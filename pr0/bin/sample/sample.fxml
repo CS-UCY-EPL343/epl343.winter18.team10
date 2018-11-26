@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.chart.NumberAxis?>
@@ -298,65 +299,6 @@
                   <JFXButton fx:id="chooseproduct_name_submitbutton" layoutX="516.0" layoutY="150.0" onAction="#handleButtonAction" prefHeight="27.0" prefWidth="146.0" style="-fx-background-color: #1a5d88;" text="Select" textFill="WHITE" />
                </children>
             </Pane>
-            <Pane fx:id="invoice_pane" prefHeight="720.0" prefWidth="1126.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label layoutX="52.0" layoutY="46.0" prefHeight="48.0" prefWidth="257.0" text="Invoice">
-                     <font>
-                        <Font size="36.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="178.0" layoutY="143.0" prefHeight="27.0" prefWidth="265.0" promptText="Search..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <Label layoutX="123.0" layoutY="143.0" prefHeight="27.0" prefWidth="48.0" text="Name:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="614.0" layoutY="143.0" prefHeight="27.0" prefWidth="214.0" promptText="DD/MM/YY" style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <Label layoutX="559.0" layoutY="143.0" prefHeight="27.0" prefWidth="48.0" text="Date:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TextField alignment="TOP_LEFT" layoutX="178.0" layoutY="193.0" prefHeight="62.0" prefWidth="265.0" promptText="Info..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <Label layoutX="123.0" layoutY="193.0" prefHeight="27.0" prefWidth="48.0" text="Bill To:">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <TableView layoutX="179.0" layoutY="302.0" prefHeight="281.0" prefWidth="651.0">
-                    <columns>
-                      <TableColumn prefWidth="112.0" text="Quantity" />
-                      <TableColumn prefWidth="235.0" text="Product Name" />
-                        <TableColumn prefWidth="126.0" text="Product Value" />
-                        <TableColumn prefWidth="177.0" text="Total" />
-                    </columns>
-                  </TableView>
-                  <TextField fx:id="qty_Product" layoutX="179.0" layoutY="265.0" prefHeight="27.0" prefWidth="48.0" promptText="Qty" style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <TextField fx:id="select_product" layoutX="241.0" layoutY="265.0" prefHeight="27.0" prefWidth="221.0" promptText="Select Product..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <TextField fx:id="value" layoutX="468.0" layoutY="265.0" prefHeight="27.0" prefWidth="116.0" promptText="Value..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
-                  <Button fx:id="addproductinvoice_button" layoutX="601.0" layoutY="265.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="229.0" text="Add Product" />
-                  <Button layoutX="473.0" layoutY="675.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Save" />
-                  <Button layoutX="588.0" layoutY="675.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Print" />
-                  <Label alignment="CENTER_RIGHT" layoutX="640.0" layoutY="593.0" prefHeight="20.0" prefWidth="105.0" text="Total w.o VAT">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" layoutX="666.0" layoutY="619.0" prefHeight="17.0" prefWidth="79.0" text="VAT">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label alignment="CENTER_RIGHT" layoutX="666.0" layoutY="649.0" prefHeight="17.0" prefWidth="79.0" text="Total">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField layoutX="751.0" layoutY="587.0" prefHeight="25.0" prefWidth="79.0" />
-                  <TextField layoutX="751.0" layoutY="617.0" prefHeight="25.0" prefWidth="79.0" />
-                  <TextField layoutX="751.0" layoutY="647.0" prefHeight="25.0" prefWidth="79.0" />
-               </children>
-            </Pane>
             <Pane fx:id="product_pane" prefHeight="720.0" prefWidth="1117.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="52.0" layoutY="46.0" prefHeight="48.0" prefWidth="257.0" text="Product">
@@ -381,6 +323,65 @@
                         <TableColumn fx:id="productPrice_c1" prefWidth="165.0" text="Price" />
                      </columns>
                   </TableView>
+               </children>
+            </Pane>
+            <Pane fx:id="invoice_pane" prefHeight="720.0" prefWidth="1126.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label layoutX="52.0" layoutY="46.0" prefHeight="48.0" prefWidth="257.0" text="Invoice">
+                     <font>
+                        <Font size="36.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="123.0" layoutY="143.0" prefHeight="27.0" prefWidth="48.0" text="Name:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="invoiceDate" layoutX="614.0" layoutY="143.0" prefHeight="27.0" prefWidth="214.0" promptText="DD/MM/YY" style="-fx-opacity: 50%; -fx-border-color: #000000;" />
+                  <Label layoutX="559.0" layoutY="143.0" prefHeight="27.0" prefWidth="48.0" text="Date:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="invoiceBillTo" alignment="TOP_LEFT" layoutX="178.0" layoutY="193.0" prefHeight="62.0" prefWidth="265.0" promptText="Info..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
+                  <Label layoutX="123.0" layoutY="193.0" prefHeight="27.0" prefWidth="48.0" text="Bill To:">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <TableView layoutX="179.0" layoutY="302.0" prefHeight="281.0" prefWidth="651.0">
+                    <columns>
+                      <TableColumn prefWidth="112.0" text="Quantity" />
+                      <TableColumn prefWidth="235.0" text="Product Name" />
+                        <TableColumn prefWidth="126.0" text="Product Value" />
+                        <TableColumn prefWidth="177.0" text="Total" />
+                    </columns>
+                  </TableView>
+                  <TextField fx:id="qty_Product" layoutX="179.0" layoutY="265.0" prefHeight="27.0" prefWidth="48.0" promptText="Qty" style="-fx-opacity: 50%; -fx-border-color: #000000;" />
+                  <TextField fx:id="value" layoutX="468.0" layoutY="265.0" prefHeight="27.0" prefWidth="116.0" promptText="Value..." style="-fx-opacity: 50%; -fx-border-color: #000000;" />
+                  <Button fx:id="addproductinvoice_button" layoutX="601.0" layoutY="265.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="229.0" text="Add Product" />
+                  <Button layoutX="473.0" layoutY="675.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Save" />
+                  <Button layoutX="588.0" layoutY="675.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Print" />
+                  <Label alignment="CENTER_RIGHT" layoutX="640.0" layoutY="593.0" prefHeight="20.0" prefWidth="105.0" text="Total w.o VAT">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="666.0" layoutY="619.0" prefHeight="17.0" prefWidth="79.0" text="VAT">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="666.0" layoutY="649.0" prefHeight="17.0" prefWidth="79.0" text="Total">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField layoutX="751.0" layoutY="587.0" prefHeight="25.0" prefWidth="79.0" />
+                  <TextField layoutX="751.0" layoutY="617.0" prefHeight="25.0" prefWidth="79.0" />
+                  <TextField layoutX="751.0" layoutY="647.0" prefHeight="25.0" prefWidth="79.0" />
+                  <JFXComboBox fx:id="incoiceCustomerName" layoutX="175.0" layoutY="144.0" prefHeight="25.0" prefWidth="265.0" />
+                  <JFXComboBox fx:id="select_product" layoutX="238.0" layoutY="266.0" prefHeight="25.0" prefWidth="205.0" />
                </children>
             </Pane>
          </children></AnchorPane>

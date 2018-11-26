@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,11 +32,14 @@ public class Controller implements Initializable{
     private Button registerpro_button,modifypro_button,addproductinvoice_button,modify_changebutton;
     @FXML private ComboBox chooseproduct_name_modify;
     DropShadow shadow = new DropShadow();
-    @FXML private TextField qty_Product,select_product,value,productName,productPrice,productDescr,product_current_price_modify,product_new_price_modify;
+    @FXML private TextField qty_Product,value,productName,productPrice,productDescr,product_current_price_modify,product_new_price_modify,invoiceDate,invoiceBillTo;
     @FXML private TableView productTable,productTable1;
     @FXML private TableColumn productName_c,productDescr_c,productPrice_c,productName_c1,productDescr_c1,productPrice_c1;
-    ObservableList<Product> data=FXCollections.observableArrayList();
-	ObservableList<String> options =FXCollections.observableArrayList();
+    @FXML private JFXComboBox incoiceCustomerName,select_product;
+    ObservableList<Product> productsData=FXCollections.observableArrayList();
+	ObservableList<String> options=FXCollections.observableArrayList();
+	ObservableList<String> customers=FXCollections.observableArrayList();
+
 	int productIndex=-1;
     public void handleButtonAction(ActionEvent event){
         if (event.getSource() == receipt_button) {
@@ -64,27 +68,27 @@ public class Controller implements Initializable{
 
             registerpro_pane.toFront();
         }else  if (event.getSource() == modifypro_button) {
-        	for (int i=0; i<data.size();i++){
-        		options.add(data.get(i).getName());
+        	for (int i=0; i<productsData.size();i++){
+        		options.add(productsData.get(i).getName());
         	}
         	chooseproduct_name_modify.getItems().addAll(options);
             modifypro_pane.toFront();
        
         }else if (event.getSource()==addProduct){
-       	 data.add(new Product(productName.getText(),Double.valueOf(productPrice.getText()),productDescr.getText()));
-         productTable.setItems(data);
-         productTable1.setItems(data);
+        	productsData.add(new Product(productName.getText(),Double.valueOf(productPrice.getText()),productDescr.getText()));
+         productTable.setItems(productsData);
+         productTable1.setItems(productsData);
 
         }else if(event.getSource()==chooseproduct_name_submitbutton){
-        	for (int i=0; i<data.size(); i++){
-        		if (data.get(i).getName().equals((String)chooseproduct_name_modify.getValue())){
+        	for (int i=0; i<productsData.size(); i++){
+        		if (productsData.get(i).getName().equals((String)chooseproduct_name_modify.getValue())){
         			productIndex=i;
         		}	
         	}
-        	product_current_price_modify.setText(Double.toString(data.get(productIndex).getPrice()));
+        	product_current_price_modify.setText(Double.toString(productsData.get(productIndex).getPrice()));
         }else if(event.getSource()==modify_changebutton){
         	if (productIndex!=-1){
-        		data.get(productIndex).setPrice(Double.parseDouble(product_new_price_modify.getText()));
+        		productsData.get(productIndex).setPrice(Double.parseDouble(product_new_price_modify.getText()));
         		productTable.refresh();
         		productTable1.refresh();
         		modifysucc_pane.toFront();
