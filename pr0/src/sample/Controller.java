@@ -13,6 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
@@ -24,9 +28,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
 public class Controller implements Initializable{
-
+	@FXML
+	LineChart lineChart_Dashboard;
+	@FXML
+	PieChart ordersPieChart;
     @FXML
-    private Pane receipt_pane,credit_pane,statement_pane,customer_pane,product_pane,order_pane,invoice_pane,dashboard_pane,registerpro_pane,modifypro_pane,modifysucc_pane,registerclient_pane,editClient_pane
+    private Pane receipt_pane,creditNote_pane,statement_pane,customer_pane,product_pane,order_pane,invoice_pane,dashboard_pane,registerpro_pane,modifypro_pane,modifysucc_pane,registerclient_pane,editClient_pane
     ,editClientSucc_pane,allInvoices_pane;
 
     @FXML
@@ -53,7 +60,7 @@ public class Controller implements Initializable{
     @FXML private JFXComboBox incoiceCustomerID_combo,select_product_combo,editClient_combo;
     
     @FXML private JFXDatePicker invoiceDate;
-    @FXML private Text invoiceidText,vat,totalwovat,ttotal;
+    @FXML private Text invoiceidText,vat,totalwovat,ttotal,vatfront,orders_front,invoicefront,receiptfront;
     
     ObservableList<Product> productsData=FXCollections.observableArrayList();
 	ObservableList<String> productOptions=FXCollections.observableArrayList();
@@ -71,7 +78,7 @@ public class Controller implements Initializable{
         if (event.getSource() == receipt_button) {
             receipt_pane.toFront();
         }else  if (event.getSource() == credit_button) {
-            credit_pane.toFront();
+			creditNote_pane.toFront();
         }else  if (event.getSource() == statement_button) {
             statement_pane.toFront();
         }else  if (event.getSource() == customer_button) {
@@ -105,6 +112,7 @@ public class Controller implements Initializable{
 
             invoice_pane.toFront();
         }else  if (event.getSource() == dashboard_button) {
+
             dashboard_pane.toFront();
         }else  if (event.getSource() == registerpro_button) {
     		productName_c.setCellValueFactory(new PropertyValueFactory<Product,String>("name"));
@@ -283,5 +291,34 @@ public class Controller implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-    }
+//defining the axes
+		final NumberAxis xAxis = new NumberAxis();
+		final NumberAxis yAxis = new NumberAxis();
+		//creating the chart
+		lineChart_Dashboard.setTitle("Sales, 2018");
+		//defining a series
+		XYChart.Series series = new XYChart.Series();
+		//populating the series with data
+		series.getData().add(new XYChart.Data("Jan", 13512));
+		series.getData().add(new XYChart.Data("Feb", 11424));
+		series.getData().add(new XYChart.Data("Mar", 11556));
+		series.getData().add(new XYChart.Data("Apr", 12475));
+		series.getData().add(new XYChart.Data("May", 13456));
+		series.getData().add(new XYChart.Data("Jun", 13624));
+		series.getData().add(new XYChart.Data("Jul", 14047));
+		series.getData().add(new XYChart.Data("Aug", 14531));
+		series.getData().add(new XYChart.Data("Sep", 14325));
+		series.getData().add(new XYChart.Data("Oct", 13078));
+		series.getData().add(new XYChart.Data("Nov", 12978));
+		series.getData().add(new XYChart.Data("Dec", 12521));
+		lineChart_Dashboard.getData().add(series);
+		ordersPieChart.setTitle("Orders");
+
+		ObservableList<PieChart.Data> pieChartData =
+				FXCollections.observableArrayList(
+						new PieChart.Data("Executed", 13),
+						new PieChart.Data("Outstanding", 25));
+		ordersPieChart.getData().addAll(pieChartData);
+		vatfront.setText("€3215.27");orders_front.setText("258");invoicefront.setText("€15328.37");receiptfront.setText("€12896.65");
+	}
 }
