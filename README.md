@@ -9,7 +9,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Clone
 
-- Clone this repo to your local machine using ``
+- Clone this repo to your local machine using `https://github.com/CS-UCY-EPL343/epl343.winter18.team10.git`
 
 ### Prerequisites
 
