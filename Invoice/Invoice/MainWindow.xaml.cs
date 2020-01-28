@@ -31,6 +31,7 @@ namespace Invoice
         void myButton_Click(object sender, RoutedEventArgs e)
         {
             Window1 wnd = new Window1();
+            Console.WriteLine();
             wnd.Show();
             if (password.Password == pass && username.Text == user)
             {
