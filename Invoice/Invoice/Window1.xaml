@@ -13,7 +13,7 @@
 
         <chartingToolkit:Chart />
 
-        <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="0" Grid.Column="1" Grid.Row="1" Grid.RowSpan="0" >
+        <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" >
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
                     <GradientStop Color="#FF30455D" Offset="1"/>
@@ -107,7 +107,8 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
                 <TextBlock  Text="Dashboard" TextAlignment="left" FontFamily="Gotham"  FontSize="25" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="0"  />
             </Canvas>
             <Canvas  Width="152" Height="55" Canvas.Left="18" Canvas.Top="138" >
-                <Border  Width="152" Height="55" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
+                <!--Border  Width="152" Height="55" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  /-->
+                <Button Click="OnButtonClick" Width="152" Height="55" Background="#ffffffff" BorderBrush="#ff707070"></Button>
                 <TextBlock  Text="Invoice" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="50" Canvas.Top="19"  />
                 <Canvas  Width="22" Height="18" Canvas.Left="19" Canvas.Top="19" >
                     <Path  Width="20" Height="16" Stretch="uniform" Data="M 4 4 L 20 4 C 21.10000038146973 4 22 4.900000095367432 22 6 L 22 18 C 22 19.10000038146973 21.10000038146973 20 20 20 L 4 20 C 2.900000095367432 20 2 19.10000038146973 2 18 L 2 6 C 2 4.900000095367432 2.900000095367432 4 4 4 Z" Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="1"  />
@@ -442,5 +443,7 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
             </chartingToolkit:Chart.Axes>
             <chartingToolkit:LineSeries/>
         </chartingToolkit:Chart>
+        <Frame x:Name="Main" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="964" Margin="174,85,0,0" VerticalAlignment="Top" Width="1734"/>
+        <TextBlock HorizontalAlignment="Left" Margin="1580,393,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
     </Grid>
 </Window>

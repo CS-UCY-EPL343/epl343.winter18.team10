@@ -10,35 +10,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Invoice
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Window2.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static String pass = "pass";
-        private static String user = "admin";
-
         public MainWindow()
         {
             InitializeComponent();
-            login_button.Click += myButton_Click;
         }
-        void myButton_Click(object sender, RoutedEventArgs e)
-        {
-            Window1 wnd = new Window1();
-            Console.WriteLine();
-            wnd.Show();
-            if (password.Password == pass && username.Text == user)
-            {
-                login_button.Content = "Succeed";
-            }
-        }
-
-
     }
 }

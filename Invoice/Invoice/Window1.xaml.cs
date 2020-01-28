@@ -23,5 +23,14 @@ namespace Invoice
         {
             InitializeComponent();
         }
+
+        private void OnButtonClick(object sender, RoutedEventArgs e)
+        {
+            Main.Content = new Page1();
+            if (Main.Content.Equals(new Page1()))
+                MessageBox.Show("In page 1!");
+            else
+                MessageBox.Show("If failed");
+        }
     }
 }
