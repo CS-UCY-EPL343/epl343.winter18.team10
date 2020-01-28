@@ -1,0 +1,57 @@
+﻿<Window x:Class="Invoice.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Invoice"
+                xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
+
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1080" Width="1920">
+    
+    <Grid x:Name="login_page" Width="1920" Height="1080" Background="#ffffffff">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="37*"/>
+        </Grid.ColumnDefinitions>
+        <Controls:Frame Name="MainFrame" NavigationUIVisibility="Hidden" >
+        </Controls:Frame>
+
+        <Border  Width="1920" Height="1080" Background="#ff30455d" BorderBrush="#ff4b6583" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+        <Border  Width="1440" Height="860" Background="#ffffffff" BorderBrush="#ff707070" Margin="95.586,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
+        <Border  Width="580" Height="860" BorderBrush="#ff707070" Margin="158.586,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" />
+        <Border  Width="860" Height="860" Background="#ffffffff" BorderBrush="#ff707070" Margin="738.586,110,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" >
+            <TextBlock Text="TextBlock" TextWrapping="Wrap"/>
+        </Border>
+        <Canvas  Width="446" Height="80" Margin="944.586,547,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1"/>
+        <Canvas  Width="446" Height="80" Margin="944.586,446,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1">
+            <TextBox x:Name="username"  Width="446" Height="79" Canvas.Left="0.3905029296875" Canvas.Top="0" FontSize="20" TextAlignment="Left" Padding="20,20,5,5" TextWrapping="Wrap"/>
+            <TextBlock  Text="USERNAME" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Canvas.Left="3" Canvas.Top="-28"  />
+            <PasswordBox x:Name="password"  Width="446" Height="79" Canvas.Top="113" FontSize="20" Padding="20,20,5,5"/>
+            <TextBlock  Text="PASSWORD" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Canvas.Left="3" Canvas.Top="91"  />
+
+            <Border  Width="6" Height="79" Background="#ffff5a87" BorderBrush="#ff707070" Canvas.Left="0"  />
+        </Canvas>
+        <Canvas  Width="113" Height="30" Margin="1277.586,645,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1">
+            <Button x:Name="login_button" FontFamily="Avenir" Padding="-5,4,5,5" FontSize="20" Foreground="#ff707070"  Height="35" Width="113" Content="LOGIN" Background="#33FFFFFF"  />
+            <Canvas  Width="29" Height="29" Canvas.Left="84.369384765625" Canvas.Top="1" >
+                <Canvas  Width="29" Height="29" Canvas.Left="0" Canvas.Top="0" >
+                    <Canvas  Width="29" Height="29" Canvas.Left="0" Canvas.Top="0" >
+                        <Path  Width="19" Height="29" Stretch="uniform" Data="M 187.5918121337891 0 L 173.0839996337891 0 C 171.7504577636719 0 170.666015625 1.084402322769165 170.666015625 2.417987823486328 L 170.666015625 6.649452209472656 C 170.666015625 6.983584880828857 170.9363861083984 7.253963470458984 171.2705230712891 7.253963470458984 C 171.6046600341797 7.253963470458984 171.8750305175781 6.983585834503174 171.8750305175781 6.649452686309814 L 171.8750305175781 2.417987823486328 C 171.8750305175781 1.751535058021545 172.4175415039063 1.209022164344788 173.0839996337891 1.209022164344788 L 187.5918121337891 1.209022164344788 C 188.2582702636719 1.209022164344788 188.80078125 1.751535058021545 188.80078125 2.417987823486328 L 188.80078125 26.59769248962402 C 188.80078125 27.26414680480957 188.2582702636719 27.80665969848633 187.5918121337891 27.80665969848633 L 173.0839996337891 27.80665969848633 C 172.4175415039063 27.80665969848633 171.8750305175781 27.26414680480957 171.8750305175781 26.59769248962402 L 171.8750305175781 22.36623001098633 C 171.8750305175781 22.03209686279297 171.6046600341797 21.76171875 171.2705230712891 21.76171875 C 170.9363861083984 21.76171875 170.666015625 22.03209686279297 170.666015625 22.36623001098633 L 170.666015625 26.59769248962402 C 170.666015625 27.93122100830078 171.7504272460938 29.01568031311035 173.0839996337891 29.01568031311035 L 187.5918121337891 29.01568031311035 C 188.9253845214844 29.015625 190.0097961425781 27.93122100830078 190.0097961425781 26.59763717651367 L 190.0097961425781 2.417987823486328 C 190.0097961425781 1.084402322769165 188.9253845214844 0 187.5918121337891 0 Z" Fill="#ffff5a87" Stroke="#FFFF5A87" Canvas.Left="7.922" Canvas.Top="2.25" UseLayoutRounding="False"  />
+                        <Path  Width="21" Height="14" Stretch="uniform" Data="M 13.49481678009033 141.4601440429688 C 13.24863719940186 141.6856384277344 13.23214626312256 142.0681610107422 13.45763874053955 142.3143463134766 C 13.57687568664551 142.4442443847656 13.73980522155762 142.5103149414063 13.90335750579834 142.5103149414063 C 14.04917335510254 142.5103149414063 14.19555473327637 142.4577789306641 14.31184387207031 142.3515167236328 L 21.56575012207031 135.7021331787109 C 21.69087982177734 135.5876007080078 21.76171875 135.4258575439453 21.76171875 135.2564086914063 C 21.76171875 135.0869750976563 21.69087982177734 134.9252319335938 21.56575012207031 134.8106994628906 L 14.31184387207031 128.1613006591797 C 14.06447315216064 127.9358062744141 13.68375682830811 127.9529113769531 13.45763874053955 128.1984710693359 C 13.23214435577393 128.4446563720703 13.24863624572754 128.8271789550781 13.49481678009033 129.0526733398438 L 19.60339736938477 134.6519012451172 L 0.6045110821723938 134.6519012451172 C 0.2703780233860016 134.6519012451172 0 134.9222869873047 0 135.2564086914063 C 0 135.5905456542969 0.2703780233860016 135.8609161376953 0.6045110821723938 135.8609161376953 L 19.60345458984375 135.8609161376953 L 13.49481678009033 141.4601440429688 Z" Fill="#ffff5a87" Stroke="#FFFF5A87" Canvas.Left="-1.75" Canvas.Top="9.254" UseLayoutRounding="False" />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+        </Canvas>
+        <Border  Width="845" Height="860" BorderBrush="#ff707070" Margin="35,110,0,110" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" >
+            <Border.Background>
+                <ImageBrush Stretch="UniformToFill" ImageSource="Untitled-1.jpg">
+
+                </ImageBrush>
+            </Border.Background>
+        </Border>
+        <Canvas  Width="509" Height="53" Margin="994.586,316,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1">
+            <TextBlock  Text="WELCOME TO ECO-BRIGHT" TextAlignment="left" FontFamily="Gotham"  FontSize="40" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="0" FontWeight="Bold" FontStyle="Italic"  />
+        </Canvas>
+    </Grid>
+</Window>
