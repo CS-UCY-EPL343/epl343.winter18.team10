@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Invoice.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Invoice
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Page m_home;
+        private Page m_dashboard=new Dashboard();
         private Page m_invoice = new Page1();
         private Page m_receipt;
         private Page m_creditNote;
@@ -39,6 +40,7 @@ namespace Invoice
         private void BtnHome_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Home";
+            MainPage.Content = m_dashboard;
         }
 
         private void BtnInvoice_Click(object sender, RoutedEventArgs e)

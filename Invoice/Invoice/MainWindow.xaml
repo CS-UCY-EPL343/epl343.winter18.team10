@@ -52,7 +52,7 @@
 
             <Button x:Name="btnHome" Width="170" Height="55" Canvas.Left="0" Canvas.Top="80" BorderThickness="0" Background="White" Click="BtnHome_Click">
                 <Canvas Width="170" Height="55" Canvas.Left="2" Canvas.Top="80">
-                    <TextBlock  Text="Home" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
+                    <TextBlock  Text="Dashboard" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
                         <Path  Width="18" Height="20" Stretch="uniform" Data="M 3 9 L 12 2 L 21 9 L 21 20 C 21 21.10457038879395 20.10456848144531 22 19 22 L 5 22 C 3.895430564880371 22 3 21.10456848144531 3 20 L 3 9 Z" Stroke="#ff7764e4" Canvas.Left="1" Canvas.Top="1"  />
                         <Path  Width="6" Height="10" Stretch="uniform" Data="M 9 22 L 9 12 L 15 12 L 15 22" Stroke="#ff7764e4" Canvas.Left="7" Canvas.Top="11"  />

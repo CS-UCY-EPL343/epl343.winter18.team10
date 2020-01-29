@@ -1,0 +1,189 @@
+﻿<Page x:Class="Invoice.Pages.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Invoice.Pages"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+
+      mc:Ignorable="d" 
+      d:DesignHeight="964" d:DesignWidth="1756"
+      Title="Page1">
+
+    <Grid Background="Aquamarine">
+        <Border Background="red" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="94" Margin="-2,-104,0,0" VerticalAlignment="Top" Width="878" Panel.ZIndex="1"/>
+        <TextBlock  Text="6
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1391,124,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="7
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1391,206,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="8
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1392,287,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="9
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff9574ff" Margin="1391,369,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="10
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1390,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="11
+AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1390,532,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="12
+PM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ffff3e9f" Margin="1390,614,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="1
+PM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ffff3e9f" Margin="1392,696,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="2
+PM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ffff3e9f" Margin="1392,778,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="3
+PM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1558,943,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="4
+PM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1558,1025,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="86" Height="0" Stretch="uniform" Data="M -17371.21875 -22641 L -17284.443359375 -22641" Stroke="#ffec4e6e" Margin="173.5,75.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1432,142,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1432,224,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1432,306,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1432,470,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1432,550,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1597.5,961.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1597.5,1043.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="298" Height="81" Background="#fff0f0ff" BorderBrush="#ff707070" Margin="1432,347,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Daily Stand up Meeting" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ff6b43eb" Margin="1448,357,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="8:30 AM - 9:30 AM" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foreground="#ff6b43eb" Margin="1448,399,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="6" Height="81" Background="#ff9574ff" BorderBrush="#ff707070" Margin="1725,347,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Line  X1="0" Y1="0" X2="299" Y2="0" Stroke="#ff9574ff" Margin="1432,388,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Ellipse  Width="8" Height="8" Fill="#ff6b43eb" Stroke="#ff707070" Margin="1432,384,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="298" Height="165" Background="#fffcedf4" BorderBrush="#ff707070" Margin="1432,632,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Team Lunch" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ffff3c9e" Margin="1448,644,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Rich Table" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ffff3c9e" Margin="1448,700,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="12:00 PM - 2:00 PM" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foreground="#ffff3c9e" Margin="1448,664,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="199 Gough St,
+San Francisco, CA 94102,
+United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foreground="#ffff3c9e" Margin="1448,720,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="6" Height="165" Background="#ffff3c9e" BorderBrush="#ff707070" Margin="1725,632,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Canvas  Width="156" Height="50" Margin="1391,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock  Text="Thursday, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="21" Foreground="#ff000000" Canvas.Left="0" Canvas.Top="22"  />
+            <TextBlock  Text="Calendar" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff8f9198" Canvas.Left="0" Canvas.Top="0"  />
+        </Canvas>
+        <Canvas  Width="98" Height="101" Margin="1638,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas  Width="98" Height="101" Canvas.Left="0" Canvas.Top="0" >
+                <Canvas  Width="98" Height="101" Canvas.Left="0" Canvas.Top="0" >
+                    <Path  Width="98" Height="101" Stretch="uniform" Data="M 97.32489013671875 11.05380153656006 C 97.11666870117188 11.04534339904785 96.90826416015625 11.04393196105957 96.69978332519531 11.04980754852295 L 88.84217834472656 11.04980754852295 L 88.84217834472656 4.297160148620605 C 88.84243774414063 1.596101522445679 86.2640380859375 -4.206197168343806e-09 83.56298828125 -4.206197168343806e-09 L 76.31944274902344 -4.206197168343806e-09 C 73.61837768554688 -4.206197168343806e-09 71.65403747558594 1.596101522445679 71.65403747558594 4.297160148620605 L 71.65403747558594 11.04957294464111 L 42.18819046020508 11.04957294464111 L 42.18819046020508 4.297160148620605 C 42.18819046020508 1.596101522445679 40.22385787963867 -4.206197168343806e-09 37.52278518676758 -4.206197168343806e-09 L 30.27899551391602 -4.206197168343806e-09 C 27.57817459106445 -4.206197168343806e-09 24.99978256225586 1.596101522445679 24.99978256225586 4.297160148620605 L 24.99978256225586 11.04957294464111 L 17.14240837097168 11.04957294464111 C 12.12663173675537 10.90974998474121 7.947208404541016 14.86263847351074 7.807382106781006 19.87818717956543 C 7.801505565643311 20.08639335632324 7.802916049957275 20.29507255554199 7.811378479003906 20.50328063964844 L 7.811378479003906 91.46657562255859 C 7.811378479003906 96.86870574951172 11.74006175994873 101.90234375 17.14217758178711 101.90234375 L 96.70002746582031 101.90234375 C 102.1021575927734 101.90234375 106.0308380126953 96.86870574951172 106.0308380126953 91.46657562255859 L 106.0308380126953 20.50328063964844 C 106.2362365722656 15.48984718322754 102.3383331298828 11.25919055938721 97.32489013671875 11.05380153656006 Z M 76.31944274902344 4.91097354888916 L 83.93145751953125 4.91097354888916 L 83.93145751953125 18.41603469848633 L 76.31944274902344 18.41603469848633 L 76.31944274902344 4.91097354888916 Z M 30.27922821044922 4.91097354888916 L 37.27744674682617 4.91097354888916 L 37.27744674682617 18.41603469848633 L 30.27923774719238 18.41603469848633 L 30.27923774719238 4.91097354888916 Z M 101.1198577880859 91.46657562255859 C 101.1198577880859 94.16764068603516 99.40109252929688 96.99137115478516 96.70002746582031 96.99137115478516 L 17.14240837097168 96.99137115478516 C 14.4413537979126 96.99137115478516 12.72258853912354 94.16765594482422 12.72258853912354 91.46657562255859 L 12.72258853912354 39.28778839111328 L 101.1198577880859 39.28778839111328 L 101.1198577880859 91.46657562255859 Z M 101.1198577880859 20.50328063964844 L 101.1198577880859 34.37681198120117 L 12.72235298156738 34.37681198120117 L 12.72235298156738 20.50328063964844 C 12.51437854766846 18.20735549926758 14.20706176757813 16.17745208740234 16.50298690795898 15.9694766998291 C 16.71542739868164 15.9502067565918 16.92927360534668 15.94738388061523 17.14217758178711 15.96078205108643 L 24.99979209899902 15.96078205108643 L 24.99979209899902 18.66184234619141 C 24.99979209899902 21.36290168762207 27.57793617248535 23.32724189758301 30.27899551391602 23.32724189758301 L 37.52278518676758 23.32724189758301 C 40.03067398071289 23.39609718322754 42.11934280395508 21.41859436035156 42.18819046020508 18.91070365905762 C 42.19054412841797 18.82774925231934 42.19054412841797 18.74479484558105 42.18819046020508 18.66184234619141 L 42.18819046020508 15.96054553985596 L 71.65403747558594 15.96054553985596 L 71.65403747558594 18.66160774230957 C 71.58517456054688 21.16949844360352 73.56268310546875 23.25815391540527 76.07057189941406 23.32700538635254 C 76.15353393554688 23.3293571472168 76.23648071289063 23.3293571472168 76.31944274902344 23.32700538635254 L 83.56321716308594 23.32700538635254 C 86.2642822265625 23.32700538635254 88.84243774414063 21.3626651763916 88.84243774414063 18.66160774230957 L 88.84243774414063 15.96054553985596 L 96.70004272460938 15.96054553985596 C 99.00088500976563 15.81555271148682 100.9835662841797 17.56322860717773 101.1285705566406 19.86408805847168 C 101.1419525146484 20.07699394226074 101.1391296386719 20.29084205627441 101.1198577880859 20.50328063964844 Z" Fill="#ff0eb280" Stroke="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
+                    <Path  Width="44" Height="42" Stretch="uniform" Data="M 127.3090515136719 221.3692626953125 L 125.0991363525391 233.6467590332031 C 125.0116500854492 234.1732940673828 125.0981521606445 234.7142028808594 125.3455810546875 235.1873626708984 C 125.9742126464844 236.3889007568359 127.4579925537109 236.8534393310547 128.6595153808594 236.2247619628906 L 139.7091522216797 230.4545593261719 L 150.7586975097656 236.2247619628906 L 151.8636779785156 236.4704437255859 C 152.3963317871094 236.4798889160156 152.9164428710938 236.3064727783203 153.3368072509766 235.9794006347656 C 154.0707550048828 235.4431762695313 154.4484405517578 234.5460052490234 154.3191223144531 233.6464233398438 L 152.1092376708984 221.3690948486328 L 161.0717468261719 212.77490234375 C 161.7131042480469 212.0820465087891 161.9457397460938 211.1043853759766 161.6856079101563 210.1968078613281 C 161.3549346923828 209.3579559326172 160.6100006103516 208.7528381347656 159.7212371826172 208.6007232666016 L 147.4437866210938 206.7590484619141 L 141.9190368652344 195.5865936279297 C 141.6782379150391 195.0892639160156 141.2768096923828 194.6877899169922 140.7795257568359 194.4470367431641 C 139.5589447021484 193.8560791015625 138.0904388427734 194.3661651611328 137.4992065429688 195.5865936279297 L 131.9744262695313 206.7590484619141 L 119.6970062255859 208.6007232666016 C 118.8082885742188 208.7525024414063 118.0632705688477 209.3579559326172 117.732666015625 210.1968078613281 C 117.4725112915039 211.1043853759766 117.7053909301758 212.0820465087891 118.3464584350586 212.77490234375 L 127.3090515136719 221.3692626953125 Z" Fill="#ff0eb280" Stroke="#ff707070" Canvas.Left="25.808349609375" Canvas.Top="45.63665771484375"  />
+                </Canvas>
+            </Canvas>
+        </Canvas>
+        <Border  Width="162" Height="31" BorderBrush="#ff707070" Margin="4,1006,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
+
+        </Border>
+        <Canvas  Width="158" Height="317" Margin="994,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border  Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0" Canvas.Top="0" CornerRadius="20"  />
+
+            <Canvas  Width="55" Height="55" Canvas.Left="52" Canvas.Top="26" >
+                <Border  Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1" CornerRadius="15"  />
+                <Canvas  Width="24" Height="24" Canvas.Left="16" Canvas.Top="16" >
+                    <Canvas  Width="24" Height="24" Canvas.Left="0" Canvas.Top="0" >
+                        <Border  Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
+                        <Path  Width="19" Height="13" Stretch="uniform" Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625"  />
+                        <Ellipse  Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6" Canvas.Top="18"  />
+                        <Ellipse  Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16" Canvas.Top="18"  />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas  Width="89" Height="76" Canvas.Left="31" Canvas.Top="197" >
+                <Canvas  Width="89" Height="59" Canvas.Left="0" Canvas.Top="0" >
+                    <TextBlock x:Name="invoicesCount"  Text="200" TextAlignment="left" FontFamily="Avenir"  FontSize="30" Foreground="#ffcce8ff" Canvas.Left="23" Canvas.Top="0"  />
+                    <TextBlock  Text="NEW INVOICES" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ffcce8ff" Canvas.Top="41" Canvas.Left="1"  />
+                </Canvas>
+                <TextBlock  Text="Last 30 days" TextAlignment="left" FontFamily="Avenir"  FontSize="9" Foreground="#ffcce8ff" Canvas.Left="22" Canvas.Top="64"  />
+            </Canvas>
+        </Canvas>
+        <Canvas  Width="158" Height="317" Margin="1185,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border x:Name="salesCount"  Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0" Canvas.Top="0" CornerRadius="20"  />
+            <Canvas  Width="55" Height="55" Canvas.Left="57" Canvas.Top="20" >
+                <Border  Width="55" Height="55" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0" Canvas.Top="6" BorderThickness="1" CornerRadius="15"  />
+                <Canvas  Width="24" Height="24" Canvas.Left="16" Canvas.Top="16" >
+                    <Canvas  Width="24" Height="24" Canvas.Left="0" Canvas.Top="0" >
+                        <Border  Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
+                        <Path  Width="8" Height="8" Stretch="uniform" Data="M 14.5 10.32999992370605 L 21.17000007629395 10.32999992370605 C 21.62839698791504 10.32999992370605 22 9.958395957946777 22 9.5 C 22 5.357864379882813 18.64213562011719 1.999999046325684 14.49999904632568 2 C 14.04160308837891 2 13.66999912261963 2.371603727340698 13.66999912261963 2.830000162124634 L 13.67000007629395 9.5 C 13.67000102996826 9.958395957946777 14.04160499572754 10.32999992370605 14.50000095367432 10.32999992370605 Z" Fill="#ffffb100" Canvas.Left="14" Canvas.Top="10" RenderTransformOrigin="0.708,1.542"  />
+                        <Path  Width="19" Height="19" Stretch="uniform" Data="M 21.07999992370605 12 L 12.93000030517578 12 C 12.42742156982422 11.99999904632568 12.02000045776367 11.59257888793945 12.02000045776367 11.08999919891357 L 12.02000045776367 2.920000076293945 C 12.02155494689941 2.657643795013428 11.91102504730225 2.407104015350342 11.7162036895752 2.231383085250854 C 11.52138233184814 2.055661916732788 11.2608060836792 1.971477746963501 11 1.99999988079071 C 5.779948234558105 2.554285049438477 1.87705135345459 7.050512790679932 2.06212043762207 12.29664897918701 C 2.247188568115234 17.54278564453125 6.457214832305908 21.75281143188477 11.70335102081299 21.93788146972656 C 16.94948577880859 22.12294960021973 21.44571495056152 18.22005462646484 22 13.00000095367432 C 22.02248573303223 12.74246406555176 21.93557548522949 12.4873514175415 21.76054382324219 12.29710102081299 C 21.58551406860352 12.10685062408447 21.33851432800293 11.99901962280273 21.07999992370605 12 Z" Fill="#ffffb100" Canvas.Left="3" Canvas.Top="10"  />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas  Width="75" Height="76" Canvas.Left="39" Canvas.Top="197" >
+                <Canvas  Width="75" Height="59" Canvas.Left="0" Canvas.Top="0" >
+                    <TextBlock  Text="$1.3k" TextAlignment="left" FontFamily="Avenir"  FontSize="30" Foreground="#ffcce8ff" Canvas.Left="3" Canvas.Top="0"  />
+                    <TextBlock  Text="NEW SALES" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ffcce8ff" Canvas.Left="4" Canvas.Top="41"  />
+                </Canvas>
+                <TextBlock  Text="Last 30 days" TextAlignment="left" FontFamily="Avenir"  FontSize="9" Foreground="#ffcce8ff" Canvas.Left="19" Canvas.Top="64"  />
+            </Canvas>
+            <Border  Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5" CornerRadius="30"  />
+        </Canvas>
+        <TextBlock  Text="OUTSTANDING ORDERS(tOTAL: 9)" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="10,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,432,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Collabee Private Co." TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="DUE" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="596,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="CREATED" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="408,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,501,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Wed, 25 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,520,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,522,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,570,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Target" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,589,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Tue, 24 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,589,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,591,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Cambr Card" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,520,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="54" Height="54" BorderBrush="#ff707070" Margin="29,436,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,639,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Canvas  Width="39" Height="28" Margin="36,514,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas  Width="39" Height="28" Canvas.Left="0" Canvas.Top="0" >
+                <Path  Width="29" Height="21" Stretch="uniform" Data="M 29.91716194152832 16.8164005279541 L 29.91716194152832 31.19091606140137 C 29.91716194152832 33.04169845581055 28.41654396057129 34.54232025146484 26.56575775146484 34.54232025146484 L 14.95858097076416 34.59059143066406 L 11.425537109375 34.54232025146484 L 8.159224510192871 34.59059143066406 L 3.351401805877686 34.59059143066406 C 1.500617504119873 34.59059143066406 1.473079702662972e-08 33.0899772644043 1.473079702662972e-08 31.23918724060059 L 1.473079702662972e-08 16.86467552185059 C 1.473079702662972e-08 15.01389217376709 1.500617504119873 13.51327514648438 3.351401805877686 13.51327514648438 L 26.56507873535156 13.46499824523926 C 28.41654396057129 13.46500110626221 29.91716194152832 14.96562004089355 29.91716194152832 16.8164005279541 Z" Fill="#ff1dc6ac" Stroke="#ff707070" Canvas.Left="0" Canvas.Top="7.47930908203125"  />
+                <Path  Width="29" Height="23" Stretch="uniform" Data="M 40.56575775146484 2.512595653533936 L 17.35208511352539 2.46500039100647 C 15.50061988830566 2.464999914169312 14 3.965617895126343 14 5.816401481628418 L 14 9.978969573974609 L 31.04666709899902 9.943610191345215 C 32.89744567871094 9.943610191345215 34.39806747436523 11.44422817230225 34.39806747436523 13.29569339752197 L 34.39806747436523 25.83438110351563 L 34.39806747436523 23.5905933380127 L 39.15761184692383 23.5905933380127 L 40.56575775146484 23.5905933380127 C 42.41654205322266 23.5905933380127 43.91716384887695 22.08997344970703 43.91716384887695 20.23919105529785 L 43.91716384887695 5.864677906036377 C 43.91716384887695 4.013213634490967 42.41654205322266 2.512595653533936 40.56575775146484 2.512595653533936 Z" Fill="#ffffd179" Stroke="#ff707070" Canvas.Left="9.519088745117188" Canvas.Top="0"  />
+                <Border  Width="7" Height="2" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="4.999755859375" Canvas.Top="18.99908447265625"  />
+                <Border  Width="19" Height="2" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="4.999755859375" Canvas.Top="22.99908447265625"  />
+            </Canvas>
+        </Canvas>
+        <Canvas  Width="42" Height="44" Margin="31,578,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border  Width="82" Height="82" BorderBrush="#ff707070" Canvas.Left="-7" Canvas.Top="-12"  />
+            <Border  Width="42" Height="44" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
+        </Canvas>
+        <TextBlock  Text="Mon, 23 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Gramma Limited" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="53" Height="53" BorderBrush="#ff707070" Margin="29,644,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,708,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Mon, 23 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="Gramma Limited" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border  Width="53" Height="53" BorderBrush="#ff707070" Margin="29,713,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Canvas  Width="16" Height="345" Margin="708,425,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Path  Width="16" Height="345" Stretch="uniform" Data="M 0 0 L 16 0 L 16 345 L 0 345 L 0 0 Z" Fill="#ffe6e6e6" Canvas.Left="0" Canvas.Top="0"  />
+            <Path  Width="16" Height="126" Stretch="uniform" Data="M 0 0 L 16 0 L 16 126.775032043457 L 0 126.775032043457 L 0 0 Z" Fill="#33000000" Canvas.Left="0" Canvas.Top="16"  />
+            <Canvas  Width="16" Height="16" Canvas.Left="0" Canvas.Top="329" >
+                <Path  Width="16" Height="16" Stretch="uniform" Data="M 0 0 L 16 0 L 16 16 L 0 16 L 0 0 Z" Stroke="#ff979797" Canvas.Left="0" Canvas.Top="0"  />
+                <TextBlock  Text="" TextAlignment="left" FontFamily="Segoe MDL2 Assets"  FontSize="8" Foreground="#ff000000" Canvas.Left="4" Canvas.Top="4"  />
+            </Canvas>
+            <Canvas  Width="16" Height="16" Canvas.Left="0" Canvas.Top="0" >
+                <Border  Width="16" Height="16" BorderBrush="#ff979797" Canvas.Left="0" Canvas.Top="0"  />
+                <TextBlock  Text="" TextAlignment="left" FontFamily="Segoe MDL2 Assets"  FontSize="8" Foreground="#ff000000" Canvas.Left="4" Canvas.Top="4"  />
+            </Canvas>
+            <lvc:CartesianChart Series="{Binding SeriesCollection}"  LegendLocation="Bottom" Width="920" Height="300" AutomationProperties.IsRequiredForForm="True" Canvas.Left="-683" Canvas.Top="-373" >
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" ></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Month" Labels="{Binding Labels}" Foreground="#FF9E9E9E"></lvc:Axis>
+                </lvc:CartesianChart.AxisX>
+            </lvc:CartesianChart>
+
+            <Grid>
+                <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="30,-52,-434,-200" Width="600" Height="453" Loaded="CartesianChart_Loaded">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Title="Month" Labels="{Binding Labels2}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Amount" LabelFormatter="{Binding Formatter}"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </Grid>
+
+        </Canvas>
+    </Grid>
+</Page>
