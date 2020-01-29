@@ -40,6 +40,7 @@ namespace Invoice
         /// The table of the MigraDoc document that contains the invoice items.
         /// </summary>
         Table table;
+        Table table2;
 
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
@@ -73,6 +74,67 @@ namespace Invoice
         /// <summary>
         /// Defines the styles used to format the MigraDoc document.
         /// </summary>
+        void addDetails(Section section)
+        {
+            this.table2 = section.AddTable();
+            this.table2.Style = "Table";
+            this.table2.Borders.Color = TableBorder;
+            this.table2.Borders.Width = 0.25;
+            this.table2.Borders.Left.Width = 0.5;
+            this.table2.Borders.Right.Width = 0.5;
+            this.table2.Rows.LeftIndent = 0;
+
+            // Before you can add a row, you must define the columns
+            Column column = this.table2.AddColumn("1.5cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            column = this.table2.AddColumn("8.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            column = this.table2.AddColumn("3cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            column = this.table2.AddColumn("3cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            Row row = table2.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = true;
+            row.Shading.Color = LogoBlue;
+            row.Format.Font.Color = new Color(255, 255, 255);
+            row.TopPadding = 3;
+            row.BottomPadding = 3;
+            row.Format.Font.Size = 10;
+
+            row.Cells[0].AddParagraph("QTY");
+            row.Cells[0].Format.Font.Bold = true;
+            row.Format.LineSpacing = 10;
+            row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
+            row.Cells[1].AddParagraph("DESCRIPTION");
+            row.Cells[1].Format.Font.Bold = true;
+            row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+            row.Cells[2].AddParagraph("UNIT PRICE");
+            row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[3].AddParagraph("AMOUNT");
+            row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
+
+            this.table2.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+            Row row1 = this.table2.AddRow();
+            row1.TopPadding = 1.5;
+            row1.Cells[0].Shading.Color = TableGray;
+            row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+            row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+            row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+            row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
+            row1.Cells[3].Shading.Color = TableGray;
+            row1.Cells[0].AddParagraph("aaaaaaa");
+            this.table2.SetEdge(0, this.table2.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
+
+
+        }
         void DefineStyles()
         {
             // Get the predefined style Normal.
@@ -119,10 +181,13 @@ namespace Invoice
             image.Left = ShapePosition.Left;
             image.WrapFormat.Style = WrapStyle.Through;
 
+            addDetails(section);
+
             Paragraph par = section.Headers.Primary.AddParagraph();
             par.Format.Alignment = ParagraphAlignment.Right;
             par.Format.Font.Size = 24;
             par.Format.Font.Color = LogoBlue;
+            par.Format.SpaceBefore = 5;
             par.AddFormattedText("INVOICE", TextFormat.Bold);
 
             // Create footer
@@ -179,59 +244,52 @@ namespace Invoice
             this.table.Borders.Right.Width = 0.5;
             this.table.Rows.LeftIndent = 0;
 
+
+
             // Before you can add a row, you must define the columns
-            Column column = this.table.AddColumn("1cm");
+            Column column = this.table.AddColumn("1.5cm");
             column.Format.Alignment = ParagraphAlignment.Center;
 
-            column = this.table.AddColumn("2.5cm");
+            column = this.table.AddColumn("8.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
             column = this.table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            column = this.table.AddColumn("3.5cm");
+            column = this.table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            column = this.table.AddColumn("2cm");
-            column.Format.Alignment = ParagraphAlignment.Center;
 
-            column = this.table.AddColumn("4cm");
-            column.Format.Alignment = ParagraphAlignment.Right;
 
             // Create the header of the table
             Row row = table.AddRow();
             row.HeadingFormat = true;
             row.Format.Alignment = ParagraphAlignment.Center;
             row.Format.Font.Bold = true;
-            row.Shading.Color = TableBlue;
-            row.Cells[0].AddParagraph("Item");
-            row.Cells[0].Format.Font.Bold = false;
-            row.Cells[0].Format.Alignment = ParagraphAlignment.Left;
+            row.Shading.Color = LogoBlue;
+            row.Format.Font.Color = new Color(255, 255, 255);
+            row.TopPadding = 3;
+            row.BottomPadding = 3;
+            row.Format.Font.Size = 10;
+
+            row.Cells[0].AddParagraph("QTY");
+            row.Cells[0].Format.Font.Bold = true;
+            row.Format.LineSpacing = 10;
+            row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
             row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[0].MergeDown = 1;
-            row.Cells[1].AddParagraph("Title and Author");
-            row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[1].MergeRight = 3;
-            row.Cells[5].AddParagraph("Extended Price");
-            row.Cells[5].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[5].MergeDown = 1;
+            row.Cells[1].AddParagraph("DESCRIPTION");
+            row.Cells[1].Format.Font.Bold = true;
+            row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
+            row.Cells[2].AddParagraph("UNIT PRICE");
+            row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[3].AddParagraph("AMOUNT");
+            row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
 
-            row = table.AddRow();
-            row.HeadingFormat = true;
-            row.Format.Alignment = ParagraphAlignment.Center;
-            row.Format.Font.Bold = true;
-            row.Shading.Color = TableBlue;
-            row.Cells[1].AddParagraph("Quantity");
-            row.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[2].AddParagraph("Unit Price");
-            row.Cells[2].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[3].AddParagraph("Discount (%)");
-            row.Cells[3].Format.Alignment = ParagraphAlignment.Left;
-            row.Cells[4].AddParagraph("Taxable");
-            row.Cells[4].Format.Alignment = ParagraphAlignment.Left;
+            this.table.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
-            this.table.SetEdge(0, 0, 6, 2, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
+
+
         }
 
         /// <summary>
@@ -334,33 +392,28 @@ namespace Invoice
 
                 // Each item fills two rows
                 Row row1 = this.table.AddRow();
-                Row row2 = this.table.AddRow();
                 row1.TopPadding = 1.5;
                 row1.Cells[0].Shading.Color = TableGray;
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-                row1.Cells[0].MergeDown = 1;
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-                row1.Cells[1].MergeRight = 3;
-                row1.Cells[5].Shading.Color = TableGray;
-                row1.Cells[5].MergeDown = 1;
+                row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[3].Shading.Color = TableGray;
 
                 row1.Cells[0].AddParagraph(GetValue(item, "itemNumber"));
                 paragraph = row1.Cells[1].AddParagraph();
                 paragraph.AddFormattedText(GetValue(item, "title"), TextFormat.Bold);
                 paragraph.AddFormattedText(" by ", TextFormat.Italic);
                 paragraph.AddText(GetValue(item, "author"));
-                row2.Cells[1].AddParagraph(GetValue(item, "quantity"));
-                row2.Cells[2].AddParagraph(price.ToString("0.00") + " ");
-                row2.Cells[3].AddParagraph(discount.ToString("0.0"));
-                row2.Cells[4].AddParagraph();
-                row2.Cells[5].AddParagraph(price.ToString("0.00"));
+                row1.Cells[2].AddParagraph(price.ToString("0.00"));
+                row1.Cells[2].AddParagraph();
                 double extendedPrice = quantity * price;
-                extendedPrice = extendedPrice * (100 - discount) / 100;
-                row1.Cells[5].AddParagraph(extendedPrice.ToString("0.00") + " ");
-                row1.Cells[5].VerticalAlignment = VerticalAlignment.Bottom;
+                row1.Cells[3].AddParagraph(extendedPrice.ToString("0.00"));
+                row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
                 totalExtendedPrice += extendedPrice;
 
-                this.table.SetEdge(0, this.table.Rows.Count - 2, 6, 2, Edge.Box, BorderStyle.Single, 0.75);
+                this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
 
             // Add an invisible row as a space line to the table
@@ -373,8 +426,8 @@ namespace Invoice
             row.Cells[0].AddParagraph("Total Price");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-            row.Cells[0].MergeRight = 4;
-            row.Cells[5].AddParagraph(totalExtendedPrice.ToString("0.00") + " ");
+            row.Cells[0].MergeRight = 2;
+            row.Cells[3].AddParagraph(totalExtendedPrice.ToString("0.00"));
 
             // Add the VAT row
             row = this.table.AddRow();
@@ -382,17 +435,9 @@ namespace Invoice
             row.Cells[0].AddParagraph("VAT (19%)");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-            row.Cells[0].MergeRight = 4;
-            row.Cells[5].AddParagraph((0.19 * totalExtendedPrice).ToString("0.00") + " ");
+            row.Cells[0].MergeRight = 2;
+            row.Cells[3].AddParagraph((0.19 * totalExtendedPrice).ToString("0.00"));
 
-            // Add the additional fee row
-            row = this.table.AddRow();
-            row.Cells[0].Borders.Visible = false;
-            row.Cells[0].AddParagraph("Shipping and Handling");
-            row.Cells[5].AddParagraph(0.ToString("0.00") + " ");
-            row.Cells[0].Format.Font.Bold = true;
-            row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-            row.Cells[0].MergeRight = 4;
 
             // Add the total due row
             row = this.table.AddRow();
@@ -400,12 +445,12 @@ namespace Invoice
             row.Cells[0].Borders.Visible = false;
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
-            row.Cells[0].MergeRight = 4;
+            row.Cells[0].MergeRight = 2;
             totalExtendedPrice += 0.19 * totalExtendedPrice;
-            row.Cells[5].AddParagraph(totalExtendedPrice.ToString("0.00") + " ");
+            row.Cells[3].AddParagraph(totalExtendedPrice.ToString("0.00"));
 
             // Set the borders of the specified cell range
-            this.table.SetEdge(5, this.table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
+            this.table.SetEdge(3, this.table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
 
             // Add the notes paragraph
             paragraph = this.document.LastSection.AddParagraph();

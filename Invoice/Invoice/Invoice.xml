@@ -126,6 +126,7 @@
       <extendedPrice></extendedPrice>
       <extendedPricePlusTax></extendedPricePlusTax>
     </item>
+    
     <item>
       <itemNumber>1</itemNumber>
       <title>iText in Action - Creating and Manipulating PDF</title>
