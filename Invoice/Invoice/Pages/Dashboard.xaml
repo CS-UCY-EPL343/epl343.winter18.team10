@@ -10,8 +10,8 @@
       d:DesignHeight="964" d:DesignWidth="1756"
       Title="Page1">
 
-    <Grid Background="Aquamarine">
-        <Border Background="red" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="94" Margin="-2,-104,0,0" VerticalAlignment="Top" Width="878" Panel.ZIndex="1"/>
+    <Grid Background="White">
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="94" Margin="-2,-104,0,0" VerticalAlignment="Top" Width="878" Panel.ZIndex="1" Background="Red"/>
         <TextBlock  Text="6
 AM" TextAlignment="center" FontFamily="Avenir"  FontSize="10" Foreground="#ff8f9198" Margin="1391,124,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <TextBlock  Text="7

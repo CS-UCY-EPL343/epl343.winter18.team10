@@ -9,6 +9,7 @@
         WindowStyle ="ThreeDBorderWindow"
         Title="MainWindow" Height="1080" Width="1920">
     <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >
+
         <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" >
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
@@ -41,7 +42,7 @@
             <Path  Width="5" Height="5" Stretch="uniform" Data="M 0 0 L 0 5.8046875 L 5.81103515625 5.8046875" Stroke="#ff8f9198" Canvas.Left="197.9530029296875" Canvas.Top="20.500106811523438"  />
         </Canvas>
 
-        <Canvas  Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas  Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
             <Border  Width="171" Height="965" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="7"  >
                 <Border.Effect>
                     <DropShadowEffect Opacity="0.16"/>
@@ -50,7 +51,10 @@
 
             <TextBlock  x:Name="pageTitle" Width="170" Height="33" Text="" TextAlignment="Center" FontFamily="Gotham"  FontSize="25" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="30"  />
 
-            <Button x:Name="btnHome" Width="170" Height="55" Canvas.Left="0" Canvas.Top="80" BorderThickness="0" Background="White" Click="BtnHome_Click">
+            <Button x:Name="btnHome" Width="170" Height="55" Canvas.Left="0" Canvas.Top="80" BorderThickness="0" Background="#FFECEFFF" Click="BtnHome_Click" Panel.ZIndex="1">
+                <Button.Effect>
+                    <DropShadowEffect Direction="270" Opacity="0.16"/>
+                </Button.Effect>
                 <Canvas Width="170" Height="55" Canvas.Left="2" Canvas.Top="80">
                     <TextBlock  Text="Dashboard" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -59,7 +63,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnInvoice" Width="170" Height="55" Canvas.Left="0" Canvas.Top="135" BorderThickness="0" Background="White" Click="BtnInvoice_Click">
+            <Button x:Name="btnInvoice" Width="170" Height="55" Canvas.Left="0" Canvas.Top="135" BorderThickness="0" Click="BtnInvoice_Click" Background="White">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="135" >
                     <TextBlock  Text="Invoice" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="22" Height="18" Canvas.Left="35" Canvas.Top="17" >
@@ -160,6 +164,11 @@
         </Canvas>
 
         <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="964" Margin="174,85,-10,0" VerticalAlignment="Top" Width="1756"/>
+        <Border BorderBrush="Black" HorizontalAlignment="Left" Height="30" Margin="6,962,0,88"  Width="158">
+            <Border.Background>
+                <ImageBrush ImageSource="logo0.1.png"/>
+            </Border.Background>
+        </Border>
     </Grid>
 
 </Window>

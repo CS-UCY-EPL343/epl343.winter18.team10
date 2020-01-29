@@ -35,6 +35,7 @@ namespace Invoice
         public MainWindow()
         {
             InitializeComponent();
+            MainPage.Content = m_dashboard;
         }
 
         private void BtnHome_Click(object sender, RoutedEventArgs e)

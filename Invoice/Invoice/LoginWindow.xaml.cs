@@ -27,15 +27,17 @@ namespace Invoice
         {
             InitializeComponent();
             login_button.Click += myButton_Click;
+
         }
         void myButton_Click(object sender, RoutedEventArgs e)
         {
-            Window1 wnd = new Window1();
-            Console.WriteLine();
-            wnd.Show();
             if (password.Password == pass && username.Text == user)
             {
+                MainWindow wnd = new MainWindow();
+                wnd.Show();
+
                 login_button.Content = "Succeed";
+                this.Close();
             }
         }
 
