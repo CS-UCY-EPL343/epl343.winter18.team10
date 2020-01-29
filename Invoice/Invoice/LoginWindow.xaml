@@ -47,7 +47,7 @@
         </Canvas>
         <Border  Width="845" Height="860" BorderBrush="#ff707070" Margin="35,110,0,110" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" Grid.ColumnSpan="2" >
             <Border.Background>
-                <ImageBrush Stretch="UniformToFill" ImageSource="Untitled-1.jpg">
+                <ImageBrush Stretch="UniformToFill" ImageSource="Images/Untitled-1.jpg">
 
                 </ImageBrush>
             </Border.Background>

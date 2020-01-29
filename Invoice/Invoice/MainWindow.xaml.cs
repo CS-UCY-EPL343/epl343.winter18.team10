@@ -21,7 +21,7 @@ namespace Invoice
     public partial class MainWindow : Window
     {
         private Page m_dashboard=new Dashboard();
-        private Page m_invoice = new Page1();
+        private Page m_invoice = new InvoiceMain();
         private Page m_receipt;
         private Page m_creditNote;
         private Page m_statement;
@@ -35,10 +35,11 @@ namespace Invoice
         public MainWindow()
         {
             InitializeComponent();
+            btnDashboard.Focus();
             MainPage.Content = m_dashboard;
         }
-
-        private void BtnHome_Click(object sender, RoutedEventArgs e)
+           
+        private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Home";
             MainPage.Content = m_dashboard;
@@ -94,5 +95,7 @@ namespace Invoice
         {
             pageTitle.Text = "Settings";
         }
+
+        
     }
 }
