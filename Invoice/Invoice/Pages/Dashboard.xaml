@@ -185,5 +185,6 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
             </Grid>
 
         </Canvas>
+        <Button x:Name="createpdf_button" Content="PDF" HorizontalAlignment="Left" Margin="550,855,0,0" VerticalAlignment="Top" Width="277" Height="74"/>
     </Grid>
 </Page>

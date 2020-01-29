@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 
 namespace Invoice.Pages
 {
@@ -24,9 +26,34 @@ namespace Invoice.Pages
         public Dashboard()
         {
             InitializeComponent();
+            createpdf_button.Click += createPdf;
             createChart1();
             createChart2();
+            
         }
+        void createPdf(object sender, RoutedEventArgs e)
+        {
+            InvoiceForm invoice = new InvoiceForm("../../invoice.xml");
+            Document document = invoice.CreateDocument();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            PdfDocumentRenderer pdfRenderer = new PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice.pdf";
+            filename = "Invoice.pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+            Environment.Exit(1);
+
+        }
+
         void createChart1()
         {
             SeriesCollection = new SeriesCollection

@@ -166,7 +166,7 @@
         <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="964" Margin="174,85,-10,0" VerticalAlignment="Top" Width="1756"/>
         <Border BorderBrush="Black" HorizontalAlignment="Left" Height="30" Margin="6,962,0,88"  Width="158">
             <Border.Background>
-                <ImageBrush ImageSource="logo0.1.png"/>
+                <ImageBrush ImageSource="logo01.png"/>
             </Border.Background>
         </Border>
     </Grid>
