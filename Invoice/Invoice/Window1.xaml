@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:Invoice"
         xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
         mc:Ignorable="d"
+        WindowState = "Maximized"
+        WindowStyle ="ThreeDBorderWindow"
         Title="Window1" Height="1080" Width="1920">
 
     <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >

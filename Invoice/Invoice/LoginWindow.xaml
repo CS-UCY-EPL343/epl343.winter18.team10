@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Invoice"
-                xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
-
+        xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
         mc:Ignorable="d"
+        WindowState = "Maximized"
+        WindowStyle = "ThreeDBorderWindow"
         Title="LoginWindow" Height="1080" Width="1920">
 
     <Grid x:Name="login_page" Width="1920" Height="1080" Background="#ffffffff">
