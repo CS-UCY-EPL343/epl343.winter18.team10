@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Invoice.Forms;
 using LiveCharts;
 using LiveCharts.Wpf;
 using MigraDoc.DocumentObjectModel;
@@ -33,7 +34,7 @@ namespace Invoice.Pages
         }
         void createPdf(object sender, RoutedEventArgs e)
         {
-            InvoiceForm invoice = new InvoiceForm("../../invoice.xml");
+            InvoiceForm invoice = new InvoiceForm("../../Forms/Invoice.xml");
             Document document = invoice.CreateDocument();
             document.UseCmykColor = true;
             // Create a renderer for PDF that uses Unicode font encoding

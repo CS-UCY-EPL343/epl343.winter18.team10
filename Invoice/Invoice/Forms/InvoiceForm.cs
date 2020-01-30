@@ -8,7 +8,7 @@ using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering;
 using System.Diagnostics;
 
-namespace Invoice
+namespace Invoice.Forms
 {
     /// <summary>
     /// Creates the invoice form.
@@ -172,7 +172,7 @@ namespace Invoice
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage("../../logo01.png");
+            Image image = section.Headers.Primary.AddImage("../Images/Untitled-1.jpg");
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
