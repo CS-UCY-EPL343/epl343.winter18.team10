@@ -74,67 +74,7 @@ namespace Invoice.Forms
         /// <summary>
         /// Defines the styles used to format the MigraDoc document.
         /// </summary>
-        void addDetails(Section section)
-        {
-            this.table2 = section.AddTable();
-            this.table2.Style = "Table";
-            this.table2.Borders.Color = TableBorder;
-            this.table2.Borders.Width = 0.25;
-            this.table2.Borders.Left.Width = 0.5;
-            this.table2.Borders.Right.Width = 0.5;
-            this.table2.Rows.LeftIndent = 0;
-
-            // Before you can add a row, you must define the columns
-            Column column = this.table2.AddColumn("1.5cm");
-            column.Format.Alignment = ParagraphAlignment.Center;
-
-            column = this.table2.AddColumn("8.5cm");
-            column.Format.Alignment = ParagraphAlignment.Right;
-
-            column = this.table2.AddColumn("3cm");
-            column.Format.Alignment = ParagraphAlignment.Right;
-
-            column = this.table2.AddColumn("3cm");
-            column.Format.Alignment = ParagraphAlignment.Right;
-
-            Row row = table2.AddRow();
-            row.HeadingFormat = true;
-            row.Format.Alignment = ParagraphAlignment.Center;
-            row.Format.Font.Bold = true;
-            row.Shading.Color = LogoBlue;
-            row.Format.Font.Color = new Color(255, 255, 255);
-            row.TopPadding = 3;
-            row.BottomPadding = 3;
-            row.Format.Font.Size = 10;
-
-            row.Cells[0].AddParagraph("QTY");
-            row.Cells[0].Format.Font.Bold = true;
-            row.Format.LineSpacing = 10;
-            row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
-            row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[1].AddParagraph("DESCRIPTION");
-            row.Cells[1].Format.Font.Bold = true;
-            row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
-            row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[2].AddParagraph("UNIT PRICE");
-            row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
-            row.Cells[3].AddParagraph("AMOUNT");
-            row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
-
-            this.table2.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
-            Row row1 = this.table2.AddRow();
-            row1.TopPadding = 1.5;
-            row1.Cells[0].Shading.Color = TableGray;
-            row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
-            row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
-            row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
-            row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
-            row1.Cells[3].Shading.Color = TableGray;
-            row1.Cells[0].AddParagraph("aaaaaaa");
-            this.table2.SetEdge(0, this.table2.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
-
-
-        }
+    
         void DefineStyles()
         {
             // Get the predefined style Normal.
@@ -145,7 +85,7 @@ namespace Invoice.Forms
             style.Font.Name = "Verdana";
 
             style = this.document.Styles[StyleNames.Header];
-            style.ParagraphFormat.AddTabStop("16cm", TabAlignment.Right);
+            style.ParagraphFormat.AddTabStop("6cm", TabAlignment.Right);
 
             style = this.document.Styles[StyleNames.Footer];
             style.ParagraphFormat.AddTabStop("8cm", TabAlignment.Center);
@@ -181,7 +121,6 @@ namespace Invoice.Forms
             image.Left = ShapePosition.Left;
             image.WrapFormat.Style = WrapStyle.Through;
 
-            addDetails(section);
 
             Paragraph par = section.Headers.Primary.AddParagraph();
             par.Format.Alignment = ParagraphAlignment.Right;
@@ -318,9 +257,7 @@ namespace Invoice.Forms
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("INVOICE #");
-            paragraph.AddTab();
-            paragraph.AddTab();
-            paragraph.AddTab();
+            paragraph.AddSpace(16);
             paragraph.AddText("DATE");
 
             paragraph = this.invoiceDetailsFrame.AddParagraph();
@@ -328,10 +265,7 @@ namespace Invoice.Forms
             String invoiceNumber = "7777";
             String date = "08-09-2020";
             paragraph.AddText(invoiceNumber);
-            paragraph.AddTab(); 
-            paragraph.AddTab();
-                        paragraph.AddTab();
-
+            paragraph.AddSpace(24);
             paragraph.AddText(date);
 
             paragraph = this.addressFrame.AddParagraph();
