@@ -15,10 +15,17 @@
             <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Height="60" Margin="389,9,0,0" VerticalAlignment="Top" Width="124" Background="Transparent"/>
         </Grid>
 
-        <Grid x:Name="viewTab" Background="Beige" Visibility="Visible">
-            
+        <Grid x:Name="viewTab" Background="Beige" Visibility="Hidden">
+
         </Grid>
-        <Grid x:Name="createTab" Background="GreenYellow" Visibility="Hidden">
+        <Grid x:Name="createTab" Background="White" Visibility="Visible">
+            <Border BorderBrush="Black" Background="#FFECECEC" BorderThickness="1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1725">
+                <Border.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Border.Effect>
+                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="410" Margin="1021,9,0,0" VerticalAlignment="Top" Width="464"/>
+            </Border>
+            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="410" Margin="536,10,0,0" VerticalAlignment="Top" Width="464"/>
 
         </Grid>
     </Grid>
