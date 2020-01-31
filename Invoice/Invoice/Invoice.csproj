@@ -88,6 +88,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Invoice.cs" />
+    <Compile Include="Classes\InvoiceProduct.cs" />
+    <Compile Include="Classes\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
@@ -160,9 +163,7 @@
   <ItemGroup>
     <Resource Include="Images\Untitled-1.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Forms\Invoice.xml" />
   </ItemGroup>

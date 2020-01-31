@@ -7,6 +7,67 @@
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="InvoiceMain">
 
+    <Page.Resources>
+        <!-- DataGrid style -->
+        <Style x:Key="viewDataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}"/>
+            <Setter Property="RowStyle" Value="{DynamicResource RowStyle}"/>
+            <Setter Property="CellStyle" Value="{DynamicResource CellStyle}"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="AlternatingRowBackground" Value="AliceBlue"/>
+            <Setter Property="IsReadOnly" Value="True"/>            
+        </Style>
+        <!-- DataGridColumnHeader style -->
+        <Style x:Key="ColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#FFCFE6EE"/>
+            <Setter Property="Foreground" Value="#FF6A6A6A"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Height" Value="50"/>
+            <Setter Property="Width" Value="287.5"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to Sort"/>
+                    <Setter Property="Background" Value="#FFB8E0EE"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- DataGridRow style -->
+        <Style x:Key="RowStyle" TargetType="DataGridRow">
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to View Products"/>
+                    <Setter Property="Background" Value="#FFCFE4EC"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <Trigger Property="IsFocused"  Value="True">
+                    <Setter Property="Background" Value="AliceBlue"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- DataGridCell style -->
+        <Style x:Key="CellStyle" TargetType="DataGridCell">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Width" Value="287.5"/>
+            <Setter Property="Height" Value="65"/>            
+        </Style>
+
+    </Page.Resources>
+
     <Grid Background="Aquamarine">
         <Grid Background="Transparent" HorizontalAlignment="Left" Height="70" Margin="0,-85,0,0" VerticalAlignment="Top" Width="612" Panel.ZIndex="1">
             <Button x:Name="btnView" Content="View" HorizontalAlignment="Left" Height="60" Margin="0,9,0,0" VerticalAlignment="Top" Width="125" Background="Transparent" Click="btnView_Click"/>
@@ -23,7 +84,7 @@
                 <Label x:Name="label" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,35,0,0" Height="66" Width="134" FontSize="36"/>
             </Border>
 
-            <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top" Width="1011">
+            <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top" Width="1099">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
@@ -36,7 +97,7 @@
                     <ComboBoxItem Name="cbi4">40</ComboBoxItem>
                     <ComboBoxItem Name="cbi5">50</ComboBoxItem>
                 </ComboBox>
-                    <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+                <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
                 <DatePicker HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16"/>
                 <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>
                 <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
@@ -45,23 +106,45 @@
                 <Label x:Name="label1_Copy1" Content="By Status: " HorizontalAlignment="Left" Margin="558,34,0,0" VerticalAlignment="Top" FontSize="18"/>
                 <Label x:Name="label1_Copy2" Content="Show Last: " HorizontalAlignment="Left" Margin="558,79,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.919,0.471"/>
                 <Label x:Name="label3" Content="entries" HorizontalAlignment="Left" Margin="760,79,0,0" VerticalAlignment="Top" FontSize="18"/>
+                <Button x:Name="btnFilter" Content="Filter" HorizontalAlignment="Left" Margin="933,79,0,0" VerticalAlignment="Top" Width="141" Height="31" FontSize="18" Click="btnFilter_Click"/>
             </Grid>
 
-            <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1244,10,0,800" VerticalAlignment="Center" Width="350">
+            <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <Label x:Name="label1_Copy4" Content="Search:" HorizontalAlignment="Left" Margin="37,27,0,0" VerticalAlignment="Top" FontSize="18"/>
                 <TextBox x:Name="textBox3_Copy" HorizontalAlignment="Left" Height="37" Margin="37,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center"/>
             </Grid>
-            <DataGrid x:Name="dataGrid" HorizontalAlignment="Left" Height="616" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725">
+            <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
                 <DataGrid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </DataGrid.Effect>
+                <DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding m_products}" Margin="10" Width="900" HorizontalAlignment="Left">
+                            <DataGrid.Columns>
+                            <DataGridTextColumn Header="Product" Width="Auto" FontSize="18"
+                            Binding="{Binding Path=m_idProduct}" />
+                            <DataGridTextColumn Header="Quantity " Width="Auto" FontSize="18"
+                            Binding="{Binding Path=m_quantity }" />
+                            <DataGridTextColumn Header="Cost " Width="Auto" FontSize="18"
+                            Binding="{Binding Path=m_totalCost }" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header = "Created At" Binding = "{Binding m_date}" />
+                    <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
+                    <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customer}" />
+                    <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost}" />
+                    <DataGridTextColumn Header = "VAT" Binding = "{Binding m_VAT}" />
+                    <DataGridTextColumn Header = "Total Cost" Binding = "{Binding m_totalCost}" />
+                </DataGrid.Columns>
+
             </DataGrid>
-
-
-
         </Grid>
         <Grid x:Name="createTab" Background="White" Visibility="Hidden">
             <Border BorderBrush="Black" Background="#FFECECEC" BorderThickness="1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1725">
