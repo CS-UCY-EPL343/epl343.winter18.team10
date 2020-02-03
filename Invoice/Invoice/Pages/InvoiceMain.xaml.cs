@@ -36,5 +36,15 @@ namespace Invoice.Pages
             viewTab.Visibility = Visibility.Hidden;
             createTab.Visibility = Visibility.Visible;
         }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

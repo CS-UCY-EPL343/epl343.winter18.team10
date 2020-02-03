@@ -16,17 +16,43 @@
         </Grid>
 
         <Grid x:Name="viewTab" Background="Beige" Visibility="Hidden">
-
         </Grid>
-        <Grid x:Name="createTab" Background="White" Visibility="Visible">
-            <Border BorderBrush="Black" Background="#FFECECEC" BorderThickness="1" HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1725">
-                <Border.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
-                </Border.Effect>
-                <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="410" Margin="1021,9,0,0" VerticalAlignment="Top" Width="464"/>
-            </Border>
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="410" Margin="536,10,0,0" VerticalAlignment="Top" Width="464"/>
 
+        <Grid x:Name="createTab" Background="White" Visibility="Visible">
+            <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1725">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+               
+                
+                
+                
+                <Grid Background="white" HorizontalAlignment="Left" Height="366" Margin="412,43,0,0" VerticalAlignment="Top" Width="584">
+                    <Grid.Effect>
+                        <DropShadowEffect Opacity="0.16"/>
+                    </Grid.Effect>
+                    <TextBox HorizontalAlignment="Left" Height="53" Margin="10,36,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" TextChanged="textBox_TextChanged" FontSize="30" Background="White" Foreground="#FF5960FF"/>
+
+                    
+                        <ComboBox Margin="176,53,32,282" SelectionChanged="ComboBox_SelectionChanged">
+                            <ComboBoxItem Content="ComboBox Item #1"/>
+                            <ComboBoxItem IsSelected="True" Content="ComboBox Item #2"/>
+                            <ComboBoxItem Content="ComboBox Item #3"/>
+                        </ComboBox>
+                    
+
+                </Grid>
+
+                <Grid Background="white" HorizontalAlignment="Left" Height="366" Margin="1031,43,0,0" VerticalAlignment="Top" Width="584">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+            </Grid>
+                <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,103,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+               
+
+
+            </Grid>
         </Grid>
     </Grid>
 </Page>
