@@ -70,5 +70,15 @@ namespace Invoice.Pages
             }
             invoiceDataGrid.ItemsSource = invoices;
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void ComboBox_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+
+        }
     }
 }
