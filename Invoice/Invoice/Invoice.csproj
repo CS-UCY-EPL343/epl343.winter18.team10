@@ -163,7 +163,9 @@
   <ItemGroup>
     <Resource Include="Images\Untitled-1.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\login-button.png" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Forms\Invoice.xml" />
   </ItemGroup>

@@ -26,12 +26,12 @@ namespace Invoice
         public LoginWindow()
         {
             InitializeComponent();
-            login_button.Click += myButton_Click;
+            txtUsername.Focus();
+        }        
 
-        }
-        void myButton_Click(object sender, RoutedEventArgs e)
+        private void login_button_Click(object sender, RoutedEventArgs e)
         {
-            if (password.Password == pass && username.Text == user)
+            if (txtPassword.Password == pass && txtUsername.Text == user)
             {
                 MainWindow wnd = new MainWindow();
                 wnd.Show();
@@ -41,6 +41,9 @@ namespace Invoice
             }
         }
 
-
+        private void password_KeyDown(object sender, KeyEventArgs e)
+        {
+            login_button_Click(sender, e);
+        }
     }
 }
