@@ -23,6 +23,7 @@ namespace Invoice.Pages
         public InvoiceMain()
         {
             InitializeComponent();
+            tempData();
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -37,14 +38,37 @@ namespace Invoice.Pages
             createTab.Visibility = Visibility.Visible;
         }
 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void tempData()
         {
+            List<Invoice.Classes.Invoice> invoices = new List<Invoice.Classes.Invoice>();
 
+            for (int i = 0; i < 50; i++)
+            {
+                List<Invoice.Classes.InvoiceProduct> products = new List<Classes.InvoiceProduct>();
+                products.Add(new Classes.InvoiceProduct()
+                {
+                    m_idInvoice = i,
+                    m_idProduct = 3,
+                    m_quantity = 15,
+                    m_totalCost = 535.25 + 25.37
+                });
+                invoices.Add(new Classes.Invoice()
+                {
+                    m_date = "10/10/2020",
+                    m_idInvoice = i,
+                    m_customer = "Panikos",
+                    m_cost = 535.25,
+                    m_VAT = 25.37,
+                    m_totalCost = 535.25 + 25.37,
+                    m_products = products
+                });
+            }
+            invoiceDataGrid.ItemsSource = invoices;
         }
     }
 }
