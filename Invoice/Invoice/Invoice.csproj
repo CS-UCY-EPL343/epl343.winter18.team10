@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Caliburn.Micro, Version=3.2.0.0, Culture=neutral, PublicKeyToken=8e5891231f2ed21f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Caliburn.Micro.Core.3.2.0\lib\net45\Caliburn.Micro.dll</HintPath>
+    </Reference>
     <Reference Include="EvalScript, Version=2.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EvalScript.2.6.3\lib\net40\EvalScript.dll</HintPath>
     </Reference>
@@ -88,13 +91,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="autocomplitebox_customer.cs" />
     <Compile Include="Classes\Invoice.cs" />
     <Compile Include="Classes\InvoiceProduct.cs" />
     <Compile Include="Classes\Product.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Data_import.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
+    <Compile Include="Models\Customers.cs" />
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -107,6 +108,7 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
