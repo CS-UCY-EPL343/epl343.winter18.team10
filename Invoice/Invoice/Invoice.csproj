@@ -88,9 +88,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="autocomplitebox_customer.cs" />
     <Compile Include="Classes\Invoice.cs" />
     <Compile Include="Classes\InvoiceProduct.cs" />
     <Compile Include="Classes\Product.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="Data_import.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
