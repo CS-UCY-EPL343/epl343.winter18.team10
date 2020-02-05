@@ -1,4 +1,4 @@
-﻿using Invoice.Pages;
+﻿using InvoiceX.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,14 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Invoice
+namespace InvoiceX
 {
     /// <summary>
     /// Interaction logic for Window2.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Page m_dashboard=new Dashboard();
+        private Page m_dashboard = new Dashboard();
         private Page m_invoice = new InvoiceMain();
         private Page m_receipt;
         private Page m_creditNote;

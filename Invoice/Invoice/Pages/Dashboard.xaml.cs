@@ -11,13 +11,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Invoice.Forms;
+using InvoiceX.Forms;
 using LiveCharts;
 using LiveCharts.Wpf;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
 
-namespace Invoice.Pages
+namespace InvoiceX.Pages
 {
     /// <summary>
     /// Interaction logic for Dashboard.xaml

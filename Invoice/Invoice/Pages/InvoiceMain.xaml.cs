@@ -1,5 +1,9 @@
-﻿using System;
+﻿using InvoiceX.Models;
+using InvoiceX.ViewModels;
+using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Invoice.Pages
+namespace InvoiceX.Pages
 {
     /// <summary>
     /// Interaction logic for InvoiceMain.xaml
@@ -23,7 +27,13 @@ namespace Invoice.Pages
         public InvoiceMain()
         {
             InitializeComponent();
-            tempData();
+            load();
+        }    
+        
+        private void load()
+        {
+            InvoiceViewModel invVModel = new InvoiceViewModel();
+            invoiceDataGrid.ItemsSource = invVModel.invoiceList;
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -41,50 +51,37 @@ namespace Invoice.Pages
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {
 
-        }
-
-        private void tempData()
-        {
-            List<Invoice.Classes.Invoice> invoices = new List<Invoice.Classes.Invoice>();
-
-            for (int i = 0; i < 50; i++)
-            {
-                List<Invoice.Classes.InvoiceProduct> products = new List<Classes.InvoiceProduct>();
-                products.Add(new Classes.InvoiceProduct()
-                {
-                    m_idInvoice = i,
-                    m_idProduct = 3,
-                    m_quantity = 15,
-                    m_totalCost = 535.25 + 25.37
-                });
-                invoices.Add(new Classes.Invoice()
-                {
-                    m_date = "10/10/2020",
-                    m_idInvoice = i,
-                    m_customer = "Panikos",
-                    m_cost = 535.25,
-                    m_VAT = 25.37,
-                    m_totalCost = 535.25 + 25.37,
-                    m_products = products
-                });
-            }
-            invoiceDataGrid.ItemsSource = invoices;
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ComboBox_ContextMenuClosing(object sender, ContextMenuEventArgs e)
-        {
-
-        }
+        }       
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
             textBox_FirstName.Text = "den ta kataferno";
+        }
+
+        private void btnReload_Click(object sender, RoutedEventArgs e)
+        {
+            load();
+        }
+
+        private void btnClearFilters_Click(object sender, RoutedEventArgs e)
+        {
+            dtPickerFrom.SelectedDate = null;
+            dtPickerTo.SelectedDate = null;
+            txtBoxCustomer.Text = null;
+        }
+
+        private void dtPickerFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (dtPickerTo.SelectedDate == null)
+            {
+                dtPickerTo.SelectedDate = dtPickerFrom.SelectedDate;
+            }
+        }
+
+        private void btnOptions_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

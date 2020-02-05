@@ -8,7 +8,7 @@ using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering;
 using System.Diagnostics;
 
-namespace Invoice.Forms
+namespace InvoiceX.Forms
 {
     /// <summary>
     /// Creates the invoice form.

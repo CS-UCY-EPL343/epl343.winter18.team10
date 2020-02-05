@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Invoice.Models;
+using InvoiceX.Models;
 
-namespace Invoice.ViewModels
+namespace InvoiceX.ViewModels
 {
     public class MainViewModel
     {
