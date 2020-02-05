@@ -80,5 +80,11 @@ namespace Invoice.Pages
         {
 
         }
+
+        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            textBox_FirstName.Text = "den ta kataferno";
+        }
     }
 }
