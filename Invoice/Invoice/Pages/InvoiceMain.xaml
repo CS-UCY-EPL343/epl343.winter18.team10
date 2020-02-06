@@ -65,9 +65,7 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Height" Value="65"/>
-            <Setter Property="BorderBrush" Value="Transparent" />
-            <Setter Property="Width" Value=""/>
-            
+            <Setter Property="BorderBrush" Value="Transparent" />            
         </Style>
 
     </Page.Resources>
