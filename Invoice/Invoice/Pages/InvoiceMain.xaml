@@ -217,7 +217,7 @@
             <Grid>
 
 
-                <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="199" Margin="29,394,0,0" Height="30" ItemsSource="{Binding ProductList}" SelectionChanged="ComboBox_SelectionChanged">
+                <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="7,375,0,0" Height="30" ItemsSource="{Binding ProductList}" SelectionChanged="ComboBox_SelectionChanged">
                     <ComboBox.DataContext>
                         <ViewModels:ProductViwModel/>
                     </ComboBox.DataContext>
@@ -229,14 +229,57 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBox   x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="30" Margin="233,394,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="533" TextChanged="TextBox_TextChanged_2" Text="Description"/>
-                <TextBlock x:Name="textBlock_ProductStock"     HorizontalAlignment="Left" Margin="771,394,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top" Height="30" Width="80"/>
-                <TextBox   x:Name="textBox_ProductQuanity"     HorizontalAlignment="Left" Height="30" Margin="856,394,0,0" TextWrapping="Wrap" Text="Quanity" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductQuanity_TextChanged"/>
-                <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="981,394,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductPrice_TextChanged"/>
-                <TextBlock x:Name="textBlock_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1106,393,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="50"/>
-                <TextBlock x:Name="textBlock_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1161,393,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top" Width="48"/>
+                <TextBox   x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="30" Margin="211,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="534" TextChanged="TextBox_TextChanged_2" Text="Description"/>
+                <TextBlock x:Name="textBlock_ProductStock"     HorizontalAlignment="Left" Margin="749,375,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top" Height="30" Width="80"/>
+                <TextBox   x:Name="textBox_ProductQuanity"     HorizontalAlignment="Left" Height="30" Margin="835,375,0,0" TextWrapping="Wrap" Text="Quanity" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductQuanity_TextChanged"/>
+                <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="959,375,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductPrice_TextChanged"/>
+                <TextBlock x:Name="textBlock_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1085,373,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="50"/>
+                <TextBlock x:Name="textBlock_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1139,373,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top" Width="116"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1277,371,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
             </Grid>
-          
+
+
+
+
+
+            <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="424" Margin="0,416,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+              
+                <DataGrid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </DataGrid.Effect>
+               
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header = "ITEMS " Binding="{Binding bITEMS}" />
+                    <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding bDESCRIPTION}" />
+                    <DataGridTextColumn Header = "QUANITY" Binding="{Binding bQUANITY}" />
+                    <DataGridTextColumn Header = "PRICE" Binding="{Binding bPRICE}" />
+                    <DataGridTextColumn Header = "VAT" Binding="{Binding bVAT}" />
+                    <DataGridTextColumn Header = "AMOUNT"  Binding="{Binding bAMOUNT}" />
+                    
+                    <DataGridTemplateColumn Header = "CANCEL">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="X" Click="Button_Click_1"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+               
+                </DataGrid.Columns>
+
+            </DataGrid>
+           
+
+
+
+
+
+
+
+
+
+
+
         </Grid>
         <!-- Create Invoice Ends Here -->
 

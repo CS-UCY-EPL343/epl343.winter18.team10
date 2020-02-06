@@ -136,5 +136,25 @@ namespace InvoiceX.Pages
                 textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuanity.Text)).ToString();
             }
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            invoiceDataGrid2.Items.Add(new { bITEMS = ((Product)comboBox_Product.SelectedItem).ProductName,
+                bDESCRIPTION = textBox_ProductDescription.Text,
+                bQUANITY=textBox_ProductQuanity.Text,
+                bPRICE=textBox_ProductPrice.Text,
+                bVAT=textBlock_ProductVat.Text,
+                bAMOUNT=textBlock_ProductAmount.Text
+            });
+
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
+
+
+        }
     }
 }
