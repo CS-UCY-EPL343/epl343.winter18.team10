@@ -56,7 +56,12 @@ namespace InvoiceX.Pages
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            textBox_FirstName.Text = "den ta kataferno";
+            textBox_Address.Text = ((Customers)comboBox1.SelectedItem).Address+", " + 
+                ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
+            textBox_Contact_Details.Text = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
+            textBox_Email_Address.Text = ((Customers)comboBox1.SelectedItem).Email;
+            
+
         }
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
@@ -80,6 +85,16 @@ namespace InvoiceX.Pages
         }
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
         {
 
         }

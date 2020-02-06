@@ -65,9 +65,9 @@
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="18"/>
             <Setter Property="Height" Value="65"/>
-            <Setter Property="BorderBrush" Value="Transparent" />            
+            <Setter Property="BorderBrush" Value="Transparent" />
         </Style>
-
+     
     </Page.Resources>
 
     <Grid Background="Aquamarine">
@@ -150,17 +150,18 @@
         <!-- View Invoice Ends Here -->
 
         <!-- Create Invoice Starts Here -->
-        <Grid x:Name="createTab" Background="White" Visibility="Hidden">
-            <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="450" VerticalAlignment="Top" Width="1725">
+
+        <Grid x:Name="createTab" Background="White" Visibility="Visible">
+            <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="358" VerticalAlignment="Top" Width="1725">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
-                <Grid Background="white" HorizontalAlignment="Left" Height="366" Margin="412,43,0,0" VerticalAlignment="Top" Width="584">
+                <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="412,43,0,0" VerticalAlignment="Top" Width="584">
                     <Grid.Effect>
                         <DropShadowEffect Opacity="0.16"/>
                     </Grid.Effect>
-                    <TextBox HorizontalAlignment="Left" Height="53" Margin="196,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="73,82,0,0" VerticalAlignment="Top" Width="441" Height="32" ItemsSource="{Binding CustomersList}" SelectionChanged="comboBox1_SelectionChanged" >
+                    <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
+                    <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" ItemsSource="{Binding CustomersList}" SelectionChanged="comboBox1_SelectionChanged" BorderBrush="White" >
                         <ComboBox.DataContext>
                             <ViewModels:MainViewModel/>
                         </ComboBox.DataContext>
@@ -168,30 +169,45 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock  Name="onoma"  Text="{Binding FirstName}"/>
-                                    <TextBlock  Text=" , "/>
-                                    <TextBlock  Text="{Binding LastName}"/>
-                                    <TextBlock  Text=" , "/>
-                                    <TextBlock  Text="{Binding Address}"/>
-                                    <TextBlock  Text=" , "/>
-                                    <TextBlock  Text="{Binding Telephone}"/>
-                                    <TextBlock  Text=" , "/>
-                                    <TextBlock  Text="{Binding Email}"/>
+                                    <TextBlock  Text="{Binding CustomerName }"/>                            
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox>
-                    <TextBox x:Name="textBox_FirstName" HorizontalAlignment="Left" Height="22" Margin="148,154,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="234"/>
+                    </ComboBox> 
+                    <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373"/>
+                    <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
+                    <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="178,30,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="178,86,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="178,142,0,0" TextWrapping="Wrap" Text="Contact Details" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="178,198,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
+
+
+
                 </Grid>
 
-                <Grid Background="white" HorizontalAlignment="Left" Height="366" Margin="1031,43,0,0" VerticalAlignment="Top" Width="584">
+                <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="1031,43,0,0" VerticalAlignment="Top" Width="584">
                     <Grid.Effect>
                         <DropShadowEffect Opacity="0.16"/>
                     </Grid.Effect>
+                    <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
+                    <TextBlock HorizontalAlignment="Left" Margin="139,28,0,0" TextWrapping="Wrap" Text="Invoice No." VerticalAlignment="Top"/>
+
+                    <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="273,80,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
+                    <TextBox HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
+                    <DatePicker HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                    <DatePicker HorizontalAlignment="Left" Margin="273,101,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                    <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30"/>
+
+
+
                 </Grid>
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,103,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
             </Grid>
         </Grid>
+        <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
         <!-- Create Invoice Ends Here -->
 
     </Grid>
