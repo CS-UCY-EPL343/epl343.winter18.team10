@@ -67,7 +67,7 @@
             <Setter Property="Height" Value="65"/>
             <Setter Property="BorderBrush" Value="Transparent" />
         </Style>
-     
+
     </Page.Resources>
 
     <Grid Background="Aquamarine">
@@ -169,11 +169,11 @@
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock  Text="{Binding CustomerName }"/>                            
+                                    <TextBlock  Text="{Binding CustomerName }"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
-                    </ComboBox> 
+                    </ComboBox>
                     <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373"/>
                     <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371"/>
                     <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373"/>
@@ -206,6 +206,8 @@
                 </Grid>
                 <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,103,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
             </Grid>
+            <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="549,804,0,0" VerticalAlignment="Top" Width="277" Height="74"/>
+            <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="856,804,0,0" VerticalAlignment="Top" Width="277" Height="74"/>
         </Grid>
         <ComboBox HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
         <!-- Create Invoice Ends Here -->

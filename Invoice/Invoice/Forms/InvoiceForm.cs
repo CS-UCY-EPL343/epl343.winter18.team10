@@ -112,7 +112,7 @@ namespace InvoiceX.Forms
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage("../Images/Untitled-1.jpg");
+            Image image = section.Headers.Primary.AddImage("../../Images/logo-2.png");
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
