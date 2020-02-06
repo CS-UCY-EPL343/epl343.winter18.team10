@@ -98,5 +98,43 @@ namespace InvoiceX.Pages
         {
 
         }
+
+        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+       
+         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+         {
+                textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
+                textBlock_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
+                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
+                textBlock_ProductVat.Text = "19%";
+
+           
+
+
+         }
+
+        private void TextBox_ProductQuanity_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int n;
+            if (int.TryParse(textBox_ProductQuanity.Text, out n))
+            {
+                textBlock_ProductAmount.Text = (((Product)comboBox_Product.SelectedItem).SellPrice * Convert.ToInt32(textBox_ProductQuanity.Text)).ToString();
+            }
+            
+
+        }
+
+        private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            int n;
+            if (int.TryParse(textBox_ProductPrice.Text, out n)&& int.TryParse(textBox_ProductQuanity.Text, out n))
+            {
+                textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuanity.Text)).ToString();
+            }
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace InvoiceX.ViewModels
         {
             CustomersList = new List<Customers>();
 
-            /*CHRISIS START*/
+         
           
             MySqlConnection conn;
             string myConnectionString;
@@ -71,7 +71,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-        /*CHRISIS END*/
+       
 
 
 

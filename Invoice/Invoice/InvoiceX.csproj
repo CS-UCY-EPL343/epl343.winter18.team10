@@ -116,6 +116,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\Users.cs" />
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -129,7 +130,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\ProductViwModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
