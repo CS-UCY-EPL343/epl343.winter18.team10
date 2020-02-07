@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
 namespace InvoiceX.Pages
 {
     /// <summary>
@@ -34,6 +34,9 @@ namespace InvoiceX.Pages
         {
             InvoiceViewModel invVModel = new InvoiceViewModel();
             invoiceDataGrid.ItemsSource = invVModel.invoiceList;
+            printPdf_button.Click += printPdf;
+            createpdf_button.Click += createPdf;
+
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -61,6 +64,41 @@ namespace InvoiceX.Pages
             textBox_Contact_Details.Text = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
             textBox_Email_Address.Text = ((Customers)comboBox1.SelectedItem).Email;
             
+
+        }
+        void createPdf(object sender, RoutedEventArgs e)
+        {
+            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml");
+            MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice.pdf";
+            filename = "Invoice.pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+            Forms.PDFViewer viewer = new Forms.PDFViewer(filename);
+            viewer.Show();
+
+        }
+        void printPdf(object sender, RoutedEventArgs e)
+        {
+            PrintDialog printDialog = new PrintDialog();
+            printDialog.PageRangeSelection = PageRangeSelection.AllPages;
+            printDialog.UserPageRangeEnabled = true;
+            bool? doPrint = printDialog.ShowDialog();
+            if (doPrint != true)
+            {
+                return;
+            }
 
         }
 

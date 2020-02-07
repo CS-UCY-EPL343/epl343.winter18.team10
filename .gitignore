@@ -6,3 +6,7 @@
 /.vs/VSWorkspaceState.json
 /.vs
 /Invoice/.vs/Invoice/v16
+/Invoice/Invoice/bin/Debug
+/Invoice/Invoice/obj
+/Invoice/packages
+/Invoice.rar
