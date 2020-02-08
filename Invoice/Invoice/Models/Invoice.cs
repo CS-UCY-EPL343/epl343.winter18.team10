@@ -8,7 +8,7 @@ namespace InvoiceX.Models
 {
     public class Invoice
     {
-        public string m_date { get; set; }
+        public DateTime m_date { get; set; }
         public int m_idInvoice { get; set; }
         public string m_customer { get; set; }
         public double m_cost { get; set; }

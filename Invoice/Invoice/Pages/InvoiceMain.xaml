@@ -71,14 +71,23 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        <!-- Top Button Style -->
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
     </Page.Resources>
 
     <Grid Background="Aquamarine">
         <Grid Background="Transparent" HorizontalAlignment="Left" Height="70" Margin="0,-85,0,0" VerticalAlignment="Top" Width="612" Panel.ZIndex="1">
-            <Button x:Name="btnViewAll" Content="View All" HorizontalAlignment="Left" Height="60" Margin="0,9,0,0" VerticalAlignment="Top" Width="125" Background="Transparent" Click="btnViewAll_Click"/>
-            <Button x:Name="btnCreate" Content="Create" HorizontalAlignment="Left" Height="60" Margin="129,9,0,0" VerticalAlignment="Top" Width="125" Background="Transparent" Click="btnCreate_Click"/>
-            <Button x:Name="btnEdit" Content="Edit" HorizontalAlignment="Left" Height="60" Margin="259,9,0,0" VerticalAlignment="Top" Width="125" Background="Transparent"/>
-            <Button x:Name="btnDelete" Content="Delete" HorizontalAlignment="Left" Height="60" Margin="389,9,0,0" VerticalAlignment="Top" Width="124" Background="Transparent"/>
+            <Button x:Name="btnViewAll" Content="View All" Margin="0,9,0,0" Style="{DynamicResource ButtonStyle}" Click="btnViewAll_Click"/>
+            <Button x:Name="btnCreate" Content="Create" Margin="129,9,0,0" Style="{DynamicResource ButtonStyle}" Click="btnCreate_Click"/>
+            <Button x:Name="btnEdit" Content="Edit" Margin="259,9,0,0" Style="{DynamicResource ButtonStyle}" />
+            <Button x:Name="btnDelete" Content="Delete" Margin="389,9,0,0" Style="{DynamicResource ButtonStyle}" IsEnabled="False"/>
         </Grid>
 
         <!-- View Invoice Starts Here -->
@@ -103,7 +112,7 @@
                 <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
                 <Button x:Name="btnFilter" Content="Filter" HorizontalAlignment="Left" Margin="812,82,0,0" VerticalAlignment="Top" Width="141" Height="31" FontSize="18" Click="btnFilter_Click"/>
                 <Button x:Name="btnClearFilters" Content="Clear Filters" HorizontalAlignment="Left" Margin="661,82,0,0" VerticalAlignment="Top" Width="141" Height="31" FontSize="18" Click="btnClearFilters_Click"/>
-                <Button x:Name="btnReload" Content="Reload" HorizontalAlignment="Left" Margin="661,37,0,0" VerticalAlignment="Top" Width="292" Height="31" FontSize="18" Click="btnReload_Click"/>
+                <Button x:Name="btnReload" IsEnabled="False" Content="Reload" HorizontalAlignment="Left" Margin="661,37,0,0" VerticalAlignment="Top" Width="292" Height="31" FontSize="18" Click="btnReload_Click"/>
             </Grid>
 
             <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
@@ -133,7 +142,7 @@
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate-->
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header = "Created At" Binding = "{Binding m_date}" />
+                    <DataGridTextColumn Header = "Created At" Binding = "{Binding m_date, StringFormat=\{0:dd/MM/yyyy\}}" />
                     <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
                     <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customer}" />
                     <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost}" />

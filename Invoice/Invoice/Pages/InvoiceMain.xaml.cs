@@ -3,6 +3,7 @@ using InvoiceX.ViewModels;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -24,23 +25,19 @@ namespace InvoiceX.Pages
     /// </summary>
     public partial class InvoiceMain : Page
     {
+        private InvoiceViewModel invVModel;
+
         public InvoiceMain()
         {
             InitializeComponent();
-            load();
-        }
-
-        private void load()
-        {
-            InvoiceViewModel invVModel = new InvoiceViewModel();
-            invoiceDataGrid.ItemsSource = invVModel.invoiceList;
-            //printPdf_button.Click += printPdf;
-            //createpdf_button.Click += createPdf;
-
-        }
+            btnViewAll_Click(new object(), new RoutedEventArgs());
+        }        
 
         private void btnViewAll_Click(object sender, RoutedEventArgs e)
         {
+            invVModel = new InvoiceViewModel();
+            btnFilter_Click(new object(), new RoutedEventArgs());
+            //invoiceDataGrid.ItemsSource = invVModel.invoiceList;
             viewAllTab.Visibility = Visibility.Visible;
             createTab.Visibility = Visibility.Hidden;
         }
@@ -52,8 +49,46 @@ namespace InvoiceX.Pages
         }
 
         private void btnFilter_Click(object sender, RoutedEventArgs e)
-        {
+        {            
+            var _itemSourceList = new CollectionViewSource() { Source = invVModel.invoiceList };
 
+            ICollectionView Itemlist = _itemSourceList.View;
+
+            if (dtPickerFrom.SelectedDate.HasValue || dtPickerTo.SelectedDate.HasValue || !string.IsNullOrWhiteSpace(txtBoxCustomer.Text))
+            {
+                var filter = new Predicate<object>(customFilter);
+                Itemlist.Filter = filter;
+            }
+
+            invoiceDataGrid.ItemsSource = Itemlist;
+        }
+
+        private bool customFilter(Object obj)
+        {
+            bool logic = true;
+            DateTime? dateFrom = dtPickerFrom.SelectedDate;
+            DateTime? dateTo = dtPickerTo.SelectedDate;
+            string customerName = txtBoxCustomer.Text;
+
+            var item = obj as Invoice;
+            if (dateFrom.HasValue)            
+                logic = logic & (item.m_date.CompareTo(dateFrom.Value) >= 0);
+
+            if (dateTo.HasValue)
+                logic = logic & (item.m_date.CompareTo(dateTo.Value) <= 0);
+
+            if (!string.IsNullOrWhiteSpace(customerName))
+                logic = logic & (item.m_customer.ToLower().Contains(customerName.ToLower()));
+
+            return logic;
+        }
+
+        private void btnClearFilters_Click(object sender, RoutedEventArgs e)
+        {
+            dtPickerFrom.SelectedDate = null;
+            dtPickerTo.SelectedDate = null;
+            txtBoxCustomer.Text = null;
+            invoiceDataGrid.ItemsSource = invVModel.invoiceList;
         }
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -104,14 +139,7 @@ namespace InvoiceX.Pages
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
         {
-            load();
-        }
-
-        private void btnClearFilters_Click(object sender, RoutedEventArgs e)
-        {
-            dtPickerFrom.SelectedDate = null;
-            dtPickerTo.SelectedDate = null;
-            txtBoxCustomer.Text = null;
+            
         }
 
         private void dtPickerFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)

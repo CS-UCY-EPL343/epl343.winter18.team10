@@ -58,7 +58,7 @@ namespace InvoiceX.ViewModels
                             m_cost = cost,
                             m_VAT = VAT,
                             m_totalCost = invTotalCost,
-                            m_date = date.Date.ToString("dd/MM/yyyy"),
+                            m_date = date,
                             m_products = new List<InvoiceProduct>()
 
                             //m_idInvoice = Convert.ToInt32(dataRow[dt.Columns.IndexOf("idInvoice")]),
