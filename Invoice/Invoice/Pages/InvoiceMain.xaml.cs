@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 namespace InvoiceX.Pages
 {
     /// <summary>
@@ -203,23 +204,36 @@ namespace InvoiceX.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            invoiceDataGrid2.Items.Add(new
-            {
-                bITEMS = ((Product)comboBox_Product.SelectedItem).ProductName,
-                bDESCRIPTION = textBox_ProductDescription.Text,
-                bQUANITY = textBox_ProductQuanity.Text,
-                bPRICE = textBox_ProductPrice.Text,
-                bVAT = textBlock_ProductVat.Text,
-                bAMOUNT = textBlock_ProductAmount.Text
+           
+            invoiceDataGrid2.Items.Add(new Product
+            {               
+                ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
+                ProductDescription = textBox_ProductDescription.Text,
+                Stock = Convert.ToInt32(textBox_ProductQuanity.Text),
+                SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
+                Quanity= Convert.ToInt32(textBox_ProductQuanity.Text),
+                Total = Convert.ToDouble(textBlock_ProductAmount.Text) ,
+                Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
             });
 
-            var dataGridCellInfo = new DataGridCellInfo(invoiceDataGrid2.Items[0], invoiceDataGrid2.Columns[0]);
+            double NetTotal_TextBlock_var = 0;
+            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
+            NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBlock_ProductAmount.Text);
+            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
+            Vat_TextBlock.Text= (NetTotal_TextBlock_var * 0.19).ToString(); 
+            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19 )).ToString();
 
-            MessageBox.Show(dataGridCellInfo.Item.ToString());
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
+            double NetTotal_TextBlock_var = 0;
+            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
+            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(textBlock_ProductAmount.Text);
+            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
+            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
+            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
+
             invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
 
         }
