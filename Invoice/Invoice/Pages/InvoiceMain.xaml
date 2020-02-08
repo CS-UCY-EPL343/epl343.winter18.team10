@@ -171,7 +171,7 @@
         <!-- View Invoice Ends Here -->
 
         <!-- Create Invoice Starts Here -->
-        <Grid x:Name="createTab" Background="White" Visibility="Hidden">
+        <Grid x:Name="createTab" Background="White" Visibility="Visible">
             <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="358" VerticalAlignment="Top" Width="1725">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
@@ -212,11 +212,11 @@
 
                     <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
                     <TextBlock HorizontalAlignment="Left" Margin="273,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
-                    <TextBox HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
-                    <DatePicker HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
-                    <DatePicker HorizontalAlignment="Left" Margin="273,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                    <TextBox x:Name="invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
+                    <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                    <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="273,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                     <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                    <ComboBox HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" ItemsSource="{Binding UsersList}">
+                    <ComboBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" ItemsSource="{Binding UsersList}">
                         <ComboBox.DataContext>
                             <ViewModels:UserViewModel/>
                         </ComboBox.DataContext>
@@ -263,7 +263,7 @@
                     <DataGridTextColumn Header = "ITEMS " Binding="{Binding ProductName}" />
                     <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                     <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
-                    <DataGridTextColumn Header = "QUANITY" Binding="{Binding Quanity}" />
+                    <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quanity}" />
                     <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice}" />
                     <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />
                     <DataGridTextColumn Header = "VAT" Binding="{Binding Vat}" />
@@ -278,11 +278,11 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="963,836,0,0" VerticalAlignment="Top" Width="278" Height="74"/>
-            <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="682,836,0,0" VerticalAlignment="Top" Width="276" Height="74"/>
+            <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="963,836,0,0" VerticalAlignment="Top" Width="278" Height="74" Click="savePdf_Click"/>
+            <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="682,836,0,0" VerticalAlignment="Top" Width="276" Height="74" Click="printPdf_click"/>
             <TextBox HorizontalAlignment="Left" Height="90" Margin="33,836,0,0" TextWrapping="Wrap" Text="Enter a message for customer..." VerticalAlignment="Top" Width="414"/>
             <TextBlock HorizontalAlignment="Left" Margin="33,809,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
-            <Button Content="Preview&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Margin="474,836,0,0" Height="74"/>
+            <Button Content="Preview&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="191" Margin="474,836,0,0" Height="74" Click="previewPdf_click"/>
             <Button Content="Complete" HorizontalAlignment="Left" Margin="1255,836,0,0" VerticalAlignment="Top" Width="165" Height="74"/>
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,836,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,863,0,0" TextWrapping="Wrap" Text="Vat 19%" VerticalAlignment="Top" Width="81"/>

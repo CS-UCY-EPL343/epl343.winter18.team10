@@ -21,7 +21,7 @@ namespace InvoiceX.Models
 
         //those are used only in the new invoice grid
         public Double Total { get; set; }
-        public int Quanity { get; set; }
+        public int Quantity { get; set; }
 
     }
 }

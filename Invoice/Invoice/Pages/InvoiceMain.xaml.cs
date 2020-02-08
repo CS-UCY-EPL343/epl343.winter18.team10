@@ -48,7 +48,6 @@ namespace InvoiceX.Pages
             viewAllTab.Visibility = Visibility.Hidden;
             createTab.Visibility = Visibility.Visible;
         }
-
         private void btnFilter_Click(object sender, RoutedEventArgs e)
         {            
             var _itemSourceList = new CollectionViewSource() { Source = invVModel.invoiceList };
@@ -96,15 +95,36 @@ namespace InvoiceX.Pages
         {
 
             textBox_Address.Text = ((Customers)comboBox1.SelectedItem).Address + ", " +
-                ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
+            ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
             textBox_Contact_Details.Text = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
             textBox_Email_Address.Text = ((Customers)comboBox1.SelectedItem).Email;
 
 
         }
-        void createPdf(object sender, RoutedEventArgs e)
+        void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml");
+            string[] customerDetails = new string[6];
+            customerDetails[0] = ((Customers)comboBox1.SelectedItem).CustomerName;
+            customerDetails[1] = ((Customers)comboBox1.SelectedItem).Address + ", " +
+            ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
+            customerDetails[2] = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
+            customerDetails[3]= ((Customers)comboBox1.SelectedItem).Email;
+            customerDetails[4] = ((Customers)comboBox1.SelectedItem).Balance.ToString();
+            customerDetails[5]= ((Customers)comboBox1.SelectedItem).idCustomer.ToString();
+
+            string[] invoiceDetails = new string[6];
+            invoiceDetails[0] = invoiceNumber.Text;
+            Console.WriteLine(invoiceNumber.Text);
+            invoiceDetails[1] = invoiceDate.SelectedDate.Value.ToString("dd/MM/yyyy");
+            invoiceDetails[2] = issuedBy.Text;
+            invoiceDetails[3] = NetTotal_TextBlock.Text;
+            invoiceDetails[4] = Vat_TextBlock.Text;
+            invoiceDetails[5] = TotalAmount_TextBlock.Text;
+
+            List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
+
+
+            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml",customerDetails,invoiceDetails,products);
             MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
             document.UseCmykColor = true;
             // Create a renderer for PDF that uses Unicode font encoding
@@ -121,11 +141,10 @@ namespace InvoiceX.Pages
             filename = "Invoice.pdf";
             pdfRenderer.Save(filename);
             System.Diagnostics.Process.Start(filename);
-            Forms.PDFViewer viewer = new Forms.PDFViewer(filename);
-            viewer.Show();
+
 
         }
-        void printPdf(object sender, RoutedEventArgs e)
+        void printPdf_click(object sender, RoutedEventArgs e)
         {
             PrintDialog printDialog = new PrintDialog();
             printDialog.PageRangeSelection = PageRangeSelection.AllPages;
@@ -137,6 +156,15 @@ namespace InvoiceX.Pages
             }
 
         }
+        private void previewPdf_click(object sender, RoutedEventArgs e)
+        {
+
+            Forms.PDFViewer viewer = new Forms.PDFViewer();
+            viewer.Show();
+
+
+        }
+
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
         {
@@ -211,7 +239,7 @@ namespace InvoiceX.Pages
                 ProductDescription = textBox_ProductDescription.Text,
                 Stock = Convert.ToInt32(textBox_ProductQuanity.Text),
                 SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
-                Quanity= Convert.ToInt32(textBox_ProductQuanity.Text),
+                Quantity= Convert.ToInt32(textBox_ProductQuanity.Text),
                 Total = Convert.ToDouble(textBlock_ProductAmount.Text) ,
                 Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
             });
