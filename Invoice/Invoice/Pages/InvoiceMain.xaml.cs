@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -103,29 +104,7 @@ namespace InvoiceX.Pages
         }
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            string[] customerDetails = new string[6];
-            customerDetails[0] = ((Customers)comboBox1.SelectedItem).CustomerName;
-            customerDetails[1] = ((Customers)comboBox1.SelectedItem).Address + ", " +
-            ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
-            customerDetails[2] = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
-            customerDetails[3]= ((Customers)comboBox1.SelectedItem).Email;
-            customerDetails[4] = ((Customers)comboBox1.SelectedItem).Balance.ToString();
-            customerDetails[5]= ((Customers)comboBox1.SelectedItem).idCustomer.ToString();
-
-            string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = invoiceNumber.Text;
-            Console.WriteLine(invoiceNumber.Text);
-            invoiceDetails[1] = invoiceDate.SelectedDate.Value.ToString("dd/MM/yyyy");
-            invoiceDetails[2] = issuedBy.Text;
-            invoiceDetails[3] = NetTotal_TextBlock.Text;
-            invoiceDetails[4] = Vat_TextBlock.Text;
-            invoiceDetails[5] = TotalAmount_TextBlock.Text;
-
-            List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
-
-
-            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml",customerDetails,invoiceDetails,products);
-            MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
             document.UseCmykColor = true;
             // Create a renderer for PDF that uses Unicode font encoding
             MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
@@ -142,29 +121,63 @@ namespace InvoiceX.Pages
             pdfRenderer.Save(filename);
             System.Diagnostics.Process.Start(filename);
 
-
         }
         void printPdf_click(object sender, RoutedEventArgs e)
         {
-            PrintDialog printDialog = new PrintDialog();
-            printDialog.PageRangeSelection = PageRangeSelection.AllPages;
-            printDialog.UserPageRangeEnabled = true;
-            bool? doPrint = printDialog.ShowDialog();
-            if (doPrint != true)
-            {
-                return;
-            }
-
         }
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
+            if (File.Exists("Invoice_temp.pdf"))
+            {
+                File.Delete("Invoice_temp.pdf");
+            }
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            Forms.PDFViewer viewer = new Forms.PDFViewer();
-            viewer.Show();
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
 
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice_temp.pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+            
 
         }
 
+        MigraDoc.DocumentObjectModel.Document createPdf()
+        {
+            string[] customerDetails = new string[6];
+            customerDetails[0] = ((Customers)comboBox1.SelectedItem).CustomerName;
+            customerDetails[1] = ((Customers)comboBox1.SelectedItem).Address + ", " +
+            ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
+            customerDetails[2] = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
+            customerDetails[3] = ((Customers)comboBox1.SelectedItem).Email;
+            customerDetails[4] = ((Customers)comboBox1.SelectedItem).Balance.ToString();
+            customerDetails[5] = ((Customers)comboBox1.SelectedItem).idCustomer.ToString();
+
+            string[] invoiceDetails = new string[6];
+            invoiceDetails[0] = invoiceNumber.Text;
+            Console.WriteLine(invoiceNumber.Text);
+            invoiceDetails[1] = invoiceDate.SelectedDate.Value.ToString("dd/MM/yyyy");
+            invoiceDetails[2] = issuedBy.Text;
+            invoiceDetails[3] = NetTotal_TextBlock.Text;
+            invoiceDetails[4] = Vat_TextBlock.Text;
+            invoiceDetails[5] = TotalAmount_TextBlock.Text;
+
+            List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
+
+
+            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
+            MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
+            return document;
+           
+        }
 
         private void btnReload_Click(object sender, RoutedEventArgs e)
         {
