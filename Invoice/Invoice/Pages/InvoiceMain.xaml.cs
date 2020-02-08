@@ -39,15 +39,15 @@ namespace InvoiceX.Pages
 
         }
 
-        private void btnView_Click(object sender, RoutedEventArgs e)
+        private void btnViewAll_Click(object sender, RoutedEventArgs e)
         {
-            viewTab.Visibility = Visibility.Visible;
+            viewAllTab.Visibility = Visibility.Visible;
             createTab.Visibility = Visibility.Hidden;
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-            viewTab.Visibility = Visibility.Hidden;
+            viewAllTab.Visibility = Visibility.Hidden;
             createTab.Visibility = Visibility.Visible;
         }
 
@@ -124,7 +124,7 @@ namespace InvoiceX.Pages
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("View, Edit, Delete");
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
