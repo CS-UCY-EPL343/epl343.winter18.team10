@@ -35,65 +35,94 @@ namespace InvoiceX
         public MainWindow()
         {
             InitializeComponent();
-            btnDashboard.Focus();
-            MainPage.Content = m_dashboard;
+            BtnDashboard_Click(new object(), new RoutedEventArgs());
         }
            
+        private void resetAllBtnStyles()
+        {
+            btnDashboard.Style = btnInvoice.Style = btnReceipt.Style = 
+            btnCreditNote.Style = btnStatement.Style = btnProduct.Style = 
+            btnCustomers.Style = btnOrder.Style = btnOffer.Style = 
+            btnExpenses.Style = btnSettings.Style = FindResource("sideMenuBtnStyle") as Style;
+        }
+
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
-            pageTitle.Text = "Home";
+            pageTitle.Text = "Dashboard";
             MainPage.Content = m_dashboard;
+            resetAllBtnStyles();
+            btnDashboard.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnInvoice_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Invoice";
             MainPage.Content = m_invoice;
+            resetAllBtnStyles();
+            btnInvoice.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnReceipt_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Receipt";
+            resetAllBtnStyles();
+            btnReceipt.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnCreditNote_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Credit Note";
+            resetAllBtnStyles();
+            btnCreditNote.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnStatement_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Statement";
+            resetAllBtnStyles();
+            btnStatement.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnProduct_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Product";
+            resetAllBtnStyles();
+            btnProduct.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnCustomers_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Customers";
+            resetAllBtnStyles();
+            btnCustomers.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnOrder_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Order";
+            resetAllBtnStyles();
+            btnOrder.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnOffer_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Offer";
+            resetAllBtnStyles();
+            btnOffer.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnExpenses_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Expenses";
+            resetAllBtnStyles();
+            btnExpenses.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Settings";
+            resetAllBtnStyles();
+            btnSettings.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         

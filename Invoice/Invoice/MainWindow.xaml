@@ -10,13 +10,13 @@
         Title="MainWindow" Height="1080" Width="1920">
 
     <Window.Resources>
-        <Style x:Key="sideMenuBtnTemplate" TargetType="Button">
+        <Style x:Key="sideMenuBtnStyle" TargetType="Button">
             <Setter Property="Background" Value="White"/>
             <Setter Property="Width" Value="170"/>
             <Setter Property="Height" Value="55"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Canvas.Left" Value="0"/>
-            <Style.Triggers>
+            <!--Style.Triggers>
                 <Trigger Property = "IsFocused" Value = "True">
                     <Setter Property="Background" Value="#FFCCDBDC"/>
                     <Setter Property="Panel.ZIndex" Value="1"/>
@@ -26,9 +26,23 @@
                         </Setter.Value>
                     </Setter>
                 </Trigger>
-            </Style.Triggers>
+            </-->
         </Style>
-        
+
+        <Style x:Key="sideMenuBtnStyle_selected" TargetType="Button">
+            <Setter Property="Background" Value="#FFCCDBDC"/>
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Canvas.Left" Value="0"/>
+            <Setter Property="Panel.ZIndex" Value="1"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Direction="270" Opacity="0.16"/>
+                </Setter.Value>
+            </Setter>            
+        </Style>
+
     </Window.Resources>
 
     <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >
@@ -68,7 +82,7 @@
 
             <TextBlock  x:Name="pageTitle" Width="170" Height="33" Text="Dashboard" TextAlignment="Center" FontFamily="Gotham"  FontSize="25" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="30"  />
 
-            <Button x:Name="btnDashboard" Style = "{DynamicResource sideMenuBtnTemplate}" Canvas.Top="80" Click="BtnDashboard_Click">
+            <Button x:Name="btnDashboard" Style = "{DynamicResource sideMenuBtnStyle}" Canvas.Top="80" Click="BtnDashboard_Click">
                 <Canvas Width="170" Height="55" Canvas.Left="2" Canvas.Top="80">
                     <TextBlock  Text="Dashboard" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -77,7 +91,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnInvoice" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="135" Click="BtnInvoice_Click">
+            <Button x:Name="btnInvoice" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="135" Click="BtnInvoice_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="135" >
                     <TextBlock  Text="Invoice" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="22" Height="18" Canvas.Left="35" Canvas.Top="17" >
@@ -86,7 +100,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnReceipt" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="190" Click="BtnReceipt_Click">
+            <Button x:Name="btnReceipt" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="190" Click="BtnReceipt_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="190" >
                     <TextBlock  Text="Receipt" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -97,7 +111,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnCreditNote" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="245" Click="BtnCreditNote_Click">
+            <Button x:Name="btnCreditNote" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="245" Click="BtnCreditNote_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="245" >
                     <TextBlock  Text="Credit Note" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="18" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -109,7 +123,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnStatement" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="300" Click="BtnStatement_Click">
+            <Button x:Name="btnStatement" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="300" Click="BtnStatement_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="300" >
                     <TextBlock  Text="Statement" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="20" Canvas.Left="35" Canvas.Top="17" >
@@ -117,7 +131,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnProduct" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="355" Click="BtnProduct_Click">
+            <Button x:Name="btnProduct" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="355" Click="BtnProduct_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="355" >
                     <TextBlock  Text="Product" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -128,7 +142,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnCustomers" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="410" Click="BtnCustomers_Click">
+            <Button x:Name="btnCustomers" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="410" Click="BtnCustomers_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="410" >
                     <TextBlock  Text="Customers" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
@@ -137,7 +151,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button  x:Name="btnOrder" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="465" Click="BtnOrder_Click">
+            <Button  x:Name="btnOrder" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="465" Click="BtnOrder_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="520">
                     <TextBlock  Text="Order" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
@@ -148,7 +162,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnOffer" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="520" Click="BtnOffer_Click">
+            <Button x:Name="btnOffer" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="520" Click="BtnOffer_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="575">
                     <TextBlock  Text="Offer" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
@@ -157,7 +171,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnExpenses" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="575" Click="BtnExpenses_Click">
+            <Button x:Name="btnExpenses" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="575" Click="BtnExpenses_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="630">
                     <TextBlock  Text="Expenses" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
@@ -166,7 +180,7 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnSettings" Style = "{StaticResource sideMenuBtnTemplate}" Canvas.Top="630" Click="BtnSettings_Click">
+            <Button x:Name="btnSettings" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="630" Click="BtnSettings_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="465" >
                     <TextBlock  Text="Settings" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="24" Height="24" Canvas.Left="35" Canvas.Top="17" >
