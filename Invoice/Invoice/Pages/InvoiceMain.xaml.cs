@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Xps.Packaging;
 
 namespace InvoiceX.Pages
 {
@@ -102,6 +103,7 @@ namespace InvoiceX.Pages
 
 
         }
+        private string filenamePath = null;
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
             MigraDoc.DocumentObjectModel.Document document = createPdf();
@@ -124,6 +126,35 @@ namespace InvoiceX.Pages
         }
         void printPdf_click(object sender, RoutedEventArgs e)
         {
+            //Create and save the pdf
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice.pdf";
+            pdfRenderer.Save(filename);
+
+            // Create the print dialog object and set options
+            PrintDialog pDialog = new PrintDialog();
+            pDialog.PageRangeSelection = PageRangeSelection.AllPages;
+            pDialog.UserPageRangeEnabled = true;
+
+            // Display the dialog. This returns true if the user presses the Print button.
+            Nullable<Boolean> print = pDialog.ShowDialog();
+            if (print == true)
+            {
+                XpsDocument xpsDocument = new XpsDocument(filename, FileAccess.ReadWrite);
+                FixedDocumentSequence fixedDocSeq = xpsDocument.GetFixedDocumentSequence();
+                pDialog.PrintDocument(fixedDocSeq.DocumentPaginator, "Test print job");
+            }
         }
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
@@ -152,6 +183,7 @@ namespace InvoiceX.Pages
 
         MigraDoc.DocumentObjectModel.Document createPdf()
         {
+
             string[] customerDetails = new string[6];
             customerDetails[0] = ((Customers)comboBox1.SelectedItem).CustomerName;
             customerDetails[1] = ((Customers)comboBox1.SelectedItem).Address + ", " +
