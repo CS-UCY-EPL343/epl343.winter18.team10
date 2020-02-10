@@ -255,12 +255,12 @@ namespace InvoiceX.Pages
 
         }
 
-        private void TextBox_ProductQuanity_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
             int n;
-            if (int.TryParse(textBox_ProductQuanity.Text, out n))
+            if (int.TryParse(textBox_ProductQuantity.Text, out n))
             {
-                textBlock_ProductAmount.Text = (((Product)comboBox_Product.SelectedItem).SellPrice * Convert.ToInt32(textBox_ProductQuanity.Text)).ToString();
+                textBlock_ProductAmount.Text = (((Product)comboBox_Product.SelectedItem).SellPrice * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
 
 
@@ -269,9 +269,9 @@ namespace InvoiceX.Pages
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             int n;
-            if (int.TryParse(textBox_ProductPrice.Text, out n) && int.TryParse(textBox_ProductQuanity.Text, out n))
+            if (int.TryParse(textBox_ProductPrice.Text, out n) && int.TryParse(textBox_ProductQuantity.Text, out n))
             {
-                textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuanity.Text)).ToString();
+                textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
         }
 
@@ -282,9 +282,9 @@ namespace InvoiceX.Pages
             {               
                 ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
                 ProductDescription = textBox_ProductDescription.Text,
-                Stock = Convert.ToInt32(textBox_ProductQuanity.Text),
+                Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
                 SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
-                Quantity= Convert.ToInt32(textBox_ProductQuanity.Text),
+                Quantity= Convert.ToInt32(textBox_ProductQuantity.Text),
                 Total = Convert.ToDouble(textBlock_ProductAmount.Text) ,
                 Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
             });
@@ -306,7 +306,6 @@ namespace InvoiceX.Pages
             NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
             Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
-
             invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
 
         }

@@ -246,7 +246,7 @@
                 </ComboBox>
                 <TextBox   x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="30" Margin="214,345,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="534" TextChanged="TextBox_TextChanged_2" Text="Description"/>
                 <TextBlock x:Name="textBlock_ProductStock"     HorizontalAlignment="Left" Margin="752,345,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top" Height="30" Width="80"/>
-                <TextBox   x:Name="textBox_ProductQuanity"     HorizontalAlignment="Left" Height="30" Margin="838,345,0,0" TextWrapping="Wrap" Text="Quanity" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductQuanity_TextChanged"/>
+                <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="838,345,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductQuantity_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="962,345,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductPrice_TextChanged"/>
                 <TextBlock x:Name="textBlock_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1088,343,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="50"/>
                 <TextBlock x:Name="textBlock_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1142,343,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top" Width="116"/>
@@ -263,7 +263,7 @@
                     <DataGridTextColumn Header = "ITEMS " Binding="{Binding ProductName}" />
                     <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                     <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
-                    <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quanity}" />
+                    <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
                     <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice}" />
                     <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />
                     <DataGridTextColumn Header = "VAT" Binding="{Binding Vat}" />

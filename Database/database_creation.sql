@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS `invoice`.`Product` (
   `MinStock` INT NOT NULL,
   `Cost` FLOAT NULL,
   `SellPrice` FLOAT NULL,
+  `Vat` FLOAT NULL,
   PRIMARY KEY (`idProduct`))
 ENGINE = InnoDB;
 
