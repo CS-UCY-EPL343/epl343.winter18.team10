@@ -7,6 +7,7 @@ using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.DocumentObjectModel.Shapes;
 using MigraDoc.Rendering;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace InvoiceX.Forms
 {
@@ -45,11 +46,18 @@ namespace InvoiceX.Forms
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
         /// </summary>
-        public InvoiceForm(string filename)
+        string[] customer_details = new string[6];
+        string[] invoice_details = new string[6];
+        List<Models.Product> products = new List<Models.Product>();
+
+        public InvoiceForm(string filename, string[] cd, string[] id, List<Models.Product> p)
         {
             this.invoice = new XmlDocument();
             this.invoice.Load(filename);
             this.navigator = this.invoice.CreateNavigator();
+            this.customer_details = cd;
+            this.invoice_details = id;
+            this.products = p;
         }
 
         /// <summary>
@@ -167,12 +175,9 @@ namespace InvoiceX.Forms
 
             // Add the print date field
             paragraph = section.AddParagraph();
-            paragraph.Format.SpaceBefore = "8cm";
+            paragraph.Format.SpaceBefore = "6cm";
             paragraph.Style = "Reference";
             paragraph.AddFormattedText("INVOICE", TextFormat.Bold);
-            paragraph.AddTab();
-            paragraph.AddText("Cologne, ");
-            paragraph.AddDateField("dd.MM.yyyy");
 
             // Create the item table
             this.table = section.AddTable();
@@ -262,8 +267,8 @@ namespace InvoiceX.Forms
 
             paragraph = this.invoiceDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Right;
-            String invoiceNumber = "7777";
-            String date = "08-09-2020";
+            String invoiceNumber = this.invoice_details[0];
+            String date = this.invoice_details[1];
             paragraph.AddText(invoiceNumber);
             paragraph.AddSpace(24);
             paragraph.AddText(date);
@@ -293,8 +298,8 @@ namespace InvoiceX.Forms
 
             paragraph = this.invoiceDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
-            String customerId = "2123";
-             String balance = "753.92";
+            String customerId = this.customer_details[5];
+             String balance = this.customer_details[4];
             paragraph.AddText(customerId);
             paragraph.AddTab(); 
             paragraph.AddTab();
@@ -304,23 +309,19 @@ namespace InvoiceX.Forms
 
             paragraph = this.addressFrame.AddParagraph();
             paragraph.Format.SpaceBefore = 20;
-            paragraph.AddText(GetValue(item, "name/singleName"));
+            paragraph.AddText(this.customer_details[0]);
             paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "address/line1") + " " + (GetValue(item, "address/postalCode") + " " + GetValue(item, "address/city")));
+            paragraph.AddText(this.customer_details[1]);
             paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "telephoneNumberHome") + ", " + GetValue(item, "telephoneNumberCell"));
+            paragraph.AddText(this.customer_details[2]);
             paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "emailAddressPrimary"));
-            paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "webSite"));
+            paragraph.AddText(this.customer_details[3]);
 
             // Iterate the invoice items
-            double totalExtendedPrice = 0;
-            XPathNodeIterator iter = this.navigator.Select("/invoice/items/*");
-            while (iter.MoveNext())
+
+            for (int i=0; i<products.Count;i++)
             {
-                item = iter.Current;
-                double quantity = GetValueAsDouble(item, "quantity");
+                double quantity = this.products[i].Quantity;
                 double price = GetValueAsDouble(item, "price");
                 double discount = GetValueAsDouble(item, "discount");
 
@@ -334,18 +335,14 @@ namespace InvoiceX.Forms
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[3].Shading.Color = TableGray;
 
-                row1.Cells[0].AddParagraph(GetValue(item, "itemNumber"));
+                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
                 paragraph = row1.Cells[1].AddParagraph();
-                paragraph.AddFormattedText(GetValue(item, "title"), TextFormat.Bold);
-                paragraph.AddFormattedText(" by ", TextFormat.Italic);
-                paragraph.AddText(GetValue(item, "author"));
-                row1.Cells[2].AddParagraph(price.ToString("0.00"));
+                paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
+                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString());
                 row1.Cells[2].AddParagraph();
-                double extendedPrice = quantity * price;
-                row1.Cells[3].AddParagraph(extendedPrice.ToString("0.00"));
+                row1.Cells[3].AddParagraph(this.products[i].Total.ToString());
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                 row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
-                totalExtendedPrice += extendedPrice;
 
                 this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
@@ -361,7 +358,7 @@ namespace InvoiceX.Forms
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            row.Cells[3].AddParagraph(totalExtendedPrice.ToString("0.00"));
+            row.Cells[3].AddParagraph(this.invoice_details[3]);
 
             // Add the VAT row
             row = this.table.AddRow();
@@ -370,7 +367,7 @@ namespace InvoiceX.Forms
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            row.Cells[3].AddParagraph((0.19 * totalExtendedPrice).ToString("0.00"));
+            row.Cells[3].AddParagraph(this.invoice_details[4]);
 
 
             // Add the total due row
@@ -380,21 +377,11 @@ namespace InvoiceX.Forms
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            totalExtendedPrice += 0.19 * totalExtendedPrice;
-            row.Cells[3].AddParagraph(totalExtendedPrice.ToString("0.00"));
+            row.Cells[3].AddParagraph(this.invoice_details[5]);
 
             // Set the borders of the specified cell range
             this.table.SetEdge(3, this.table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
 
-            // Add the notes paragraph
-            paragraph = this.document.LastSection.AddParagraph();
-            paragraph.Format.SpaceBefore = "1cm";
-            paragraph.Format.Borders.Width = 0.75;
-            paragraph.Format.Borders.Distance = 3;
-            paragraph.Format.Borders.Color = TableBorder;
-            paragraph.Format.Shading.Color = TableGray;
-            item = SelectItem("/invoice");
-            paragraph.AddText(GetValue(item, "notes"));
         }
 
         /// <summary>

@@ -1,0 +1,163 @@
+﻿<Page x:Class="InvoiceX.Pages.InvoicePage.InvoiceViewAll"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="950" d:DesignWidth="1725"
+      Title="InvoiceViewAll">
+
+    <Page.Resources>
+        <!-- DataGrid style -->
+        <Style x:Key="viewDataGridStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}"/>
+            <Setter Property="RowStyle" Value="{DynamicResource RowStyle}"/>
+            <Setter Property="CellStyle" Value="{DynamicResource CellStyle}"/>
+            <Setter Property="CanUserAddRows" Value="False"/>
+            <Setter Property="CanUserResizeColumns" Value="False"/>
+            <Setter Property="CanUserResizeRows" Value="False"/>
+            <Setter Property="CanUserReorderColumns" Value="False"/>
+            <Setter Property="AutoGenerateColumns" Value="False"/>
+            <Setter Property="AlternatingRowBackground" Value="AliceBlue"/>
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Width" Value="{Binding Path=ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=Window,AncestorLevel=1}}"/>
+            <Setter Property="ColumnWidth" Value="*"/>
+        </Style>
+        <!-- DataGridColumnHeader style -->
+        <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="Background" Value="#FFCFE6EE"/>
+            <Setter Property="Foreground" Value="#FF6A6A6A"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Height" Value="50"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to Sort"/>
+                    <Setter Property="Background" Value="#FFB8E0EE"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- DataGridRow style -->
+        <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Height" Value="65"/>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="ToolTip" Value="Click to View Products"/>
+                    <Setter Property="Background" Value="#FFCFE4EC"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- DataGridCell style -->
+        <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- Top Button Style -->
+        <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="Width" Value="125"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+    </Page.Resources>
+    
+    <!-- View Invoice Starts Here -->
+    <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
+        <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Border.Effect>
+            <Label x:Name="label" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,35,0,0" Height="66" Width="134" FontSize="36"/>
+        </Border>
+
+        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top" Width="1099">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Grid.Effect>
+            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center"/>
+            <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
+            <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16"/>
+            <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Button x:Name="btnFilter" Content="Filter" HorizontalAlignment="Left" Margin="812,82,0,0" VerticalAlignment="Top" Width="141" Height="31" FontSize="18" Click="btnFilter_Click"/>
+            <Button x:Name="btnClearFilters" Content="Clear Filters" HorizontalAlignment="Left" Margin="661,82,0,0" VerticalAlignment="Top" Width="141" Height="31" FontSize="18" Click="btnClearFilters_Click"/>
+            <Button x:Name="btnReload" IsEnabled="False" Content="Reload" HorizontalAlignment="Left" Margin="661,37,0,0" VerticalAlignment="Top" Width="292" Height="31" FontSize="18" Click="btnReload_Click"/>
+        </Grid>
+
+        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Grid.Effect>
+            <Label x:Name="label1_Copy4" Content="Search:" HorizontalAlignment="Left" Margin="37,27,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <TextBox x:Name="textBox3_Copy" HorizontalAlignment="Left" Height="37" Margin="37,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center"/>
+        </Grid>
+        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+            <DataGrid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </DataGrid.Effect>
+            <!--DataGrid.RowDetailsTemplate>
+                    <DataTemplate>
+                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding m_products}" Margin="10" Width="900" HorizontalAlignment="Left">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Product" Width="Auto" FontSize="18"
+                            Binding="{Binding m_productName}" />
+                                <DataGridTextColumn Header="Quantity " Width="Auto" FontSize="18"
+                            Binding="{Binding m_quantity}" />
+                                <DataGridTextColumn Header="Cost " Width="Auto" FontSize="18"
+                            Binding="{Binding m_totalCost}" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DataTemplate>
+                </DataGrid.RowDetailsTemplate-->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_date, StringFormat=\{0:dd/MM/yyyy\}}" />
+                <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
+                <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customer}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost}" />
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding m_VAT}" />
+                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding m_totalCost}" />
+                <DataGridTemplateColumn Header = "Options">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnOptions" Width="40" Height="40" Click="btnOptions_Click">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="#FFE4E0E0"/>
+                                            <TextBlock Text="…" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+    <!-- View Invoice Ends Here -->
+</Page>
