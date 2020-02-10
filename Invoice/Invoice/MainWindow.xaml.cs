@@ -1,4 +1,5 @@
 ﻿using InvoiceX.Pages;
+using InvoiceX.Pages.InvoicePage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

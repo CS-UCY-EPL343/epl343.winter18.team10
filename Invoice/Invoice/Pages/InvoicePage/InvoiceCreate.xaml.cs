@@ -1,10 +1,6 @@
 ﻿using InvoiceX.Models;
-using InvoiceX.ViewModels;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -19,78 +15,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using System.Windows.Xps.Packaging;
 
-namespace InvoiceX.Pages
+namespace InvoiceX.Pages.InvoicePage
 {
     /// <summary>
-    /// Interaction logic for InvoiceMain.xaml
+    /// Interaction logic for InvoiceCreate.xaml
     /// </summary>
-    public partial class InvoiceMain : Page
+    public partial class InvoiceCreate : Page
     {
-        private InvoiceViewModel invVModel;
-
-        public InvoiceMain()
+        public InvoiceCreate()
         {
             InitializeComponent();
-            btnViewAll_Click(new object(), new RoutedEventArgs());
-        }        
-
-        private void btnViewAll_Click(object sender, RoutedEventArgs e)
-        {
-            invVModel = new InvoiceViewModel();
-            btnFilter_Click(new object(), new RoutedEventArgs());
-            //invoiceDataGrid.ItemsSource = invVModel.invoiceList;
-            viewAllTab.Visibility = Visibility.Visible;
-            createTab.Visibility = Visibility.Hidden;
-        }
-
-        private void btnCreate_Click(object sender, RoutedEventArgs e)
-        {
-            viewAllTab.Visibility = Visibility.Hidden;
-            createTab.Visibility = Visibility.Visible;
-        }
-        private void btnFilter_Click(object sender, RoutedEventArgs e)
-        {            
-            var _itemSourceList = new CollectionViewSource() { Source = invVModel.invoiceList };
-
-            ICollectionView Itemlist = _itemSourceList.View;
-
-            if (dtPickerFrom.SelectedDate.HasValue || dtPickerTo.SelectedDate.HasValue || !string.IsNullOrWhiteSpace(txtBoxCustomer.Text))
-            {
-                var filter = new Predicate<object>(customFilter);
-                Itemlist.Filter = filter;
-            }
-
-            invoiceDataGrid.ItemsSource = Itemlist;
-        }
-
-        private bool customFilter(Object obj)
-        {
-            bool logic = true;
-            DateTime? dateFrom = dtPickerFrom.SelectedDate;
-            DateTime? dateTo = dtPickerTo.SelectedDate;
-            string customerName = txtBoxCustomer.Text;
-
-            var item = obj as Invoice;
-            if (dateFrom.HasValue)            
-                logic = logic & (item.m_date.CompareTo(dateFrom.Value) >= 0);
-
-            if (dateTo.HasValue)
-                logic = logic & (item.m_date.CompareTo(dateTo.Value) <= 0);
-
-            if (!string.IsNullOrWhiteSpace(customerName))
-                logic = logic & (item.m_customer.ToLower().Contains(customerName.ToLower()));
-
-            return logic;
-        }
-
-        private void btnClearFilters_Click(object sender, RoutedEventArgs e)
-        {
-            dtPickerFrom.SelectedDate = null;
-            dtPickerTo.SelectedDate = null;
-            txtBoxCustomer.Text = null;
-            invoiceDataGrid.ItemsSource = invVModel.invoiceList;
         }
 
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -242,26 +177,10 @@ namespace InvoiceX.Pages
             Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
             MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
             return document;
-           
+
         }
 
-        private void btnReload_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
 
-        private void dtPickerFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (dtPickerTo.SelectedDate == null)
-            {
-                dtPickerTo.SelectedDate = dtPickerFrom.SelectedDate;
-            }
-        }
-
-        private void btnOptions_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("View, Edit, Delete");
-        }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -311,15 +230,15 @@ namespace InvoiceX.Pages
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+
             invoiceDataGrid2.Items.Add(new Product
-            {               
+            {
                 ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
                 ProductDescription = textBox_ProductDescription.Text,
                 Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
                 SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
-                Quantity= Convert.ToInt32(textBox_ProductQuantity.Text),
-                Total = Convert.ToDouble(textBlock_ProductAmount.Text) ,
+                Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
+                Total = Convert.ToDouble(textBlock_ProductAmount.Text),
                 Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
             });
 
@@ -327,8 +246,8 @@ namespace InvoiceX.Pages
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
             NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBlock_ProductAmount.Text);
             NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
-            Vat_TextBlock.Text= (NetTotal_TextBlock_var * 0.19).ToString(); 
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19 )).ToString();
+            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
+            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
 
         }
 
@@ -343,7 +262,5 @@ namespace InvoiceX.Pages
             invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
 
         }
-
-
     }
 }
