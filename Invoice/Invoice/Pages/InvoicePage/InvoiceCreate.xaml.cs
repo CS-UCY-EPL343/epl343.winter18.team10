@@ -121,7 +121,6 @@ namespace InvoiceX.Pages.InvoicePage
             // Save the PDF document...
             string filename = "Invoice_temp.pdf";
             pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
 
             //open adobe acrobat
             Process proc = new Process();
