@@ -15,18 +15,7 @@
             <Setter Property="Width" Value="170"/>
             <Setter Property="Height" Value="55"/>
             <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Canvas.Left" Value="0"/>
-            <!--Style.Triggers>
-                <Trigger Property = "IsFocused" Value = "True">
-                    <Setter Property="Background" Value="#FFCCDBDC"/>
-                    <Setter Property="Panel.ZIndex" Value="1"/>
-                    <Setter Property="Effect">
-                        <Setter.Value>
-                            <DropShadowEffect Direction="270" Opacity="0.16"/>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-            </-->
+            <Setter Property="Canvas.Left" Value="0"/>            
         </Style>
 
         <Style x:Key="sideMenuBtnStyle_selected" TargetType="Button">
@@ -46,7 +35,6 @@
     </Window.Resources>
 
     <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >
-
         <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" >
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
