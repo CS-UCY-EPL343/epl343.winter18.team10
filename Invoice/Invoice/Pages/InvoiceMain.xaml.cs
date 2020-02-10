@@ -141,20 +141,30 @@ namespace InvoiceX.Pages
             // Save the PDF document...
             string filename = "Invoice.pdf";
             pdfRenderer.Save(filename);
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
 
-            // Create the print dialog object and set options
-            PrintDialog pDialog = new PrintDialog();
-            pDialog.PageRangeSelection = PageRangeSelection.AllPages;
-            pDialog.UserPageRangeEnabled = true;
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
 
-            // Display the dialog. This returns true if the user presses the Print button.
-            Nullable<Boolean> print = pDialog.ShowDialog();
-            if (print == true)
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
             {
-                XpsDocument xpsDocument = new XpsDocument(filename, FileAccess.ReadWrite);
-                FixedDocumentSequence fixedDocSeq = xpsDocument.GetFixedDocumentSequence();
-                pDialog.PrintDocument(fixedDocSeq.DocumentPaginator, "Test print job");
+                proc.WaitForExit(10000);
             }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
         }
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
@@ -177,7 +187,31 @@ namespace InvoiceX.Pages
             string filename = "Invoice_temp.pdf";
             pdfRenderer.Save(filename);
             System.Diagnostics.Process.Start(filename);
-            
+
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
 
         }
 
