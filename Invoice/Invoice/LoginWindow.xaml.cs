@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,27 @@ namespace InvoiceX
         {
             InitializeComponent();
             txtUsername.Focus();
-        }        
+        }
 
         private void login_button_Click(object sender, RoutedEventArgs e)
         {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+
             if (txtPassword.Password == pass && txtUsername.Text == user)
             {
                 MainWindow wnd = new MainWindow();

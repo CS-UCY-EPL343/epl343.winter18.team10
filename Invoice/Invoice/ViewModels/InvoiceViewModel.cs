@@ -40,7 +40,7 @@ namespace InvoiceX.ViewModels
                     var cost = dataRow.Field<float>("InvoiceCost");
                     var VAT = dataRow.Field<float>("VAT");
                     var invTotalCost = dataRow.Field<float>("InvoiceTotalCost");
-                    var date = dataRow.Field<DateTime>("Date");
+                    var date = dataRow.Field<DateTime>("CreatedDate");
 
                     var product = dataRow.Field<string>("ProductName");
                     var proTotalCost = dataRow.Field<float>("IPCost");
