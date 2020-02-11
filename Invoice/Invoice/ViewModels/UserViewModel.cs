@@ -16,8 +16,6 @@ namespace InvoiceX.ViewModels
         {
             UsersList = new List<Users>();
 
-          
-
             MySqlConnection conn;
             string myConnectionString;
 
@@ -28,19 +26,15 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Users", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM User", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-
-
-
+                
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var NameDB = dataRow.Field<string>("Name");
-                    var PasswordDB = dataRow.Field<int>("Password");
-                    var AdminDB = dataRow.Field<bool>("Admin");
-
-
+                    var NameDB = dataRow.Field<string>("idUser");
+                    var PasswordDB = dataRow.Field<int>("Password_p");
+                    var AdminDB = dataRow.Field<bool>("AdminPrivileges");
 
                     UsersList.Add(
                         new Users()
@@ -49,10 +43,7 @@ namespace InvoiceX.ViewModels
                             UserPassword = PasswordDB,
                             admin = AdminDB
                         });
-
                 }
-
-
                 conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -60,14 +51,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-      
-
-
-
-
-
     }
-
 }
 
 
