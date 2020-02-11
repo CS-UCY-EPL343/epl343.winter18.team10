@@ -32,10 +32,10 @@ namespace InvoiceX.Pages.InvoicePage
         public void load()
         {
             invVModel = new InvoiceViewModel();
-            btnFilter_Click(new object(), new RoutedEventArgs());
+            filterList();
         }
 
-        private void btnFilter_Click(object sender, RoutedEventArgs e)
+        private void filterList()
         {
             var _itemSourceList = new CollectionViewSource() { Source = invVModel.invoiceList };
 
@@ -76,12 +76,7 @@ namespace InvoiceX.Pages.InvoicePage
             dtPickerTo.SelectedDate = null;
             txtBoxCustomer.Text = null;
             invoiceDataGrid.ItemsSource = invVModel.invoiceList;
-        }
-
-        private void btnReload_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        }        
 
         private void dtPickerFrom_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -89,11 +84,24 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 dtPickerTo.SelectedDate = dtPickerFrom.SelectedDate;
             }
+            filterList();
+        }
+
+        private void dtPickerTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filterList();
         }
 
         private void btnOptions_Click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("View, Edit, Delete");
         }
+
+        private void txtBoxCustomer_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            filterList();
+        }
+
+        
     }
 }
