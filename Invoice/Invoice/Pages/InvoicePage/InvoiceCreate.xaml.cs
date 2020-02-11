@@ -252,9 +252,11 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
+
+            Product CurrentCell_Product = (Product)(invoiceDataGrid2.CurrentCell.Item);
             double NetTotal_TextBlock_var = 0;
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(textBlock_ProductAmount.Text);
+            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
             NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
             Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
