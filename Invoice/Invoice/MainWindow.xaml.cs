@@ -23,15 +23,15 @@ namespace InvoiceX
     {
         private Page m_dashboard = new Dashboard();
         private Page m_invoice = new InvoiceMain();
-        private Page m_receipt;
-        private Page m_creditNote;
-        private Page m_statement;
-        private Page m_product;
-        private Page m_customers;
-        private Page m_order;
-        private Page m_offer;
-        private Page m_expenses;
-        private Page m_settings;
+        //private Page m_receipt;
+        //private Page m_creditNote;
+        //private Page m_statement;
+        //private Page m_product;
+        //private Page m_customers;
+        //private Page m_order;
+        //private Page m_offer;
+        //private Page m_expenses;
+        //private Page m_settings;
 
         public MainWindow()
         {

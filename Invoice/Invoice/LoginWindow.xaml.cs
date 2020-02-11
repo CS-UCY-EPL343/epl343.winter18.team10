@@ -41,7 +41,7 @@ namespace InvoiceX
             try
             {
                 conn = new MySqlConnection(myConnectionString);
-                conn.Open();
+                //conn.Open();
 
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
