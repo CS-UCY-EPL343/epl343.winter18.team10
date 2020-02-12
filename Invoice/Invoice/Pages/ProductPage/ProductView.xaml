@@ -8,6 +8,51 @@
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="ProductView">
 
+    <Page.Resources>
+        <Style x:Key="productCellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding LowStock}" Value="True">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid>
+                                    <Ellipse Fill="Red" Width="10" Height="10" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="Low Stock" Margin="20,0,0,0" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding LowStock}" Value="False">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid>
+                                    <Ellipse Fill="Green" Width="10" Height="10" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="Stock" Margin="20,0,0,0" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+
     <Grid x:Name="viewTab" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
             <Border.Effect>
@@ -52,10 +97,10 @@
                 <DataGridTextColumn Header = "Product ID" Binding = "{Binding idProduct}" />
                 <DataGridTextColumn Header = "Product" Binding = "{Binding ProductName}" />
                 <DataGridTextColumn Header = "Description" Binding = "{Binding ProductDescription}" />
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding Cost, StringFormat=F2}" />
-                <DataGridTextColumn Header = "Base Price" Binding = "{Binding SellPrice, StringFormat=F2}" />
-                <DataGridTextColumn Header = "VAT" Binding = "{Binding Vat}" />
-                <DataGridTextColumn Header = "Status" Binding = "{Binding LowStock}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding Cost, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Sell Price" Binding = "{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding Vat, StringFormat=P}" />
+                <DataGridTextColumn Header = "Status" CellStyle="{StaticResource productCellStyle}"/>
                 <DataGridTextColumn Header = "Stock" Binding = "{Binding Stock}" />
             </DataGrid.Columns>
 

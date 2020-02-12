@@ -16,7 +16,18 @@ namespace InvoiceX.Models
         public Double Cost { get; set; }
         public Double SellPrice { get; set; }
         public double Vat { get; set; }
-        public bool LowStock { get; set; }
+        private bool _LowStock;
+        public bool LowStock
+        {
+            get
+            {
+                if (Stock >= MinStock)
+                    return false;
+                else
+                    return true;
+            }
+            set { _LowStock = value; }
+        }
         public string Category { get; set; }
 
 

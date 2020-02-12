@@ -38,18 +38,21 @@ namespace InvoiceX.ViewModels
                     var Stockdb = dataRow.Field<int>("Stock");
                     var MinStockdb = dataRow.Field<int>("MinStock");
                     var Costdb = dataRow.Field<float>("Cost");
-                    var SellPricedb = dataRow.Field<float>("SellPrice");            
+                    var SellPricedb = dataRow.Field<float>("SellPrice");       
+                    var Vatdb = dataRow.Field<float>("VAT");
+                    //var Categorydb = dataRow.Field<string>("Category");
 
                     ProductList.Add(
                         new Product()
                         {
-                            idProduct= idProductsdb,
-                            ProductName= ProductNamedb,
-                            ProductDescription= ProductDescriptiondb,
-                            Stock= Stockdb,
-                            MinStock= MinStockdb,
-                            Cost= Costdb,
-                            SellPrice= SellPricedb
+                            idProduct = idProductsdb,
+                            ProductName = ProductNamedb,
+                            ProductDescription = ProductDescriptiondb,
+                            Stock = Stockdb,
+                            MinStock = MinStockdb,
+                            Cost = Costdb,
+                            SellPrice = SellPricedb,
+                            Vat = Vatdb
                         });
                 }
 
