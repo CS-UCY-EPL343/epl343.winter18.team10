@@ -23,11 +23,7 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" ItemsSource="{Binding CustomersList}" SelectionChanged="comboBox1_SelectionChanged" BorderBrush="White" >
-                    <ComboBox.DataContext>
-                        <ViewModels:CustomerViewModel/>
-                    </ComboBox.DataContext>
-
+                <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -54,14 +50,11 @@
 
                 <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="273,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
+                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="273,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                <ComboBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" ItemsSource="{Binding UsersList}">
-                    <ComboBox.DataContext>
-                        <ViewModels:UserViewModel/>
-                    </ComboBox.DataContext>
+                <ComboBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30">                   
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -74,10 +67,7 @@
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
         </Grid>
         <Grid>
-            <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="2,367,0,0" Height="30" ItemsSource="{Binding ProductList}" SelectionChanged="ComboBox_SelectionChanged">
-                <ComboBox.DataContext>
-                    <ViewModels:ProductViewModel/>
-                </ComboBox.DataContext>
+            <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="2,367,0,0" Height="30"  SelectionChanged="ComboBox_SelectionChanged">                
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
