@@ -74,7 +74,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
             dtPickerFrom.SelectedDate = null;
             dtPickerTo.SelectedDate = null;
-            txtBoxCustomer.Text = null;
+            txtBoxCustomer.Clear();
             invoiceDataGrid.ItemsSource = invVModel.invoiceList;
         }        
 

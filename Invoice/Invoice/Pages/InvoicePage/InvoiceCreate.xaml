@@ -76,7 +76,7 @@
         <Grid>
             <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="2,367,0,0" Height="30" ItemsSource="{Binding ProductList}" SelectionChanged="ComboBox_SelectionChanged">
                 <ComboBox.DataContext>
-                    <ViewModels:ProductViwModel/>
+                    <ViewModels:ProductViewModel/>
                 </ComboBox.DataContext>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

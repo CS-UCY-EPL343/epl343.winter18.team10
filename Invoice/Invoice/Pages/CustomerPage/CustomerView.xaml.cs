@@ -84,7 +84,11 @@ namespace InvoiceX.Pages.CustomerPage
 
         private void btnClearFilters_Click(object sender, RoutedEventArgs e)
         {
-            filterList();
+            txtBoxFrom.Clear();
+            txtBoxTo.Clear();
+            txtBoxCustomer.Clear();
+            txtBoxCity.Clear();
+            customerDataGrid.ItemsSource = custViewModel.CustomersList;
         }
 
         private void TxtBoxFrom_TextChanged(object sender, TextChangedEventArgs e)

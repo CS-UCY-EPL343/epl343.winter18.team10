@@ -1,0 +1,64 @@
+﻿<Page x:Class="InvoiceX.Pages.ProductPage.ProductView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:InvoiceX.Pages.ProductPage"
+      mc:Ignorable="d" 
+      d:DesignHeight="950" d:DesignWidth="1725"
+      Title="ProductView">
+
+    <Grid x:Name="viewTab" Background="White">
+        <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
+            <Border.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Border.Effect>
+            <Label x:Name="label" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,35,0,0" Height="66" Width="134" FontSize="36"/>
+        </Border>
+
+        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top" Width="1099">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Grid.Effect>
+            <TextBox x:Name="txtBoxProduct" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center" TextChanged="TxtBoxProduct_TextChanged"/>
+            <Label x:Name="label1" Content="By Category: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <TextBox x:Name="txtBoxCategory" HorizontalAlignment="Left" Margin="157,37,0,0" VerticalAlignment="Top" Height="30" Width="352" FontSize="16" TextChanged="TxtBoxCategory_TextChanged"/>
+            <Label x:Name="label1_Copy" Content="By Product: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Button x:Name="btnClearFilters" Content="Clear Filters" HorizontalAlignment="Left" Margin="575,82,0,0" VerticalAlignment="Top" Width="318" Height="31" FontSize="18" Click="BtnClearFilters_Click"/>
+            <Label x:Name="label1_Copy1" Content="By Status: " HorizontalAlignment="Left" Margin="575,33,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <ComboBox x:Name="cmbBoxStatus" HorizontalAlignment="Left" Margin="671,37,0,0" VerticalAlignment="Top" Width="222" Height="30" SelectionChanged="CmbBoxStatus_SelectionChanged">
+                <ComboBoxItem Content="All"/>
+                <ComboBoxItem Content="Low Stock"/>
+                <ComboBoxItem Content="Stock"/>
+            </ComboBox>
+
+        </Grid>
+
+        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Grid.Effect>
+            <Label x:Name="label1_Copy4" Content="Search:" HorizontalAlignment="Left" Margin="37,27,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <TextBox x:Name="textBox3_Copy" HorizontalAlignment="Left" Height="37" Margin="37,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center"/>
+        </Grid>
+        
+        <DataGrid x:Name="productDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+            <DataGrid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </DataGrid.Effect>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header = "Product ID" Binding = "{Binding idProduct}" />
+                <DataGridTextColumn Header = "Product" Binding = "{Binding ProductName}" />
+                <DataGridTextColumn Header = "Description" Binding = "{Binding ProductDescription}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding Cost, StringFormat=F2}" />
+                <DataGridTextColumn Header = "Base Price" Binding = "{Binding SellPrice, StringFormat=F2}" />
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding Vat}" />
+                <DataGridTextColumn Header = "Status" Binding = "{Binding LowStock}" />
+                <DataGridTextColumn Header = "Stock" Binding = "{Binding Stock}" />
+            </DataGrid.Columns>
+
+        </DataGrid>
+    </Grid>
+</Page>

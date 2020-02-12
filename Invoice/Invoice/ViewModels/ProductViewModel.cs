@@ -9,14 +9,12 @@ using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 namespace InvoiceX.ViewModels
 {
-    class ProductViwModel
+    class ProductViewModel
     {
         public List<Product> ProductList { get; set; }
-        public ProductViwModel()
+        public ProductViewModel()
         {
             ProductList = new List<Product>();
-
-
 
             MySqlConnection conn;
             string myConnectionString;
@@ -32,8 +30,6 @@ namespace InvoiceX.ViewModels
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-
-
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var idProductsdb = dataRow.Field<int>("idProduct");
@@ -42,16 +38,12 @@ namespace InvoiceX.ViewModels
                     var Stockdb = dataRow.Field<int>("Stock");
                     var MinStockdb = dataRow.Field<int>("MinStock");
                     var Costdb = dataRow.Field<float>("Cost");
-                    var SellPricedb = dataRow.Field<float>("SellPrice");
-                    
-
-
-
+                    var SellPricedb = dataRow.Field<float>("SellPrice");            
 
                     ProductList.Add(
                         new Product()
                         {
-                            idProducts= idProductsdb,
+                            idProduct= idProductsdb,
                             ProductName= ProductNamedb,
                             ProductDescription= ProductDescriptiondb,
                             Stock= Stockdb,
@@ -59,9 +51,7 @@ namespace InvoiceX.ViewModels
                             Cost= Costdb,
                             SellPrice= SellPricedb
                         });
-
                 }
-
 
                 conn.Close();
             }
@@ -70,14 +60,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-
-
-
-
-
-
     }
-
 }
 
 

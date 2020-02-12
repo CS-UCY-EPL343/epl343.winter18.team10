@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvoiceX.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,29 +21,36 @@ namespace InvoiceX.Pages.ProductPage
     /// </summary>
     public partial class ProductMain : Page
     {
+        ProductView viewPage = new ProductView();
         public ProductMain()
         {
             InitializeComponent();
-        }
-
-        private void btnViewAll_Click(object sender, RoutedEventArgs e)
-        {
-
+            btnView_Click(new object(), new RoutedEventArgs());
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-
+            resetAllBtnStyles();
+            btnView.Style = FindResource("ButtonStyleSelected") as Style;
+            productPage.Content = viewPage;
+            viewPage.load();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-
+            resetAllBtnStyles();
+            btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            resetAllBtnStyles();
+            btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
+        }
 
+        private void resetAllBtnStyles()
+        {
+            btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
         }
     }
 }
