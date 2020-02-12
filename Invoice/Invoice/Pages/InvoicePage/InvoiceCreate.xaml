@@ -108,8 +108,7 @@
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
                 <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />
-               
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />               
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>

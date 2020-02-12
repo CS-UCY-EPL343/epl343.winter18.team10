@@ -135,6 +135,9 @@
     <Compile Include="Pages\InvoicePage\InvoiceMain.xaml.cs">
       <DependentUpon>InvoiceMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\InvoicePage\InvoiceView.xaml.cs">
+      <DependentUpon>InvoiceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\InvoicePage\InvoiceViewAll.xaml.cs">
       <DependentUpon>InvoiceViewAll.xaml</DependentUpon>
     </Compile>
@@ -187,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\InvoicePage\InvoiceMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\InvoicePage\InvoiceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

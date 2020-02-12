@@ -59,14 +59,7 @@ namespace InvoiceX.ViewModels
                             m_VAT = VAT,
                             m_totalCost = invTotalCost,
                             m_date = date,
-                            m_products = new List<InvoiceProduct>()
-
-                            //m_idInvoice = Convert.ToInt32(dataRow[dt.Columns.IndexOf("idInvoice")]),
-                            //m_customer = Convert.ToInt32(dataRow[dt.Columns.IndexOf("idCustomer")]),
-                            //m_cost = Convert.ToDouble(dataRow[dt.Columns.IndexOf("Cost")]),
-                            //m_VAT = Convert.ToDouble(dataRow[dt.Columns.IndexOf("VAT")]),
-                            //m_totalCost = Convert.ToDouble(dataRow[dt.Columns.IndexOf("TotalCost")]),
-                            //m_date = Convert.ToDateTime(dataRow[dt.Columns.IndexOf("Date")])
+                            m_products = new List<InvoiceProduct>()                           
                         };
                         previousID = idInvoice;
                     }
