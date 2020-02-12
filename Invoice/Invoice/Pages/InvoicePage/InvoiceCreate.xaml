@@ -9,16 +9,16 @@
       Title="InvoiceCreate">
 
     <Page.Resources>
-        
+
     </Page.Resources>
 
     <!-- Create Invoice Starts Here -->
     <Grid x:Name="createTab" Background="White" Visibility="Visible">
-        <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="358" VerticalAlignment="Top" Width="1725">
+        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="394" VerticalAlignment="Top" Width="1725">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="413,16,0,0" VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
@@ -41,51 +41,65 @@
                 <TextBlock HorizontalAlignment="Left" Margin="178,198,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,16,0,0" VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
                 <TextBlock HorizontalAlignment="Left" Margin="139,28,0,0" TextWrapping="Wrap" Text="Invoice No." VerticalAlignment="Top"/>
-
                 <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="273,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged_1"/>
+                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="273,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                <ComboBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30">                   
+                <ComboBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock  Text="{Binding UserName }"/>
+                                <TextBlock  Text="{Binding username }"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="198,312,0,0" VerticalAlignment="Top" Width="1419">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+                <TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
+                <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="10,31,0,0" Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock  Text="{Binding ProductName }"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <TextBox   x:Name="textBox_ProductDescription"  HorizontalAlignment="Left" Height="30" Margin="215,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="625" />
+                <TextBox   x:Name="textBox_ProductStock"     HorizontalAlignment="Left" Margin="845,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="80" RenderTransformOrigin="0.362,-2.4" IsReadOnly="True"/>
+                <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="930,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" TextChanged="TextBox_ProductQuantity_TextChanged"/>
+                <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="995,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
+                <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1116,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" IsReadOnly="True"/>
+                <TextBox x:Name="textBox_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1171,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1292,31,0,0" VerticalAlignment="Top" Width="116" Click="Button_Click" Height="30"/>
+                <TextBlock HorizontalAlignment="Left" Margin="215,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="845,11,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="930,11,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="995,11,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="1116,11,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" RenderTransformOrigin="0.418,1.734"/>
+                <TextBlock HorizontalAlignment="Left" Margin="1171,11,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top"/>
+
+            </Grid>
         </Grid>
-        <Grid>
-            <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200" Margin="2,367,0,0" Height="30"  SelectionChanged="ComboBox_SelectionChanged">                
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock  Text="{Binding ProductName }"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <TextBox   x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="30" Margin="206,367,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="534" TextChanged="TextBox_TextChanged_2" Text="Description"/>
-            <TextBlock x:Name="textBlock_ProductStock"     HorizontalAlignment="Left" Margin="744,367,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top" Height="30" Width="80"/>
-            <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="830,367,0,0" TextWrapping="Wrap" Text="Quantity" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductQuantity_TextChanged"/>
-            <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="954,367,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top" Width="120" TextChanged="TextBox_ProductPrice_TextChanged"/>
-            <TextBlock x:Name="textBlock_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1080,365,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="50"/>
-            <TextBlock x:Name="textBlock_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1134,365,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top" Width="116"/>
-            <Button Content="Add" HorizontalAlignment="Left" Margin="1272,363,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Grid Margin="61,51,-61,-51">
+
+
         </Grid>
 
-        <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="424" Margin="0,404,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
@@ -98,7 +112,7 @@
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
                 <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />               
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
@@ -112,16 +126,21 @@
 
         <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="948,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click"/>
         <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="770,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click"/>
-        <TextBox HorizontalAlignment="Left" Height="90" Margin="10,849,0,0" TextWrapping="Wrap" Text="Enter a message for customer..." VerticalAlignment="Top" Width="414"/>
-        <TextBlock HorizontalAlignment="Left" Margin="10,828,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..." GotFocus="TextBox_GotFocus" VerticalAlignment="Top" Width="414" />
+        <TextBlock HorizontalAlignment="Left" Margin="10,842,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
         <Button Content="Preview&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="592,856,0,0" Height="74" Click="previewPdf_click"/>
         <Button Content="Complete" HorizontalAlignment="Left" Margin="1126,856,0,0" VerticalAlignment="Top" Width="174" Height="74"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,836,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,863,0,0" TextWrapping="Wrap" Text="Vat 19%" VerticalAlignment="Top" Width="81"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,888,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,835,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
-        <TextBlock x:Name="Vat_TextBlock" HorizontalAlignment="Left" Margin="1548,860,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,885,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat 19%" VerticalAlignment="Top" Width="81"/>
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,906,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>
+        <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
+        <TextBlock x:Name="Vat_TextBlock" HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0"/>
+        <Grid Margin="71,62,-71,-62"/>
+        <Grid Margin="71,72,-71,-72"/>
+        <Grid Margin="71,97,-71,-97"/>
+        <Grid/>
+        <Grid Margin="0,0,10,0"/>
 
     </Grid>
     <!-- Create Invoice Ends Here -->

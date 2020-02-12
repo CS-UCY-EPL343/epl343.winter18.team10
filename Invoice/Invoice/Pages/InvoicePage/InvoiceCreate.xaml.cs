@@ -29,6 +29,7 @@ namespace InvoiceX.Pages.InvoicePage
         ProductViewModel productView;
         UserViewModel userView;
         CustomerViewModel customerView;
+       
 
         public InvoiceCreate()
         {
@@ -236,29 +237,17 @@ namespace InvoiceX.Pages.InvoicePage
 
 
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
+        
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
-            textBlock_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
+            textBox_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
             textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
-            textBlock_ProductVat.Text = "19%";
-
+            double vat= ((Product)comboBox_Product.SelectedItem).Vat;
+            vat = Math.Round(vat, 2);
+            textBox_ProductVat.Text = vat.ToString()+" %";
+           
 
         }
 
@@ -267,7 +256,7 @@ namespace InvoiceX.Pages.InvoicePage
             int n;
             if (int.TryParse(textBox_ProductQuantity.Text, out n))
             {
-                textBlock_ProductAmount.Text = (((Product)comboBox_Product.SelectedItem).SellPrice * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
 
 
@@ -278,13 +267,22 @@ namespace InvoiceX.Pages.InvoicePage
             int n;
             if (int.TryParse(textBox_ProductPrice.Text, out n) && int.TryParse(textBox_ProductQuantity.Text, out n))
             {
-                textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
+        }
+
+        private bool Check_AddProduct_ComplitedValues() {
+            bool all_completed = false;
+
+            if (comboBox_Product.SelectedIndex > -1) { }
+
+
+                return all_completed;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            //if (Check_AddProduct_ComplitedValues()) MessageBox.Show("alakse to combobox");
             invoiceDataGrid2.Items.Add(new Product
             {
                 ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
@@ -292,13 +290,13 @@ namespace InvoiceX.Pages.InvoicePage
                 Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
                 SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
                 Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
-                Total = Convert.ToDouble(textBlock_ProductAmount.Text),
-                Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
+                Total = Convert.ToDouble(textBox_ProductAmount.Text),
+                Vat = Convert.ToDouble(textBox_ProductAmount.Text) + (Convert.ToDouble(textBox_ProductAmount.Text) * 0.19)
             });
 
             double NetTotal_TextBlock_var = 0;
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBlock_ProductAmount.Text);
+            NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBox_ProductAmount.Text);
             NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
             Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
@@ -317,6 +315,13 @@ namespace InvoiceX.Pages.InvoicePage
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
             invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
 
+        }
+        /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
+        public void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= TextBox_GotFocus;
         }
     }
 }
