@@ -150,9 +150,9 @@
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnOffer" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="520" Click="BtnOffer_Click">
+            <Button x:Name="btnQuote" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="520" Click="BtnQuote_Click">
                 <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="575">
-                    <TextBlock  Text="Offer" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
+                    <TextBlock  Text="Quote" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
                     <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
                         <Path  Width="16" Height="6" Stretch="uniform" Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13"  />
                         <Ellipse  Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1"  />

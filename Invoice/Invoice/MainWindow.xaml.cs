@@ -2,6 +2,7 @@
 using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
 using InvoiceX.Pages.ProductPage;
+using InvoiceX.Pages.QuotePage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,7 @@ namespace InvoiceX
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
         //private Page m_order;
-        //private Page m_offer;
+        private Page m_quote = new QuoteCreate();
         //private Page m_expenses;
         //private Page m_settings;
 
@@ -45,7 +46,7 @@ namespace InvoiceX
         {
             btnDashboard.Style = btnInvoice.Style = btnReceipt.Style = 
             btnCreditNote.Style = btnStatement.Style = btnProduct.Style = 
-            btnCustomers.Style = btnOrder.Style = btnOffer.Style = 
+            btnCustomers.Style = btnOrder.Style = btnQuote.Style = 
             btnExpenses.Style = btnSettings.Style = FindResource("sideMenuBtnStyle") as Style;
         }
 
@@ -109,11 +110,12 @@ namespace InvoiceX
             btnOrder.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
-        private void BtnOffer_Click(object sender, RoutedEventArgs e)
+        private void BtnQuote_Click(object sender, RoutedEventArgs e)
         {
-            pageTitle.Text = "Offer";
+            pageTitle.Text = "Quote";
+            MainPage.Content = m_quote;
             resetAllBtnStyles();
-            btnOffer.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            btnQuote.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
         private void BtnExpenses_Click(object sender, RoutedEventArgs e)
