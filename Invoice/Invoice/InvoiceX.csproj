@@ -296,5 +296,8 @@
   <ItemGroup>
     <Resource Include="Forms\Quote.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logout.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

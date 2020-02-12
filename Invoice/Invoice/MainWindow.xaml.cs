@@ -132,6 +132,24 @@ namespace InvoiceX
             btnSettings.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
 
-        
+        private void btnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            string msgtext = "You are about to logout and return to the login screen. Are you sure?";
+            string txt = "Logout";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    LoginWindow loginWindow = new LoginWindow();
+                    loginWindow.Show();
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:                    
+                    break;                
+            }
+            
+        }
     }
 }
