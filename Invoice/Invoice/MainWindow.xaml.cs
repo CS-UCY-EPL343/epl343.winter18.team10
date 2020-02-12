@@ -1,4 +1,5 @@
 ﻿using InvoiceX.Pages;
+using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace InvoiceX
         //private Page m_creditNote;
         //private Page m_statement;
         //private Page m_product;
-        //private Page m_customers;
+        private Page m_customer = new CustomerMain();
         //private Page m_order;
         //private Page m_offer;
         //private Page m_expenses;
@@ -94,6 +95,7 @@ namespace InvoiceX
         private void BtnCustomers_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Customers";
+            MainPage.Content = m_customer;
             resetAllBtnStyles();
             btnCustomers.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }

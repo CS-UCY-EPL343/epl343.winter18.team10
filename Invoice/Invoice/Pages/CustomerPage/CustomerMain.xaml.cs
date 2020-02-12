@@ -20,29 +20,37 @@ namespace InvoiceX.Pages.CustomerPage
     /// </summary>
     public partial class CustomerMain : Page
     {
+        CustomerView viewPage = new CustomerView();
+
         public CustomerMain()
         {
             InitializeComponent();
-        }
-
-        private void btnViewAll_Click(object sender, RoutedEventArgs e)
-        {
-
+            btnView_Click(new object(), new RoutedEventArgs());
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-
+            resetAllBtnStyles();
+            btnView.Style = FindResource("ButtonStyleSelected") as Style;
+            customerPage.Content = viewPage;
+            viewPage.load();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
-
+            resetAllBtnStyles();
+            btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
+            resetAllBtnStyles();
+            btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
+        }
 
+        private void resetAllBtnStyles()
+        {
+            btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
         }
     }
 }

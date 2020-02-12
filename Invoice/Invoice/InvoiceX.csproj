@@ -123,6 +123,9 @@
     <Compile Include="Pages\CustomerPage\CustomerMain.xaml.cs">
       <DependentUpon>CustomerMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CustomerPage\CustomerView.xaml.cs">
+      <DependentUpon>CustomerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -165,6 +168,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\CustomerPage\CustomerMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CustomerPage\CustomerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
