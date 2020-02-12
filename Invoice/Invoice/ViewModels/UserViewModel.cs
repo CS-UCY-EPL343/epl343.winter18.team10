@@ -33,7 +33,7 @@ namespace InvoiceX.ViewModels
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var NameDB = dataRow.Field<string>("idUser");
-                    var PasswordDB = dataRow.Field<int>("Password_p");
+                    var PasswordDB = dataRow.Field<string>("Password_p");
                     var AdminDB = dataRow.Field<bool>("AdminPrivileges");
 
                     UsersList.Add(

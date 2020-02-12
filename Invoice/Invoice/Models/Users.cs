@@ -9,8 +9,7 @@ namespace InvoiceX.Models
     class Users
     {
         public string UserName { get; set; }
-        public int UserPassword { get; set; }
-
+        public string UserPassword { get; set; }
         public bool admin { get; set; }
 
 
