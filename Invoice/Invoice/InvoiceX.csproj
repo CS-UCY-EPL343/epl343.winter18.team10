@@ -114,6 +114,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\QuoteForm.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceProduct.cs" />
     <Compile Include="Models\Product.cs" />
@@ -128,6 +129,9 @@
     </Compile>
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuotePage\QuoteCreate.xaml.cs">
+      <DependentUpon>QuoteCreate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InvoicePage\InvoiceCreate.xaml.cs">
       <DependentUpon>InvoiceCreate.xaml</DependentUpon>
@@ -181,6 +185,10 @@
     <Page Include="Pages\Dashboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuotePage\QuoteCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\InvoicePage\InvoiceCreate.xaml">
       <SubType>Designer</SubType>
@@ -278,6 +286,8 @@
   <ItemGroup>
     <Resource Include="Images\logo-2.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Forms\Quote.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
