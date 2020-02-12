@@ -24,6 +24,6 @@ INSERT INTO `InvoiceProduct` (`idInvoice`, `idProduct`, `Quantity`, `Cost`, `VAT
 				   (4, 3, 3, 50, 0.19),
 				   (4, 4, 4, 50, 0.19);
 				   
-INSERT INTO `User` (`idUser`, `Password_p`, `AdminPrivileges`) 
-			VALUES ('admin', 'pass', 1);
+INSERT INTO `User` (`idUser`, `Hash`, `Salt`, `AdminPrivileges`) 
+			VALUES ('admin', 'hash', 'salt', 1);
 			

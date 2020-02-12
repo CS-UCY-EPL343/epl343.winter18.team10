@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace InvoiceX.Models
 {
-    class Users
+    class User
     {
-        public string UserName { get; set; }
-        public string UserPassword { get; set; }
+        public string username { get; set; }
+        public string hash { get; set; }
+        public string salt { get; set; }
         public bool admin { get; set; }
-
-
-
     }
 }

@@ -11,10 +11,10 @@ namespace InvoiceX.ViewModels
 {
     class UserViewModel
     {
-        public List<Users> UsersList { get; set; }
+        public List<User> UsersList { get; set; }
         public UserViewModel()
         {
-            UsersList = new List<Users>();
+            UsersList = new List<User>();
 
             MySqlConnection conn;
             string myConnectionString;
@@ -33,14 +33,14 @@ namespace InvoiceX.ViewModels
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var NameDB = dataRow.Field<string>("idUser");
-                    var PasswordDB = dataRow.Field<string>("Password_p");
+                    var PasswordDB = dataRow.Field<string>("Hash");
                     var AdminDB = dataRow.Field<bool>("AdminPrivileges");
 
                     UsersList.Add(
-                        new Users()
+                        new User()
                         {
-                            UserName = NameDB,
-                            UserPassword = PasswordDB,
+                            username = NameDB,
+                            hash = PasswordDB,
                             admin = AdminDB
                         });
                 }

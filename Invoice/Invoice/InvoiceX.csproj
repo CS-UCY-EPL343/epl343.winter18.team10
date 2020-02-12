@@ -114,13 +114,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\QuoteForm.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceProduct.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customers.cs" />
-    <Compile Include="Models\Users.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Pages\CustomerPage\CustomerMain.xaml.cs">
       <DependentUpon>CustomerMain.xaml</DependentUpon>
     </Compile>

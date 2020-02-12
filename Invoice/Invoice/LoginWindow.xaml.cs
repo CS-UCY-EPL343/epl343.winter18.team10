@@ -1,8 +1,11 @@
-﻿using MySql.Data.MySqlClient;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -31,58 +34,74 @@ namespace InvoiceX
 
         private void login_button_Click(object sender, RoutedEventArgs e)
         {
+            HashSalt hashSalt = HashSalt.GenerateSaltedHash(16, txtPassword.Password);
+            MessageBox.Show(hashSalt.Hash + ", " + hashSalt.Salt);
+            //User user = getUserByUsername(txtUsername.Text);
+
+            //if (user.username != null)
+            //{
+            //    bool isPasswordMatched = VerifyPassword(txtPassword.Password, user.hash, user.salt);
+
+            //    if (isPasswordMatched)
+            //    {
+            //        //Login Successfull
+            //        MainWindow mainWindow = new MainWindow();
+            //        mainWindow.Show();
+            //        this.Close();
+            //    }
+            //    else
+            //    {
+            //        //Login Failed
+            //        MessageBox.Show("Password is invalid");
+            //    }
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Username is invalid");
+            //}
+        }
+
+        private User getUserByUsername(string username)
+        {
             MySqlConnection conn;
             string myConnectionString;
 
             myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
                                  "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
-            string username = txtUsername.Text;
-            string password = txtPassword.Password;
-            bool response = false;
-            bool adminPrivileges = false;
+            User user = new User();  
             try
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand();
-                cmd.Connection = conn;
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM User WHERE idUser = " + username, conn);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
 
-                cmd.CommandText = "login_authentication";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.AddWithValue("@userID", username);
-                cmd.Parameters["@userID"].Direction = ParameterDirection.Input;
-
-                cmd.Parameters.AddWithValue("@pass", password);
-                cmd.Parameters["@pass"].Direction = ParameterDirection.Input;
-
-                cmd.Parameters.AddWithValue("@response", MySqlDbType.Bool);
-                cmd.Parameters["@response"].Direction = ParameterDirection.Output;
-
-                cmd.Parameters.AddWithValue("@admin_priv", MySqlDbType.Bool);
-                cmd.Parameters["@admin_priv"].Direction = ParameterDirection.Output;
-
-                response = Convert.ToBoolean(cmd.Parameters["@response"].Value);
-                adminPrivileges = Convert.ToBoolean(cmd.Parameters["@admin_priv"].Value);
-
-                cmd.ExecuteNonQuery();
-                conn.Close();
-                if (response)
+                if (dt.Rows.Count != 0)
                 {
-                    MainWindow wnd = new MainWindow();
-                    wnd.Show();
-                    this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Invalid Username/Password!");
-                }
+                    return new User()
+                    {
+                        username = dt.Rows[0].Field<string>("idUser"),
+                        hash = dt.Rows[0].Field<string>("Hash"),
+                        salt = dt.Rows[0].Field<string>("Salt"),
+                        admin = dt.Rows[0].Field<bool>("AdminPrivileges"),
+                    };
+                }               
+
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
+
+            return user;
+        }
+
+        private bool VerifyPassword(string enteredPassword, string storedHash, string storedSalt)
+        {
+            var saltBytes = Convert.FromBase64String(storedSalt);
+            var rfc2898DeriveBytes = new Rfc2898DeriveBytes(enteredPassword, saltBytes, 10000);
+            return Convert.ToBase64String(rfc2898DeriveBytes.GetBytes(256)) == storedHash;
         }
 
         private void password_KeyDown(object sender, KeyEventArgs e)
