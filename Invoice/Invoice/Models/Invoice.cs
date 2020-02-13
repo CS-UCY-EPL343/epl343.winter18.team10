@@ -8,13 +8,15 @@ namespace InvoiceX.Models
 {
     public class Invoice
     {
-        public DateTime m_date { get; set; }
+        public DateTime m_createdDate { get; set; }
+        public DateTime m_dueDate { get; set; }
         public int m_idInvoice { get; set; }
-        public string m_customer { get; set; }
+        public string m_customerName { get; set; }
         public double m_cost { get; set; }
         public double m_VAT { get; set; }
         public double m_totalCost { get; set; }
         public List<InvoiceProduct> m_products { get; set; }
+        public Customers m_customer { get; set; }
 
     }
 }

@@ -61,9 +61,9 @@
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate-->
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_date, StringFormat=d, ConverterCulture='fr-FR'}" />                
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />                
                 <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
-                <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customer}" />
+                <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customerName}" />
                 <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost, StringFormat=C, ConverterCulture='fr-FR'}"/>
                 <DataGridTextColumn Header = "VAT" Binding = "{Binding m_VAT, StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTextColumn Header = "Total Cost" Binding = "{Binding m_totalCost, StringFormat=C, ConverterCulture='fr-FR'}" />

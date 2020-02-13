@@ -13,12 +13,12 @@ namespace InvoiceX.ViewModels
     public class CustomerViewModel
     {
         public List<Customers> CustomersList { get; set; }
-        public CustomerViewModel() 
+        public CustomerViewModel()
         {
             CustomersList = new List<Customers>();
 
-         
-          
+
+
             MySqlConnection conn;
             string myConnectionString;
 
@@ -33,8 +33,8 @@ namespace InvoiceX.ViewModels
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                
-                
+
+
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var idCustomerDB = dataRow.Field<int>("idCustomer");
@@ -46,7 +46,6 @@ namespace InvoiceX.ViewModels
                     var AddressDB = dataRow.Field<string>("Address");
                     var BalanceDB = dataRow.Field<float>("Balance");
 
-
                     CustomersList.Add(
                         new Customers()
                         {
@@ -57,12 +56,10 @@ namespace InvoiceX.ViewModels
                             Country = CountryDB,
                             City = CityDB,
                             Address = AddressDB,
-                            Balance= BalanceDB
+                            Balance = BalanceDB
 
-                        } );
-                       
-                    }
-                   
+                        });
+                }
 
                 conn.Close();
             }
@@ -71,13 +68,13 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-       
 
 
 
 
 
-    }
 
     }
+
+}
 

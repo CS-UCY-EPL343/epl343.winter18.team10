@@ -59,13 +59,13 @@ namespace InvoiceX.Pages.InvoicePage
 
             var item = obj as Invoice;
             if (dateFrom.HasValue)
-                logic = logic & (item.m_date.CompareTo(dateFrom.Value) >= 0);
+                logic = logic & (item.m_createdDate.CompareTo(dateFrom.Value) >= 0);
 
             if (dateTo.HasValue)
-                logic = logic & (item.m_date.CompareTo(dateTo.Value) <= 0);
+                logic = logic & (item.m_createdDate.CompareTo(dateTo.Value) <= 0);
 
             if (!string.IsNullOrWhiteSpace(customerName))
-                logic = logic & (item.m_customer.ToLower().Contains(customerName.ToLower()));
+                logic = logic & (item.m_customerName.ToLower().Contains(customerName.ToLower()));
 
             return logic;
         }
