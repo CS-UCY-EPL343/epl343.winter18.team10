@@ -27,7 +27,7 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceCreate : Page
     {
         ProductViewModel productView;
-        UserViewModel userView;
+        //UserViewModel userView;
         CustomerViewModel customerView;
        
 
@@ -40,13 +40,15 @@ namespace InvoiceX.Pages.InvoicePage
         {
             Btn_clearProduct_Click(new object(),new RoutedEventArgs());
             productView = new ProductViewModel();
-            userView = new UserViewModel();
+           // userView = new UserViewModel();
             customerView = new CustomerViewModel();
 
-            issuedBy.ItemsSource = userView.UsersList;
+            //issuedBy.ItemsSource = userView.UsersList;
             comboBox_customer.ItemsSource = customerView.CustomersList;
             comboBox_Product.ItemsSource = productView.ProductList;
             textBox_invoiceNumber.Text=ReturnLatestInvoiceID();
+            invoiceDate.SelectedDate = DateTime.Today;//set curent date 
+            dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
         }
 
         string ReturnLatestInvoiceID() {
@@ -85,9 +87,12 @@ namespace InvoiceX.Pages.InvoicePage
             return "0";
            
         }
+
+
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (comboBox_customer.SelectedIndex != -1)
+            comboBox_customer_border.BorderThickness = new Thickness(0);
+            if (comboBox_customer.SelectedIndex > -1)
             {
                 textBox_Customer.Text = ((Customers)comboBox_customer.SelectedItem).CustomerName;
                 textBox_Address.Text = ((Customers)comboBox_customer.SelectedItem).Address + ", " +
@@ -95,6 +100,7 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
                 textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
             }
+            
 
 
         }
@@ -236,6 +242,7 @@ namespace InvoiceX.Pages.InvoicePage
             Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
             MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
             return document;
+           
 
         }
 
@@ -247,7 +254,6 @@ namespace InvoiceX.Pages.InvoicePage
         {
             if (comboBox_Product.SelectedIndex > -1)
             {
-
                 comboBox_Product_border.BorderThickness = new Thickness(0);
                 textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
                 textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
@@ -290,15 +296,18 @@ namespace InvoiceX.Pages.InvoicePage
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
-            if (!int.TryParse(textBox_ProductQuantity.Text, out n)){
+            if (!int.TryParse(textBox_ProductQuantity.Text, out n))
+            {
                 all_completed = false;
                 textBox_ProductQuantity.BorderBrush = Brushes.Red;
             }
-            if (!int.TryParse(textBox_ProductPrice.Text, out n)) {
+            else { textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty); }
+            if (!int.TryParse(textBox_ProductPrice.Text, out n))
+            {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;
             }
-
+            else { textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty); }
 
                 return all_completed;
         }
@@ -309,6 +318,7 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 invoiceDataGrid2.Items.Add(new Product
                 {
+                    idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
                     ProductDescription = textBox_ProductDescription.Text,
                     Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
@@ -365,6 +375,159 @@ namespace InvoiceX.Pages.InvoicePage
             textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
             textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
 
+        }
+
+        private bool Check_CustomerForm()
+        {
+            if (comboBox_customer.SelectedIndex <= -1)
+            {
+                comboBox_customer_border.BorderBrush = Brushes.Red;
+                comboBox_customer_border.BorderThickness = new Thickness(1);
+                return false;
+            }
+            return true;
+        }
+
+        private bool Check_DetailsForm()
+        {
+            if (issuedBy.Text.Equals(""))
+            {
+                issuedBy.BorderBrush = Brushes.Red;
+                return false;
+            }
+            return true;
+        }
+
+        private bool Has_Items_Selected()
+        {
+
+            if (invoiceDataGrid2.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
+            {
+                MessageBox.Show("You havent selectet any products");
+                return false;
+            }
+            return true;
+        }
+
+
+        private void Send_Ivoice_and_Products_to_DB()
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idInvoice", textBox_invoiceNumber.Text);
+                    cmd.Parameters.AddWithValue("@idCustomer", ((Customers)comboBox_customer.SelectedItem).idCustomer);
+                    cmd.Parameters.AddWithValue("@Cost", NetTotal_TextBlock.Text);
+                    cmd.Parameters.AddWithValue("@Vat", Vat_TextBlock.Text);
+                    cmd.Parameters.AddWithValue("@TotalCost", TotalAmount_TextBlock.Text);
+                    cmd.Parameters.AddWithValue("@CreatedDate", invoiceDate.SelectedDate.Value.Date);
+                    cmd.Parameters.AddWithValue("@DueDate", dueDate.SelectedDate.Value.Date);
+                    cmd.Parameters.AddWithValue("@IssuedBy", issuedBy.Text);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct,Quantity,Cost,VAT) VALUES ");
+                List<string> Rows = new List<string>();
+
+               // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
+
+                foreach (Product p in invoiceDataGrid2.Items)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text), MySqlHelper.EscapeString(p.idProduct.ToString()), MySqlHelper.EscapeString(p.Quantity.ToString()), MySqlHelper.EscapeString(p.Total.ToString()), MySqlHelper.EscapeString(p.Vat.ToString().Replace(',', '.'))));
+                    //using (MySqlCommand cmd3 = new MySqlCommand("SELECT Stock FROM Product WHERE idProduct=4; UPDATE Product SET Stock = Stock+100 WHERE idProduct=4;", conn)){ cmd3.ExecuteNonQuery();}
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+                 MessageBox.Show(sCommand.ToString());
+
+
+
+
+
+                conn.Close();
+                MessageBox.Show("Invoice was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+        private void Btn_Complete_Click(object sender, RoutedEventArgs e)
+        {
+            bool ALL_VALUES_OK = true;
+            if (!Check_CustomerForm()) ALL_VALUES_OK = false;
+            if (!Check_DetailsForm()) ALL_VALUES_OK = false;
+            if (!Has_Items_Selected()) ALL_VALUES_OK = false;
+            if (ALL_VALUES_OK) Send_Ivoice_and_Products_to_DB();
+        }
+
+       
+
+        private void Clear_Customer()
+        {
+            comboBox_customer.SelectedIndex = -1;
+            textBox_Customer.Text = "";
+            textBox_Address.Text = "";
+            textBox_Contact_Details.Text = "";
+            textBox_Email_Address.Text = "";
+        }
+
+        private void Clear_Details()
+        {
+
+            issuedBy.Text = "";
+            issuedBy.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void Clear_ProductGrid()
+        {
+            invoiceDataGrid2.Items.Clear();
+            NetTotal_TextBlock.Text = "0.00";
+            Vat_TextBlock.Text = "0.00";
+            TotalAmount_TextBlock.Text = "0.00";
+            textBox_entermessage.Text = "Write a message here ...";
+        }
+
+
+
+        private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
+        {
+            comboBox_customer_border.BorderThickness = new Thickness(0);
+            Btn_clearProduct_Click(new object(), new RoutedEventArgs());
+            Clear_Customer();
+            Clear_Details();
+            Clear_ProductGrid();
+            load();
+
+
+
+        }
+
+        private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
     }
 }
