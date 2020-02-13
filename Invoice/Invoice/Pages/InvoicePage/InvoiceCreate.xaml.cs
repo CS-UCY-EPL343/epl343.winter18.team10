@@ -450,7 +450,7 @@ namespace InvoiceX.Pages.InvoicePage
                 foreach (Product p in invoiceDataGrid2.Items)
                 {
                     Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text), MySqlHelper.EscapeString(p.idProduct.ToString()), MySqlHelper.EscapeString(p.Quantity.ToString()), MySqlHelper.EscapeString(p.Total.ToString()), MySqlHelper.EscapeString(p.Vat.ToString().Replace(',', '.'))));
-                    //using (MySqlCommand cmd3 = new MySqlCommand("SELECT Stock FROM Product WHERE idProduct=4; UPDATE Product SET Stock = Stock+100 WHERE idProduct=4;", conn)){ cmd3.ExecuteNonQuery();}
+                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-"+ p.Quantity.ToString() + ") WHERE idProduct="+ p.idProduct.ToString() + ";", conn)){ cmd3.ExecuteNonQuery();}
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
@@ -459,12 +459,6 @@ namespace InvoiceX.Pages.InvoicePage
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
-                 MessageBox.Show(sCommand.ToString());
-
-
-
-
 
                 conn.Close();
                 MessageBox.Show("Invoice was send to Data Base");
