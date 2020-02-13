@@ -237,7 +237,7 @@ namespace InvoiceX.Pages.QuotePage
                 SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
                 Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
                 Total = Convert.ToDouble(textBlock_ProductAmount.Text),
-                Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
+                //Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
             });
 
             double NetTotal_TextBlock_var = 0;

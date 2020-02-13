@@ -52,7 +52,8 @@ namespace InvoiceX.ViewModels
                             MinStock = MinStockdb,
                             Cost = Costdb,
                             SellPrice = SellPricedb,
-                            Vat = Vatdb
+                            Vat = Vatdb,
+                            Quantity=1
                         });
                 }
 

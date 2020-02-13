@@ -38,6 +38,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void load()
         {
+            Btn_clearProduct_Click(new object(),new RoutedEventArgs());
             productView = new ProductViewModel();
             userView = new UserViewModel();
             customerView = new CustomerViewModel();
@@ -86,11 +87,14 @@ namespace InvoiceX.Pages.InvoicePage
         }
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            textBox_Address.Text = ((Customers)comboBox_customer.SelectedItem).Address + ", " +
-            ((Customers)comboBox_customer.SelectedItem).City + ", " + ((Customers)comboBox_customer.SelectedItem).Country;
-            textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
-            textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
+            if (comboBox_customer.SelectedIndex != -1)
+            {
+                textBox_Customer.Text = ((Customers)comboBox_customer.SelectedItem).CustomerName;
+                textBox_Address.Text = ((Customers)comboBox_customer.SelectedItem).Address + ", " +
+                 ((Customers)comboBox_customer.SelectedItem).City + ", " + ((Customers)comboBox_customer.SelectedItem).Country;
+                textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
+                textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
+            }
 
 
         }
@@ -241,22 +245,29 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
-            textBox_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
-            textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
-            double vat= ((Product)comboBox_Product.SelectedItem).Vat;
-            vat = Math.Round(vat, 2);
-            textBox_ProductVat.Text = vat.ToString()+" %";
-           
+            if (comboBox_Product.SelectedIndex > -1)
+            {
+
+                comboBox_Product_border.BorderThickness = new Thickness(0);
+                textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+                textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+                textBox_Product.Text = ((Product)comboBox_Product.SelectedItem).ProductName;
+                textBox_ProductQuantity.Text = ((Product)comboBox_Product.SelectedItem).Quantity.ToString();
+                textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
+                textBox_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
+                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
+                textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
+            }
 
         }
 
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
+
             int n;
-            if (int.TryParse(textBox_ProductQuantity.Text, out n))
+            if (int.TryParse(textBox_ProductQuantity.Text, out n) &&  float.TryParse(textBox_ProductPrice.Text, out float f)&&(comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductAmount.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
 
 
@@ -265,42 +276,58 @@ namespace InvoiceX.Pages.InvoicePage
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             int n;
-            if (int.TryParse(textBox_ProductPrice.Text, out n) && int.TryParse(textBox_ProductQuantity.Text, out n))
+            if (float.TryParse(textBox_ProductPrice.Text, out float f) && int.TryParse(textBox_ProductQuantity.Text, out n) && (comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductAmount.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
         }
 
         private bool Check_AddProduct_ComplitedValues() {
-            bool all_completed = false;
-
-            if (comboBox_Product.SelectedIndex > -1) { }
+            bool all_completed = true;
+            int n;
+            if (comboBox_Product.SelectedIndex <= -1) {
+                all_completed = false;
+                comboBox_Product_border.BorderBrush = Brushes.Red;
+                comboBox_Product_border.BorderThickness = new Thickness(1);
+            }
+            if (!int.TryParse(textBox_ProductQuantity.Text, out n)){
+                all_completed = false;
+                textBox_ProductQuantity.BorderBrush = Brushes.Red;
+            }
+            if (!int.TryParse(textBox_ProductPrice.Text, out n)) {
+                all_completed = false;
+                textBox_ProductPrice.BorderBrush = Brushes.Red;
+            }
 
 
                 return all_completed;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            //if (Check_AddProduct_ComplitedValues()) MessageBox.Show("alakse to combobox");
-            invoiceDataGrid2.Items.Add(new Product
+            if (Check_AddProduct_ComplitedValues())
             {
-                ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
-                ProductDescription = textBox_ProductDescription.Text,
-                Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
-                SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
-                Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
-                Total = Convert.ToDouble(textBox_ProductAmount.Text),
-                Vat = Convert.ToDouble(textBox_ProductAmount.Text) + (Convert.ToDouble(textBox_ProductAmount.Text) * 0.19)
-            });
+                invoiceDataGrid2.Items.Add(new Product
+                {
+                    ProductName = textBox_Product.Text,
+                    ProductDescription = textBox_ProductDescription.Text,
+                    Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
+                    SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
+                    Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
+                    Total = Convert.ToDouble(textBox_ProductAmount.Text),
+                    Vat = ((Product)comboBox_Product.SelectedItem).Vat
+                });
 
-            double NetTotal_TextBlock_var = 0;
-            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBox_ProductAmount.Text);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
-
+                double NetTotal_TextBlock_var = 0;
+                NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
+                NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBox_ProductAmount.Text);
+                NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
+                double Vat_TextBlock_var = 0;
+                Vat_TextBlock_var = Convert.ToDouble(Vat_TextBlock.Text);
+                Vat_TextBlock_var = Vat_TextBlock_var + (Convert.ToDouble(textBox_ProductAmount.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
+                Vat_TextBlock.Text = (Vat_TextBlock_var).ToString("n2");
+                TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + Vat_TextBlock_var).ToString("n2");
+            }
         }
 
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
@@ -310,9 +337,9 @@ namespace InvoiceX.Pages.InvoicePage
             double NetTotal_TextBlock_var = 0;
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
             NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
+            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
+            Vat_TextBlock.Text = (NetTotal_TextBlock_var * (CurrentCell_Product.Vat)).ToString("n2");
+            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * (CurrentCell_Product.Vat))).ToString("n2");
             invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
 
         }
@@ -322,6 +349,22 @@ namespace InvoiceX.Pages.InvoicePage
             TextBox tb = (TextBox)sender;
             tb.Text = string.Empty;
             tb.GotFocus -= TextBox_GotFocus;
+        }
+
+        public void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
+        {
+            comboBox_Product.SelectedIndex = -1;
+            textBox_Product.Text = "";
+            textBox_ProductDescription.Text = "";
+            textBox_ProductStock.Text = "";
+            textBox_ProductQuantity.Text = "";
+            textBox_ProductPrice.Text = "";
+            textBox_ProductVat.Text = "";
+            textBox_ProductAmount.Text = "";
+            comboBox_Product_border.BorderThickness = new Thickness(0);
+            textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+            textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+
         }
     }
 }

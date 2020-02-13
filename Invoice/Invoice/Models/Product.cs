@@ -15,7 +15,7 @@ namespace InvoiceX.Models
         public int MinStock { get; set; }
         public Double Cost { get; set; }
         public Double SellPrice { get; set; }
-        public double Vat { get; set; }
+        public float Vat { get; set; }
         private bool _LowStock;
         public bool LowStock
         {
