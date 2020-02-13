@@ -26,7 +26,8 @@ namespace InvoiceX.Pages.ProductPage
 
         public ProductView()
         {
-            InitializeComponent();            
+            InitializeComponent();
+            cmbBoxStatus.SelectionChanged += new SelectionChangedEventHandler(CmbBoxStatus_SelectionChanged);
         }
 
         public void load()

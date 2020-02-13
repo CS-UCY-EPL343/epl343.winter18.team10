@@ -33,32 +33,30 @@ namespace InvoiceX
         }
 
         private void login_button_Click(object sender, RoutedEventArgs e)
-        {
-            HashSalt hashSalt = HashSalt.GenerateSaltedHash(16, txtPassword.Password);
-            MessageBox.Show(hashSalt.Hash + ", " + hashSalt.Salt);
-            //User user = getUserByUsername(txtUsername.Text);
+        {            
+            User user = getUserByUsername(txtUsername.Text);
 
-            //if (user.username != null)
-            //{
-            //    bool isPasswordMatched = VerifyPassword(txtPassword.Password, user.hash, user.salt);
+            if (user.username != null)
+            {
+                bool isPasswordMatched = VerifyPassword(txtPassword.Password, user.hash, user.salt);
 
-            //    if (isPasswordMatched)
-            //    {
-            //        //Login Successfull
-            //        MainWindow mainWindow = new MainWindow();
-            //        mainWindow.Show();
-            //        this.Close();
-            //    }
-            //    else
-            //    {
-            //        //Login Failed
-            //        MessageBox.Show("Password is invalid");
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Username is invalid");
-            //}
+                if (isPasswordMatched)
+                {
+                    //Login Successfull
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    //Login Failed
+                    MessageBox.Show("Password is invalid");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Username is invalid");
+            }
         }
 
         private User getUserByUsername(string username)
@@ -73,7 +71,7 @@ namespace InvoiceX
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM User WHERE idUser = " + username, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM User WHERE idUser = \"" + username + "\"", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 

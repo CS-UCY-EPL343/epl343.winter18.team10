@@ -71,6 +71,7 @@
         <Setter Property="Width" Value="125"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="FontSize" Value="16"/>
     </Style>
     <!-- Top Button Selected Style -->
     <Style x:Key="ButtonStyleSelected" TargetType="{x:Type Button}">
@@ -78,8 +79,10 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="Height" Value="60"/>
         <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="#FFCCDBDC"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0,0,0,5"/>
+        <Setter Property="BorderBrush" Value="#FFAC2525"/>
+        <Setter Property="FontSize" Value="16"/>
     </Style>
 
 </ResourceDictionary>
