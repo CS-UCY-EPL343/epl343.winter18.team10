@@ -83,7 +83,32 @@
         <Setter Property="BorderThickness" Value="0,0,0,5"/>
         <Setter Property="BorderBrush" Value="#FFEE1515"/>
         <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="#FFEE1515"/>
+        <Setter Property="Foreground" Value="#FFEE1515"/> 
+    </Style>
+    <!--  Button diafanes apo mesa blue -->
+    <Style x:Key="ButtonStyle_Complete" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="125"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1,1,1,1"/>
+        <Setter Property="BorderBrush" Value="#FF5960FF"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="#FF5960FF"/>
+    </Style>
+
+    <!--  Button diafanes apo mesa blue -->
+    <Style x:Key="ButtonStyle_X" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="125"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="1,1,1,1"/>
+        <Setter Property="BorderBrush" Value="#FF5960FF"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="Red"/>
     </Style>
 
 </ResourceDictionary>

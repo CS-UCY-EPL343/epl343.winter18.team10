@@ -85,7 +85,7 @@
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>
                 <TextBox x:Name="textBox_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddProduct" Height="30"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddProduct" Height="30"  Style="{StaticResource ButtonStyle_Complete}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1024,11,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top"/>
@@ -94,10 +94,10 @@
                 <TextBlock HorizontalAlignment="Left" Margin="1295,11,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" RenderTransformOrigin="0.418,1.734"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1350,11,0,0" TextWrapping="Wrap" Text="Total" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1335,39,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Width="12" Height="17"/>
-                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"/>
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{StaticResource ButtonStyle_X}" />
             </Grid>
-            <Button x:Name="Btn_clearAll" Content="Clear &amp; Refresh" HorizontalAlignment="Left" Margin="59,168,0,0" VerticalAlignment="Top" Width="223" Height="64" FontSize="30" Click="Btn_clearAll_Click" />
 
+            <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="81,154,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
 
         </Grid>
 
@@ -113,9 +113,9 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice,StringFormat=C}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total}" />
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
@@ -127,18 +127,21 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="948,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="770,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click"/>
+        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click" Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click" Style="{StaticResource ButtonStyle_Complete}"/>
         <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..." GotFocus="TextBox_GotFocus" VerticalAlignment="Top" Width="414" />
         <TextBlock HorizontalAlignment="Left" Margin="10,842,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
-        <Button Content="Preview&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="592,856,0,0" Height="74" Click="previewPdf_click"/>
-        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1126,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  />
+        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Click="previewPdf_click" Style="{StaticResource ButtonStyle_Complete}" />
+        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
+
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,906,0,0" TextWrapping="Wrap" Text="Total Cost" VerticalAlignment="Top" Width="81"/>
         <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"/>
         <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"  />
         <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
+        
 
         <Grid/>
 
