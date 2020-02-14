@@ -111,4 +111,28 @@
         <Setter Property="Foreground" Value="Red"/>
     </Style>
 
+    <Style x:Key="ButtonStyle_Create" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="125"/>
+        <Setter Property="Background" Value="#FF0078D6"/>
+        <Setter Property="BorderBrush" Value="#FF5960FF"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="Foreground" Value="White"/>
+        
+    </Style>
+
+    <Style x:Key="ButtonStyle_Cancel" TargetType="Button">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="Height" Value="60"/>
+        <Setter Property="Width" Value="125"/>
+        <Setter Property="Background" Value="#FF949494"/>
+        <Setter Property="BorderBrush" Value="#FF5960FF"/>
+        <Setter Property="FontSize" Value="30"/>
+        <Setter Property="Foreground" Value="White"/>
+
+    </Style>
+
 </ResourceDictionary>

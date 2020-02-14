@@ -52,6 +52,8 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_invoiceNumber.Text = ReturnLatestInvoiceID();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
+                textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message
+                
             }
             Refresh_DB_data = false;
         }

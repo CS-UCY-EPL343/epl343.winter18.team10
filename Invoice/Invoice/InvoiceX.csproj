@@ -130,6 +130,9 @@
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ProductPage\ProductCreate.xaml.cs">
+      <DependentUpon>ProductCreate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\QuotePage\QuoteCreate.xaml.cs">
       <DependentUpon>QuoteCreate.xaml</DependentUpon>
     </Compile>
@@ -183,6 +186,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\Dashboard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ProductPage\ProductCreate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

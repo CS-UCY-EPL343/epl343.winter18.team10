@@ -129,7 +129,7 @@
 
         <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click" Style="{StaticResource ButtonStyle_Complete}"/>
         <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click" Style="{StaticResource ButtonStyle_Complete}"/>
-        <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..." GotFocus="TextBox_GotFocus" VerticalAlignment="Top" Width="414" />
+        <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..."  VerticalAlignment="Top" Width="414" />
         <TextBlock HorizontalAlignment="Left" Margin="10,842,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
         <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Click="previewPdf_click" Style="{StaticResource ButtonStyle_Complete}" />
         <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
