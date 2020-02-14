@@ -29,6 +29,7 @@ namespace InvoiceX.Pages.InvoicePage
         ProductViewModel productView;
         //UserViewModel userView;
         CustomerViewModel customerView;
+        bool Refresh_DB_data = true;
        
 
         public InvoiceCreate()
@@ -38,17 +39,21 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void load()
         {
-            Btn_clearProduct_Click(new object(),new RoutedEventArgs());
-            productView = new ProductViewModel();
-           // userView = new UserViewModel();
-            customerView = new CustomerViewModel();
+            if (Refresh_DB_data)
+            {
+                //Btn_clearProduct_Click(new object(),new RoutedEventArgs());
+                productView = new ProductViewModel();
+                // userView = new UserViewModel();
+                customerView = new CustomerViewModel();
 
-            //issuedBy.ItemsSource = userView.UsersList;
-            comboBox_customer.ItemsSource = customerView.CustomersList;
-            comboBox_Product.ItemsSource = productView.ProductList;
-            textBox_invoiceNumber.Text=ReturnLatestInvoiceID();
-            invoiceDate.SelectedDate = DateTime.Today;//set curent date 
-            dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
+                //issuedBy.ItemsSource = userView.UsersList;
+                comboBox_customer.ItemsSource = customerView.CustomersList;
+                comboBox_Product.ItemsSource = productView.ProductList;
+                textBox_invoiceNumber.Text = ReturnLatestInvoiceID();
+                invoiceDate.SelectedDate = DateTime.Today;//set curent date 
+                dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
+            }
+            Refresh_DB_data = false;
         }
 
         string ReturnLatestInvoiceID() {
@@ -513,6 +518,7 @@ namespace InvoiceX.Pages.InvoicePage
             Clear_Customer();
             Clear_Details();
             Clear_ProductGrid();
+            Refresh_DB_data = true;
             load();
 
 
