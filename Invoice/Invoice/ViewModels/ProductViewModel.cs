@@ -40,7 +40,7 @@ namespace InvoiceX.ViewModels
                     var Costdb = dataRow.Field<float>("Cost");
                     var SellPricedb = dataRow.Field<float>("SellPrice");       
                     var Vatdb = dataRow.Field<float>("VAT");
-                    //var Categorydb = dataRow.Field<string>("Category");
+                    var Categorydb = dataRow.Field<string>("Category");
 
                     ProductList.Add(
                         new Product()
@@ -53,6 +53,7 @@ namespace InvoiceX.ViewModels
                             Cost = Costdb,
                             SellPrice = SellPricedb,
                             Vat = Vatdb,
+                            Category = Categorydb,
                             Quantity=1
                         });
                 }

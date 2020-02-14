@@ -16,6 +16,7 @@ namespace InvoiceX.Models
         public Double Cost { get; set; }
         public Double SellPrice { get; set; }
         public float Vat { get; set; }
+        public string Category { get; set; }
         private bool _LowStock;
         public bool LowStock
         {
@@ -28,10 +29,9 @@ namespace InvoiceX.Models
             }
             set { _LowStock = value; }
         }
-        public string Category { get; set; }
 
 
-        //these are used only in the new invoice grid
+        //these are used only in the new invoice product grid
         public Double Total { get; set; }
         public int Quantity { get; set; }
 

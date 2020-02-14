@@ -27,51 +27,38 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT `Invoice`.*, `Customer`.`CustomerName` FROM `Invoice`" +
+                    " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                var previousID = -1;
                 Invoice inv = new Invoice();
                 foreach (DataRow dataRow in dt.Rows)
-                {
-                    var idInvoice = dataRow.Field<Int32>("InvoiceID");
+                {                   
                     var customer = dataRow.Field<string>("CustomerName");
-                    var cost = dataRow.Field<float>("InvoiceCost");
+                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    var cost = dataRow.Field<float>("Cost");
                     var VAT = dataRow.Field<float>("VAT");
-                    var invTotalCost = dataRow.Field<float>("InvoiceTotalCost");
-                    var date = dataRow.Field<DateTime>("CreatedDate");
+                    var invTotalCost = dataRow.Field<float>("TotalCost");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                    var dueDate = dataRow.Field<DateTime>("DueDate");
+                    var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    var product = dataRow.Field<string>("ProductName");
-                    var proTotalCost = dataRow.Field<float>("IPCost");
-                    var quantity = dataRow.Field<Int32>("Quantity");
-
-                    if (previousID != idInvoice)
-                    {
-                        if (previousID != -1)
-                            invoiceList.Add(inv);
-
-                        inv = new Invoice()
-                        {
-                            m_idInvoice = idInvoice,
-                            m_customerName = customer,
-                            m_cost = cost,
-                            m_VAT = VAT,
-                            m_totalCost = invTotalCost,
-                            m_createdDate = date,
-                            m_products = new List<InvoiceProduct>()
-                        };
-                        previousID = idInvoice;
-                    }
-                    inv.m_products.Add(new InvoiceProduct()
+                    inv = new Invoice()
                     {
                         m_idInvoice = idInvoice,
-                        m_productName = product,
-                        m_quantity = quantity,
-                        m_totalCost = proTotalCost
-                    });
+                        m_customerName = customer,
+                        m_cost = cost,
+                        m_VAT = VAT,
+                        m_totalCost = invTotalCost,
+                        m_createdDate = createdDate,
+                        m_dueDate = dueDate,
+                        m_issuedBy = issuedBy
+                    };
+
+                    invoiceList.Add(inv);
                 }
-                invoiceList.Add(inv);
+
 
                 conn.Close();
             }
@@ -93,7 +80,7 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE idInvoice = " + invoiceID, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
@@ -104,23 +91,28 @@ namespace InvoiceX.ViewModels
                     var phoneNumber = dataRow.Field<int>("PhoneNumber");
                     var email = dataRow.Field<string>("Email");
                     var address = dataRow.Field<string>("Address");
+                    var country = dataRow.Field<string>("Country");
+                    var city = dataRow.Field<string>("City");
 
                     var idInvoice = dataRow.Field<Int32>("InvoiceID");
                     var cost = dataRow.Field<float>("InvoiceCost");
-                    var VAT = dataRow.Field<float>("VAT");
+                    var VAT = dataRow.Field<float>("InvoiceVAT");
                     var invTotalCost = dataRow.Field<float>("InvoiceTotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
+                    var productID = dataRow.Field<Int32>("idProduct");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
                     var proTotalCost = dataRow.Field<float>("IPCost");
+                    var proVat = dataRow.Field<float>("IPVAT");
                     var quantity = dataRow.Field<Int32>("Quantity");
 
                     if (count == 0)
                     {
+                        count++;
                         inv = new Invoice()
                         {
                             m_idInvoice = idInvoice,
@@ -130,23 +122,30 @@ namespace InvoiceX.ViewModels
                             m_totalCost = invTotalCost,
                             m_createdDate = createdDate,
                             m_dueDate = dueDate,
-                            m_products = new List<InvoiceProduct>(),
+                            m_issuedBy = issuedBy,
+                            m_products = new List<Product>(),
                             m_customer = new Customers()
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
                                 Email = email,
-                                Address = address
+                                Address = address,
+                                Country = country,
+                                City = city
                             }
                         };
                     }
 
-                    inv.m_products.Add(new InvoiceProduct()
+                    inv.m_products.Add(new Product()
                     {
-                        m_idInvoice = idInvoice,
-                        m_productName = product,
-                        m_quantity = quantity,
-                        m_totalCost = proTotalCost
+                        idProduct = productID,
+                        ProductName = product,
+                        ProductDescription = prodDescription,
+                        Stock = stock,
+                        Total = proTotalCost,
+                        Quantity = quantity,
+                        Cost = proTotalCost / quantity,
+                        Vat = proVat
                     });
                 }
 

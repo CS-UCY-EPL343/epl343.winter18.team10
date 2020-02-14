@@ -18,7 +18,7 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Customer" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" IsReadOnly="True" />
                 <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True"/>
                 <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True"/>
                 <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True"/>
@@ -39,14 +39,14 @@
                 <TextBox x:Name="invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True"/>
-                <Button x:Name="loadInvoice" Content="Load Invoice" HorizontalAlignment="Left" Margin="291,48,0,0" VerticalAlignment="Top" Width="106" Height="31" Click="LoadInvoice_Click"/>
+                <Button x:Name="btn_loadInvoice" Content="Load Invoice" HorizontalAlignment="Left" Margin="291,48,0,0" VerticalAlignment="Top" Width="106" Height="31" Click="Btn_LoadInvoice_Click"/>
 
 
             </Grid>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" Text="View Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
         </Grid>
 
-        <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="invoiceProductsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
@@ -65,7 +65,7 @@
 
         <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="948,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click"/>
         <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="770,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click"/>
-        <Button Content="Preview&#xD;&#xA;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="592,856,0,0" Height="74" Click="previewPdf_click"/>
+        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="592,856,0,0" Height="74" Click="previewPdf_click"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,836,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,863,0,0" TextWrapping="Wrap" Text="Vat 19%" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,888,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>

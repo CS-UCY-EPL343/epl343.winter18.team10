@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InvoiceX.Models;
+using InvoiceX.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,13 +22,30 @@ namespace InvoiceX.Pages.InvoicePage
     /// </summary>
     public partial class InvoiceView : Page
     {
+        private Invoice invoice;
+
         public InvoiceView()
         {
             InitializeComponent();
         }
-        private void LoadInvoice_Click(object sender, RoutedEventArgs e)
-        {
 
+        private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(invoiceNumber.Text, out int invoiceID);
+            if (invoiceID != 0)
+            {
+                loadInvoice(invoiceID);
+            }
+            else
+            {
+                //not a number
+            }
+        }
+
+        public void loadInvoice(int invoiceID)
+        {
+            invoice = InvoiceViewModel.getInvoiceById(invoiceID);
+            invoiceProductsGrid.ItemsSource = invoice.m_products;
         }
 
         #region PDF

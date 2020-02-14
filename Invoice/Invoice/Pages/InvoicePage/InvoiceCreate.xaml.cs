@@ -449,8 +449,12 @@ namespace InvoiceX.Pages.InvoicePage
 
                 foreach (Product p in invoiceDataGrid2.Items)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text), MySqlHelper.EscapeString(p.idProduct.ToString()), MySqlHelper.EscapeString(p.Quantity.ToString()), MySqlHelper.EscapeString(p.Total.ToString()), MySqlHelper.EscapeString(p.Vat.ToString().Replace(',', '.'))));
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-"+ p.Quantity.ToString() + ") WHERE idProduct="+ p.idProduct.ToString() + ";", conn)){ cmd3.ExecuteNonQuery();}
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text), 
+                        MySqlHelper.EscapeString(p.idProduct.ToString()), MySqlHelper.EscapeString(p.Quantity.ToString()), 
+                        MySqlHelper.EscapeString(p.Total.ToString()), MySqlHelper.EscapeString(p.Vat.ToString().Replace(',', '.'))));
+
+                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-"+ 
+                        p.Quantity.ToString() + ") WHERE idProduct="+ p.idProduct.ToString() + ";", conn)){ cmd3.ExecuteNonQuery();}
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
@@ -468,6 +472,8 @@ namespace InvoiceX.Pages.InvoicePage
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
+
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
             bool ALL_VALUES_OK = true;
