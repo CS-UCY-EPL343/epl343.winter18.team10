@@ -18,12 +18,12 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="114" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBox x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="114" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" />
                 <TextBlock HorizontalAlignment="Left" Margin="178,29,0,0" TextWrapping="Wrap" Text="Product Name" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="180,85,0,0" TextWrapping="Wrap" Text="Category" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="178,141,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_ProductName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True" />
-                <TextBox x:Name="textBox_ProductCategory" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True" />
+                <TextBox x:Name="textBox_ProductName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" />
+                <TextBox x:Name="textBox_ProductCategory" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" />
 
 
             </Grid>
@@ -55,7 +55,7 @@
 
 
 
-        <Button Content="Create"  Margin="619,480,981,410" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="619,480,981,410" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createProduct_Click"  />
         <Button x:Name="Btn_clearProduct" Content="Cancel" Margin="824,480,776,410" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
 

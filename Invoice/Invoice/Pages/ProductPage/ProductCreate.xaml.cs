@@ -34,6 +34,14 @@ namespace InvoiceX.Pages.ProductPage
            
         }
 
+        private void Btn_createProduct_Click(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox_ProductName.Text)) textBox_ProductName.BorderBrush = Brushes.Red;
+            if (string.IsNullOrWhiteSpace(textBox_ProductCategory.Text)) textBox_ProductCategory.BorderBrush = Brushes.Red;
+            if (string.IsNullOrWhiteSpace(textBox_ProductDescription.Text)) textBox_ProductDescription.BorderBrush = Brushes.Red;
+            if (!int.TryParse(txtBlock_ProductCurrentStock.Text, out int a)) txtBlock_ProductCurrentStock.BorderBrush = Brushes.Red;
 
+            
+        }
     }
 }
