@@ -90,18 +90,16 @@ namespace InvoiceX.Pages.InvoicePage
         private void dtPickerTo_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             filterList();
-        }
-
-        private void btnOptions_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("View, Edit, Delete");
-        }
+        }               
 
         private void txtBoxCustomer_TextChanged(object sender, TextChangedEventArgs e)
         {
             filterList();
-        }
+        }        
 
-        
+        private void ViewInvoice_Click(object sender, RoutedEventArgs e)
+        {
+           // InvoiceView.loadInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);
+        }
     }
 }

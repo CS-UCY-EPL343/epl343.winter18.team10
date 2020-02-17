@@ -8,9 +8,9 @@
       Title="InvoiceViewAll">
 
     <Page.Resources>
-        
+
     </Page.Resources>
-    
+
     <!-- View Invoice Starts Here -->
     <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
@@ -61,7 +61,7 @@
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate-->
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />                
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />
                 <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
                 <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customerName}" />
                 <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost, StringFormat=C, ConverterCulture='fr-FR'}"/>
@@ -70,15 +70,50 @@
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnOptions" Width="40" Height="40" Click="btnOptions_Click">
+                            <!--Image Source="/Images/3dots.png" Width="50" Height="50">
+                                        <Image.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="Menu item 1" />
+                                                <MenuItem Header="Menu item 2" />
+                                                <Separator />
+                                                <MenuItem Header="Menu item 3" />
+                                            </ContextMenu>
+                                        </Image.ContextMenu>
+                                    </-->
+                            <Button x:Name="btnOptions" Width="40" Height="40">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
                                             <Ellipse Fill="#FFE4E0E0"/>
-                                            <TextBlock Text="…" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold"/>
+                                            <TextBlock Text="⋮" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="25"/>
                                         </Grid>
                                     </ControlTemplate>
                                 </Button.Template>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="View Invoice" Click="ViewInvoice_Click"/>
+                                        <MenuItem Header="Edit Invoice" />
+                                        <Separator />
+                                        <MenuItem Header="Delete Invoice" />
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <EventTrigger RoutedEvent="Click">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                            </BooleanAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>                                    
+                                </Button.Style>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

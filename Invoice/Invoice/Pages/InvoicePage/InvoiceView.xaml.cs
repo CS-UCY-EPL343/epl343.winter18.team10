@@ -31,7 +31,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(invoiceNumber.Text, out int invoiceID);
+            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
             if (invoiceID != 0)
             {
                 loadInvoice(invoiceID);
@@ -45,7 +45,32 @@ namespace InvoiceX.Pages.InvoicePage
         public void loadInvoice(int invoiceID)
         {
             invoice = InvoiceViewModel.getInvoiceById(invoiceID);
+
+            // Customer details
+            textBox_Customer.Text = invoice.m_customer.CustomerName;
+            textBox_Contact_Details.Text = invoice.m_customer.PhoneNumber.ToString();
+            textBox_Email_Address.Text = invoice.m_customer.Email;
+            textBox_Address.Text = invoice.m_customer.Address + ", " + invoice.m_customer.City + ", " + invoice.m_customer.Country;
+
+            // Invoice details
+            txtBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
+            txtBox_invoiceDate.Text = invoice.m_createdDate.ToString();
+            txtBox_dueDate.Text = invoice.m_dueDate.ToString();
+            txtBox_issuedBy.Text = invoice.m_issuedBy;
+            NetTotal_TextBlock.Text = invoice.m_cost.ToString("N2");
+            Vat_TextBlock.Text = invoice.m_VAT.ToString("N2");
+            TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("N2");
+
+            // Invoice products           
             invoiceProductsGrid.ItemsSource = invoice.m_products;
+        }
+
+        private void txtBox_invoiceNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Btn_LoadInvoice_Click(new object(), new RoutedEventArgs());
+            }
         }
 
         #region PDF
@@ -65,5 +90,6 @@ namespace InvoiceX.Pages.InvoicePage
         }
         #endregion
 
+        
     }
 }
