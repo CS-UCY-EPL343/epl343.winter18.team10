@@ -9,12 +9,13 @@ namespace InvoiceX.Classes
 {
     public class HashSalt
     {
+        private static int saltSize = 75;
         public string Hash { get; set; }
         public string Salt { get; set; }
 
-        public static HashSalt GenerateSaltedHash(int size, string password)
+        public static HashSalt GenerateSaltedHash(string password)
         {
-            var saltBytes = new byte[size];
+            var saltBytes = new byte[saltSize];
             var provider = new RNGCryptoServiceProvider();
             provider.GetNonZeroBytes(saltBytes);
             var salt = Convert.ToBase64String(saltBytes);

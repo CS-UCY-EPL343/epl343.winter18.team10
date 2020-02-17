@@ -36,7 +36,7 @@
                     </TextBox.Style>                    
                 </TextBox>                
                 <TextBlock  Text="PASSWORD" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Margin="79,94,447,173" Grid.Row="1" RenderTransformOrigin="0.782,0.575" />
-                <PasswordBox x:Name="txtPassword"  Width="446" FontSize="20" Padding="20,20,5,5" RenderTransformOrigin="0.333,3.361" Margin="79,114,79,110" Grid.Row="1" KeyDown="password_KeyDown" SelectionBrush="#FFAC2525">
+                <PasswordBox x:Name="txtPassword"  Width="446" FontSize="20" Padding="20,20,5,5" RenderTransformOrigin="0.333,3.361" Margin="79,114,79,110" Grid.Row="1" KeyDown="txtPassword_KeyDown"  SelectionBrush="#FFAC2525">
                     <PasswordBox.Style>
                         <Style TargetType="{x:Type PasswordBox}">
                             <Style.Triggers>
@@ -48,7 +48,7 @@
                         </Style>                        
                     </PasswordBox.Style>   
                 </PasswordBox>
-                <Button x:Name="login_button" FontFamily="Avenir" Padding="-5,4,5,5" FontSize="20" Foreground="#ff707070" Background="#33FFFFFF" Margin="426,195,79,74" Grid.Row="1" Click="login_button_Click">
+                <Button x:Name="btn_login" FontFamily="Avenir" Padding="-5,4,5,5" FontSize="20" Foreground="#ff707070" Background="#33FFFFFF" Margin="426,195,79,74" Grid.Row="1" Click="btn_login_Click">
                     <Button.Content>
                         <Grid Height="29" RenderTransformOrigin="0.551,-0.207">
                             <TextBlock Text="LOGIN" Margin="9,0,27,4" />

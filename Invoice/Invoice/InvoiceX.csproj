@@ -157,6 +157,9 @@
     <Compile Include="Pages\ProductPage\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SettingsPage\SettingsMain.xaml.cs">
+      <DependentUpon>SettingsMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
@@ -222,6 +225,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\ProductPage\ProductView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SettingsPage\SettingsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

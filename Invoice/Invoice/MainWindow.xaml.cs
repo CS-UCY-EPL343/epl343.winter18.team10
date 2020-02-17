@@ -3,6 +3,7 @@ using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
 using InvoiceX.Pages.ProductPage;
 using InvoiceX.Pages.QuotePage;
+using InvoiceX.Pages.SettingsPage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace InvoiceX
         //private Page m_order;
         private Page m_quote = new QuoteCreate();
         //private Page m_expenses;
-        //private Page m_settings;
+        private Page m_settings = new SettingsMain();
 
         public MainWindow()
         {
@@ -128,6 +129,7 @@ namespace InvoiceX
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Settings";
+            MainPage.Content = m_settings;
             resetAllBtnStyles();
             btnSettings.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
