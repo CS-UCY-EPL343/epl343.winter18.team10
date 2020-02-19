@@ -9,7 +9,7 @@
       Title="ProductCreate">
 
     <Grid>
-        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="429" VerticalAlignment="Top" Width="1725">
+        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="940" VerticalAlignment="Top" Width="1725">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
@@ -18,12 +18,12 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="114" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" />
+                <TextBox x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="114" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_ProductDescription_TextChanged" />
                 <TextBlock HorizontalAlignment="Left" Margin="178,29,0,0" TextWrapping="Wrap" Text="Product Name" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="180,85,0,0" TextWrapping="Wrap" Text="Category" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="178,141,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_ProductName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" />
-                <TextBox x:Name="textBox_ProductCategory" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" />
+                <TextBox x:Name="textBox_ProductName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_ProductName_TextChanged" />
+                <TextBox x:Name="textBox_ProductCategory" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_ProductCategory_TextChanged" />
 
 
             </Grid>
@@ -33,18 +33,16 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
-                <TextBlock HorizontalAlignment="Left"  Margin="130,29,0,0" TextWrapping="Wrap" Text="Current Stock" VerticalAlignment="Top"/>
-                <TextBox  x:Name="txtBlock_ProductCurrentStock" HorizontalAlignment="Left" Height="30" Margin="130,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="130,85,0,0" TextWrapping="Wrap" Text="Code" VerticalAlignment="Top"/>
-                <TextBox  x:Name="txtBlock_ProductCode" HorizontalAlignment="Left" Height="30" Margin="130,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
-                <TextBox  x:Name="txtBlock_ProductCapacity" HorizontalAlignment="Left" Height="30" Margin="130,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="130,141,0,0" TextWrapping="Wrap" Text="Capacity" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left"  Margin="130,29,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top"/>
+                <TextBox  x:Name="txtBlock_ProductCurrentStock" HorizontalAlignment="Left" Height="30" Margin="130,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533" TextChanged="TxtBlock_ProductCurrentStock_TextChanged"/>
                 <TextBlock HorizontalAlignment="Left"  Margin="275,29,0,0" TextWrapping="Wrap" Text="Minimun Stock" VerticalAlignment="Top"/>
-                <TextBox  x:Name="txtBlock_ProductMinimun_Stock" HorizontalAlignment="Left" Height="30" Margin="275,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
+                <TextBox  x:Name="txtBlock_ProductMinimun_Stock" HorizontalAlignment="Left" Height="30" Margin="275,50,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533" TextChanged="TxtBlock_ProductMinimun_Stock_TextChanged"/>
                 <TextBlock HorizontalAlignment="Left"  Margin="275,85,0,0" TextWrapping="Wrap" Text="Cost" VerticalAlignment="Top"/>
-                <TextBox  x:Name="txtBlock_ProductCost" HorizontalAlignment="Left" Height="30" Margin="275,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
-                <TextBox  x:Name="txtBlock_ProductSellPrice" HorizontalAlignment="Left" Height="30" Margin="275,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="275,141,0,0" TextWrapping="Wrap" Text="Sell Price" VerticalAlignment="Top"/>
+                <TextBox  x:Name="txtBlock_ProductCost" HorizontalAlignment="Left" Height="30" Margin="275,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533" TextChanged="TxtBlock_ProductCost_TextChanged"/>
+                <TextBox  x:Name="txtBlock_ProductSellPrice" HorizontalAlignment="Left" Height="30" Margin="130,106,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533" TextChanged="TxtBlock_ProductSellPrice_TextChanged"/>
+                <TextBlock HorizontalAlignment="Left"  Margin="130,85,0,0" TextWrapping="Wrap" Text="Sell Price" VerticalAlignment="Top"/>
+                <TextBox  x:Name="txtBlock_ProductVat" HorizontalAlignment="Left" Height="30" Margin="130,162,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.533,-0.533" TextChanged="TxtBlock_ProductVat_TextChanged"/>
+                <TextBlock HorizontalAlignment="Left"  Margin="130,141,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top"/>
 
 
             </Grid>
@@ -55,8 +53,8 @@
 
 
 
-        <Button x:Name="Btn_createProduct" Content="Create"  Margin="619,480,981,410" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createProduct_Click"  />
-        <Button x:Name="Btn_clearProduct" Content="Cancel" Margin="824,480,776,410" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="435,384,1165,506" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createProduct_Click"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="608,384,992,506" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" />
 
 
     </Grid>

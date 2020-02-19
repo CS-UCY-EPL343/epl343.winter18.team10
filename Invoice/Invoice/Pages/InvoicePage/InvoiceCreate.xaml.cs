@@ -537,5 +537,10 @@ namespace InvoiceX.Pages.InvoicePage
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
+
+        private void TextBox_Contact_Details_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
