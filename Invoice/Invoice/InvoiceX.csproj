@@ -121,6 +121,9 @@
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customers.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Pages\CustomerPage\CustomerCreate.xaml.cs">
+      <DependentUpon>CustomerCreate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CustomerPage\CustomerMain.xaml.cs">
       <DependentUpon>CustomerMain.xaml</DependentUpon>
     </Compile>
@@ -180,6 +183,10 @@
       <DependentUpon>LoginWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\CustomerPage\CustomerCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\CustomerPage\CustomerMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
