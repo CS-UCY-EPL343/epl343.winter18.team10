@@ -13,8 +13,8 @@ namespace InvoiceX.Models
         public string ProductDescription { get; set; }
         public int Stock { get; set; }
         public int MinStock { get; set; }
-        public Double Cost { get; set; }
-        public Double SellPrice { get; set; }
+        public double Cost { get; set; }
+        public double SellPrice { get; set; }
         public float Vat { get; set; }
         public string Category { get; set; }
         private bool _LowStock;

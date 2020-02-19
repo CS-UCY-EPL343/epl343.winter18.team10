@@ -60,10 +60,10 @@ namespace InvoiceX.Pages.ProductPage
                     cmd.Parameters.AddWithValue("@Description", textBox_ProductDescription.Text);
                     cmd.Parameters.AddWithValue("@Stock", txtBlock_ProductCurrentStock.Text);
                     cmd.Parameters.AddWithValue("@MinStock", txtBlock_ProductMinimun_Stock.Text);
-                    cmd.Parameters.AddWithValue("@Cost", txtBlock_ProductCost.Text);
-                    cmd.Parameters.AddWithValue("@VAT", txtBlock_ProductVat.Text);
+                    cmd.Parameters.AddWithValue("@Cost", double.Parse(txtBlock_ProductCost.Text));
+                    cmd.Parameters.AddWithValue("@VAT", double.Parse(txtBlock_ProductVat.Text));
                     cmd.Parameters.AddWithValue("@Category", textBox_ProductCategory.Text);
-                    cmd.Parameters.AddWithValue("@SellPrice", txtBlock_ProductSellPrice.Text);
+                    cmd.Parameters.AddWithValue("@SellPrice", double.Parse(txtBlock_ProductSellPrice.Text));
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
