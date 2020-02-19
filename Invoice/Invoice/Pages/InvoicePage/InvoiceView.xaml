@@ -13,7 +13,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0" VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
@@ -28,7 +28,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="178,198,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid x:Name="grid_Invoice" Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0" VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
@@ -39,9 +39,10 @@
                 <TextBox x:Name="txtBox_invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtBox_issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True"/>
-                <Button x:Name="btn_loadInvoice" Content="Load Invoice" HorizontalAlignment="Left" Margin="277,48,0,0" VerticalAlignment="Top" Width="120" Height="31" Click="Btn_LoadInvoice_Click"/>
+                <Button x:Name="btn_loadInvoice" Content="Load Invoice" HorizontalAlignment="Left" Margin="139,210,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="Btn_LoadInvoice_Click"/>
                 <TextBlock HorizontalAlignment="Left" Margin="277,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtBox_dueDate" HorizontalAlignment="Left" Margin="277,104,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                <Button x:Name="btn_clearView" Content="Clear" HorizontalAlignment="Left" Margin="277,210,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="Btn_clearView_Click"/>
 
 
             </Grid>

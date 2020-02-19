@@ -30,7 +30,7 @@ namespace InvoiceX.Pages.InvoicePage
         //UserViewModel userView;
         CustomerViewModel customerView;
         bool Refresh_DB_data = true;
-       
+
 
         public InvoiceCreate()
         {
@@ -53,12 +53,13 @@ namespace InvoiceX.Pages.InvoicePage
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
                 textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message
-                
+
             }
             Refresh_DB_data = false;
         }
 
-        string ReturnLatestInvoiceID() {
+        string ReturnLatestInvoiceID()
+        {
 
             int id_return = 0;
             MySqlConnection conn;
@@ -84,7 +85,7 @@ namespace InvoiceX.Pages.InvoicePage
                     idInvoice = "";
 
                 conn.Close();
-                return ((Convert.ToInt32(idInvoice)+1).ToString());
+                return ((Convert.ToInt32(idInvoice) + 1).ToString());
 
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -92,7 +93,7 @@ namespace InvoiceX.Pages.InvoicePage
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
             return "0";
-           
+
         }
 
 
@@ -107,10 +108,12 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
                 textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
             }
-            
+
 
 
         }
+
+        #region PDF
         private string filenamePath = null;
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
@@ -249,13 +252,10 @@ namespace InvoiceX.Pages.InvoicePage
             Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
             MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
             return document;
-           
+
 
         }
-
-
-
-        
+        #endregion
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -278,7 +278,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
 
             int n;
-            if (int.TryParse(textBox_ProductQuantity.Text, out n) &&  float.TryParse(textBox_ProductPrice.Text, out float f)&&(comboBox_Product.SelectedIndex > -1))
+            if (int.TryParse(textBox_ProductQuantity.Text, out n) && float.TryParse(textBox_ProductPrice.Text, out float f) && (comboBox_Product.SelectedIndex > -1))
             {
                 textBox_ProductAmount.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
@@ -295,10 +295,12 @@ namespace InvoiceX.Pages.InvoicePage
             }
         }
 
-        private bool Check_AddProduct_ComplitedValues() {
+        private bool Check_AddProduct_ComplitedValues()
+        {
             bool all_completed = true;
             int n;
-            if (comboBox_Product.SelectedIndex <= -1) {
+            if (comboBox_Product.SelectedIndex <= -1)
+            {
                 all_completed = false;
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
@@ -308,15 +310,21 @@ namespace InvoiceX.Pages.InvoicePage
                 all_completed = false;
                 textBox_ProductQuantity.BorderBrush = Brushes.Red;
             }
-            else { textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty); }
-            if (!int.TryParse(textBox_ProductPrice.Text, out n))
+            else
+            {
+                textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+            }
+            if (!float.TryParse(textBox_ProductPrice.Text, out float f))
             {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;
             }
-            else { textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty); }
+            else
+            {
+                textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+            }
 
-                return all_completed;
+            return all_completed;
         }
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
@@ -438,9 +446,9 @@ namespace InvoiceX.Pages.InvoicePage
 
                     cmd.Parameters.AddWithValue("@idInvoice", textBox_invoiceNumber.Text);
                     cmd.Parameters.AddWithValue("@idCustomer", ((Customers)comboBox_customer.SelectedItem).idCustomer);
-                    cmd.Parameters.AddWithValue("@Cost", NetTotal_TextBlock.Text);
-                    cmd.Parameters.AddWithValue("@Vat", Vat_TextBlock.Text);
-                    cmd.Parameters.AddWithValue("@TotalCost", TotalAmount_TextBlock.Text);
+                    cmd.Parameters.AddWithValue("@Cost", double.Parse(NetTotal_TextBlock.Text));
+                    cmd.Parameters.AddWithValue("@Vat", double.Parse(Vat_TextBlock.Text));
+                    cmd.Parameters.AddWithValue("@TotalCost", double.Parse(TotalAmount_TextBlock.Text));
                     cmd.Parameters.AddWithValue("@CreatedDate", invoiceDate.SelectedDate.Value.Date);
                     cmd.Parameters.AddWithValue("@DueDate", dueDate.SelectedDate.Value.Date);
                     cmd.Parameters.AddWithValue("@IssuedBy", issuedBy.Text);
@@ -449,19 +457,21 @@ namespace InvoiceX.Pages.InvoicePage
                 }
 
                 //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct,Quantity,Cost,VAT) VALUES ");
+                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
                 List<string> Rows = new List<string>();
 
-               // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
+                // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
 
                 foreach (Product p in invoiceDataGrid2.Items)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text), 
-                        MySqlHelper.EscapeString(p.idProduct.ToString()), MySqlHelper.EscapeString(p.Quantity.ToString()), 
-                        MySqlHelper.EscapeString(p.Total.ToString()), MySqlHelper.EscapeString(p.Vat.ToString().Replace(',', '.'))));
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text),
+                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
 
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-"+ 
-                        p.Quantity.ToString() + ") WHERE idProduct="+ p.idProduct.ToString() + ";", conn)){ cmd3.ExecuteNonQuery();}
+                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
+                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    {
+                        cmd3.ExecuteNonQuery();
+                    }
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
@@ -490,7 +500,7 @@ namespace InvoiceX.Pages.InvoicePage
             if (ALL_VALUES_OK) Send_Ivoice_and_Products_to_DB();
         }
 
-       
+
 
         private void Clear_Customer()
         {

@@ -23,10 +23,17 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceView : Page
     {
         private Invoice invoice;
+        InvoiceMain mainPage;
 
-        public InvoiceView()
+        public InvoiceView(InvoiceMain mainPage)
         {
+            this.mainPage = mainPage;
+
             InitializeComponent();
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
+            txtBox_invoiceNumber.Focus();
         }
 
         private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
@@ -54,12 +61,12 @@ namespace InvoiceX.Pages.InvoicePage
 
             // Invoice details
             txtBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
-            txtBox_invoiceDate.Text = invoice.m_createdDate.ToString();
-            txtBox_dueDate.Text = invoice.m_dueDate.ToString();
+            txtBox_invoiceDate.Text = invoice.m_createdDate.ToString("dd/mm/yyyy");
+            txtBox_dueDate.Text = invoice.m_dueDate.ToString("dd/mm/yyyy");
             txtBox_issuedBy.Text = invoice.m_issuedBy;
-            NetTotal_TextBlock.Text = invoice.m_cost.ToString("N2");
-            Vat_TextBlock.Text = invoice.m_VAT.ToString("N2");
-            TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("N2");
+            NetTotal_TextBlock.Text = invoice.m_cost.ToString("C");
+            Vat_TextBlock.Text = invoice.m_VAT.ToString("C");
+            TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("C");
 
             // Invoice products           
             invoiceProductsGrid.ItemsSource = invoice.m_products;
@@ -71,6 +78,24 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 Btn_LoadInvoice_Click(new object(), new RoutedEventArgs());
             }
+        }
+        private void Btn_clearView_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var ctrl in grid_Customer.Children)
+            {
+                if (ctrl.GetType() == typeof(TextBox))
+                    ((TextBox)ctrl).Clear();
+            }
+            foreach (var ctrl in grid_Invoice.Children)
+            {
+                if (ctrl.GetType() == typeof(TextBox))
+                    ((TextBox)ctrl).Clear();
+            }
+            invoiceProductsGrid.ItemsSource = null;
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
+            txtBox_invoiceNumber.Focus();
         }
 
         #region PDF
@@ -88,8 +113,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
 
         }
-        #endregion
 
-        
+        #endregion        
     }
 }

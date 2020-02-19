@@ -23,10 +23,12 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceViewAll : Page
     {
         InvoiceViewModel invVModel;
+        InvoiceMain mainPage;
 
-        public InvoiceViewAll()
+        public InvoiceViewAll(InvoiceMain mainPage)
         {
             InitializeComponent();
+            this.mainPage = mainPage;
         }
 
         public void load()
@@ -99,7 +101,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {
-           // InvoiceView.loadInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);
+            mainPage.loadInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);            
         }
     }
 }

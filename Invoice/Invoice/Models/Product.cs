@@ -32,7 +32,7 @@ namespace InvoiceX.Models
 
 
         //these are used only in the new invoice product grid
-        public Double Total { get; set; }
+        public double Total { get; set; }
         public int Quantity { get; set; }
 
     }

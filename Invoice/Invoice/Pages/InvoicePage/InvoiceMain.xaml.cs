@@ -14,13 +14,16 @@ namespace InvoiceX.Pages.InvoicePage
     /// </summary>
     public partial class InvoiceMain : Page
     {
-        InvoiceViewAll viewAllPage = new InvoiceViewAll();
-        InvoiceView viewPage = new InvoiceView();
-        InvoiceCreate createpage = new InvoiceCreate();
+        InvoiceViewAll viewAllPage;
+        InvoiceView viewPage;
+        InvoiceCreate createpage;
 
         public InvoiceMain()
         {
             InitializeComponent();
+            viewAllPage = new InvoiceViewAll(this);
+            viewPage = new InvoiceView(this);
+            createpage = new InvoiceCreate();
             btnViewAll_Click(new object(), new RoutedEventArgs());
         }        
 
@@ -58,6 +61,10 @@ namespace InvoiceX.Pages.InvoicePage
             btnEdit.Style = btnView.Style = btnCreate.Style =
             btnViewAll.Style =  FindResource("ButtonStyle") as Style;
         }
-
+        public void loadInvoice(int invID)
+        {
+            viewPage.loadInvoice(invID);
+            btnView_Click(null, null);
+        }
     }
 }
