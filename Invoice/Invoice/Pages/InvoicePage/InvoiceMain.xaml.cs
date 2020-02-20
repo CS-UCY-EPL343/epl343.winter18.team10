@@ -17,6 +17,8 @@ namespace InvoiceX.Pages.InvoicePage
         InvoiceViewAll viewAllPage;
         InvoiceView viewPage;
         InvoiceCreate createpage;
+        InvoiceEdit editpage;
+
 
         public InvoiceMain()
         {
@@ -24,6 +26,7 @@ namespace InvoiceX.Pages.InvoicePage
             viewAllPage = new InvoiceViewAll(this);
             viewPage = new InvoiceView(this);
             createpage = new InvoiceCreate();
+            editpage = new InvoiceEdit();
             btnViewAll_Click(new object(), new RoutedEventArgs());
         }        
 
@@ -54,6 +57,8 @@ namespace InvoiceX.Pages.InvoicePage
         {
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
+            invoicePage.Content = editpage;
+            editpage.load();
         }
 
         private void resetAllBtnStyles()
