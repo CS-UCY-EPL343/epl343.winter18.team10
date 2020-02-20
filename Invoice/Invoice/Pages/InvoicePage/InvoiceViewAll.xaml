@@ -94,7 +94,7 @@
                                         <MenuItem Header="View Invoice" Click="ViewInvoice_Click"/>
                                         <MenuItem Header="Edit Invoice" />
                                         <Separator />
-                                        <MenuItem Header="Delete Invoice" />
+                                        <MenuItem Header="Delete Invoice" Click="DeleteInvoice_Click"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                                 <Button.Style>

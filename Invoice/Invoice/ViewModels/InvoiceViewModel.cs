@@ -72,7 +72,7 @@ namespace InvoiceX.ViewModels
         {
             MySqlConnection conn;
             string myConnectionString;
-
+            
             myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
                                  "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             Invoice inv = new Invoice();
@@ -157,6 +157,31 @@ namespace InvoiceX.ViewModels
             }
 
             return inv;
+        }
+
+        public static void deleteInvoiceByID(int invoiceID)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM InvoiceProduct WHERE idInvoice = " + invoiceID, conn);
+                cmd.ExecuteNonQuery();
+
+                cmd = new MySqlCommand("DELETE FROM Invoice WHERE idInvoice = " + invoiceID, conn);
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
         }
     }
 }

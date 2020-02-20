@@ -61,6 +61,7 @@ namespace InvoiceX.Pages.InvoicePage
 
             // Invoice details
             txtBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
+            txtBox_invoiceNumber.IsReadOnly = true;
             txtBox_invoiceDate.Text = invoice.m_createdDate.ToString("dd/mm/yyyy");
             txtBox_dueDate.Text = invoice.m_dueDate.ToString("dd/mm/yyyy");
             txtBox_issuedBy.Text = invoice.m_issuedBy;
@@ -79,6 +80,7 @@ namespace InvoiceX.Pages.InvoicePage
                 Btn_LoadInvoice_Click(new object(), new RoutedEventArgs());
             }
         }
+
         private void Btn_clearView_Click(object sender, RoutedEventArgs e)
         {
             foreach (var ctrl in grid_Customer.Children)
@@ -95,6 +97,7 @@ namespace InvoiceX.Pages.InvoicePage
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
+            txtBox_invoiceNumber.IsReadOnly = false;
             txtBox_invoiceNumber.Focus();
         }
 
@@ -114,6 +117,33 @@ namespace InvoiceX.Pages.InvoicePage
 
         }
 
-        #endregion        
+        #endregion
+
+        private void Btn_delete_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
+            if (txtBox_invoiceNumber.IsReadOnly)
+            {                
+                string msgtext = "You are about to delete the invoice with ID = " + invoiceID + ". Are you sure?";
+                string txt = "Delete Invoice";
+                MessageBoxButton button = MessageBoxButton.YesNo;
+                MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        InvoiceViewModel.deleteInvoiceByID(invoiceID);
+                        Btn_clearView_Click(null, null);
+                        MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
+                        break;
+                    case MessageBoxResult.No:
+                        break;
+                }                
+            }
+            else
+            {
+                MessageBox.Show("No invoice is loaded");
+            }
+        }
     }
 }

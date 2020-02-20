@@ -103,5 +103,24 @@ namespace InvoiceX.Pages.InvoicePage
         {
             mainPage.loadInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);            
         }
+
+        private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            int invoiceID = ((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice;
+            string msgtext = "You are about to delete the invoice with ID = " + invoiceID + ". Are you sure?";
+            string txt = "Delete Invoice";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    InvoiceViewModel.deleteInvoiceByID(invoiceID);
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }            
+        }
     }
 }
