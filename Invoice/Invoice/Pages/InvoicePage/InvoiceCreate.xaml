@@ -84,7 +84,7 @@
                 <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="1109,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" TextChanged="TextBox_ProductQuantity_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>
-                <TextBox x:Name="textBox_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
+                <TextBox x:Name="textBox_ProductTotal"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True" TextChanged="TextBox_ProductTotal_TextChanged"/>
                 <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddProduct" Height="30"  Style="{StaticResource ButtonStyle_Complete}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>

@@ -41,11 +41,12 @@
                 <TextBlock HorizontalAlignment="Left" Margin="135,18,0,0" TextWrapping="Wrap" Text="Invoice No." VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="269,73,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="TextBox_invoiceNumber_TextChanged"  />
+                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"   />
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
                 <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
+                <Button Content="Load Invoice" HorizontalAlignment="Left" Margin="269,39,0,0" VerticalAlignment="Top" Width="75" Height="30" Click="Button_Click"/>
 
 
             </Grid>
@@ -72,7 +73,7 @@
                 <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="1109,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" TextChanged="TextBox_ProductQuantity_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>
-                <TextBox x:Name="textBox_ProductAmount"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
+                <TextBox x:Name="textBox_ProductTotal"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
                 <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddProduct" Height="30"  Style="{StaticResource ButtonStyle_Complete}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
@@ -88,8 +89,8 @@
         </Grid>
 
 
-        <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
-                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
+        <DataGrid x:Name="productDataGrit" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" SelectionChanged="ProductDataGrit_SelectionChanged" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </DataGrid.Effect>
@@ -99,7 +100,7 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding Cost, StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
                 <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
 
@@ -113,11 +114,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click" Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click" Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Style="{StaticResource ButtonStyle_Complete}"/>
         <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..."  VerticalAlignment="Top" Width="414" />
         <TextBlock HorizontalAlignment="Left" Margin="10,842,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
-        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Click="previewPdf_click" Style="{StaticResource ButtonStyle_Complete}" />
+        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Style="{StaticResource ButtonStyle_Complete}" />
         <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
         <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
 

@@ -183,5 +183,40 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
+        public static int ReturnLatestInvoiceID()
+        {
+            int id_return = 0;
+            MySqlConnection conn;         
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                string idInvoice;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
+                conn.Open();
+                id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idInvoice = Convert.ToString(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idInvoice = "";
+
+                conn.Close();
+                return Convert.ToInt32(idInvoice) ;
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return 0;
+        }
+
     }
+
 }

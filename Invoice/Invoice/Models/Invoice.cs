@@ -19,5 +19,6 @@ namespace InvoiceX.Models
         public Customers m_customer { get; set; }
         public string m_issuedBy { get; set; }
 
+        
     }
 }
