@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -184,69 +185,35 @@ namespace InvoiceX.Pages.InvoicePage
         }
 
 
-        private void Send_Ivoice_and_Products_to_DB()
+        private Invoice make_object_Invoice()
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
-            try
+            Invoice myinvoice;
+            int invoiceId = 0;
+            if (int.TryParse(textBox_invoiceNumber.Text, out int n))
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-                //insert Invoice 
-                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    // Now we can start using the passed values in our parameters:
-
-                    cmd.Parameters.AddWithValue("@idInvoice", textBox_invoiceNumber.Text);
-                    //cmd.Parameters.AddWithValue("@idCustomer", ((Customers)comboBox_customer.SelectedItem).idCustomer);
-                    cmd.Parameters.AddWithValue("@Cost", double.Parse(NetTotal_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@Vat", double.Parse(Vat_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@TotalCost", double.Parse(TotalAmount_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@CreatedDate", invoiceDate.SelectedDate.Value.Date);
-                    cmd.Parameters.AddWithValue("@DueDate", dueDate.SelectedDate.Value.Date);
-                    cmd.Parameters.AddWithValue("@IssuedBy", issuedBy.Text);
-                    // Execute the query
-                    cmd.ExecuteNonQuery();
-                }
-
-                //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
-                List<string> Rows = new List<string>();
-
-                // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
-
-                foreach (Product p in productDataGrit.Items)
-                {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text),
-                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
-
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
-                    {
-                        cmd3.ExecuteNonQuery();
-                    }
-                }
-                sCommand.Append(string.Join(",", Rows));
-                sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
-                {
-                    myCmd.CommandType = CommandType.Text;
-                    myCmd.ExecuteNonQuery();
-                }
-
-                conn.Close();
-                MessageBox.Show("Invoice was send to Data Base");
+                invoiceId = int.Parse(textBox_invoiceNumber.Text);
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            if (invoiceId <= InvoiceViewModel.ReturnLatestInvoiceID())
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);                
+                myinvoice = new Invoice();
+                myinvoice.m_customer = invoice.m_customer;
+                myinvoice.m_products = productDataGrit.Items.OfType<Product>().ToList();
+                myinvoice.m_idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
+                myinvoice.m_cost = double.Parse(NetTotal_TextBlock.Text);
+                myinvoice.m_VAT = double.Parse(Vat_TextBlock.Text);
+                myinvoice.m_totalCost = double.Parse(TotalAmount_TextBlock.Text);
+                myinvoice.m_createdDate = invoiceDate.SelectedDate.Value.Date;
+                myinvoice.m_dueDate = invoiceDate.SelectedDate.Value.Date;
+                myinvoice.m_issuedBy = issuedBy.Text;
+                return myinvoice;
             }
+            else
+            {
+                MessageBox.Show("Invoice id doesnt't exist");
+                return myinvoice=null;
+            }            
+           
         }
 
 
@@ -257,16 +224,11 @@ namespace InvoiceX.Pages.InvoicePage
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK)
             {
-
-                delete_product_with_invoiceID_Update_stock_and_invoice_costs();
-                Send_Ivoice_and_Products_to_DB();
+                InvoiceViewModel.edit_Invoice(make_object_Invoice());
             }
         }
 
-        private void delete_product_with_invoiceID_Update_stock_and_invoice_costs()
-        {
-           
-        }
+      
 
         private void Clear_Customer()
         {
@@ -292,8 +254,7 @@ namespace InvoiceX.Pages.InvoicePage
             TotalAmount_TextBlock.Text = "0.00";
             textBox_entermessage.Text = "Write a message here ...";
         }
-
-
+        
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {         
@@ -309,14 +270,15 @@ namespace InvoiceX.Pages.InvoicePage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
         {
-            int invoiceId = 0;
+            int invoiceId = -1;
             if (int.TryParse(textBox_invoiceNumber.Text, out int n))
             {
                 invoiceId = int.Parse(textBox_invoiceNumber.Text);
             }
-            if (invoiceId <= InvoiceViewModel.ReturnLatestInvoiceID())
+            int latestinvoiceid = InvoiceViewModel.ReturnLatestInvoiceID();
+            if ((invoiceId <= latestinvoiceid) && (invoiceId > -1))
             {
                 Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
 
@@ -328,17 +290,28 @@ namespace InvoiceX.Pages.InvoicePage
 
                 // Invoice details
                 textBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
-
                 invoiceDate.SelectedDate = invoice.m_createdDate;
                 dueDate.SelectedDate = invoice.m_dueDate;
                 issuedBy.Text = invoice.m_issuedBy;
-                NetTotal_TextBlock.Text = invoice.m_cost.ToString("C");
-                Vat_TextBlock.Text = invoice.m_VAT.ToString("C");
-                TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("C");
+                NetTotal_TextBlock.Text = invoice.m_cost.ToString("2n");
+                Vat_TextBlock.Text = invoice.m_VAT.ToString("2n");
+                TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("2n");
 
-                // Invoice products           
-                productDataGrit.ItemsSource = invoice.m_products;
-
+                // Invoice products        
+                for (int i = 0; i < invoice.m_products.Count; i++)
+                {
+                    productDataGrit.Items.Add(new Product
+                    {
+                        idProduct =  invoice.m_products[i].idProduct,
+                        ProductName = invoice.m_products[i].ProductName ,
+                        ProductDescription = invoice.m_products[i].ProductDescription,
+                        Stock = invoice.m_products[i].Stock,
+                        SellPrice = invoice.m_products[i].Cost,
+                        Quantity = invoice.m_products[i].Quantity,
+                        Total = invoice.m_products[i].Total ,
+                        Vat = invoice.m_products[i].Vat
+                    });
+                }
             }
             else
             {
@@ -348,9 +321,6 @@ namespace InvoiceX.Pages.InvoicePage
 
         }
 
-        private void ProductDataGrit_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+      
     }
 }

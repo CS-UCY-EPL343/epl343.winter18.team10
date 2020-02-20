@@ -8,16 +8,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace InvoiceX.Pages.InvoicePage
 {
@@ -43,52 +36,14 @@ namespace InvoiceX.Pages.InvoicePage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 comboBox_Product.ItemsSource = productView.ProductList;
-                textBox_invoiceNumber.Text = ReturnLatestInvoiceID();
+                textBox_invoiceNumber.Text = (InvoiceViewModel.ReturnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
                 textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message
 
             }
             Refresh_DB_data = false;
-        }
-
-        string ReturnLatestInvoiceID()
-        {
-
-            int id_return = 0;
-            MySqlConnection conn;
-            MySqlCommand SQLCommand;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
-            try
-            {
-                string idInvoice;
-                conn = new MySqlConnection(myConnectionString);
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
-                conn.Open();
-                id_return = cmd.ExecuteNonQuery();
-                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
-                if (queryResult != null)
-                    // If we have result, then convert it from object to string.
-                    idInvoice = Convert.ToString(queryResult);
-                else
-                    // Else make id = "" so you can later check it.
-                    idInvoice = "";
-
-                conn.Close();
-                return ((Convert.ToInt32(idInvoice) + 1).ToString());
-
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
-            }
-            return "0";
-
-        }
+        }        
 
 
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -102,9 +57,6 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
                 textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
             }
-
-
-
         }
 
         #region PDF
@@ -240,7 +192,7 @@ namespace InvoiceX.Pages.InvoicePage
             invoiceDetails[4] = Vat_TextBlock.Text;
             invoiceDetails[5] = TotalAmount_TextBlock.Text;
 
-            List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
+            List<Product> products = ProductDataGrid.Items.OfType<Product>().ToList();
 
 
             Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
@@ -276,7 +228,6 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
             }
-
 
         }
 
@@ -325,7 +276,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
             if (Check_AddProduct_ComplitedValues())
             {
-                invoiceDataGrid2.Items.Add(new Product
+                ProductDataGrid.Items.Add(new Product
                 {
                     idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
@@ -352,14 +303,14 @@ namespace InvoiceX.Pages.InvoicePage
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
 
-            Product CurrentCell_Product = (Product)(invoiceDataGrid2.CurrentCell.Item);
+            Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
             double NetTotal_TextBlock_var = 0;
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
             NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
             NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
             Vat_TextBlock.Text = (NetTotal_TextBlock_var * (CurrentCell_Product.Vat)).ToString("n2");
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * (CurrentCell_Product.Vat))).ToString("n2");
-            invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
+            ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
 
         }
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
@@ -383,7 +334,6 @@ namespace InvoiceX.Pages.InvoicePage
             comboBox_Product_border.BorderThickness = new Thickness(0);
             textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
             textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
-
         }
 
         private bool Check_CustomerForm()
@@ -409,81 +359,29 @@ namespace InvoiceX.Pages.InvoicePage
 
         private bool Has_Items_Selected()
         {
-
-            if (invoiceDataGrid2.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
+            if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
                 MessageBox.Show("You havent selectet any products");
                 return false;
             }
             return true;
         }
-
-
-        private void Send_Ivoice_and_Products_to_DB()
+        
+        private Invoice make_object_Invoice()
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
-            try
-            {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-                //insert Invoice 
-                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                {
-                    // Now we can start using the passed values in our parameters:
-
-                    cmd.Parameters.AddWithValue("@idInvoice", textBox_invoiceNumber.Text);
-                    cmd.Parameters.AddWithValue("@idCustomer", ((Customers)comboBox_customer.SelectedItem).idCustomer);
-                    cmd.Parameters.AddWithValue("@Cost", double.Parse(NetTotal_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@Vat", double.Parse(Vat_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@TotalCost", double.Parse(TotalAmount_TextBlock.Text));
-                    cmd.Parameters.AddWithValue("@CreatedDate", invoiceDate.SelectedDate.Value.Date);
-                    cmd.Parameters.AddWithValue("@DueDate", dueDate.SelectedDate.Value.Date);
-                    cmd.Parameters.AddWithValue("@IssuedBy", issuedBy.Text);
-                    // Execute the query
-                    cmd.ExecuteNonQuery();
-                }
-
-                //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
-                List<string> Rows = new List<string>();
-
-                // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
-
-                foreach (Product p in invoiceDataGrid2.Items)
-                {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(textBox_invoiceNumber.Text),
-                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
-
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
-                    {
-                        cmd3.ExecuteNonQuery();
-                    }
-                }
-                sCommand.Append(string.Join(",", Rows));
-                sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
-                {
-                    myCmd.CommandType = CommandType.Text;
-                    myCmd.ExecuteNonQuery();
-                }
-
-                conn.Close();
-                MessageBox.Show("Invoice was send to Data Base");
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
-            }
-        }
-
+            Invoice myinvoice;
+            myinvoice = new Invoice();
+            myinvoice.m_customer = ((Customers)comboBox_customer.SelectedItem);           
+            myinvoice.m_products = ProductDataGrid.Items.OfType<Product>().ToList();
+            myinvoice.m_idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
+            myinvoice.m_cost = double.Parse(NetTotal_TextBlock.Text);
+            myinvoice.m_VAT = double.Parse(Vat_TextBlock.Text);
+            myinvoice.m_totalCost = double.Parse(TotalAmount_TextBlock.Text);
+            myinvoice.m_createdDate = invoiceDate.SelectedDate.Value.Date;
+            myinvoice.m_dueDate = invoiceDate.SelectedDate.Value.Date;
+            myinvoice.m_issuedBy = issuedBy.Text;
+            return myinvoice;
+        }             
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
@@ -491,10 +389,8 @@ namespace InvoiceX.Pages.InvoicePage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) Send_Ivoice_and_Products_to_DB();
+            if (ALL_VALUES_OK) InvoiceViewModel.Send_Ivoice_and_Products_to_DB(make_object_Invoice());
         }
-
-
 
         private void Clear_Customer()
         {
@@ -507,21 +403,18 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Clear_Details()
         {
-
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
         private void Clear_ProductGrid()
         {
-            invoiceDataGrid2.Items.Clear();
+            ProductDataGrid.Items.Clear();
             NetTotal_TextBlock.Text = "0.00";
             Vat_TextBlock.Text = "0.00";
             TotalAmount_TextBlock.Text = "0.00";
             textBox_entermessage.Text = "Write a message here ...";
         }
-
-
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
@@ -531,25 +424,12 @@ namespace InvoiceX.Pages.InvoicePage
             Clear_Details();
             Clear_ProductGrid();
             Refresh_DB_data = true;
-            load();
-
-
-
+            load();                       
         }
 
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
-        }
-
-        private void TextBox_Contact_Details_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_ProductTotal_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        }       
     }
 }

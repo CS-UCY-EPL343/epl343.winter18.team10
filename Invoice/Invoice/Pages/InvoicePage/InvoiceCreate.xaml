@@ -36,7 +36,7 @@
                 </Border>
                 <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
                 <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
-                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" TextChanged="TextBox_Contact_Details_TextChanged" />
+                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
                 <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
                 <TextBlock HorizontalAlignment="Left" Margin="178,10,0,0" TextWrapping="Wrap" Text="Select Customer" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="178,66,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
@@ -84,7 +84,7 @@
                 <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="1109,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" TextChanged="TextBox_ProductQuantity_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>
-                <TextBox x:Name="textBox_ProductTotal"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True" TextChanged="TextBox_ProductTotal_TextChanged"/>
+                <TextBox x:Name="textBox_ProductTotal"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True" />
                 <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddProduct" Height="30"  Style="{StaticResource ButtonStyle_Complete}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
@@ -102,7 +102,7 @@
         </Grid>
 
 
-        <DataGrid x:Name="invoiceDataGrid2" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>

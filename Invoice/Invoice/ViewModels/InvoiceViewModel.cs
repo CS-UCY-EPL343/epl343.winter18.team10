@@ -184,6 +184,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
+        //logika tha ta metakinisoume ta pio kato ----------------------------------------------
         public static int ReturnLatestInvoiceID()
         {
             int id_return = 0;
@@ -215,6 +216,136 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
             return 0;
+        }
+        public static void Send_Ivoice_and_Products_to_DB(Invoice invoice)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
+                    cmd.Parameters.AddWithValue("@idCustomer", invoice.m_customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@Cost", invoice.m_cost);
+                    cmd.Parameters.AddWithValue("@Vat", invoice.m_VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.m_totalCost);
+                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.m_createdDate);
+                    cmd.Parameters.AddWithValue("@DueDate", invoice.m_dueDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.m_issuedBy);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
+                List<string> Rows = new List<string>();
+
+                // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
+
+                foreach (Product p in invoice.m_products)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.m_idInvoice.ToString()),
+                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
+
+                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
+                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    {
+                        cmd3.ExecuteNonQuery();
+                    }
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Invoice was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+        public static void edit_Invoice(Invoice invoice)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "REPLACE INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
+                    cmd.Parameters.AddWithValue("@idCustomer", invoice.m_customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@Cost", invoice.m_cost);
+                    cmd.Parameters.AddWithValue("@Vat", invoice.m_VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.m_totalCost);
+                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.m_createdDate);
+                    cmd.Parameters.AddWithValue("@DueDate", invoice.m_dueDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.m_issuedBy);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+                /*
+              //insert products
+              StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
+              List<string> Rows = new List<string>();
+
+
+
+              foreach (Product p in invoice.m_products)
+              {
+                  Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.m_idInvoice.ToString()),
+                      p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
+
+                  using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
+                      p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                  {
+                      cmd3.ExecuteNonQuery();
+                  }
+              }
+              sCommand.Append(string.Join(",", Rows));
+              sCommand.Append(";");
+              using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+              {
+                  myCmd.CommandType = CommandType.Text;
+                  myCmd.ExecuteNonQuery();
+              }
+              */
+
+                conn.Close();
+                MessageBox.Show("Invoice was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
         }
 
     }

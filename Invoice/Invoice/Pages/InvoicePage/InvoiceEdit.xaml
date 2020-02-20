@@ -46,7 +46,7 @@
                 <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
-                <Button Content="Load Invoice" HorizontalAlignment="Left" Margin="269,39,0,0" VerticalAlignment="Top" Width="75" Height="30" Click="Button_Click"/>
+                <Button Content="Load Invoice" HorizontalAlignment="Left" Margin="269,39,0,0" VerticalAlignment="Top" Width="75" Height="30" Click="Btn_Load_Invoice"/>
 
 
             </Grid>
@@ -90,7 +90,7 @@
 
 
         <DataGrid x:Name="productDataGrit" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
-                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" SelectionChanged="ProductDataGrit_SelectionChanged" >
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None"  >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </DataGrid.Effect>
@@ -100,7 +100,7 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding Cost, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice , StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
                 <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
 
