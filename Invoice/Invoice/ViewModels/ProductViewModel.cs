@@ -106,6 +106,123 @@ namespace InvoiceX.ViewModels
             }
         }
 
+        public static void UpdateProductToDB(Product product)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "UPDATE Product SET ProductName=@ProductName, Description=@Description, Stock=@Stock, MinStock=@MinStock, Cost=@Cost, SellPrice=@SellPrice, VAT=@VAT,Category=@Category  WHERE idProduct=@idProduct";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                    cmd.Parameters.AddWithValue("@Description", product.ProductDescription);
+                    cmd.Parameters.AddWithValue("@Stock", product.Stock);
+                    cmd.Parameters.AddWithValue("@MinStock", product.MinStock);
+                    cmd.Parameters.AddWithValue("@Cost", product.Cost);
+                    cmd.Parameters.AddWithValue("@VAT", product.Vat);
+                    cmd.Parameters.AddWithValue("@Category", product.Category);
+                    cmd.Parameters.AddWithValue("@SellPrice", product.SellPrice);
+                    cmd.Parameters.AddWithValue("@idProduct", product.idProduct);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Product was Updated");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+        public static int ReturnLatestProductID()
+        {
+            int id_return = 0;
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                string idProduct;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idProduct FROM Product ORDER BY idProduct DESC LIMIT 1", conn);
+                conn.Open();
+                id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idProduct = Convert.ToString(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idProduct = "";
+
+                conn.Close();
+                return Convert.ToInt32(idProduct);
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return 0;
+        }
+
+        
+        public static Product ReturnProductByid(int productid)
+        {
+           
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            Product product = new Product();
+            try
+            {                
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Product WHERE idProduct="+ productid, conn);
+                conn.Open();
+                var produc = cmd.ExecuteReader();
+               
+                // Now check if any rows returned.
+                if (produc.HasRows)
+                {
+                    produc.Read();// Get first record.                     
+                    product.idProduct = productid; //get  values of first row
+                    product.ProductName= produc.GetString(1);
+                    product.ProductDescription= produc.GetString(2);
+                    product.Stock = produc.GetInt32(3);
+                    product.MinStock = produc.GetInt32(4);
+                    product.Cost = produc.GetDouble(5);
+                    product.SellPrice = produc.GetDouble(6);
+                    product.Vat = produc.GetFloat(7);
+                    product.Category = produc.GetString(8);
+                }
+                produc.Close();// Close reader.
+                
+
+                conn.Close();
+                //return Convert.ToInt32(idInvoice);
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return product;
+        }
     }
 }
 

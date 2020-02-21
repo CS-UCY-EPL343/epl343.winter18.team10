@@ -22,6 +22,7 @@ namespace InvoiceX.Pages.CustomerPage
     {
         CustomerView viewPage = new CustomerView();
         CustomerCreate CreatePage = new CustomerCreate();
+        CustomerEdit editPage = new CustomerEdit();
 
         public CustomerMain()
         {
@@ -49,6 +50,8 @@ namespace InvoiceX.Pages.CustomerPage
         {
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
+            customerPage.Content = editPage;
+
         }
 
         private void resetAllBtnStyles()

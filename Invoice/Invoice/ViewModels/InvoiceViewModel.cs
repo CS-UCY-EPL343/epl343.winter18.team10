@@ -187,7 +187,7 @@ namespace InvoiceX.ViewModels
         //logika tha ta metakinisoume ta pio kato ----------------------------------------------
         public static int ReturnLatestInvoiceID()
         {
-            int id_return = 0;
+            //int id_return = 0;
             MySqlConnection conn;         
             string myConnectionString;
             myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
@@ -198,7 +198,7 @@ namespace InvoiceX.ViewModels
                 conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
                 conn.Open();
-                id_return = cmd.ExecuteNonQuery();
+               // id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.

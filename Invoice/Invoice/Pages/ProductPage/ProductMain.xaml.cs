@@ -23,6 +23,7 @@ namespace InvoiceX.Pages.ProductPage
     {
         ProductView viewPage = new ProductView();
         ProductCreate createPage = new ProductCreate();
+        ProductEdit editPage = new ProductEdit();
         public ProductMain()
         {
             InitializeComponent();
@@ -49,6 +50,7 @@ namespace InvoiceX.Pages.ProductPage
         {
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
+            productPage.Content = editPage;
         }
 
         private void resetAllBtnStyles()

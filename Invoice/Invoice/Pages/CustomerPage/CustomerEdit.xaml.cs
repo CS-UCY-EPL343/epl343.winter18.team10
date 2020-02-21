@@ -19,11 +19,11 @@ using System.Windows.Shapes;
 namespace InvoiceX.Pages.CustomerPage
 {
     /// <summary>
-    /// Interaction logic for CustomerCreate.xaml
+    /// Interaction logic for CustomerEdit.xaml
     /// </summary>
-    public partial class CustomerCreate : Page
+    public partial class CustomerEdit : Page
     {
-        public CustomerCreate()
+        public CustomerEdit()
         {
             InitializeComponent();
         }
@@ -52,11 +52,36 @@ namespace InvoiceX.Pages.CustomerPage
             customer.City=textBox_CustomerCity.Text;
             customer.Address=textBox_CustomerAddress.Text;
             customer.Balance=float.Parse(textBox_CustomerBalance.Text);
+            customer.idCustomer = int.Parse(txtBox_Customerid.Text);
             return customer;
         }
-        private void Btn_createCustomer_Click(object sender, RoutedEventArgs e)
-        {  
-            if (validate_customer()) CustomerViewModel.SendCustomerToDB(create_Object_customer());
+        private void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            int customerid = -1;
+            if (int.TryParse(txtBox_Customerid.Text, out int n))
+            {
+                customerid = int.Parse(txtBox_Customerid.Text);
+                int latestcustomerid = CustomerViewModel.ReturnLatestCustomerID();
+                if ((customerid <= latestcustomerid) && (customerid > -1))
+                {
+                    // Customers customer = CustomerViewModel.ReturnCustomerByid(customerid);
+                    if (validate_customer())
+                    {
+                        CustomerViewModel.UpdateCustomerToDB(create_Object_customer());
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Customer ID doesn't exist");
+                    txtBox_Customerid.BorderBrush = Brushes.Red;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Customer ID doesn't exist");
+                txtBox_Customerid.BorderBrush = Brushes.Red;
+            }
+           
         }
 
         private void TextBox_CustomerName_TextChanged(object sender, TextChangedEventArgs e)
@@ -94,7 +119,11 @@ namespace InvoiceX.Pages.CustomerPage
             textBox_CustomerBalance.ClearValue(TextBox.BorderBrushProperty);
         }
 
-      
+        private void TxtBox_Customerid_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtBox_Customerid.ClearValue(TextBox.BorderBrushProperty);
+        }
+
 
         private void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
         {
@@ -105,7 +134,7 @@ namespace InvoiceX.Pages.CustomerPage
             textBox_CustomerCity.ClearValue(TextBox.BorderBrushProperty);
             textBox_CustomerAddress.ClearValue(TextBox.BorderBrushProperty);
             textBox_CustomerBalance.ClearValue(TextBox.BorderBrushProperty);
-
+            txtBox_Customerid.ClearValue(TextBox.BorderBrushProperty);
 
             textBox_CustomerName.Clear();
             textBox_PhoneNumber.Clear();
@@ -114,7 +143,42 @@ namespace InvoiceX.Pages.CustomerPage
             textBox_CustomerCity.Clear();
             textBox_CustomerAddress.Clear();
             textBox_CustomerBalance.Clear();
-            
+            txtBox_Customerid.Clear();
+
+
         }
+
+        private void Btn_LoadCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            int customerid = -1;
+            if (int.TryParse(txtBox_Customerid.Text, out int n))
+            {
+                customerid = int.Parse(txtBox_Customerid.Text);
+                int latestcustomerid = CustomerViewModel.ReturnLatestCustomerID();
+                if ((customerid <= latestcustomerid) && (customerid > -1))
+                {
+                    Customers customer = CustomerViewModel.ReturnCustomerByid(customerid);
+                    textBox_CustomerName.Text =customer.CustomerName;
+                    textBox_PhoneNumber.Text = customer.PhoneNumber.ToString();
+                    textBox_CustomerEmail.Text = customer.Email;
+                    textBox_CustomerCountry.Text = customer.Country;
+                    textBox_CustomerCity.Text = customer.City;
+                    textBox_CustomerAddress.Text = customer.Address;
+                    textBox_CustomerBalance.Text = customer.Balance.ToString();
+                }
+                else
+                {
+                    MessageBox.Show("Customer ID doesn't exist");
+                    txtBox_Customerid.BorderBrush = Brushes.Red;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Customer ID doesn't exist");
+                txtBox_Customerid.BorderBrush = Brushes.Red;
+            }
+        }
+
+       
     }
 }
