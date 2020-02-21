@@ -35,12 +35,14 @@ namespace InvoiceX.Pages
 
         void createChart1()
         {
+            ChartValues<double> total = new ChartValues<double>();
+            total.AddRange(ViewModels.InvoiceViewModel.getTotalAmountByMonth());
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
                 {
                     Title = "Sales",
-                    Values = new ChartValues<double> { 4, 6, 5, 2 ,4, 10, 20, 30, 40, 50, 60,10 }
+                    Values = total
                 },
                 new LineSeries
                 {

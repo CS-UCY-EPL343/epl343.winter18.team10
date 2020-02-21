@@ -371,6 +371,44 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+        public static double[] getTotalAmountByMonth()
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            double[] total = new double[12];
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                for (int i = 1; i <= 12; i++)
+                {
+                    MySqlCommand cmd = new MySqlCommand("getTotalAmountMonth_Invoices", conn);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = i;
+                    cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+
+                    cmd.ExecuteNonQuery();
+                    String sum = cmd.ExecuteScalar().ToString();
+                    if (sum == null || sum=="")
+                    {
+                        total[i - 1] = 0;
+                    }
+                    else
+                    {
+                        total[i - 1] = double.Parse(sum);
+                    }
+                }
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
+
+        }
 
     }
 
