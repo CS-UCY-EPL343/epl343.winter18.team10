@@ -21,7 +21,7 @@ namespace InvoiceX.Pages.InvoicePage
         ProductViewModel productView;
         //UserViewModel userView;
         CustomerViewModel customerView;
-      
+
 
 
         public InvoiceEdit()
@@ -31,13 +31,13 @@ namespace InvoiceX.Pages.InvoicePage
         }
 
         public void load()
-        {            
-                productView = new ProductViewModel();              
-                customerView = new CustomerViewModel();                     
-                comboBox_Product.ItemsSource = productView.ProductList;
-                textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message          
+        {
+            productView = new ProductViewModel();
+            customerView = new CustomerViewModel();
+            comboBox_Product.ItemsSource = productView.ProductList;
+            textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message          
         }
-        
+
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_Product.SelectedIndex > -1)
@@ -195,7 +195,7 @@ namespace InvoiceX.Pages.InvoicePage
             }
             if (invoiceId <= InvoiceViewModel.ReturnLatestInvoiceID())
             {
-                Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);                
+                Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
                 myinvoice = new Invoice();
                 myinvoice.m_customer = invoice.m_customer;
                 myinvoice.m_products = productDataGrit.Items.OfType<Product>().ToList();
@@ -211,28 +211,30 @@ namespace InvoiceX.Pages.InvoicePage
             else
             {
                 MessageBox.Show("Invoice id doesnt't exist");
-                return myinvoice=null;
-            }            
-           
+                return myinvoice = null;
+            }
         }
-
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
             bool ALL_VALUES_OK = true;
-           
+
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK)
             {
-                InvoiceViewModel.edit_Invoice(make_object_Invoice());
+                int invoiceId = -1;
+                if (int.TryParse(textBox_invoiceNumber.Text, out int n))
+                {
+                    invoiceId = int.Parse(textBox_invoiceNumber.Text);
+                    InvoiceViewModel.edit_Invoice(make_object_Invoice(), InvoiceViewModel.getInvoiceById(invoiceId));
+                }
+               
             }
         }
 
-      
-
         private void Clear_Customer()
         {
-           
+
             textBox_Customer.Text = "";
             textBox_Address.Text = "";
             textBox_Contact_Details.Text = "";
@@ -254,14 +256,14 @@ namespace InvoiceX.Pages.InvoicePage
             TotalAmount_TextBlock.Text = "0.00";
             textBox_entermessage.Text = "Write a message here ...";
         }
-        
+
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
-        {         
+        {
             Btn_clearProduct_Click(new object(), new RoutedEventArgs());
             Clear_Customer();
             Clear_Details();
-            Clear_ProductGrid();            
+            Clear_ProductGrid();
             load();
         }
 
@@ -302,13 +304,13 @@ namespace InvoiceX.Pages.InvoicePage
                 {
                     productDataGrit.Items.Add(new Product
                     {
-                        idProduct =  invoice.m_products[i].idProduct,
-                        ProductName = invoice.m_products[i].ProductName ,
+                        idProduct = invoice.m_products[i].idProduct,
+                        ProductName = invoice.m_products[i].ProductName,
                         ProductDescription = invoice.m_products[i].ProductDescription,
                         Stock = invoice.m_products[i].Stock,
                         SellPrice = invoice.m_products[i].Cost,
                         Quantity = invoice.m_products[i].Quantity,
-                        Total = invoice.m_products[i].Total ,
+                        Total = invoice.m_products[i].Total,
                         Vat = invoice.m_products[i].Vat
                     });
                 }
@@ -321,6 +323,6 @@ namespace InvoiceX.Pages.InvoicePage
 
         }
 
-      
+
     }
 }

@@ -42,7 +42,7 @@ namespace InvoiceX.Pages.ProductPage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             productPage.Content = createPage;
-            createPage.load();
+           
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

@@ -282,7 +282,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void edit_Invoice(Invoice invoice)
+        public static void edit_Invoice(Invoice invoice, Invoice old_invoice)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -313,19 +313,18 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-                /*sastoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
+                
                 //update old stock  
-                string query_uodate_old_stock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity WHERE idProduct=@idProduct ";
-                using (MySqlCommand cmd3 = new MySqlCommand(query_uodate_old_stock, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@idProduct", invoice.m_idInvoice);
-                    cmd3.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
-                    cmd3.ExecuteNonQuery();
+                string query_update_old_stock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
+                for (int i = 0; i < old_invoice.m_products.Count; i++)
+                {                    
+                    using (MySqlCommand cmd3 = new MySqlCommand(query_update_old_stock, conn))
+                    {
+                        cmd3.Parameters.AddWithValue("@Quantity", old_invoice.m_products[i].Quantity);
+                        cmd3.Parameters.AddWithValue("@idProduct", old_invoice.m_products[i].idProduct);                        
+                        cmd3.ExecuteNonQuery();
+                    }
                 }
-
-
-
 
                 //delete old invoice products
                 string query_delete_invoiceProducts = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
@@ -334,12 +333,11 @@ namespace InvoiceX.ViewModels
                 using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
                 {
                     // Now we can start using the passed values in our parameters:
-                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);                   
+                    cmd.Parameters.AddWithValue("@idInvoice", old_invoice.m_idInvoice);                   
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-               /*
+              
 
                 //insert products
                 StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
@@ -362,8 +360,7 @@ namespace InvoiceX.ViewModels
               {
                   myCmd.CommandType = CommandType.Text;
                   myCmd.ExecuteNonQuery();
-              }
-              */
+              }             
               
 
                 conn.Close();

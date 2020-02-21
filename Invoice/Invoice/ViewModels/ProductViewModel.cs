@@ -65,6 +65,47 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
+        public static void SendProductToDB(Product product)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "INSERT INTO Product (ProductName, Description, Stock, MinStock, Cost, SellPrice, VAT,Category) Values (@ProductName, @Description, @Stock, @MinStock, @Cost, @SellPrice, @VAT,@Category)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                    cmd.Parameters.AddWithValue("@Description", product.ProductDescription);
+                    cmd.Parameters.AddWithValue("@Stock", product.Stock);
+                    cmd.Parameters.AddWithValue("@MinStock", product.MinStock);
+                    cmd.Parameters.AddWithValue("@Cost", product.Cost);
+                    cmd.Parameters.AddWithValue("@VAT", product.Vat);
+                    cmd.Parameters.AddWithValue("@Category", product.Category);
+                    cmd.Parameters.AddWithValue("@SellPrice", product.SellPrice);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Product was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
     }
 }
 
