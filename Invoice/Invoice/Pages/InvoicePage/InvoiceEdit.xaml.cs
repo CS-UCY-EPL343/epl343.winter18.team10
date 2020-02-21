@@ -293,9 +293,9 @@ namespace InvoiceX.Pages.InvoicePage
                 invoiceDate.SelectedDate = invoice.m_createdDate;
                 dueDate.SelectedDate = invoice.m_dueDate;
                 issuedBy.Text = invoice.m_issuedBy;
-                NetTotal_TextBlock.Text = invoice.m_cost.ToString("2n");
-                Vat_TextBlock.Text = invoice.m_VAT.ToString("2n");
-                TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("2n");
+                NetTotal_TextBlock.Text = invoice.m_cost.ToString("n2");
+                Vat_TextBlock.Text = invoice.m_VAT.ToString("n2");
+                TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("n2");
 
                 // Invoice products        
                 for (int i = 0; i < invoice.m_products.Count; i++)

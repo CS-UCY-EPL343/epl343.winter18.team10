@@ -293,8 +293,9 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                //insert Invoice 
-                string query = "REPLACE INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
+
+                //update Invoice 
+                string query = "UPDATE Invoice SET  Cost=@Cost,Vat=@Vat, TotalCost=@TotalCost, CreatedDate=@CreatedDate, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -312,18 +313,43 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-                /*
-              //insert products
-              StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
+
+                /*sastoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo*/
+                //update old stock  
+                string query_uodate_old_stock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity WHERE idProduct=@idProduct ";
+                using (MySqlCommand cmd3 = new MySqlCommand(query_uodate_old_stock, conn))
+                {
+                    cmd3.Parameters.AddWithValue("@idProduct", invoice.m_idInvoice);
+                    cmd3.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
+                    cmd3.ExecuteNonQuery();
+                }
+
+
+
+
+                //delete old invoice products
+                string query_delete_invoiceProducts = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);                   
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+               /*
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
               List<string> Rows = new List<string>();
-
-
 
               foreach (Product p in invoice.m_products)
               {
                   Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.m_idInvoice.ToString()),
                       p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
-
+                  //update stock  
                   using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
                       p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
                   {
@@ -338,6 +364,7 @@ namespace InvoiceX.ViewModels
                   myCmd.ExecuteNonQuery();
               }
               */
+              
 
                 conn.Close();
                 MessageBox.Show("Invoice was send to Data Base");
