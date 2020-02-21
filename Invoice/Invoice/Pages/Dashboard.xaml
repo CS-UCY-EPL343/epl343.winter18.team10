@@ -105,7 +105,7 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
             </Canvas>
             <Canvas  Width="75" Height="76" Canvas.Left="39" Canvas.Top="197" >
                 <Canvas  Width="75" Height="59" Canvas.Left="0" Canvas.Top="0" >
-                    <TextBlock  Text="$1.3k" TextAlignment="left" FontFamily="Avenir"  FontSize="30" Foreground="#ffcce8ff" Canvas.Left="3" Canvas.Top="0"  />
+                    <TextBlock x:Name="totalSales" Text="$1.3k" TextAlignment="left" FontFamily="Avenir"  FontSize="30" Foreground="#ffcce8ff" Canvas.Left="3" Canvas.Top="0"  />
                     <TextBlock  Text="NEW SALES" TextAlignment="left" FontFamily="Avenir"  FontSize="13" Foreground="#ffcce8ff" Canvas.Left="4" Canvas.Top="41"  />
                 </Canvas>
                 <TextBlock  Text="Last 30 days" TextAlignment="left" FontFamily="Avenir"  FontSize="9" Foreground="#ffcce8ff" Canvas.Left="19" Canvas.Top="64"  />

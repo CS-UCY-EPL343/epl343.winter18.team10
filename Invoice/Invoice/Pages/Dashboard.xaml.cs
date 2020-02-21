@@ -29,9 +29,12 @@ namespace InvoiceX.Pages
             InitializeComponent();
             createChart1();
             createChart2();
-            
+            invoicesCount.Text = ViewModels.InvoiceViewModel.get30DaysTotalInvoices();
+            totalSales.Text = "€"+ ViewModels.InvoiceViewModel.get30DaysTotalSales();
+
+
         }
-        
+
 
         void createChart1()
         {

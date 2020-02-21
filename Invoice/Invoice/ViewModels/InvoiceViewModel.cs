@@ -409,7 +409,56 @@ namespace InvoiceX.ViewModels
             return total;
 
         }
+        public static String get30DaysTotalInvoices()
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            String total="";
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                
+                    MySqlCommand cmd = new MySqlCommand("get30DaysTotalInvoices", conn);
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.ExecuteNonQuery();
+                    total = cmd.ExecuteScalar().ToString();
+                    conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
+        }
+        public static String get30DaysTotalSales()
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+            String total = "";
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("get30DaysTotalSales", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.ExecuteNonQuery();
+                total = cmd.ExecuteScalar().ToString();
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
+        }
 
     }
 
 }
+
