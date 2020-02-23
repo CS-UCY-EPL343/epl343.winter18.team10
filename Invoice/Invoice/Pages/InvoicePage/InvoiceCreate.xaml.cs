@@ -51,11 +51,11 @@ namespace InvoiceX.Pages.InvoicePage
             comboBox_customer_border.BorderThickness = new Thickness(0);
             if (comboBox_customer.SelectedIndex > -1)
             {
-                textBox_Customer.Text = ((Customers)comboBox_customer.SelectedItem).CustomerName;
-                textBox_Address.Text = ((Customers)comboBox_customer.SelectedItem).Address + ", " +
-                 ((Customers)comboBox_customer.SelectedItem).City + ", " + ((Customers)comboBox_customer.SelectedItem).Country;
-                textBox_Contact_Details.Text = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
-                textBox_Email_Address.Text = ((Customers)comboBox_customer.SelectedItem).Email;
+                textBox_Customer.Text = ((Customer)comboBox_customer.SelectedItem).CustomerName;
+                textBox_Address.Text = ((Customer)comboBox_customer.SelectedItem).Address + ", " +
+                 ((Customer)comboBox_customer.SelectedItem).City + ", " + ((Customer)comboBox_customer.SelectedItem).Country;
+                textBox_Contact_Details.Text = ((Customer)comboBox_customer.SelectedItem).PhoneNumber.ToString();
+                textBox_Email_Address.Text = ((Customer)comboBox_customer.SelectedItem).Email;
             }
         }
 
@@ -175,13 +175,13 @@ namespace InvoiceX.Pages.InvoicePage
         {
 
             string[] customerDetails = new string[6];
-            customerDetails[0] = ((Customers)comboBox_customer.SelectedItem).CustomerName;
-            customerDetails[1] = ((Customers)comboBox_customer.SelectedItem).Address + ", " +
-            ((Customers)comboBox_customer.SelectedItem).City + ", " + ((Customers)comboBox_customer.SelectedItem).Country;
-            customerDetails[2] = ((Customers)comboBox_customer.SelectedItem).PhoneNumber.ToString();
-            customerDetails[3] = ((Customers)comboBox_customer.SelectedItem).Email;
-            customerDetails[4] = ((Customers)comboBox_customer.SelectedItem).Balance.ToString();
-            customerDetails[5] = ((Customers)comboBox_customer.SelectedItem).idCustomer.ToString();
+            customerDetails[0] = ((Customer)comboBox_customer.SelectedItem).CustomerName;
+            customerDetails[1] = ((Customer)comboBox_customer.SelectedItem).Address + ", " +
+            ((Customer)comboBox_customer.SelectedItem).City + ", " + ((Customer)comboBox_customer.SelectedItem).Country;
+            customerDetails[2] = ((Customer)comboBox_customer.SelectedItem).PhoneNumber.ToString();
+            customerDetails[3] = ((Customer)comboBox_customer.SelectedItem).Email;
+            customerDetails[4] = ((Customer)comboBox_customer.SelectedItem).Balance.ToString();
+            customerDetails[5] = ((Customer)comboBox_customer.SelectedItem).idCustomer.ToString();
 
             string[] invoiceDetails = new string[6];
             invoiceDetails[0] = textBox_invoiceNumber.Text;
@@ -371,7 +371,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
             Invoice myinvoice;
             myinvoice = new Invoice();
-            myinvoice.m_customer = ((Customers)comboBox_customer.SelectedItem);           
+            myinvoice.m_customer = ((Customer)comboBox_customer.SelectedItem);           
             myinvoice.m_products = ProductDataGrid.Items.OfType<Product>().ToList();
             myinvoice.m_idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
             myinvoice.m_cost = double.Parse(NetTotal_TextBlock.Text);

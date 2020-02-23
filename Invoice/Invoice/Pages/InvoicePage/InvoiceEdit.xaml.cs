@@ -228,7 +228,7 @@ namespace InvoiceX.Pages.InvoicePage
                     invoiceId = int.Parse(textBox_invoiceNumber.Text);
                     InvoiceViewModel.edit_Invoice(make_object_Invoice(), InvoiceViewModel.getInvoiceById(invoiceId));
                 }
-               
+
             }
         }
 
@@ -274,11 +274,20 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
         {
-            int invoiceId = -1;
-            if (int.TryParse(textBox_invoiceNumber.Text, out int n))
+            int.TryParse(textBox_invoiceNumber.Text, out int invoiceID);
+            if (invoiceID > 0)
             {
-                invoiceId = int.Parse(textBox_invoiceNumber.Text);
+                loadInvoice(invoiceID);
             }
+            else
+            {
+                //not a number
+                MessageBox.Show("Please insert a valid value for invoice ID.");
+            }
+        }
+
+        public void loadInvoice(int invoiceId)
+        {
             int latestinvoiceid = InvoiceViewModel.ReturnLatestInvoiceID();
             if ((invoiceId <= latestinvoiceid) && (invoiceId > -1))
             {
@@ -319,10 +328,6 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 MessageBox.Show("Invoice id doesnt't exist");
             }
-
-
         }
-
-
     }
 }

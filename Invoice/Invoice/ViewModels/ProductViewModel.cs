@@ -223,6 +223,28 @@ namespace InvoiceX.ViewModels
             }
             return product;
         }
+
+        public static void deleteProductByID(int productID)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM Product WHERE idProduct = " + productID, conn);
+                cmd.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
     }
 }
 

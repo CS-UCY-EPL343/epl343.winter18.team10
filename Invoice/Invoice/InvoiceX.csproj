@@ -119,7 +119,7 @@
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
-    <Compile Include="Models\Customers.cs" />
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\CustomerPage\CustomerEdit.xaml.cs">
       <DependentUpon>CustomerEdit.xaml</DependentUpon>

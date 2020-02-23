@@ -101,7 +101,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {
-            mainPage.loadInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);            
+            mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);            
         }
 
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
@@ -121,6 +121,11 @@ namespace InvoiceX.Pages.InvoicePage
                 case MessageBoxResult.No:
                     break;
             }            
+        }
+
+        private void EditInvoice_Click(object sender, RoutedEventArgs e)
+        {
+            mainPage.editInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);
         }
     }
 }

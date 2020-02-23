@@ -12,8 +12,7 @@
         <Setter Property="CanUserReorderColumns" Value="False"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="AlternatingRowBackground" Value="AliceBlue"/>
-        <Setter Property="IsReadOnly" Value="True"/>
-        
+        <Setter Property="IsReadOnly" Value="True"/>        
         <Setter Property="ColumnWidth" Value="*"/>
     </Style>
     <!-- DataGridColumnHeader style -->
@@ -38,7 +37,6 @@
         <Setter Property="Focusable" Value="False"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ToolTip" Value="Click to View Products"/>
                 <Setter Property="Background" Value="#FFCFE4EC"/>
                 <Setter Property="Foreground" Value="Black"/>
             </Trigger>

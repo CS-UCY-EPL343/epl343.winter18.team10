@@ -21,12 +21,16 @@ namespace InvoiceX.Pages.ProductPage
     /// </summary>
     public partial class ProductMain : Page
     {
-        ProductView viewPage = new ProductView();
-        ProductCreate createPage = new ProductCreate();
-        ProductEdit editPage = new ProductEdit();
+        ProductView viewPage;
+        ProductCreate createPage;
+        ProductEdit editPage;
+
         public ProductMain()
         {
             InitializeComponent();
+            viewPage = new ProductView(this);
+            createPage = new ProductCreate();
+            editPage = new ProductEdit();
             btnView_Click(new object(), new RoutedEventArgs());
         }
 
@@ -56,6 +60,12 @@ namespace InvoiceX.Pages.ProductPage
         private void resetAllBtnStyles()
         {
             btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
+        }
+
+        public void editProduct(int prodID)
+        {
+            editPage.loadProduct(prodID);
+            btnEdit_Click(null, null);
         }
     }
 }

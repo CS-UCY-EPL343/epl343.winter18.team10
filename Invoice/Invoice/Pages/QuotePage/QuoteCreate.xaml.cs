@@ -31,10 +31,10 @@ namespace InvoiceX.Pages.QuotePage
         private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            textBox_Address.Text = ((Customers)comboBox1.SelectedItem).Address + ", " +
-            ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
-            textBox_Contact_Details.Text = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
-            textBox_Email_Address.Text = ((Customers)comboBox1.SelectedItem).Email;
+            textBox_Address.Text = ((Customer)comboBox1.SelectedItem).Address + ", " +
+            ((Customer)comboBox1.SelectedItem).City + ", " + ((Customer)comboBox1.SelectedItem).Country;
+            textBox_Contact_Details.Text = ((Customer)comboBox1.SelectedItem).PhoneNumber.ToString();
+            textBox_Email_Address.Text = ((Customer)comboBox1.SelectedItem).Email;
 
 
         }
@@ -154,13 +154,13 @@ namespace InvoiceX.Pages.QuotePage
             string[] customerDetails = new string[6];
             List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
             
-                        customerDetails[0] = ((Customers)comboBox1.SelectedItem).CustomerName;
-                        customerDetails[1] = ((Customers)comboBox1.SelectedItem).Address + ", " +
-                        ((Customers)comboBox1.SelectedItem).City + ", " + ((Customers)comboBox1.SelectedItem).Country;
-                        customerDetails[2] = ((Customers)comboBox1.SelectedItem).PhoneNumber.ToString();
-                        customerDetails[3] = ((Customers)comboBox1.SelectedItem).Email;
-                        customerDetails[4] = ((Customers)comboBox1.SelectedItem).Balance.ToString();
-                        customerDetails[5] = ((Customers)comboBox1.SelectedItem).idCustomer.ToString();
+                        customerDetails[0] = ((Customer)comboBox1.SelectedItem).CustomerName;
+                        customerDetails[1] = ((Customer)comboBox1.SelectedItem).Address + ", " +
+                        ((Customer)comboBox1.SelectedItem).City + ", " + ((Customer)comboBox1.SelectedItem).Country;
+                        customerDetails[2] = ((Customer)comboBox1.SelectedItem).PhoneNumber.ToString();
+                        customerDetails[3] = ((Customer)comboBox1.SelectedItem).Email;
+                        customerDetails[4] = ((Customer)comboBox1.SelectedItem).Balance.ToString();
+                        customerDetails[5] = ((Customer)comboBox1.SelectedItem).idCustomer.ToString();
     
                         quoteDetails[0] = quoteNumber.Text;
                         Console.WriteLine(quoteNumber.Text);

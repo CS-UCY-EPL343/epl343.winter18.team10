@@ -124,7 +124,7 @@ namespace InvoiceX.ViewModels
                             m_dueDate = dueDate,
                             m_issuedBy = issuedBy,
                             m_products = new List<Product>(),
-                            m_customer = new Customers()
+                            m_customer = new Customer()
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
@@ -217,6 +217,7 @@ namespace InvoiceX.ViewModels
             }
             return 0;
         }
+
         public static void Send_Ivoice_and_Products_to_DB(Invoice invoice)
         {
             MySqlConnection conn;
@@ -371,6 +372,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
         public static double[] getTotalAmountByMonth()
         {
             MySqlConnection conn;
@@ -409,6 +411,7 @@ namespace InvoiceX.ViewModels
             return total;
 
         }
+
         public static String get30DaysTotalInvoices()
         {
             MySqlConnection conn;
@@ -433,6 +436,7 @@ namespace InvoiceX.ViewModels
             }
             return total;
         }
+
         public static String get30DaysTotalSales()
         {
             MySqlConnection conn;

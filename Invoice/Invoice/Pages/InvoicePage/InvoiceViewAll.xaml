@@ -69,17 +69,7 @@
                 <DataGridTextColumn Header = "Total Cost" Binding = "{Binding m_totalCost, StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <!--Image Source="/Images/3dots.png" Width="50" Height="50">
-                                        <Image.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="Menu item 1" />
-                                                <MenuItem Header="Menu item 2" />
-                                                <Separator />
-                                                <MenuItem Header="Menu item 3" />
-                                            </ContextMenu>
-                                        </Image.ContextMenu>
-                                    </-->
+                        <DataTemplate>                            
                             <Button x:Name="btnOptions" Width="40" Height="40">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
@@ -92,7 +82,7 @@
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="View Invoice" Click="ViewInvoice_Click"/>
-                                        <MenuItem Header="Edit Invoice" />
+                                        <MenuItem Header="Edit Invoice" Click="EditInvoice_Click"/>
                                         <Separator />
                                         <MenuItem Header="Delete Invoice" Click="DeleteInvoice_Click"/>
                                     </ContextMenu>

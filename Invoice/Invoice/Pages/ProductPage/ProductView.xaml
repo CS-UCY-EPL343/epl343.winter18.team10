@@ -102,6 +102,46 @@
                 <DataGridTextColumn Header = "VAT" Binding = "{Binding Vat, StringFormat=P}" />
                 <DataGridTextColumn Header = "Status" CellStyle="{StaticResource productCellStyle}"/>
                 <DataGridTextColumn Header = "Stock" Binding = "{Binding Stock}" />
+                <DataGridTemplateColumn Header = "Options">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button x:Name="btnOptions" Width="40" Height="40">
+                                <Button.Template>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid>
+                                            <Ellipse Fill="#FFE4E0E0"/>
+                                            <TextBlock Text="⋮" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="25"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Button.Template>
+                                <Button.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Edit Product" Click="EditProduct_Click"/>
+                                        <Separator />
+                                        <MenuItem Header="Delete Product" Click="DeleteProduct_Click"/>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                                <Button.Style>
+                                    <Style TargetType="{x:Type Button}">
+                                        <Style.Triggers>
+                                            <EventTrigger RoutedEvent="Click">
+                                                <EventTrigger.Actions>
+                                                    <BeginStoryboard>
+                                                        <Storyboard>
+                                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                            </BooleanAnimationUsingKeyFrames>
+                                                        </Storyboard>
+                                                    </BeginStoryboard>
+                                                </EventTrigger.Actions>
+                                            </EventTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
         </DataGrid>

@@ -23,22 +23,27 @@ namespace InvoiceX.Pages.CustomerPage
     public partial class CustomerView : Page
     {
         CustomerViewModel custViewModel = new CustomerViewModel();
-        public CustomerView()
+        CustomerMain customerMain;
+
+        public CustomerView(CustomerMain customerMain)
         {
             InitializeComponent();
+            this.customerMain = customerMain;
         }
+
         public void load()
         {
             custViewModel = new CustomerViewModel();
             filterList();
         }
+
         private void filterList()
         {
             var _itemSourceList = new CollectionViewSource() { Source = custViewModel.CustomersList };
 
             System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
 
-            if (!string.IsNullOrWhiteSpace(txtBoxFrom.Text) || !string.IsNullOrWhiteSpace(txtBoxTo.Text) 
+            if (!string.IsNullOrWhiteSpace(txtBoxFrom.Text) || !string.IsNullOrWhiteSpace(txtBoxTo.Text)
                 || !string.IsNullOrWhiteSpace(txtBoxCustomer.Text) || !string.IsNullOrWhiteSpace(txtBoxCity.Text))
             {
                 var filter = new Predicate<object>(customFilter);
@@ -56,11 +61,11 @@ namespace InvoiceX.Pages.CustomerPage
             string customerName = txtBoxCustomer.Text;
             string city = txtBoxCity.Text;
 
-            var item = obj as Customers;
-            if (!string.IsNullOrWhiteSpace(balanceFrom))
+            var item = obj as Customer;
+            if (double.TryParse(balanceFrom, out double f))
                 logic = logic & (item.Balance >= Convert.ToDouble(balanceFrom));
 
-            if (!string.IsNullOrWhiteSpace(balanceTo))
+            if (double.TryParse(balanceTo, out double t))
                 logic = logic & (item.Balance <= Convert.ToDouble(balanceTo));
 
             if (!string.IsNullOrWhiteSpace(customerName))
@@ -99,6 +104,30 @@ namespace InvoiceX.Pages.CustomerPage
         private void TxtBoxTo_TextChanged(object sender, TextChangedEventArgs e)
         {
             filterList();
+        }
+
+        private void EditCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            customerMain.editCustomer(((Customer)(customerDataGrid.SelectedItem)).idCustomer);
+        }
+
+        private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            int customerID = ((Customer)customerDataGrid.SelectedItem).idCustomer;
+            string msgtext = "You are about to delete the customer with ID = " + customerID + ". Are you sure?";
+            string txt = "Delete Customer";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    CustomerViewModel.deleteCustomerByID(customerID);
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
     }
 }

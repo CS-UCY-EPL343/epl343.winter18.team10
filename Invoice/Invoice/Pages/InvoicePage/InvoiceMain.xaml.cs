@@ -66,10 +66,17 @@ namespace InvoiceX.Pages.InvoicePage
             btnEdit.Style = btnView.Style = btnCreate.Style =
             btnViewAll.Style =  FindResource("ButtonStyle") as Style;
         }
-        public void loadInvoice(int invID)
+
+        public void viewInvoice(int invID)
         {
             viewPage.loadInvoice(invID);
             btnView_Click(null, null);
+        }
+
+        public void editInvoice(int invID)
+        {
+            editpage.loadInvoice(invID);
+            btnEdit_Click(null, null);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InvoiceX.Models
 {
-    public class Customers
+    public class Customer
     {
         public int idCustomer { get; set; }
         public string CustomerName { get; set; }
@@ -16,7 +16,5 @@ namespace InvoiceX.Models
         public string City { get; set; }
         public string Address { get; set; }
         public float Balance { get; set; }
-
-
     }
 }

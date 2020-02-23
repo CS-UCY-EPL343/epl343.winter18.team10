@@ -23,10 +23,12 @@ namespace InvoiceX.Pages.ProductPage
     public partial class ProductView : Page
     {
         ProductViewModel prodViewModel;
+        ProductMain productMain;
 
-        public ProductView()
+        public ProductView(ProductMain productMain)
         {
             InitializeComponent();
+            this.productMain = productMain;
             cmbBoxStatus.SelectionChanged += new SelectionChangedEventHandler(CmbBoxStatus_SelectionChanged);
         }
 
@@ -97,6 +99,30 @@ namespace InvoiceX.Pages.ProductPage
             txtBoxProduct.Clear();
             cmbBoxStatus.SelectedIndex = 0;
             productDataGrid.ItemsSource = prodViewModel.ProductList;
+        }
+
+        private void EditProduct_Click(object sender, RoutedEventArgs e)
+        {
+            productMain.editProduct(((Product)(productDataGrid.SelectedItem)).idProduct);
+        }
+
+        private void DeleteProduct_Click(object sender, RoutedEventArgs e)
+        {
+            int productID = ((Product)productDataGrid.SelectedItem).idProduct;
+            string msgtext = "You are about to delete the product with ID = " + productID + ". Are you sure?";
+            string txt = "Delete Product";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    ProductViewModel.deleteProductByID(productID);
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
     }
 }

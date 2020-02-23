@@ -20,13 +20,16 @@ namespace InvoiceX.Pages.CustomerPage
     /// </summary>
     public partial class CustomerMain : Page
     {
-        CustomerView viewPage = new CustomerView();
-        CustomerCreate CreatePage = new CustomerCreate();
-        CustomerEdit editPage = new CustomerEdit();
+        CustomerView viewPage;
+        CustomerCreate createPage;
+        CustomerEdit editPage;
 
         public CustomerMain()
         {
             InitializeComponent();
+            viewPage = new CustomerView(this);
+            createPage = new CustomerCreate();
+            editPage = new CustomerEdit();
             btnView_Click(new object(), new RoutedEventArgs());
         }
 
@@ -42,7 +45,7 @@ namespace InvoiceX.Pages.CustomerPage
         {
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
-            customerPage.Content = CreatePage;
+            customerPage.Content = createPage;
             
         }
 
@@ -57,6 +60,12 @@ namespace InvoiceX.Pages.CustomerPage
         private void resetAllBtnStyles()
         {
             btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
+        }
+
+        public void editCustomer(int custID)
+        {
+            editPage.loadCustomer(custID);
+            btnEdit_Click(null, null);
         }
     }
 }

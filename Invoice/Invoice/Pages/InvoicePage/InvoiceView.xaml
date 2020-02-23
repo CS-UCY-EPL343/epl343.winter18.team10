@@ -75,7 +75,7 @@
         <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"/>
         <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"  />
         <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
-        <Button x:Name="btn_edit" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="74"/>
+        <Button x:Name="btn_edit" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="btn_edit_Click"/>
         <Button x:Name="btn_delete" Content="Delete" HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_delete_Click"/>
 
 

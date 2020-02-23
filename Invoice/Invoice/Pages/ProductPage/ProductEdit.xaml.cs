@@ -29,7 +29,6 @@ namespace InvoiceX.Pages.ProductPage
         {
             InitializeComponent();
         } 
-
         
         private Product createObjectProduct()
         {
@@ -110,9 +109,7 @@ namespace InvoiceX.Pages.ProductPage
             {
                 MessageBox.Show("Product ID doesn't exist");
                 txtbox_productId.BorderBrush = Brushes.Red;
-            }
-           
-
+            }         
         }
 
         private void TextBox_ProductName_TextChanged(object sender, TextChangedEventArgs e)
@@ -212,10 +209,13 @@ namespace InvoiceX.Pages.ProductPage
             {
                 MessageBox.Show("Product ID doesn't exist");
                 txtbox_productId.BorderBrush = Brushes.Red;
-            }
-            
+            }            
+        } 
+        
+        public void loadProduct(int productID)
+        {
+            txtbox_productId.Text = productID.ToString();
+            Btn_loadProduct_Click(null, null);
         }
-
-       
     }
 }

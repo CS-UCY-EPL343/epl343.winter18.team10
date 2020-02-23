@@ -12,13 +12,11 @@ namespace InvoiceX.ViewModels
 {
     public class CustomerViewModel
     {
-        public List<Customers> CustomersList { get; set; }
+        public List<Customer> CustomersList { get; set; }
+
         public CustomerViewModel()
         {
-            CustomersList = new List<Customers>();
-
-
-
+            CustomersList = new List<Customer>();
             MySqlConnection conn;
             string myConnectionString;
 
@@ -33,8 +31,6 @@ namespace InvoiceX.ViewModels
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-
-
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var idCustomerDB = dataRow.Field<int>("idCustomer");
@@ -47,7 +43,7 @@ namespace InvoiceX.ViewModels
                     var BalanceDB = dataRow.Field<float>("Balance");
 
                     CustomersList.Add(
-                        new Customers()
+                        new Customer()
                         {
                             idCustomer = idCustomerDB,
                             CustomerName = CustomerNameDB,
@@ -70,7 +66,7 @@ namespace InvoiceX.ViewModels
         }
 
 
-        public static void SendCustomerToDB(Customers customer)
+        public static void SendCustomerToDB(Customer customer)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -109,7 +105,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void UpdateCustomerToDB(Customers customer)
+        public static void UpdateCustomerToDB(Customer customer)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -148,6 +144,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
         public static int ReturnLatestCustomerID()
         {
             int id_return = 0;
@@ -181,14 +178,14 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
-        public static Customers ReturnCustomerByid(int customerid)
+        public static Customer ReturnCustomerByid(int customerid)
         {
 
             MySqlConnection conn;
             string myConnectionString;
             myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
                                  "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-            Customers customer = new Customers();
+            Customer customer = new Customer();
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -222,6 +219,28 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
             return customer;
+        }
+
+        public static void deleteCustomerByID(int customerID)
+        {
+            MySqlConnection conn;
+            string myConnectionString;
+
+            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM Customer WHERE idCustomer = " + customerID, conn);
+                cmd.ExecuteNonQuery();                
+
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
         }
 
     }

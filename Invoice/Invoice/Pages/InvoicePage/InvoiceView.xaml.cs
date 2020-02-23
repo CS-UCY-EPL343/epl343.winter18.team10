@@ -39,19 +39,25 @@ namespace InvoiceX.Pages.InvoicePage
         private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
-            if (invoiceID != 0)
+            if (invoiceID > 0)
             {
                 loadInvoice(invoiceID);
             }
             else
             {
                 //not a number
+                MessageBox.Show("Please insert a valid value for invoice ID.");
             }
         }
 
         public void loadInvoice(int invoiceID)
         {
             invoice = InvoiceViewModel.getInvoiceById(invoiceID);
+            if (invoice.m_customerName == null)
+            {
+                MessageBox.Show("Invoice with ID = " + invoiceID + ", does not exist");
+                return;
+            }
 
             // Customer details
             textBox_Customer.Text = invoice.m_customer.CustomerName;
@@ -143,6 +149,14 @@ namespace InvoiceX.Pages.InvoicePage
             else
             {
                 MessageBox.Show("No invoice is loaded");
+            }
+        }
+
+        private void btn_edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (invoice.m_customerName != null)
+            {
+                mainPage.editInvoice(invoice.m_idInvoice);
             }
         }
     }

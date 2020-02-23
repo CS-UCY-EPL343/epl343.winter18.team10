@@ -42,9 +42,9 @@ namespace InvoiceX.Pages.CustomerPage
             return ProductCreateOK;
         }
 
-        private Customers create_Object_customer()
+        private Customer create_Object_customer()
         {
-            Customers customer = new Customers();
+            Customer customer = new Customer();
             customer.CustomerName= textBox_CustomerName.Text;
             customer.PhoneNumber=Int32.Parse(textBox_PhoneNumber.Text);
             customer.Email=textBox_CustomerEmail.Text;

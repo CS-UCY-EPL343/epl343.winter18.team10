@@ -16,7 +16,7 @@ namespace InvoiceX.Models
         public double m_VAT { get; set; }
         public double m_totalCost { get; set; }
         public List<Product> m_products { get; set; }
-        public Customers m_customer { get; set; }
+        public Customer m_customer { get; set; }
         public string m_issuedBy { get; set; }
 
         

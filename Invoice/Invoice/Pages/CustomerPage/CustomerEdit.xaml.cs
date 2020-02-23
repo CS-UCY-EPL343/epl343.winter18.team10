@@ -42,9 +42,9 @@ namespace InvoiceX.Pages.CustomerPage
             return ProductCreateOK;
         }
 
-        private Customers create_Object_customer()
+        private Customer create_Object_customer()
         {
-            Customers customer = new Customers();
+            Customer customer = new Customer();
             customer.CustomerName= textBox_CustomerName.Text;
             customer.PhoneNumber=Int32.Parse(textBox_PhoneNumber.Text);
             customer.Email=textBox_CustomerEmail.Text;
@@ -55,6 +55,7 @@ namespace InvoiceX.Pages.CustomerPage
             customer.idCustomer = int.Parse(txtBox_Customerid.Text);
             return customer;
         }
+
         private void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
         {
             int customerid = -1;
@@ -144,8 +145,6 @@ namespace InvoiceX.Pages.CustomerPage
             textBox_CustomerAddress.Clear();
             textBox_CustomerBalance.Clear();
             txtBox_Customerid.Clear();
-
-
         }
 
         private void Btn_LoadCustomer_Click(object sender, RoutedEventArgs e)
@@ -157,7 +156,7 @@ namespace InvoiceX.Pages.CustomerPage
                 int latestcustomerid = CustomerViewModel.ReturnLatestCustomerID();
                 if ((customerid <= latestcustomerid) && (customerid > -1))
                 {
-                    Customers customer = CustomerViewModel.ReturnCustomerByid(customerid);
+                    Customer customer = CustomerViewModel.ReturnCustomerByid(customerid);
                     textBox_CustomerName.Text =customer.CustomerName;
                     textBox_PhoneNumber.Text = customer.PhoneNumber.ToString();
                     textBox_CustomerEmail.Text = customer.Email;
@@ -178,7 +177,11 @@ namespace InvoiceX.Pages.CustomerPage
                 txtBox_Customerid.BorderBrush = Brushes.Red;
             }
         }
-
-       
+        
+        public void loadCustomer(int custID)
+        {
+            txtBox_Customerid.Text = custID.ToString();
+            Btn_LoadCustomer_Click(null, null);
+        }
     }
 }
