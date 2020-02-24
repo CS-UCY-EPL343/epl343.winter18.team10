@@ -117,9 +117,11 @@
     <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\QuoteForm.cs" />
     <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\CustomerPage\CustomerEdit.xaml.cs">
       <DependentUpon>CustomerEdit.xaml</DependentUpon>

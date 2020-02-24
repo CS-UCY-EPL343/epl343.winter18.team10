@@ -56,12 +56,9 @@ namespace InvoiceX.Pages.ProductPage
             if (!int.TryParse(txtBlock_ProductMinimun_Stock.Text, out a)) { txtBlock_ProductMinimun_Stock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (!double.TryParse(txtBlock_ProductSellPrice.Text, out double b)) { txtBlock_ProductSellPrice.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (!double.TryParse(txtBlock_ProductCost.Text, out b)) { txtBlock_ProductCost.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!float.TryParse(txtBlock_ProductVat.Text, out float g)) { txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!int.TryParse(txtbox_productId.Text, out int gg)) { txtbox_productId.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-
-            if (int.TryParse(txtbox_productId.Text, out int ggg))
+            
+            if (int.TryParse(txtbox_productId.Text, out int productid))
             {
-                int productid = Int32.Parse(txtbox_productId.Text);
                 if (productid < 0 || productid > ProductViewModel.ReturnLatestProductID())
                 {
                     MessageBox.Show("Product ID doesn't exist");
@@ -70,12 +67,10 @@ namespace InvoiceX.Pages.ProductPage
                 }
             }
 
-            if (float.TryParse(txtBlock_ProductVat.Text, out float k))
+            if (float.TryParse(txtBlock_ProductVat.Text.Replace(".",","), out float vat))
             {
-                float vat = float.Parse(txtBlock_ProductVat.Text);
                 if (vat < 0 || vat > 100)
                 {
-
                     MessageBox.Show("VAT is not in range 0-100");
                     txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false;
                     ProductCreateOK = false;
@@ -197,7 +192,7 @@ namespace InvoiceX.Pages.ProductPage
                      txtBlock_ProductMinimun_Stock.Text = product.MinStock.ToString();
                      txtBlock_ProductSellPrice.Text = product.SellPrice.ToString("n2");
                      txtBlock_ProductCost.Text = product.Cost.ToString("n2");
-                     txtBlock_ProductVat.Text = product.Vat.ToString();
+                     txtBlock_ProductVat.Text = (product.Vat*100).ToString();
                 }
                  else
                 {

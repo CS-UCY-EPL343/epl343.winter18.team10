@@ -214,7 +214,7 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductQuantity.Text = ((Product)comboBox_Product.SelectedItem).Quantity.ToString();
                 textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
                 textBox_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
-                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
+                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
                 textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
             }
 
@@ -240,7 +240,7 @@ namespace InvoiceX.Pages.InvoicePage
             }
         }
 
-        private bool Check_AddProduct_ComplitedValues()
+        private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
             int n;
@@ -274,14 +274,14 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_ComplitedValues())
+            if (Check_AddProduct_CompletedValues())
             {
                 ProductDataGrid.Items.Add(new Product
                 {
                     idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
                     ProductDescription = textBox_ProductDescription.Text,
-                    Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
+                    Stock = Convert.ToInt32(textBox_ProductStock.Text),
                     SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
                     Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
                     Total = Convert.ToDouble(textBox_ProductTotal.Text),
@@ -371,15 +371,15 @@ namespace InvoiceX.Pages.InvoicePage
         {
             Invoice myinvoice;
             myinvoice = new Invoice();
-            myinvoice.m_customer = ((Customer)comboBox_customer.SelectedItem);           
-            myinvoice.m_products = ProductDataGrid.Items.OfType<Product>().ToList();
-            myinvoice.m_idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
-            myinvoice.m_cost = double.Parse(NetTotal_TextBlock.Text);
-            myinvoice.m_VAT = double.Parse(Vat_TextBlock.Text);
-            myinvoice.m_totalCost = double.Parse(TotalAmount_TextBlock.Text);
-            myinvoice.m_createdDate = invoiceDate.SelectedDate.Value.Date;
-            myinvoice.m_dueDate = invoiceDate.SelectedDate.Value.Date;
-            myinvoice.m_issuedBy = issuedBy.Text;
+            myinvoice.customer = ((Customer)comboBox_customer.SelectedItem);           
+            myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
+            myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
+            myinvoice.cost = double.Parse(NetTotal_TextBlock.Text);
+            myinvoice.VAT = double.Parse(Vat_TextBlock.Text);
+            myinvoice.totalCost = double.Parse(TotalAmount_TextBlock.Text);
+            myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
+            myinvoice.dueDate = invoiceDate.SelectedDate.Value.Date;
+            myinvoice.issuedBy = issuedBy.Text;
             return myinvoice;
         }             
 

@@ -50,7 +50,7 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductQuantity.Text = ((Product)comboBox_Product.SelectedItem).Quantity.ToString();
                 textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
                 textBox_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
-                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
+                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
                 textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
             }
 
@@ -118,7 +118,7 @@ namespace InvoiceX.Pages.InvoicePage
                     idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
                     ProductDescription = textBox_ProductDescription.Text,
-                    Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
+                    Stock = Convert.ToInt32(textBox_ProductStock.Text),
                     SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
                     Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
                     Total = Convert.ToDouble(textBox_ProductTotal.Text),
@@ -139,7 +139,6 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
-
             Product CurrentCell_Product = (Product)(productDataGrit.CurrentCell.Item);
             double NetTotal_TextBlock_var = 0;
             NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
@@ -148,8 +147,8 @@ namespace InvoiceX.Pages.InvoicePage
             Vat_TextBlock.Text = (NetTotal_TextBlock_var * (CurrentCell_Product.Vat)).ToString("n2");
             TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * (CurrentCell_Product.Vat))).ToString("n2");
             productDataGrit.Items.Remove(productDataGrit.CurrentCell.Item);
-
         }
+
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
         public void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -171,12 +170,10 @@ namespace InvoiceX.Pages.InvoicePage
             comboBox_Product_border.BorderThickness = new Thickness(0);
             textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
             textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
-
         }
 
         private bool Has_Items_Selected()
         {
-
             if (productDataGrit.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
                 MessageBox.Show("You havent selectet any products");
@@ -184,7 +181,6 @@ namespace InvoiceX.Pages.InvoicePage
             }
             return true;
         }
-
 
         private Invoice make_object_Invoice()
         {
@@ -198,15 +194,15 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
                 myinvoice = new Invoice();
-                myinvoice.m_customer = invoice.m_customer;
-                myinvoice.m_products = productDataGrit.Items.OfType<Product>().ToList();
-                myinvoice.m_idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
-                myinvoice.m_cost = double.Parse(NetTotal_TextBlock.Text);
-                myinvoice.m_VAT = double.Parse(Vat_TextBlock.Text);
-                myinvoice.m_totalCost = double.Parse(TotalAmount_TextBlock.Text);
-                myinvoice.m_createdDate = invoiceDate.SelectedDate.Value.Date;
-                myinvoice.m_dueDate = invoiceDate.SelectedDate.Value.Date;
-                myinvoice.m_issuedBy = issuedBy.Text;
+                myinvoice.customer = invoice.customer;
+                myinvoice.products = productDataGrit.Items.OfType<Product>().ToList();
+                myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
+                myinvoice.cost = double.Parse(NetTotal_TextBlock.Text);
+                myinvoice.VAT = double.Parse(Vat_TextBlock.Text);
+                myinvoice.totalCost = double.Parse(TotalAmount_TextBlock.Text);
+                myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
+                myinvoice.dueDate = invoiceDate.SelectedDate.Value.Date;
+                myinvoice.issuedBy = issuedBy.Text;
                 return myinvoice;
             }
             else
@@ -295,33 +291,33 @@ namespace InvoiceX.Pages.InvoicePage
                 Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
 
                 // Customer details
-                textBox_Customer.Text = invoice.m_customer.CustomerName;
-                textBox_Contact_Details.Text = invoice.m_customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = invoice.m_customer.Email;
-                textBox_Address.Text = invoice.m_customer.Address + ", " + invoice.m_customer.City + ", " + invoice.m_customer.Country;
+                textBox_Customer.Text = invoice.customer.CustomerName;
+                textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = invoice.customer.Email;
+                textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
 
                 // Invoice details
-                textBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
-                invoiceDate.SelectedDate = invoice.m_createdDate;
-                dueDate.SelectedDate = invoice.m_dueDate;
-                issuedBy.Text = invoice.m_issuedBy;
-                NetTotal_TextBlock.Text = invoice.m_cost.ToString("n2");
-                Vat_TextBlock.Text = invoice.m_VAT.ToString("n2");
-                TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("n2");
+                textBox_invoiceNumber.Text = invoice.idInvoice.ToString();
+                invoiceDate.SelectedDate = invoice.createdDate;
+                dueDate.SelectedDate = invoice.dueDate;
+                issuedBy.Text = invoice.issuedBy;
+                NetTotal_TextBlock.Text = invoice.cost.ToString("n2");
+                Vat_TextBlock.Text = invoice.VAT.ToString("n2");
+                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("n2");
 
                 // Invoice products        
-                for (int i = 0; i < invoice.m_products.Count; i++)
+                for (int i = 0; i < invoice.products.Count; i++)
                 {
                     productDataGrit.Items.Add(new Product
                     {
-                        idProduct = invoice.m_products[i].idProduct,
-                        ProductName = invoice.m_products[i].ProductName,
-                        ProductDescription = invoice.m_products[i].ProductDescription,
-                        Stock = invoice.m_products[i].Stock,
-                        SellPrice = invoice.m_products[i].Cost,
-                        Quantity = invoice.m_products[i].Quantity,
-                        Total = invoice.m_products[i].Total,
-                        Vat = invoice.m_products[i].Vat
+                        idProduct = invoice.products[i].idProduct,
+                        ProductName = invoice.products[i].ProductName,
+                        ProductDescription = invoice.products[i].ProductDescription,
+                        Stock = invoice.products[i].Stock,
+                        SellPrice = invoice.products[i].Cost,
+                        Quantity = invoice.products[i].Quantity,
+                        Total = invoice.products[i].Total,
+                        Vat = invoice.products[i].Vat
                     });
                 }
             }
@@ -444,7 +440,7 @@ namespace InvoiceX.Pages.InvoicePage
         MigraDoc.DocumentObjectModel.Document createPdf()
         {
             Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(textBox_invoiceNumber.Text));
-            Customer customer = invoice.m_customer;
+            Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
             customerDetails[1] = customer.Address + ", " +

@@ -55,30 +55,30 @@ namespace InvoiceX.Pages.InvoicePage
         public void loadInvoice(int invoiceID)
         {
             invoice = InvoiceViewModel.getInvoiceById(invoiceID);
-            if (invoice.m_customerName == null)
+            if (invoice.customerName == null)
             {
                 MessageBox.Show("Invoice with ID = " + invoiceID + ", does not exist");
                 return;
             }
 
             // Customer details
-            textBox_Customer.Text = invoice.m_customer.CustomerName;
-            textBox_Contact_Details.Text = invoice.m_customer.PhoneNumber.ToString();
-            textBox_Email_Address.Text = invoice.m_customer.Email;
-            textBox_Address.Text = invoice.m_customer.Address + ", " + invoice.m_customer.City + ", " + invoice.m_customer.Country;
+            textBox_Customer.Text = invoice.customer.CustomerName;
+            textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
+            textBox_Email_Address.Text = invoice.customer.Email;
+            textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
 
             // Invoice details
-            txtBox_invoiceNumber.Text = invoice.m_idInvoice.ToString();
+            txtBox_invoiceNumber.Text = invoice.idInvoice.ToString();
             txtBox_invoiceNumber.IsReadOnly = true;
-            txtBox_invoiceDate.Text = invoice.m_createdDate.ToString("dd/mm/yyyy");
-            txtBox_dueDate.Text = invoice.m_dueDate.ToString("dd/mm/yyyy");
-            txtBox_issuedBy.Text = invoice.m_issuedBy;
-            NetTotal_TextBlock.Text = invoice.m_cost.ToString("C");
-            Vat_TextBlock.Text = invoice.m_VAT.ToString("C");
-            TotalAmount_TextBlock.Text = invoice.m_totalCost.ToString("C");
+            txtBox_invoiceDate.Text = invoice.createdDate.ToString("dd/mm/yyyy");
+            txtBox_dueDate.Text = invoice.dueDate.ToString("dd/mm/yyyy");
+            txtBox_issuedBy.Text = invoice.issuedBy;
+            NetTotal_TextBlock.Text = invoice.cost.ToString("C");
+            Vat_TextBlock.Text = invoice.VAT.ToString("C");
+            TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
 
             // Invoice products           
-            invoiceProductsGrid.ItemsSource = invoice.m_products;
+            invoiceProductsGrid.ItemsSource = invoice.products;
         }
 
         private void txtBox_invoiceNumber_KeyDown(object sender, KeyEventArgs e)
@@ -138,9 +138,9 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            if (invoice.m_customerName != null)
+            if (invoice.customerName != null)
             {
-                mainPage.editInvoice(invoice.m_idInvoice);
+                mainPage.editInvoice(invoice.idInvoice);
             }
         }
         void savePdf_Click(object sender, RoutedEventArgs e)
@@ -256,7 +256,7 @@ namespace InvoiceX.Pages.InvoicePage
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
             Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_invoiceNumber.Text));
-            Customer customer = invoice.m_customer;
+            Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
             customerDetails[1] = customer.Address + ", " +

@@ -46,14 +46,14 @@ namespace InvoiceX.ViewModels
 
                     inv = new Invoice()
                     {
-                        m_idInvoice = idInvoice,
-                        m_customerName = customer,
-                        m_cost = cost,
-                        m_VAT = VAT,
-                        m_totalCost = invTotalCost,
-                        m_createdDate = createdDate,
-                        m_dueDate = dueDate,
-                        m_issuedBy = issuedBy
+                        idInvoice = idInvoice,
+                        customerName = customer,
+                        cost = cost,
+                        VAT = VAT,
+                        totalCost = invTotalCost,
+                        createdDate = createdDate,
+                        dueDate = dueDate,
+                        issuedBy = issuedBy
                     };
 
                     invoiceList.Add(inv);
@@ -117,16 +117,16 @@ namespace InvoiceX.ViewModels
                         count++;
                         inv = new Invoice()
                         {
-                            m_idInvoice = idInvoice,
-                            m_customerName = customerName,
-                            m_cost = cost,
-                            m_VAT = VAT,
-                            m_totalCost = invTotalCost,
-                            m_createdDate = createdDate,
-                            m_dueDate = dueDate,
-                            m_issuedBy = issuedBy,
-                            m_products = new List<Product>(),
-                            m_customer = new Customer()
+                            idInvoice = idInvoice,
+                            customerName = customerName,
+                            cost = cost,
+                            VAT = VAT,
+                            totalCost = invTotalCost,
+                            createdDate = createdDate,
+                            dueDate = dueDate,
+                            issuedBy = issuedBy,
+                            products = new List<Product>(),
+                            customer = new Customer()
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
@@ -140,7 +140,7 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    inv.m_products.Add(new Product()
+                    inv.products.Add(new Product()
                     {
                         idProduct = productID,
                         ProductName = product,
@@ -198,7 +198,7 @@ namespace InvoiceX.ViewModels
                                  "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             try
             {
-                string idInvoice;
+                int idInvoice;
                 conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
                 conn.Open();
@@ -206,13 +206,13 @@ namespace InvoiceX.ViewModels
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
-                    idInvoice = Convert.ToString(queryResult);
+                    idInvoice = Convert.ToInt32(queryResult);
                 else
                     // Else make id = "" so you can later check it.
-                    idInvoice = "";
+                    idInvoice = 0;
 
                 conn.Close();
-                return Convert.ToInt32(idInvoice) ;
+                return idInvoice ;
 
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -241,14 +241,14 @@ namespace InvoiceX.ViewModels
                 {
                     // Now we can start using the passed values in our parameters:
 
-                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
-                    cmd.Parameters.AddWithValue("@idCustomer", invoice.m_customer.idCustomer);
-                    cmd.Parameters.AddWithValue("@Cost", invoice.m_cost);
-                    cmd.Parameters.AddWithValue("@Vat", invoice.m_VAT);
-                    cmd.Parameters.AddWithValue("@TotalCost", invoice.m_totalCost);
-                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.m_createdDate);
-                    cmd.Parameters.AddWithValue("@DueDate", invoice.m_dueDate);
-                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.m_issuedBy);
+                    cmd.Parameters.AddWithValue("@idInvoice", invoice.idInvoice);
+                    cmd.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@Cost", invoice.cost);
+                    cmd.Parameters.AddWithValue("@Vat", invoice.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
+                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.createdDate);
+                    cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
@@ -259,9 +259,9 @@ namespace InvoiceX.ViewModels
 
                 // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
 
-                foreach (Product p in invoice.m_products)
+                foreach (Product p in invoice.products)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.m_idInvoice.ToString()),
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
                         p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
 
                     using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
@@ -307,26 +307,26 @@ namespace InvoiceX.ViewModels
                 {
                     // Now we can start using the passed values in our parameters:
 
-                    cmd.Parameters.AddWithValue("@idInvoice", invoice.m_idInvoice);
-                    cmd.Parameters.AddWithValue("@idCustomer", invoice.m_customer.idCustomer);
-                    cmd.Parameters.AddWithValue("@Cost", invoice.m_cost);
-                    cmd.Parameters.AddWithValue("@Vat", invoice.m_VAT);
-                    cmd.Parameters.AddWithValue("@TotalCost", invoice.m_totalCost);
-                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.m_createdDate);
-                    cmd.Parameters.AddWithValue("@DueDate", invoice.m_dueDate);
-                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.m_issuedBy);
+                    cmd.Parameters.AddWithValue("@idInvoice", invoice.idInvoice);
+                    cmd.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@Cost", invoice.cost);
+                    cmd.Parameters.AddWithValue("@Vat", invoice.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
+                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.createdDate);
+                    cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
                 
                 //update old stock  
                 string query_update_old_stock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
-                for (int i = 0; i < old_invoice.m_products.Count; i++)
+                for (int i = 0; i < old_invoice.products.Count; i++)
                 {                    
                     using (MySqlCommand cmd3 = new MySqlCommand(query_update_old_stock, conn))
                     {
-                        cmd3.Parameters.AddWithValue("@Quantity", old_invoice.m_products[i].Quantity);
-                        cmd3.Parameters.AddWithValue("@idProduct", old_invoice.m_products[i].idProduct);                        
+                        cmd3.Parameters.AddWithValue("@Quantity", old_invoice.products[i].Quantity);
+                        cmd3.Parameters.AddWithValue("@idProduct", old_invoice.products[i].idProduct);                        
                         cmd3.ExecuteNonQuery();
                     }
                 }
@@ -338,7 +338,7 @@ namespace InvoiceX.ViewModels
                 using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
                 {
                     // Now we can start using the passed values in our parameters:
-                    cmd.Parameters.AddWithValue("@idInvoice", old_invoice.m_idInvoice);                   
+                    cmd.Parameters.AddWithValue("@idInvoice", old_invoice.idInvoice);                   
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
@@ -348,9 +348,9 @@ namespace InvoiceX.ViewModels
                 StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
               List<string> Rows = new List<string>();
 
-              foreach (Product p in invoice.m_products)
+              foreach (Product p in invoice.products)
               {
-                  Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.m_idInvoice.ToString()),
+                  Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
                       p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
                   //update stock  
                   using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +

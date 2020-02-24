@@ -61,13 +61,13 @@ namespace InvoiceX.Pages.InvoicePage
 
             var item = obj as Invoice;
             if (dateFrom.HasValue)
-                logic = logic & (item.m_createdDate.CompareTo(dateFrom.Value) >= 0);
+                logic = logic & (item.createdDate.CompareTo(dateFrom.Value) >= 0);
 
             if (dateTo.HasValue)
-                logic = logic & (item.m_createdDate.CompareTo(dateTo.Value) <= 0);
+                logic = logic & (item.createdDate.CompareTo(dateTo.Value) <= 0);
 
             if (!string.IsNullOrWhiteSpace(customerName))
-                logic = logic & (item.m_customerName.ToLower().Contains(customerName.ToLower()));
+                logic = logic & (item.customerName.ToLower().Contains(customerName.ToLower()));
 
             return logic;
         }
@@ -101,12 +101,12 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void ViewInvoice_Click(object sender, RoutedEventArgs e)
         {
-            mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);            
+            mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).idInvoice);            
         }
 
         private void DeleteInvoice_Click(object sender, RoutedEventArgs e)
         {
-            int invoiceID = ((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice;
+            int invoiceID = ((Invoice)invoiceDataGrid.SelectedItem).idInvoice;
             string msgtext = "You are about to delete the invoice with ID = " + invoiceID + ". Are you sure?";
             string txt = "Delete Invoice";
             MessageBoxButton button = MessageBoxButton.YesNo;
@@ -125,7 +125,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void EditInvoice_Click(object sender, RoutedEventArgs e)
         {
-            mainPage.editInvoice(((Invoice)invoiceDataGrid.SelectedItem).m_idInvoice);
+            mainPage.editInvoice(((Invoice)invoiceDataGrid.SelectedItem).idInvoice);
         }
     }
 }
