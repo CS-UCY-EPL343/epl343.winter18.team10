@@ -50,7 +50,7 @@
 
 
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Edit Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
             <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="22,340,0,0" VerticalAlignment="Top" Width="1644">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
@@ -114,13 +114,13 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="createpdf_button" Click="savePdf_Click" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="printPdf_button"  Click="printPdf_click" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Style="{StaticResource ButtonStyle_Complete}"/>
         <TextBox x:Name="textBox_entermessage" HorizontalAlignment="Left" Height="76" Margin="10,863,0,0" TextWrapping="Wrap"  Text="Write a message here ..."  VerticalAlignment="Top" Width="414" />
         <TextBlock HorizontalAlignment="Left" Margin="10,842,0,0" TextWrapping="Wrap" Text="Notes" VerticalAlignment="Top"/>
-        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Style="{StaticResource ButtonStyle_Complete}" />
-        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
+        <Button Content="Preview"  Click="previewPdf_click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Style="{StaticResource ButtonStyle_Complete}" />
+        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
 
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>

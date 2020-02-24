@@ -93,6 +93,8 @@ namespace InvoiceX.ViewModels
                     var address = dataRow.Field<string>("Address");
                     var country = dataRow.Field<string>("Country");
                     var city = dataRow.Field<string>("City");
+                    var customerId = dataRow.Field<int>("idCustomer");
+                    var customerBalance = dataRow.Field<float>("Balance");
 
                     var idInvoice = dataRow.Field<Int32>("InvoiceID");
                     var cost = dataRow.Field<float>("InvoiceCost");
@@ -131,7 +133,9 @@ namespace InvoiceX.ViewModels
                                 Email = email,
                                 Address = address,
                                 Country = country,
-                                City = city
+                                City = city,
+                                idCustomer = customerId,
+                                Balance=customerBalance
                             }
                         };
                     }

@@ -2,6 +2,8 @@
 using InvoiceX.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -107,24 +109,6 @@ namespace InvoiceX.Pages.InvoicePage
             txtBox_invoiceNumber.Focus();
         }
 
-        #region PDF
-        private void previewPdf_click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void printPdf_click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void savePdf_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        #endregion
-
         private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
@@ -158,6 +142,148 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 mainPage.editInvoice(invoice.m_idInvoice);
             }
+        }
+        void savePdf_Click(object sender, RoutedEventArgs e)
+        {
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice.pdf";
+            filename = "Invoice.pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+
+        }
+        void printPdf_click(object sender, RoutedEventArgs e)
+        {
+            //Create and save the pdf
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice.pdf";
+            pdfRenderer.Save(filename);
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
+        }
+        private void previewPdf_click(object sender, RoutedEventArgs e)
+        {
+            if (File.Exists("Invoice_temp.pdf"))
+            {
+                File.Delete("Invoice_temp.pdf");
+            }
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Invoice_temp.pdf";
+            pdfRenderer.Save(filename);
+
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
+
+        }
+
+        private MigraDoc.DocumentObjectModel.Document createPdf()
+        {
+            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_invoiceNumber.Text));
+            Customer customer = invoice.m_customer;
+            string[] customerDetails = new string[6];
+            customerDetails[0] = customer.CustomerName;
+            customerDetails[1] = customer.Address + ", " +
+            customer.City + ", " + customer.Country;
+            customerDetails[2] = customer.PhoneNumber.ToString();
+            customerDetails[3] = customer.Email;
+            customerDetails[4] = customer.Balance.ToString();
+            customerDetails[5] = customer.idCustomer.ToString();
+            MessageBox.Show(customer.idCustomer.ToString());
+
+            string[] invoiceDetails = new string[6];
+            invoiceDetails[0] = txtBox_invoiceNumber.Text;
+            Console.WriteLine(txtBox_invoiceNumber.Text);
+            invoiceDetails[1] = txtBox_invoiceDate.Text;
+            invoiceDetails[2] = txtBox_issuedBy.Text;
+            invoiceDetails[3] = NetTotal_TextBlock.Text;
+            invoiceDetails[4] = Vat_TextBlock.Text;
+            invoiceDetails[5] = TotalAmount_TextBlock.Text;
+
+            List<Product> products = invoiceProductsGrid.Items.OfType<Product>().ToList();
+
+
+            Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
+            MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
+            return document;
+
+
         }
     }
 }
