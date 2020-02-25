@@ -59,8 +59,7 @@ namespace InvoiceX.Pages.ProductPage
             bool logic = true;
             string category = txtBoxCategory.Text;
             string productName = txtBoxProduct.Text;
-            int status = cmbBoxStatus.SelectedIndex;
-            
+            int status = cmbBoxStatus.SelectedIndex;            
 
             var item = obj as Product;
             if (!string.IsNullOrWhiteSpace(category))

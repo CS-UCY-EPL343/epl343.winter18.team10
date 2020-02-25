@@ -222,21 +222,21 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            int n;
-            if (int.TryParse(textBox_ProductQuantity.Text, out n) && float.TryParse(textBox_ProductPrice.Text, out float f) && (comboBox_Product.SelectedIndex > -1))
+            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) && 
+                float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
-
         }
 
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int n;
-            if (float.TryParse(textBox_ProductPrice.Text, out float f) && int.TryParse(textBox_ProductQuantity.Text, out n) && (comboBox_Product.SelectedIndex > -1))
+            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
+                float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
 

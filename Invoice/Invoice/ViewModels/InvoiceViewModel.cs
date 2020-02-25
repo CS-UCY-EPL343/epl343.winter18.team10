@@ -13,15 +13,13 @@ namespace InvoiceX.ViewModels
     public class InvoiceViewModel
     {
         public List<Invoice> invoiceList { get; set; }
+        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
 
         public InvoiceViewModel()
         {
             invoiceList = new List<Invoice>();
-            MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            MySqlConnection conn;            
 
             try
             {
@@ -71,10 +69,7 @@ namespace InvoiceX.ViewModels
         public static Invoice getInvoiceById(int invoiceID)
         {
             MySqlConnection conn;
-            string myConnectionString;
             
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             Invoice inv = new Invoice();
             try
             {
@@ -83,6 +78,9 @@ namespace InvoiceX.ViewModels
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
+
+                if (dt.Rows.Count == 0)
+                    inv = null;
 
                 int count = 0;
                 foreach (DataRow dataRow in dt.Rows)
@@ -166,10 +164,7 @@ namespace InvoiceX.ViewModels
         public static void deleteInvoiceByID(int invoiceID)
         {
             MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+           
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -187,15 +182,12 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-
-        //logika tha ta metakinisoume ta pio kato ----------------------------------------------
+        
         public static int ReturnLatestInvoiceID()
         {
             //int id_return = 0;
             MySqlConnection conn;         
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            
             try
             {
                 int idInvoice;
@@ -225,10 +217,7 @@ namespace InvoiceX.ViewModels
         public static void Send_Ivoice_and_Products_to_DB(Invoice invoice)
         {
             MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
+            
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -290,10 +279,7 @@ namespace InvoiceX.ViewModels
         public static void edit_Invoice(Invoice invoice, Invoice old_invoice)
         {
             MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
+           
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -379,11 +365,9 @@ namespace InvoiceX.ViewModels
 
         public static double[] getTotalAmountByMonth()
         {
-            MySqlConnection conn;
-            string myConnectionString;
+            MySqlConnection conn;            
             double[] total = new double[12];
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -418,11 +402,9 @@ namespace InvoiceX.ViewModels
 
         public static String get30DaysTotalInvoices()
         {
-            MySqlConnection conn;
-            string myConnectionString;
+            MySqlConnection conn;           
             String total="";
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            
             try
             {
                 conn = new MySqlConnection(myConnectionString);
@@ -443,11 +425,9 @@ namespace InvoiceX.ViewModels
 
         public static String get30DaysTotalSales()
         {
-            MySqlConnection conn;
-            string myConnectionString;
+            MySqlConnection conn;           
             String total = "";
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            
             try
             {
                 conn = new MySqlConnection(myConnectionString);

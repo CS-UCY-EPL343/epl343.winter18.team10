@@ -19,7 +19,6 @@ namespace InvoiceX.Pages.InvoicePage
         InvoiceCreate createpage;
         InvoiceEdit editpage;
 
-
         public InvoiceMain()
         {
             InitializeComponent();
@@ -27,7 +26,7 @@ namespace InvoiceX.Pages.InvoicePage
             viewPage = new InvoiceView(this);
             createpage = new InvoiceCreate();
             editpage = new InvoiceEdit();
-            btnViewAll_Click(new object(), new RoutedEventArgs());
+            btnViewAll_Click(null,null);
         }        
 
         private void btnViewAll_Click(object sender, RoutedEventArgs e)

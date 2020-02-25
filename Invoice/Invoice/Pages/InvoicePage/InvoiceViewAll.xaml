@@ -11,7 +11,6 @@
 
     </Page.Resources>
 
-    <!-- View Invoice Starts Here -->
     <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
             <Border.Effect>
@@ -61,12 +60,12 @@
                     </DataTemplate>
                 </DataGrid.RowDetailsTemplate-->
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Created At" Binding = "{Binding m_createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding m_idInvoice}" />
-                <DataGridTextColumn Header = "Customer" Binding = "{Binding m_customerName}" />
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding m_cost, StringFormat=C, ConverterCulture='fr-FR'}"/>
-                <DataGridTextColumn Header = "VAT" Binding = "{Binding m_VAT, StringFormat=C, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding m_totalCost, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding idInvoice}" />
+                <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C, ConverterCulture='fr-FR'}"/>
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C, ConverterCulture='fr-FR'}" />
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>                            
@@ -112,5 +111,5 @@
 
         </DataGrid>
     </Grid>
-    <!-- View Invoice Ends Here -->
+    
 </Page>

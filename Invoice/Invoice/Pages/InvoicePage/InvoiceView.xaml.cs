@@ -55,30 +55,31 @@ namespace InvoiceX.Pages.InvoicePage
         public void loadInvoice(int invoiceID)
         {
             invoice = InvoiceViewModel.getInvoiceById(invoiceID);
-            if (invoice.customerName == null)
+            if (invoice != null)
+            {
+                // Customer details
+                textBox_Customer.Text = invoice.customer.CustomerName;
+                textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = invoice.customer.Email;
+                textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
+
+                // Invoice details
+                txtBox_invoiceNumber.Text = invoice.idInvoice.ToString();
+                txtBox_invoiceNumber.IsReadOnly = true;
+                txtBox_invoiceDate.Text = invoice.createdDate.ToString("dd/mm/yyyy");
+                txtBox_dueDate.Text = invoice.dueDate.ToString("dd/mm/yyyy");
+                txtBox_issuedBy.Text = invoice.issuedBy;
+                NetTotal_TextBlock.Text = invoice.cost.ToString("C");
+                Vat_TextBlock.Text = invoice.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
+
+                // Invoice products           
+                invoiceProductsGrid.ItemsSource = invoice.products;
+            }
+            else
             {
                 MessageBox.Show("Invoice with ID = " + invoiceID + ", does not exist");
-                return;
             }
-
-            // Customer details
-            textBox_Customer.Text = invoice.customer.CustomerName;
-            textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
-            textBox_Email_Address.Text = invoice.customer.Email;
-            textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
-
-            // Invoice details
-            txtBox_invoiceNumber.Text = invoice.idInvoice.ToString();
-            txtBox_invoiceNumber.IsReadOnly = true;
-            txtBox_invoiceDate.Text = invoice.createdDate.ToString("dd/mm/yyyy");
-            txtBox_dueDate.Text = invoice.dueDate.ToString("dd/mm/yyyy");
-            txtBox_issuedBy.Text = invoice.issuedBy;
-            NetTotal_TextBlock.Text = invoice.cost.ToString("C");
-            Vat_TextBlock.Text = invoice.VAT.ToString("C");
-            TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
-
-            // Invoice products           
-            invoiceProductsGrid.ItemsSource = invoice.products;
         }
 
         private void txtBox_invoiceNumber_KeyDown(object sender, KeyEventArgs e)
@@ -91,6 +92,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_clearView_Click(object sender, RoutedEventArgs e)
         {
+            this.invoice = null;
             foreach (var ctrl in grid_Customer.Children)
             {
                 if (ctrl.GetType() == typeof(TextBox))
@@ -138,11 +140,13 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            if (invoice.customerName != null)
+            if (invoice != null)
             {
                 mainPage.editInvoice(invoice.idInvoice);
             }
         }
+
+        #region PDF
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
             MigraDoc.DocumentObjectModel.Document document = createPdf();
@@ -163,6 +167,7 @@ namespace InvoiceX.Pages.InvoicePage
             System.Diagnostics.Process.Start(filename);
 
         }
+
         void printPdf_click(object sender, RoutedEventArgs e)
         {
             //Create and save the pdf
@@ -205,6 +210,7 @@ namespace InvoiceX.Pages.InvoicePage
             proc.Close();
 
         }
+
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
             if (File.Exists("Invoice_temp.pdf"))
@@ -249,8 +255,6 @@ namespace InvoiceX.Pages.InvoicePage
             proc.EnableRaisingEvents = true;
 
             proc.Close();
-
-
         }
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
@@ -282,8 +286,7 @@ namespace InvoiceX.Pages.InvoicePage
             Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
             MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
             return document;
-
-
         }
+        #endregion
     }
 }
