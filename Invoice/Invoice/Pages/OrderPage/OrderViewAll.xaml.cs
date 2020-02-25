@@ -121,7 +121,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void ViewOrder_Click(object sender, RoutedEventArgs e)
         {
-
+           // mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).idInvoice);
         }
 
         private void EditOrder_Click(object sender, RoutedEventArgs e)
@@ -131,9 +131,24 @@ namespace InvoiceX.Pages.OrderPage
 
         private void DeleteOrder_Click(object sender, RoutedEventArgs e)
         {
+            int orderID = ((Order)orderDataGrid.SelectedItem).idOrder;
+            string msgtext = "You are about to delete the order with ID = " + orderID + ". Are you sure?";
+            string txt = "Delete Order";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
 
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    OrderViewModel.deleteOrderByID(orderID);                    
+                    MessageBox.Show("Deleted Order with ID = " + orderID);
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
         }
 
-        
+
     }
 }
