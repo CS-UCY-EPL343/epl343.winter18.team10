@@ -1,6 +1,7 @@
 ﻿using InvoiceX.Pages;
 using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
+using InvoiceX.Pages.OrderPage;
 using InvoiceX.Pages.ProductPage;
 using InvoiceX.Pages.QuotePage;
 using InvoiceX.Pages.SettingsPage;
@@ -32,7 +33,7 @@ namespace InvoiceX
         //private Page m_statement;
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
-        //private Page m_order;
+        private Page m_order = new OrderMain();
         private Page m_quote = new QuoteCreate();
         //private Page m_expenses;
         private Page m_settings = new SettingsMain();
@@ -62,9 +63,9 @@ namespace InvoiceX
         private void BtnInvoice_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Invoice";
-            MainPage.Content = m_invoice;
             resetAllBtnStyles();
             btnInvoice.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_invoice;           
         }
 
         private void BtnReceipt_Click(object sender, RoutedEventArgs e)
@@ -109,6 +110,7 @@ namespace InvoiceX
             pageTitle.Text = "Order";
             resetAllBtnStyles();
             btnOrder.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_order;
         }
 
         private void BtnQuote_Click(object sender, RoutedEventArgs e)
