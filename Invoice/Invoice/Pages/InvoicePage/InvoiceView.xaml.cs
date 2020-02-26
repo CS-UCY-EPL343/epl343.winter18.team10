@@ -86,7 +86,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
             if (e.Key == Key.Return)
             {
-                Btn_LoadInvoice_Click(new object(), new RoutedEventArgs());
+                Btn_LoadInvoice_Click(null,null);
             }
         }
 

@@ -257,8 +257,8 @@ DROP TABLE IF EXISTS `invoice`.`User` ;
 
 CREATE TABLE IF NOT EXISTS `invoice`.`User` (
   `idUser` VARCHAR(20) NOT NULL,
-  `Hash` VARCHAR(250) NOT NULL,
-  `Salt` VARCHAR(100) NOT NULL,
+  `Hash` VARCHAR(500) NOT NULL,
+  `Salt` VARCHAR(250) NOT NULL,
   `AdminPrivileges` TINYINT(1) NULL,
   PRIMARY KEY (`idUser`))
 ENGINE = InnoDB;

@@ -221,7 +221,6 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
                 textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
             }
-
         }
 
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
@@ -378,9 +377,9 @@ namespace InvoiceX.Pages.InvoicePage
             myinvoice.customer = ((Customer)comboBox_customer.SelectedItem);           
             myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
             myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
-            myinvoice.cost = double.Parse(NetTotal_TextBlock.Text);
-            myinvoice.VAT = double.Parse(Vat_TextBlock.Text);
-            myinvoice.totalCost = double.Parse(TotalAmount_TextBlock.Text);
+            myinvoice.cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+            myinvoice.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+            myinvoice.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
             myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
             myinvoice.dueDate = invoiceDate.SelectedDate.Value.Date;
             myinvoice.issuedBy = issuedBy.Text;

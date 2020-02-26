@@ -198,9 +198,9 @@ namespace InvoiceX.Pages.InvoicePage
                 myinvoice.customer = invoice.customer;
                 myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
                 myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
-                myinvoice.cost = double.Parse(NetTotal_TextBlock.Text);
-                myinvoice.VAT = double.Parse(Vat_TextBlock.Text);
-                myinvoice.totalCost = double.Parse(TotalAmount_TextBlock.Text);
+                myinvoice.cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+                myinvoice.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+                myinvoice.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
                 myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
                 myinvoice.dueDate = invoiceDate.SelectedDate.Value.Date;
                 myinvoice.issuedBy = issuedBy.Text;
@@ -226,7 +226,6 @@ namespace InvoiceX.Pages.InvoicePage
                     invoiceId = int.Parse(textBox_invoiceNumber.Text);
                     InvoiceViewModel.edit_Invoice(make_object_Invoice(), InvoiceViewModel.getInvoiceById(invoiceId));
                 }
-
             }
         }
 
@@ -241,7 +240,6 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Clear_Details()
         {
-
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
