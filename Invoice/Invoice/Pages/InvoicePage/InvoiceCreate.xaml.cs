@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,9 @@ namespace InvoiceX.Pages.InvoicePage
         public InvoiceCreate()
         {
             InitializeComponent();
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
         public void load()
@@ -289,30 +293,30 @@ namespace InvoiceX.Pages.InvoicePage
                 });
 
                 double NetTotal_TextBlock_var = 0;
-                NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
+                NetTotal_TextBlock_var = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
                 NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBox_ProductTotal.Text);
-                NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
+                NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("C");
                 double Vat_TextBlock_var = 0;
-                Vat_TextBlock_var = Convert.ToDouble(Vat_TextBlock.Text);
+                Vat_TextBlock_var = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
                 Vat_TextBlock_var = Vat_TextBlock_var + (Convert.ToDouble(textBox_ProductTotal.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
-                Vat_TextBlock.Text = (Vat_TextBlock_var).ToString("n2");
-                TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + Vat_TextBlock_var).ToString("n2");
+                Vat_TextBlock.Text = (Vat_TextBlock_var).ToString("C");
+                TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + Vat_TextBlock_var).ToString("C");
             }
         }
 
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
-
             Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
-            double NetTotal_TextBlock_var = 0;
-            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * (CurrentCell_Product.Vat)).ToString("n2");
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * (CurrentCell_Product.Vat))).ToString("n2");
+            double netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+            netTotal = netTotal - Convert.ToDouble(CurrentCell_Product.Total);
+            NetTotal_TextBlock.Text = netTotal.ToString("C");
+            double vat = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+            vat = vat - (CurrentCell_Product.Total * CurrentCell_Product.Vat);
+            Vat_TextBlock.Text = vat.ToString("C");
+            TotalAmount_TextBlock.Text = (netTotal + vat).ToString("C");
             ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
-
         }
+
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
         public void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -410,9 +414,9 @@ namespace InvoiceX.Pages.InvoicePage
         private void Clear_ProductGrid()
         {
             ProductDataGrid.Items.Clear();
-            NetTotal_TextBlock.Text = "0.00";
-            Vat_TextBlock.Text = "0.00";
-            TotalAmount_TextBlock.Text = "0.00";
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
             textBox_entermessage.Text = "Write a message here ...";
         }
 

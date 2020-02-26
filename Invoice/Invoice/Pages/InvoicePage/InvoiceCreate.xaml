@@ -138,9 +138,9 @@
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,906,0,0" TextWrapping="Wrap" Text="Total Cost" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"/>
-        <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"  />
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
+        <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00"/>
+        <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00"  />
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" />
         
 
         <Grid/>

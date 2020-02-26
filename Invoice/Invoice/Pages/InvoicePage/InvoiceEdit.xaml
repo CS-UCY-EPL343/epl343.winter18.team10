@@ -89,7 +89,7 @@
         </Grid>
 
 
-        <DataGrid x:Name="productDataGrit" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None"  >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>

@@ -11,6 +11,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Diagnostics;
 using System.IO;
+using System.Globalization;
 
 namespace InvoiceX.Pages.InvoicePage
 {
@@ -23,11 +24,12 @@ namespace InvoiceX.Pages.InvoicePage
         //UserViewModel userView;
         CustomerViewModel customerView;
 
-
-
         public InvoiceEdit()
         {
             InitializeComponent();
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
             load();
         }
 
@@ -53,31 +55,29 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
                 textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
             }
-
         }
 
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
-
-            int n;
-            if (int.TryParse(textBox_ProductQuantity.Text, out n) && float.TryParse(textBox_ProductPrice.Text, out float f) && (comboBox_Product.SelectedIndex > -1))
+            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
+                 float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
-
-
         }
 
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            int n;
-            if (float.TryParse(textBox_ProductPrice.Text, out float f) && int.TryParse(textBox_ProductQuantity.Text, out n) && (comboBox_Product.SelectedIndex > -1))
+            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
+                float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
 
-        private bool Check_AddProduct_ComplitedValues()
+        private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
             int n;
@@ -111,9 +111,9 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_ComplitedValues())
+            if (Check_AddProduct_CompletedValues())
             {
-                productDataGrit.Items.Add(new Product
+                ProductDataGrid.Items.Add(new Product
                 {
                     idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
@@ -126,27 +126,28 @@ namespace InvoiceX.Pages.InvoicePage
                 });
 
                 double NetTotal_TextBlock_var = 0;
-                NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
+                NetTotal_TextBlock_var = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
                 NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBox_ProductTotal.Text);
-                NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
+                NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("C");
                 double Vat_TextBlock_var = 0;
-                Vat_TextBlock_var = Convert.ToDouble(Vat_TextBlock.Text);
+                Vat_TextBlock_var = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
                 Vat_TextBlock_var = Vat_TextBlock_var + (Convert.ToDouble(textBox_ProductTotal.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
-                Vat_TextBlock.Text = (Vat_TextBlock_var).ToString("n2");
-                TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + Vat_TextBlock_var).ToString("n2");
+                Vat_TextBlock.Text = (Vat_TextBlock_var).ToString("C");
+                TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + Vat_TextBlock_var).ToString("C");
             }
         }
 
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
-            Product CurrentCell_Product = (Product)(productDataGrit.CurrentCell.Item);
-            double NetTotal_TextBlock_var = 0;
-            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString("n2");
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * (CurrentCell_Product.Vat)).ToString("n2");
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * (CurrentCell_Product.Vat))).ToString("n2");
-            productDataGrit.Items.Remove(productDataGrit.CurrentCell.Item);
+            Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
+            double netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+            netTotal = netTotal - Convert.ToDouble(CurrentCell_Product.Total);
+            NetTotal_TextBlock.Text = netTotal.ToString("C");
+            double vat = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+            vat = vat - (CurrentCell_Product.Total * CurrentCell_Product.Vat);
+            Vat_TextBlock.Text = vat.ToString("C");
+            TotalAmount_TextBlock.Text = (netTotal + vat).ToString("C");
+            ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
         }
 
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
@@ -174,7 +175,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private bool Has_Items_Selected()
         {
-            if (productDataGrit.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
+            if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
                 MessageBox.Show("You havent selectet any products");
                 return false;
@@ -195,7 +196,7 @@ namespace InvoiceX.Pages.InvoicePage
                 Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
                 myinvoice = new Invoice();
                 myinvoice.customer = invoice.customer;
-                myinvoice.products = productDataGrit.Items.OfType<Product>().ToList();
+                myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
                 myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
                 myinvoice.cost = double.Parse(NetTotal_TextBlock.Text);
                 myinvoice.VAT = double.Parse(Vat_TextBlock.Text);
@@ -247,10 +248,10 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Clear_ProductGrid()
         {
-            productDataGrit.Items.Clear();
-            NetTotal_TextBlock.Text = "0.00";
-            Vat_TextBlock.Text = "0.00";
-            TotalAmount_TextBlock.Text = "0.00";
+            ProductDataGrid.Items.Clear();
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
             textBox_entermessage.Text = "Write a message here ...";
         }
 
@@ -301,14 +302,14 @@ namespace InvoiceX.Pages.InvoicePage
                 invoiceDate.SelectedDate = invoice.createdDate;
                 dueDate.SelectedDate = invoice.dueDate;
                 issuedBy.Text = invoice.issuedBy;
-                NetTotal_TextBlock.Text = invoice.cost.ToString("n2");
-                Vat_TextBlock.Text = invoice.VAT.ToString("n2");
-                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("n2");
+                NetTotal_TextBlock.Text = invoice.cost.ToString("C");
+                Vat_TextBlock.Text = invoice.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
 
                 // Invoice products        
                 for (int i = 0; i < invoice.products.Count; i++)
                 {
-                    productDataGrit.Items.Add(new Product
+                    ProductDataGrid.Items.Add(new Product
                     {
                         idProduct = invoice.products[i].idProduct,
                         ProductName = invoice.products[i].ProductName,
@@ -459,7 +460,7 @@ namespace InvoiceX.Pages.InvoicePage
             invoiceDetails[4] = Vat_TextBlock.Text;
             invoiceDetails[5] = TotalAmount_TextBlock.Text;
 
-            List<Product> products = productDataGrit.Items.OfType<Product>().ToList();
+            List<Product> products = ProductDataGrid.Items.OfType<Product>().ToList();
 
 
             Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
