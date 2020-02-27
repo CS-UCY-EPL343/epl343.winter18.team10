@@ -39,10 +39,10 @@
 
         </Grid>
 
-        <Button x:Name="Btn_updatecustomer" Content="Update"  Margin="774,375,826,515" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_updateCustomer_Click"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="904,375,696,515" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" />
-        <TextBox x:Name="txtBox_Customerid" HorizontalAlignment="Left" Height="60" Margin="418,375,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="125" TextChanged="TxtBox_Customerid_TextChanged"/>
-        <Button x:Name="Btn_LoadCustomer" Content="Load Customer"  Margin="548,375,956,515" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="221" Click="Btn_LoadCustomer_Click"   />
+        <Button x:Name="Btn_updatecustomer" Content="Update"  Margin="782,333,797,576" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_updateCustomer_Click" Height="41" Width="146"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="933,333,646,576" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" RenderTransformOrigin="-0.667,2.714" Height="41" Width="146" />
+        <TextBox x:Name="txtBox_Customerid" HorizontalAlignment="Left" Height="41" Margin="535,333,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="80" TextChanged="TxtBox_Customerid_TextChanged"/>
+        <Button x:Name="Btn_LoadCustomer" Content="Load Customer"  Margin="631,333,948,576" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="146" Click="Btn_LoadCustomer_Click" Height="41"   />
 
 
     </Grid>

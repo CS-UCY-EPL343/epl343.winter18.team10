@@ -39,10 +39,10 @@
                 <TextBox x:Name="txtBox_invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
                 <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtBox_issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True"/>
-                <Button x:Name="btn_loadInvoice" Content="Load Invoice" HorizontalAlignment="Left" Margin="139,210,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="Btn_LoadInvoice_Click"/>
+                <Button x:Name="btn_loadInvoice" Style="{DynamicResource CommonButtonStyle}" Content="Load Invoice" HorizontalAlignment="Left" Margin="139,210,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="Btn_LoadInvoice_Click"/>
                 <TextBlock HorizontalAlignment="Left" Margin="277,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
                 <TextBox x:Name="txtBox_dueDate" HorizontalAlignment="Left" Margin="277,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
-                <Button x:Name="btn_clearView" Content="Clear" HorizontalAlignment="Left" Margin="277,210,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="Btn_clearView_Click"/>
+                <Button x:Name="btn_clearView" Style="{DynamicResource CommonButtonStyle}" Content="Clear" HorizontalAlignment="Left" Margin="277,210,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="Btn_clearView_Click"/>
 
 
             </Grid>
@@ -66,17 +66,17 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="savePdf_Click"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="printPdf_click"/>
-        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="74" Click="previewPdf_click"/>
+        <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF" HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="savePdf_Click"/>
+        <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print" HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="printPdf_click"/>
+        <Button Style="{DynamicResource CommonButtonStyle}" Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,906,0,0" TextWrapping="Wrap" Text="Total Cost" VerticalAlignment="Top" Width="81"/>
         <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"/>
         <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"  />
         <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
-        <Button x:Name="btn_edit" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="btn_edit_Click"/>
-        <Button x:Name="btn_delete" Content="Delete" HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_delete_Click"/>
+        <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click"/>
+        <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete" HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_delete_Click"/>
 
 
     </Grid>

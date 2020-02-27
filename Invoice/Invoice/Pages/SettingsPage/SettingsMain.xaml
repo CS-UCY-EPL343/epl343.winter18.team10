@@ -18,7 +18,7 @@
             <Label x:Name="lbl_password" Content="Password :" HorizontalAlignment="Left" Margin="42,106,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="textBox_username" HorizontalAlignment="Left" Height="23" Margin="120,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
             <TextBox x:Name="textBox_password" HorizontalAlignment="Left" Height="23" Margin="120,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="btn_addUser" Content="Add User" HorizontalAlignment="Left" Margin="120,166,0,0" VerticalAlignment="Top" Width="120" Click="btn_addUser_Click"/>
+            <Button x:Name="btn_addUser" Style="{DynamicResource CommonButtonStyle}" Content="Add User" HorizontalAlignment="Left" Margin="120,166,0,0" VerticalAlignment="Top" Width="120" Click="btn_addUser_Click" Height="23"/>
             <Label x:Name="lbl_users" Content="Users" HorizontalAlignment="Left" Margin="42,188,0,0" VerticalAlignment="Top"/>
             <CheckBox x:Name="checkBox_admin" Content="Admin Privileges" HorizontalAlignment="Left" Margin="120,143,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.367"/>
 
@@ -40,7 +40,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-            <Button x:Name="btn_loadUsers" Content="Load Users" HorizontalAlignment="Left" Margin="120,392,0,0" VerticalAlignment="Top" Width="120" Click="btn_loadUsers_Click"/>
+            <Button x:Name="btn_loadUsers" Style="{DynamicResource CommonButtonStyle}" Content="Load Users" HorizontalAlignment="Left" Margin="120,383,0,0" VerticalAlignment="Top" Width="120" Click="btn_loadUsers_Click" Height="30"/>
 
         </Grid>
 

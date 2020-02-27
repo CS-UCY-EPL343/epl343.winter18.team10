@@ -95,7 +95,6 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Foreground" Value="#FF5960FF"/>
     </Style>
-
     <!--  Button diafanes apo mesa blue -->
     <Style x:Key="ButtonStyle_X" TargetType="Button">
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -108,7 +107,6 @@
         <Setter Property="FontSize" Value="16"/>
         <Setter Property="Foreground" Value="Red"/>
     </Style>
-
     <Style x:Key="ButtonStyle_Create" TargetType="Button">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -117,10 +115,8 @@
         <Setter Property="Background" Value="#FF0078D6"/>
         <Setter Property="BorderBrush" Value="#FF5960FF"/>
         <Setter Property="FontSize" Value="30"/>
-        <Setter Property="Foreground" Value="White"/>
-        
+        <Setter Property="Foreground" Value="White"/>        
     </Style>
-
     <Style x:Key="ButtonStyle_Cancel" TargetType="Button">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -130,7 +126,33 @@
         <Setter Property="BorderBrush" Value="#FF5960FF"/>
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="Foreground" Value="White"/>
-
+    </Style>
+    <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">  
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Background" Value="#FF172B4D"/>
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="CornerRadius" Value="5"/>
+                            </Style>
+                        </Border.Style>
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#FF0078D7"/>
+                            <Setter Property="Opacity" Value="0.8" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
 </ResourceDictionary>

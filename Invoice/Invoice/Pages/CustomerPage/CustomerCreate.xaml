@@ -9,7 +9,7 @@
       Title="CustomerCreate">
 
     <Grid>
-        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="940" VerticalAlignment="Top" Width="1725">
+        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="940" VerticalAlignment="Top" Width="1725" Margin="3,-63,-3,0">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
@@ -39,8 +39,8 @@
 
         </Grid>
 
-        <Button x:Name="Btn_createProduct" Content="Create"  Margin="459,618,1141,272" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="632,618,968,272" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" />
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="652,274,963,632" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click" Height="44" Width="110"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="767,274,850,632" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" Height="44" Width="108" />
 
 
     </Grid>
