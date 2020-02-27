@@ -27,7 +27,7 @@ namespace InvoiceX.Pages.ReceiptPage
         public ReceiptMain()
         {
             InitializeComponent();
-            viewAllPage = new ReceiptViewAll();
+            viewAllPage = new ReceiptViewAll(this);
             viewPage = new ReceiptView();
             createPage = new ReceiptCreate();
             btnViewAll_Click(null, null);
@@ -38,7 +38,7 @@ namespace InvoiceX.Pages.ReceiptPage
             resetAllBtnStyles();
             btnViewAll.Style = FindResource("ButtonStyleSelected") as Style;
             receiptPage.Content = viewAllPage;
-            //viewAllPage.load();
+            viewAllPage.load();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -67,6 +67,12 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             btnEdit.Style = btnView.Style = btnCreate.Style =
             btnViewAll.Style = FindResource("ButtonStyle") as Style;
+        }
+
+        public void viewReceipt(int recID)
+        {
+            viewPage.loadReceipt(recID);
+            btnView_Click(null, null);
         }
     }
 }

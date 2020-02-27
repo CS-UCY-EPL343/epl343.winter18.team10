@@ -205,6 +205,7 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Page Include="Dictionary1.xaml">
       <SubType>Designer</SubType>
