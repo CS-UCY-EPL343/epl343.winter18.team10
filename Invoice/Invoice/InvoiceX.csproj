@@ -186,6 +186,18 @@
     <Compile Include="Pages\ProductPage\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptCreate.xaml.cs">
+      <DependentUpon>ReceiptCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptMain.xaml.cs">
+      <DependentUpon>ReceiptMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptView.xaml.cs">
+      <DependentUpon>ReceiptView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptViewAll.xaml.cs">
+      <DependentUpon>ReceiptViewAll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPage\SettingsMain.xaml.cs">
       <DependentUpon>SettingsMain.xaml</DependentUpon>
     </Compile>
@@ -294,6 +306,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptViewAll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SettingsPage\SettingsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -372,5 +400,6 @@
   <ItemGroup>
     <Resource Include="Images\logout.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

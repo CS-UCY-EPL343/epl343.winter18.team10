@@ -4,6 +4,7 @@ using InvoiceX.Pages.InvoicePage;
 using InvoiceX.Pages.OrderPage;
 using InvoiceX.Pages.ProductPage;
 using InvoiceX.Pages.QuotePage;
+using InvoiceX.Pages.ReceiptPage;
 using InvoiceX.Pages.SettingsPage;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace InvoiceX
     {
         private Page m_dashboard = new Dashboard();
         private Page m_invoice = new InvoiceMain();
-        //private Page m_receipt;
+        private Page m_receipt = new ReceiptMain();
         //private Page m_creditNote;
         //private Page m_statement;
         private Page m_product = new ProductMain();
@@ -73,6 +74,7 @@ namespace InvoiceX
             pageTitle.Text = "Receipt";
             resetAllBtnStyles();
             btnReceipt.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_receipt;
         }
 
         private void BtnCreditNote_Click(object sender, RoutedEventArgs e)
