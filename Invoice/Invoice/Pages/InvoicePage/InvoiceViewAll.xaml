@@ -23,7 +23,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBoxCustomer_TextChanged"/>
+            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" TextChanged="txtBoxCustomer_TextChanged"/>
             <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
             <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>

@@ -201,13 +201,14 @@
     <Compile Include="Pages\SettingsPage\SettingsMain.xaml.cs">
       <DependentUpon>SettingsMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\RatioConverter.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Page Include="Dictionary1.xaml">
+    <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

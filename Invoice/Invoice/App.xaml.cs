@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace InvoiceX
@@ -38,5 +39,5 @@ namespace InvoiceX
             base.OnStartup(e);
         }
 
-    }
+    }    
 }
