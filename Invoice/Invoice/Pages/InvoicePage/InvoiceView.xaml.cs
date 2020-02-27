@@ -68,6 +68,7 @@ namespace InvoiceX.Pages.InvoicePage
                 txtBox_invoiceNumber.IsReadOnly = true;
                 txtBox_invoiceDate.Text = invoice.createdDate.ToString("dd/mm/yyyy");
                 txtBox_dueDate.Text = invoice.dueDate.ToString("dd/mm/yyyy");
+                MessageBox.Show(invoice.createdDate.ToString());
                 txtBox_issuedBy.Text = invoice.issuedBy;
                 NetTotal_TextBlock.Text = invoice.cost.ToString("C");
                 Vat_TextBlock.Text = invoice.VAT.ToString("C");

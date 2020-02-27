@@ -146,7 +146,7 @@ namespace InvoiceX.ViewModels
                         Stock = stock,
                         Total = proTotalCost,
                         Quantity = quantity,
-                        Cost = proTotalCost / quantity,
+                        SellPrice = proTotalCost / quantity,
                         Vat = proVat
                     });
                 }

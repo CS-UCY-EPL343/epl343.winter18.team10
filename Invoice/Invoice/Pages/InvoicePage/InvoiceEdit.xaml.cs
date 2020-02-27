@@ -313,7 +313,7 @@ namespace InvoiceX.Pages.InvoicePage
                         ProductName = invoice.products[i].ProductName,
                         ProductDescription = invoice.products[i].ProductDescription,
                         Stock = invoice.products[i].Stock,
-                        SellPrice = invoice.products[i].Cost,
+                        SellPrice = invoice.products[i].SellPrice,
                         Quantity = invoice.products[i].Quantity,
                         Total = invoice.products[i].Total,
                         Vat = invoice.products[i].Vat
