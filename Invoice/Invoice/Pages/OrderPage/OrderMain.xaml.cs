@@ -69,5 +69,17 @@ namespace InvoiceX.Pages.OrderPage
             btnEdit.Style = btnView.Style = btnCreate.Style =
             btnViewAll.Style = FindResource("ButtonStyle") as Style;
         }
+
+        public void viewOrder(int orderID)
+        {
+            viewPage.loadOrder(orderID);
+            btnView_Click(null, null);
+        }
+
+        public void editOrder(int orderID)
+        {
+            editpage.loadOrder(orderID);
+            btnEdit_Click(null, null);
+        }
     }
 }

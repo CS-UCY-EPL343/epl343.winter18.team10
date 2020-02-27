@@ -121,7 +121,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void ViewOrder_Click(object sender, RoutedEventArgs e)
         {
-           // mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).idInvoice);
+            orderMain.viewOrder(((Order)orderDataGrid.SelectedItem).idOrder);
         }
 
         private void EditOrder_Click(object sender, RoutedEventArgs e)

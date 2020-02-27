@@ -11,8 +11,7 @@
     <Page.Resources>
 
     </Page.Resources>
-
-    <!-- Create Invoice Starts Here -->
+    
     <Grid x:Name="createTab" Background="White" Visibility="Visible">
         <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="429" VerticalAlignment="Top" Width="1725">
             <Grid.Effect>

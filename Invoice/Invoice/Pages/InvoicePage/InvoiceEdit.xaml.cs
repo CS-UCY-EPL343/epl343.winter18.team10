@@ -20,9 +20,7 @@ namespace InvoiceX.Pages.InvoicePage
     /// </summary>
     public partial class InvoiceEdit : Page
     {
-        ProductViewModel productView;
-        //UserViewModel userView;
-        CustomerViewModel customerView;
+        ProductViewModel productView;        
 
         public InvoiceEdit()
         {
@@ -36,7 +34,6 @@ namespace InvoiceX.Pages.InvoicePage
         public void load()
         {
             productView = new ProductViewModel();
-            customerView = new CustomerViewModel();
             comboBox_Product.ItemsSource = productView.ProductList;
             textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message          
         }

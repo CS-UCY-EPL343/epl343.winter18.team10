@@ -31,7 +31,7 @@
     </Style>
     <!-- DataGridRow style -->
     <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Height" Value="65"/>
+        <Setter Property="Height" Value="50"/>
         <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Focusable" Value="False"/>
