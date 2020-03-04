@@ -1,4 +1,5 @@
 ﻿using InvoiceX.Pages;
+using InvoiceX.Pages.CreditNotePage;
 using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
 using InvoiceX.Pages.OrderPage;
@@ -30,7 +31,7 @@ namespace InvoiceX
         private Page m_dashboard = new Dashboard();
         private Page m_invoice = new InvoiceMain();
         private Page m_receipt = new ReceiptMain();
-        //private Page m_creditNote;
+        private Page m_creditNote = new CreditNoteMain();
         //private Page m_statement;
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
@@ -82,6 +83,7 @@ namespace InvoiceX
             pageTitle.Text = "Credit Note";
             resetAllBtnStyles();
             btnCreditNote.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_creditNote;
         }
 
         private void BtnStatement_Click(object sender, RoutedEventArgs e)
