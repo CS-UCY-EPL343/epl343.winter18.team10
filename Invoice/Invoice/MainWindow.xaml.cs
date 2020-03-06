@@ -36,7 +36,7 @@ namespace InvoiceX
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
         private Page m_order = new OrderMain();
-        private Page m_quote = new QuoteCreate();
+        private Page m_quote = new QuoteMain();
         //private Page m_expenses;
         private Page m_settings = new SettingsMain();
 

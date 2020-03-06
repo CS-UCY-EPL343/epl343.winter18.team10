@@ -149,6 +149,28 @@ namespace InvoiceX.Pages.OrderPage
             }
         }
 
+        private void MarkOrderReady_Click(object sender, RoutedEventArgs e)
+        {
+            int orderID = ((Order)orderDataGrid.SelectedItem).idOrder;
+            string msgtext = "Mark order with ID = " + orderID + " as ready?";
+            string txt = "Order Ready";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
 
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    OrderViewModel.markOrderAsReady(orderID);                    
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
+        private void IssueOrderAsInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

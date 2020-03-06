@@ -122,6 +122,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\CreditNotePage\CreditNoteCreate.xaml.cs">
@@ -235,6 +236,7 @@
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\QuoteViewModel.cs" />
     <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Page Include="Pages\CreditNotePage\CreditNoteCreate.xaml">
