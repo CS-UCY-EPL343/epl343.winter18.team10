@@ -44,21 +44,7 @@
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
-            </DataGrid.Effect>
-            <!--DataGrid.RowDetailsTemplate>
-                    <DataTemplate>
-                        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding m_products}" Margin="10" Width="900" HorizontalAlignment="Left">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="Product" Width="Auto" FontSize="18"
-                            Binding="{Binding m_productName}" />
-                                <DataGridTextColumn Header="Quantity " Width="Auto" FontSize="18"
-                            Binding="{Binding m_quantity}" />
-                                <DataGridTextColumn Header="Cost " Width="Auto" FontSize="18"
-                            Binding="{Binding m_totalCost}" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </DataTemplate>
-                </DataGrid.RowDetailsTemplate-->
+            </DataGrid.Effect>            
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
                 <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding idInvoice}" />

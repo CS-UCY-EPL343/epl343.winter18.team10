@@ -124,7 +124,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private void EditCreditNote_Click(object sender, RoutedEventArgs e)
         {
-            mainPage.editCredtiNote(((CreditNote)creditNoteDataGrid.SelectedItem).idCreditNote);
+            mainPage.editCreditNote(((CreditNote)creditNoteDataGrid.SelectedItem).idCreditNote);
         }
     }
 }

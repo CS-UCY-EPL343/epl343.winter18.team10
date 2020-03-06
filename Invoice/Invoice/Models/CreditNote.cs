@@ -13,6 +13,7 @@ namespace InvoiceX.Models
         public int idCreditNote { get; set; }
         public string customerName { get; set; }
         public double cost { get; set; }
+        public double VAT { get; set; }
         public double totalCost { get; set; }
         public List<Product> products { get; set; }
         public Customer customer { get; set; }

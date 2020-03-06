@@ -44,10 +44,11 @@
             </DataGrid.Effect>            
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
-                <DataGridTextColumn Header = "Credit Note ID" Binding = "{Binding idInvoice}" />
+                <DataGridTextColumn Header = "Credit Note ID" Binding = "{Binding idCreditNote}" />
                 <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
-                <DataGridTextColumn Header = "Status" Binding = "{Binding cost, StringFormat=C}"/>
-                <DataGridTextColumn Header = "Amount" Binding = "{Binding totalCost, StringFormat=C}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C}"/>
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C}" />
+                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C}" />
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -40,7 +40,7 @@ namespace InvoiceX.Pages.CreditNotePage
             resetAllBtnStyles();
             btnViewAll.Style = FindResource("ButtonStyleSelected") as Style;
             creditNotePage.Content = viewAllPage;
-            //viewAllPage.load();
+            viewAllPage.load();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -74,11 +74,11 @@ namespace InvoiceX.Pages.CreditNotePage
 
         public void viewCreditNote(int cdID)
         {
-            //viewPage.loadInvoice(cdID);
+            viewPage.loadCreditNote(cdID);
             btnView_Click(null, null);
         }
 
-        public void editCredtiNote(int cdID)
+        public void editCreditNote(int cdID)
         {
             //editpage.loadInvoice(cdID);
             btnEdit_Click(null, null);
