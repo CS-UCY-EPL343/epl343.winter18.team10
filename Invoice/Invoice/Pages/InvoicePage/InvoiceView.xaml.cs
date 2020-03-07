@@ -269,7 +269,6 @@ namespace InvoiceX.Pages.InvoicePage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
-            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] invoiceDetails = new string[6];
             invoiceDetails[0] = txtBox_invoiceNumber.Text;

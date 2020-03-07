@@ -54,10 +54,10 @@
 
 
 
-        <Button x:Name="Btn_createProduct" Content="Update"  Margin="747,378,853,512" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_UpdateProduct_Click"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="877,378,723,512" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" />
-        <TextBox  x:Name="txtbox_productId" HorizontalAlignment="Left" Height="60" Margin="416,378,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="126" TextChanged="Txtbox_productId_TextChanged"/>
-        <Button  x:Name="Btn_loadProduct" Content="Load Product" HorizontalAlignment="Left" Margin="547,378,0,0" VerticalAlignment="Top"   Style="{StaticResource ButtonStyle_Create}" Width="195" Click="Btn_loadProduct_Click" />
+        <Button x:Name="Btn_createProduct" Content="Update"  Margin="600,330,1011,580" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_UpdateProduct_Click" Height="40" Width="114"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="719,330,892,580" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" Height="40" Width="114" />
+        <TextBox  x:Name="txtbox_productId" HorizontalAlignment="Left" Height="40" Margin="433,330,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="43" TextChanged="Txtbox_productId_TextChanged"/>
+        <Button  x:Name="Btn_loadProduct" Content="Load Product" HorizontalAlignment="Left" Margin="481,330,0,0" VerticalAlignment="Top"  Style="{DynamicResource CommonButtonStyle}" Width="114" Click="Btn_loadProduct_Click" Height="40" />
 
     </Grid>
 </Page>

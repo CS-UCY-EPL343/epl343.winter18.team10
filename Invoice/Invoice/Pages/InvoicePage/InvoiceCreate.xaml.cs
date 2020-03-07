@@ -43,8 +43,6 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_invoiceNumber.Text = (InvoiceViewModel.ReturnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
-                textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message
-
             }
             Refresh_DB_data = false;
         }        
@@ -416,7 +414,6 @@ namespace InvoiceX.Pages.InvoicePage
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
-            textBox_entermessage.Text = "Write a message here ...";
         }
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
