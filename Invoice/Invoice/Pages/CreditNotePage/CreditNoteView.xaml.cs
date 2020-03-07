@@ -66,7 +66,6 @@ namespace InvoiceX.Pages.CreditNotePage
                 txtBox_creditNoteNumber.Text = creditNote.idCreditNote.ToString();
                 txtBox_creditNoteNumber.IsReadOnly = true;
                 txtBox_createdDate.Text = creditNote.createdDate.ToString("d");
-                txtBox_dueDate.Text = creditNote.dueDate.ToString("d");
                 txtBox_issuedBy.Text = creditNote.issuedBy;
                 NetTotal_TextBlock.Text = creditNote.cost.ToString("C");
                 Vat_TextBlock.Text = creditNote.VAT.ToString("C");

@@ -24,9 +24,21 @@ INSERT INTO `Receipt` (`idReceipt`, `idCustomer`, `Amount`, `IssuedBy`, `IssuedD
 
 INSERT INTO `Payment` (`idPayment`, `idReceipt`, `PaymentMethod`, `Amount`, `PaymentNumber`, `PaymentDate`) 
 			VALUES (NULL, '1', 'Cash', '150', '-1', '2020-02-26'), 
-				   (NULL, '1', 'Bank', '50', '1234', '2020-02-26'),
-				   (NULL, '1', 'Cheque', '50', '456987', '2020-02-29');
+				   (NULL, '1', 'Bank', '50', '12ad34', '2020-02-26'),
+				   (NULL, '1', 'Cheque', '50', '45698sdfb7', '2020-02-29');
 				   
+INSERT INTO `CreditNote` (`idCreditNote`, `idCustomer`, `Cost`, `VAT`, `TotalCost`, `CreatedDate`, `IssuedBy`) 
+			VALUES (NULL, '1', '62.24', '11.83', '74.07', '2020-02-29', 'chr');		
+
+INSERT INTO `CreditNoteProduct` (`idCreditNote`, `idProduct`, `idInvoice`, `Quantity`) 
+			VALUES ('1', '1', '1', '5');				   
+				   
+INSERT INTO `Quote` (`idQuote`, `idCustomer`, `IssuedBy`, `CreatedDate`) 
+			VALUES (NULL, '1', 'me', '2020-02-27');
+
+INSERT INTO `QuoteProduct` (`idQuote`, `idProduct`, `Price`) 
+			VALUES ('1', '1', 5.0);  	   
+
 INSERT INTO `User` (`idUser`, `Hash`, `Salt`, `AdminPrivileges`) 
 			VALUES ('admin', 'v4UkaqDMyrjCmnS2aFKLlUAw0XStkqp7h5Q1xNfxHfZTf0x4WEd39Q5PwTnGu2C1WgSzSmPKYmSARvzSZpX5m61dy51OjhHyTBHyYkSAHruelWbjwnQp55DoMIXVgY99Wo2ohBCKxjVqv7upyCKsXi9G3zjY04SLPcKijaWuHOZuDewyoMZTn5t03/hsmHzluTuuysIuV4DLzPZlY1BOvHoX4d84zYrdpKy34J7HKf0vOZBVonnxJxCQgJoaehDsIXdscBvyIkLC0cXUVY1IFtmolVRRelWe4oOMtUSiyC3uMpBdyzhvyNKfphqavUzCakzO4zpPDqav3BsDFONHjQ==', '6wgnx4XubS6U7n88LMMR4B397+P+XlNA9huDxytXYHAUs6mkW/+6SdWOhZF5t8aZwnkBqcMEnfICjOKIKy8EEuE1R4Pp//E4Fg8E', 1 );
 			

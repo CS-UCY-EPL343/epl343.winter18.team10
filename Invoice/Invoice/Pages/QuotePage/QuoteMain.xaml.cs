@@ -31,7 +31,7 @@ namespace InvoiceX.Pages.QuotePage
             viewAllPage = new QuoteViewAll(this);
             createpage = new QuoteCreate();
             editpage = new QuoteEdit();
-            viewPage = new QuoteView();
+            viewPage = new QuoteView(this);
             btnViewAll_Click(null, null);
         }
 
@@ -72,15 +72,15 @@ namespace InvoiceX.Pages.QuotePage
             btnViewAll.Style = FindResource("ButtonStyle") as Style;
         }
 
-        public void viewQuote(int invID)
+        public void viewQuote(int quoteID)
         {
-            //viewPage.loadInvoice(invID);
+            viewPage.loadQuote(quoteID);
             btnView_Click(null, null);
         }
 
-        public void editQuote(int invID)
+        public void editQuote(int quoteID)
         {
-            //editpage.loadInvoice(invID);
+            //editpage.loadInvoice(quoteID);
             btnEdit_Click(null, null);
         }
     }

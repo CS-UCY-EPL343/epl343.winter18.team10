@@ -87,6 +87,7 @@ namespace InvoiceX.Pages.OrderPage
             dtPickerFrom.SelectedDate = null;
             dtPickerTo.SelectedDate = null;
             txtBoxCustomer.Clear();
+            cmbBoxStatus.SelectedIndex = 0;
             orderDataGrid.ItemsSource = orderViewModel.orderList;
         }
 

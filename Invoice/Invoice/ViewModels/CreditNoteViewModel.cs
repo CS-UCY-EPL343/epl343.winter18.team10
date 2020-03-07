@@ -40,7 +40,6 @@ namespace InvoiceX.ViewModels
                     var VAT = dataRow.Field<float>("VAT");
                     var credTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
-                    var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     cred = new CreditNote()
@@ -51,7 +50,6 @@ namespace InvoiceX.ViewModels
                         VAT = VAT,
                         totalCost = credTotalCost,
                         createdDate = createdDate,
-                        dueDate = dueDate,
                         issuedBy = issuedBy
                     };
 
@@ -95,12 +93,11 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idCreditNote = dataRow.Field<Int32>("InvoiceID");
-                    var cost = dataRow.Field<float>("InvoiceCost");
-                    var VAT = dataRow.Field<float>("InvoiceVAT");
-                    var credTotalCost = dataRow.Field<float>("InvoiceTotalCost");
+                    var idCreditNote = dataRow.Field<Int32>("CreditNoteID");
+                    var cost = dataRow.Field<float>("CreditNoteCost");
+                    var VAT = dataRow.Field<float>("CreditNoteVAT");
+                    var credTotalCost = dataRow.Field<float>("CreditNoteTotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
-                    var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     var productID = dataRow.Field<Int32>("idProduct");
@@ -122,7 +119,6 @@ namespace InvoiceX.ViewModels
                             VAT = VAT,
                             totalCost = credTotalCost,
                             createdDate = createdDate,
-                            dueDate = dueDate,
                             issuedBy = issuedBy,
                             products = new List<Product>(),
                             customer = new Customer()

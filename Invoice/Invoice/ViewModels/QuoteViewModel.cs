@@ -24,8 +24,8 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT `Offer`.*, `Customer`.`CustomerName` FROM `Offer`" +
-                    " LEFT JOIN `Customer` ON `Offer`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT `Quote`.*, `Customer`.`CustomerName` FROM `Quote`" +
+                    " LEFT JOIN `Customer` ON `Quote`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
@@ -85,17 +85,15 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idQuote = dataRow.Field<Int32>("InvoiceID");
+                    var idQuote = dataRow.Field<Int32>("QuoteID");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     var productID = dataRow.Field<Int32>("idProduct");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
-                    var stock = dataRow.Field<int>("Stock");
-                    var proTotalCost = dataRow.Field<float>("IPCost");
-                    var proVat = dataRow.Field<float>("IPVAT");
-                    var quantity = dataRow.Field<Int32>("Quantity");
+                    var sellPrice = dataRow.Field<float>("SellPrice");
+                    var offerPrice = dataRow.Field<float>("OfferPrice");
 
                     if (count == 0)
                     {
@@ -125,12 +123,9 @@ namespace InvoiceX.ViewModels
                     {
                         idProduct = productID,
                         ProductName = product,
-                        ProductDescription = prodDescription,
-                        Stock = stock,
-                        Total = proTotalCost,
-                        Quantity = quantity,
-                        SellPrice = proTotalCost / quantity,
-                        Vat = proVat
+                        ProductDescription = prodDescription,                        
+                        SellPrice = sellPrice,
+                        OfferPrice = offerPrice
                     });
                 }
 

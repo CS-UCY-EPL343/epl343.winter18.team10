@@ -9,7 +9,6 @@ namespace InvoiceX.Models
     public class CreditNote
     {
         public DateTime createdDate { get; set; }
-        public DateTime dueDate { get; set; }
         public int idCreditNote { get; set; }
         public string customerName { get; set; }
         public double cost { get; set; }
