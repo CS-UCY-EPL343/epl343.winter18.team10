@@ -20,9 +20,7 @@ namespace InvoiceX.Pages.InvoicePage
     /// </summary>
     public partial class InvoiceEdit : Page
     {
-        ProductViewModel productView;
-        //UserViewModel userView;
-        CustomerViewModel customerView;
+        ProductViewModel productView;        
 
         public InvoiceEdit()
         {
@@ -36,9 +34,7 @@ namespace InvoiceX.Pages.InvoicePage
         public void load()
         {
             productView = new ProductViewModel();
-            customerView = new CustomerViewModel();
             comboBox_Product.ItemsSource = productView.ProductList;
-            textBox_entermessage.GotFocus += TextBox_GotFocus; //press message box and remove message          
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -250,7 +246,6 @@ namespace InvoiceX.Pages.InvoicePage
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
-            textBox_entermessage.Text = "Write a message here ...";
         }
 
 
@@ -305,20 +300,7 @@ namespace InvoiceX.Pages.InvoicePage
                 TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
 
                 // Invoice products        
-                for (int i = 0; i < invoice.products.Count; i++)
-                {
-                    ProductDataGrid.Items.Add(new Product
-                    {
-                        idProduct = invoice.products[i].idProduct,
-                        ProductName = invoice.products[i].ProductName,
-                        ProductDescription = invoice.products[i].ProductDescription,
-                        Stock = invoice.products[i].Stock,
-                        SellPrice = invoice.products[i].SellPrice,
-                        Quantity = invoice.products[i].Quantity,
-                        Total = invoice.products[i].Total,
-                        Vat = invoice.products[i].Vat
-                    });
-                }
+                ProductDataGrid.ItemsSource = invoice.products;
             }
             else
             {

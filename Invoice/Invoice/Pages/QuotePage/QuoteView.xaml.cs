@@ -17,82 +17,75 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InvoiceX.Pages.InvoicePage
+namespace InvoiceX.Pages.QuotePage
 {
     /// <summary>
-    /// Interaction logic for InvoiceView.xaml
+    /// Interaction logic for QuoteView.xaml
     /// </summary>
-    public partial class InvoiceView : Page
+    public partial class QuoteView : Page
     {
-        private Invoice invoice;
-        InvoiceMain mainPage;
+        private Quote quote;
+        QuoteMain mainPage;
 
-        public InvoiceView(InvoiceMain mainPage)
+        public QuoteView(QuoteMain mainPage)
         {
             this.mainPage = mainPage;
 
-            InitializeComponent();
-            NetTotal_TextBlock.Text = (0).ToString("C");
-            Vat_TextBlock.Text = (0).ToString("C");
-            TotalAmount_TextBlock.Text = (0).ToString("C");
-            txtBox_invoiceNumber.Focus();
-        }
-
-        private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
+            InitializeComponent();           
+            txtBox_QuoteNumber.Focus();
+        }    
+       
+        private void Btn_LoadQuote_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
-            if (invoiceID > 0)
+            int.TryParse(txtBox_QuoteNumber.Text, out int quoteID);
+            if (quoteID > 0)
             {
-                loadInvoice(invoiceID);
+                loadQuote(quoteID);
             }
             else
             {
                 //not a number
-                MessageBox.Show("Please insert a valid value for invoice ID.");
+                MessageBox.Show("Please insert a valid value for quote ID.");
             }
         }
 
-        public void loadInvoice(int invoiceID)
+        public void loadQuote(int quoteID)
         {
-            invoice = InvoiceViewModel.getInvoiceById(invoiceID);
-            if (invoice != null)
+            quote = QuoteViewModel.getQuoteByID(quoteID);
+            if (quote != null)
             {
                 // Customer details
-                textBox_Customer.Text = invoice.customer.CustomerName;
-                textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = invoice.customer.Email;
-                textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
+                textBox_Customer.Text = quote.customer.CustomerName;
+                textBox_Contact_Details.Text = quote.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = quote.customer.Email;
+                textBox_Address.Text = quote.customer.Address + ", " + quote.customer.City + ", " + quote.customer.Country;
 
-                // Invoice details
-                txtBox_invoiceNumber.Text = invoice.idInvoice.ToString();
-                txtBox_invoiceNumber.IsReadOnly = true;
-                txtBox_invoiceDate.Text = invoice.createdDate.ToString("d");
-                txtBox_dueDate.Text = invoice.dueDate.ToString("d");
-                txtBox_issuedBy.Text = invoice.issuedBy;
-                NetTotal_TextBlock.Text = invoice.cost.ToString("C");
-                Vat_TextBlock.Text = invoice.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
+                // Quote details
+                txtBox_QuoteNumber.Text = quote.idQuote.ToString();
+                txtBox_QuoteNumber.IsReadOnly = true;
+                txtBox_invoiceDate.Text = quote.createdDate.ToString("d");
+                txtBox_issuedBy.Text = quote.issuedBy;
 
-                // Invoice products           
-                invoiceProductsGrid.ItemsSource = invoice.products;
+                // Quote products           
+                quoteProductsGrid.ItemsSource = quote.products;
             }
             else
             {
-                MessageBox.Show("Invoice with ID = " + invoiceID + ", does not exist");
+                MessageBox.Show("Quote with ID = " + quoteID + ", does not exist");
             }
         }
 
-        private void txtBox_invoiceNumber_KeyDown(object sender, KeyEventArgs e)
+        private void txtBox_quoteNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                Btn_LoadInvoice_Click(null,null);
+                Btn_LoadQuote_Click(null, null);
             }
         }
 
         private void Btn_clearView_Click(object sender, RoutedEventArgs e)
         {
-            this.invoice = null;
+            this.quote = null;
             foreach (var ctrl in grid_Customer.Children)
             {
                 if (ctrl.GetType() == typeof(TextBox))
@@ -103,46 +96,43 @@ namespace InvoiceX.Pages.InvoicePage
                 if (ctrl.GetType() == typeof(TextBox))
                     ((TextBox)ctrl).Clear();
             }
-            invoiceProductsGrid.ItemsSource = null;
-            NetTotal_TextBlock.Text = (0).ToString("C");
-            Vat_TextBlock.Text = (0).ToString("C");
-            TotalAmount_TextBlock.Text = (0).ToString("C");
-            txtBox_invoiceNumber.IsReadOnly = false;
-            txtBox_invoiceNumber.Focus();
+            quoteProductsGrid.ItemsSource = null;           
+            txtBox_QuoteNumber.IsReadOnly = false;
+            txtBox_QuoteNumber.Focus();
         }
 
         private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
-            if (txtBox_invoiceNumber.IsReadOnly)
-            {                
-                string msgtext = "You are about to delete the invoice with ID = " + invoiceID + ". Are you sure?";
-                string txt = "Delete Invoice";
+            int.TryParse(txtBox_QuoteNumber.Text, out int quoteID);
+            if (txtBox_QuoteNumber.IsReadOnly)
+            {
+                string msgtext = "You are about to delete the quote with ID = " + quoteID + ". Are you sure?";
+                string txt = "Delete Quote";
                 MessageBoxButton button = MessageBoxButton.YesNo;
                 MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
 
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        InvoiceViewModel.deleteInvoiceByID(invoiceID);
+                        QuoteViewModel.deleteQuoteByID(quoteID);
                         Btn_clearView_Click(null, null);
-                        MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
+                        MessageBox.Show("Deleted Quote with ID = " + quoteID);
                         break;
                     case MessageBoxResult.No:
                         break;
-                }                
+                }
             }
             else
             {
-                MessageBox.Show("No invoice is loaded");
+                MessageBox.Show("No quote is loaded");
             }
         }
 
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            if (invoice != null)
+            if (quote != null)
             {
-                mainPage.editInvoice(invoice.idInvoice);
+                mainPage.editQuote(quote.idQuote);
             }
         }
 
@@ -259,7 +249,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_invoiceNumber.Text));
+            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_QuoteNumber.Text));
             Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
@@ -269,17 +259,16 @@ namespace InvoiceX.Pages.InvoicePage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
+            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = txtBox_invoiceNumber.Text;
-            Console.WriteLine(txtBox_invoiceNumber.Text);
+            invoiceDetails[0] = txtBox_QuoteNumber.Text;
+            Console.WriteLine(txtBox_QuoteNumber.Text);
             invoiceDetails[1] = txtBox_invoiceDate.Text;
             invoiceDetails[2] = txtBox_issuedBy.Text;
-            invoiceDetails[3] = NetTotal_TextBlock.Text;
-            invoiceDetails[4] = Vat_TextBlock.Text;
-            invoiceDetails[5] = TotalAmount_TextBlock.Text;
+            
 
-            List<Product> products = invoiceProductsGrid.Items.OfType<Product>().ToList();
+            List<Product> products = quoteProductsGrid.Items.OfType<Product>().ToList();
 
 
             Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);

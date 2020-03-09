@@ -17,82 +17,80 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace InvoiceX.Pages.InvoicePage
+namespace InvoiceX.Pages.CreditNotePage
 {
     /// <summary>
-    /// Interaction logic for InvoiceView.xaml
+    /// Interaction logic for CreditNoteView.xaml
     /// </summary>
-    public partial class InvoiceView : Page
+    public partial class CreditNoteView : Page
     {
-        private Invoice invoice;
-        InvoiceMain mainPage;
-
-        public InvoiceView(InvoiceMain mainPage)
+        private CreditNote creditNote;
+        CreditNoteMain mainPage;
+        public CreditNoteView(CreditNoteMain creditNoteMain)
         {
-            this.mainPage = mainPage;
+            this.mainPage = creditNoteMain;
 
             InitializeComponent();
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
-            txtBox_invoiceNumber.Focus();
-        }
-
-        private void Btn_LoadInvoice_Click(object sender, RoutedEventArgs e)
+            txtBox_creditNoteNumber.Focus();
+        }      
+       
+        private void Btn_LoadCreditNote_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
-            if (invoiceID > 0)
+            int.TryParse(txtBox_creditNoteNumber.Text, out int creditNoteID);
+            if (creditNoteID > 0)
             {
-                loadInvoice(invoiceID);
+                loadCreditNote(creditNoteID);
             }
             else
             {
                 //not a number
-                MessageBox.Show("Please insert a valid value for invoice ID.");
+                MessageBox.Show("Please insert a valid value for credit note ID.");
             }
         }
 
-        public void loadInvoice(int invoiceID)
+        public void loadCreditNote(int creditNoteID)
         {
-            invoice = InvoiceViewModel.getInvoiceById(invoiceID);
-            if (invoice != null)
+            creditNote = CreditNoteViewModel.getCreditNoteById(creditNoteID);
+            if (creditNote != null)
             {
                 // Customer details
-                textBox_Customer.Text = invoice.customer.CustomerName;
-                textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = invoice.customer.Email;
-                textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
+                textBox_Customer.Text = creditNote.customer.CustomerName;
+                textBox_Contact_Details.Text = creditNote.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = creditNote.customer.Email;
+                textBox_Address.Text = creditNote.customer.Address + ", " + creditNote.customer.City + ", " + creditNote.customer.Country;
 
-                // Invoice details
-                txtBox_invoiceNumber.Text = invoice.idInvoice.ToString();
-                txtBox_invoiceNumber.IsReadOnly = true;
-                txtBox_invoiceDate.Text = invoice.createdDate.ToString("d");
-                txtBox_dueDate.Text = invoice.dueDate.ToString("d");
-                txtBox_issuedBy.Text = invoice.issuedBy;
-                NetTotal_TextBlock.Text = invoice.cost.ToString("C");
-                Vat_TextBlock.Text = invoice.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
+                // Credit Note details
+                txtBox_creditNoteNumber.Text = creditNote.idCreditNote.ToString();
+                txtBox_creditNoteNumber.IsReadOnly = true;
+                txtBox_createdDate.Text = creditNote.createdDate.ToString("d");
+                txtBox_issuedBy.Text = creditNote.issuedBy;
+                NetTotal_TextBlock.Text = creditNote.cost.ToString("C");
+                Vat_TextBlock.Text = creditNote.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = creditNote.totalCost.ToString("C");
 
-                // Invoice products           
-                invoiceProductsGrid.ItemsSource = invoice.products;
+                // Credit Note products           
+                creditNoteProductsGrid.ItemsSource = creditNote.products;
             }
             else
             {
-                MessageBox.Show("Invoice with ID = " + invoiceID + ", does not exist");
+                MessageBox.Show("Credit Note with ID = " + creditNoteID + ", does not exist");
             }
         }
 
-        private void txtBox_invoiceNumber_KeyDown(object sender, KeyEventArgs e)
+        private void txtBox_creditNoteNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
             {
-                Btn_LoadInvoice_Click(null,null);
+                Btn_LoadCreditNote_Click(null, null);
             }
         }
 
         private void Btn_clearView_Click(object sender, RoutedEventArgs e)
         {
-            this.invoice = null;
+            this.creditNote = null;
             foreach (var ctrl in grid_Customer.Children)
             {
                 if (ctrl.GetType() == typeof(TextBox))
@@ -103,46 +101,46 @@ namespace InvoiceX.Pages.InvoicePage
                 if (ctrl.GetType() == typeof(TextBox))
                     ((TextBox)ctrl).Clear();
             }
-            invoiceProductsGrid.ItemsSource = null;
+            creditNoteProductsGrid.ItemsSource = null;
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
-            txtBox_invoiceNumber.IsReadOnly = false;
-            txtBox_invoiceNumber.Focus();
+            txtBox_creditNoteNumber.IsReadOnly = false;
+            txtBox_creditNoteNumber.Focus();
         }
 
         private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
-            int.TryParse(txtBox_invoiceNumber.Text, out int invoiceID);
-            if (txtBox_invoiceNumber.IsReadOnly)
-            {                
-                string msgtext = "You are about to delete the invoice with ID = " + invoiceID + ". Are you sure?";
-                string txt = "Delete Invoice";
+            int.TryParse(txtBox_creditNoteNumber.Text, out int creditNoteID);
+            if (txtBox_creditNoteNumber.IsReadOnly)
+            {
+                string msgtext = "You are about to delete the credit note with ID = " + creditNoteID + ". Are you sure?";
+                string txt = "Delete Credit Note";
                 MessageBoxButton button = MessageBoxButton.YesNo;
                 MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
 
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        InvoiceViewModel.deleteInvoiceByID(invoiceID);
+                        CreditNoteViewModel.deleteCreditNoteById(creditNoteID);
                         Btn_clearView_Click(null, null);
-                        MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
+                        MessageBox.Show("Deleted Credit Note with ID = " + creditNoteID);
                         break;
                     case MessageBoxResult.No:
                         break;
-                }                
+                }
             }
             else
             {
-                MessageBox.Show("No invoice is loaded");
+                MessageBox.Show("No credit note is loaded");
             }
         }
 
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
-            if (invoice != null)
+            if (creditNote != null)
             {
-                mainPage.editInvoice(invoice.idInvoice);
+                mainPage.editCreditNote(creditNote.idCreditNote);
             }
         }
 
@@ -259,7 +257,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_invoiceNumber.Text));
+            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_creditNoteNumber.Text));
             Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
@@ -269,17 +267,18 @@ namespace InvoiceX.Pages.InvoicePage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
+            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = txtBox_invoiceNumber.Text;
-            Console.WriteLine(txtBox_invoiceNumber.Text);
-            invoiceDetails[1] = txtBox_invoiceDate.Text;
+            invoiceDetails[0] = txtBox_creditNoteNumber.Text;
+            Console.WriteLine(txtBox_creditNoteNumber.Text);
+            invoiceDetails[1] = txtBox_createdDate.Text;
             invoiceDetails[2] = txtBox_issuedBy.Text;
             invoiceDetails[3] = NetTotal_TextBlock.Text;
             invoiceDetails[4] = Vat_TextBlock.Text;
             invoiceDetails[5] = TotalAmount_TextBlock.Text;
 
-            List<Product> products = invoiceProductsGrid.Items.OfType<Product>().ToList();
+            List<Product> products = creditNoteProductsGrid.Items.OfType<Product>().ToList();
 
 
             Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);

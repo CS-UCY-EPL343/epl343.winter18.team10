@@ -133,8 +133,10 @@
                                 </Button.Template>
                                 <Button.ContextMenu>
                                     <ContextMenu>
+                                        <MenuItem Header="Mark As Ready" Click="MarkOrderReady_Click"/>
+                                        <MenuItem Header="Issue As Invoice" Click="IssueOrderAsInvoice_Click"/>
                                         <MenuItem Header="View Order" Click="ViewOrder_Click"/>
-                                        <MenuItem Header="Edit Order" Click="EditOrder_Click"/>
+                                        <MenuItem Header="Edit Order" Click="EditOrder_Click"/>                                        
                                         <Separator />
                                         <MenuItem Header="Delete Order" Click="DeleteOrder_Click"/>
                                     </ContextMenu>

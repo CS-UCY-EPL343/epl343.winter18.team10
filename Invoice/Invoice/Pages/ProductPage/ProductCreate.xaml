@@ -53,8 +53,8 @@
 
 
 
-        <Button x:Name="Btn_createProduct" Content="Create"  Margin="435,384,1165,506" Style="{StaticResource ButtonStyle_Create}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createProduct_Click"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="608,384,992,506" Style="{StaticResource ButtonStyle_Cancel}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" />
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="476,339,1134,563" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createProduct_Click" Height="48" Width="115"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="596,339,1014,563" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" Height="48" Width="115" />
 
 
     </Grid>

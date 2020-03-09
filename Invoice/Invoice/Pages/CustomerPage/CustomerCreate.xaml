@@ -8,42 +8,42 @@
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="CustomerCreate">
 
-    <Grid>
-        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="940" VerticalAlignment="Top" Width="1725" Margin="3,-63,-3,0">
+
+    <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Width="1725"  Height="940" VerticalAlignment="Top">
+        <Grid.Effect>
+            <DropShadowEffect Opacity="0.16"/>
+        </Grid.Effect>
+        <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0" VerticalAlignment="Top" Width="1264">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0" VerticalAlignment="Top" Width="1264">
-                <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
-                </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox x:Name="textBox_CustomerEmail" HorizontalAlignment="Left" Height="30" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
-                <TextBlock HorizontalAlignment="Left" Margin="178,29,0,0" TextWrapping="Wrap" Text="Full Name" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="180,85,0,0" TextWrapping="Wrap" Text="Phone Number" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,141,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_CustomerName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomerName_TextChanged" />
-                <TextBox x:Name="textBox_PhoneNumber" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomePhoneNumber_TextChanged" />
-                <TextBox x:Name="textBox_CustomerAddress" HorizontalAlignment="Left" Height="30" Margin="592,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
-                <TextBlock HorizontalAlignment="Left" Margin="592,29,0,0" TextWrapping="Wrap" Text="Country" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="594,85,0,0" TextWrapping="Wrap" Text="City" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="592,141,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_CustomerCountry" HorizontalAlignment="Left" Height="30" Margin="592,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomerName_TextChanged" />
-                <TextBox x:Name="textBox_CustomerCity" HorizontalAlignment="Left" Height="30" Margin="592,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomePhoneNumber_TextChanged" />
-                <TextBox x:Name="textBox_CustomerBalance" HorizontalAlignment="Left" Height="30" Margin="180,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
-                <TextBlock HorizontalAlignment="Left" Margin="180,197,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
+            <TextBox x:Name="textBox_CustomerEmail" HorizontalAlignment="Left" Height="30" Margin="178,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
+            <TextBlock HorizontalAlignment="Left" Margin="178,29,0,0" TextWrapping="Wrap" Text="Full Name" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="180,85,0,0" TextWrapping="Wrap" Text="Phone Number" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="178,141,0,0" TextWrapping="Wrap" Text="Email" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox_CustomerName" HorizontalAlignment="Left" Height="30" Margin="178,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomerName_TextChanged" />
+            <TextBox x:Name="textBox_PhoneNumber" HorizontalAlignment="Left" Height="30" Margin="178,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomePhoneNumber_TextChanged" />
+            <TextBox x:Name="textBox_CustomerAddress" HorizontalAlignment="Left" Height="30" Margin="592,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
+            <TextBlock HorizontalAlignment="Left" Margin="592,29,0,0" TextWrapping="Wrap" Text="Country" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="594,85,0,0" TextWrapping="Wrap" Text="City" VerticalAlignment="Top"/>
+            <TextBlock HorizontalAlignment="Left" Margin="592,141,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
+            <TextBox x:Name="textBox_CustomerCountry" HorizontalAlignment="Left" Height="30" Margin="592,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomerName_TextChanged" />
+            <TextBox x:Name="textBox_CustomerCity" HorizontalAlignment="Left" Height="30" Margin="592,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" TextChanged="TextBox_CustomePhoneNumber_TextChanged" />
+            <TextBox x:Name="textBox_CustomerBalance" HorizontalAlignment="Left" Height="30" Margin="180,218,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" TextChanged="TextBox_CustomerEmail_TextChanged" />
+            <TextBlock HorizontalAlignment="Left" Margin="180,197,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top"/>
 
-
-            </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Customer" VerticalAlignment="Top" Width="398" FontSize="40"/>
 
         </Grid>
-
-        <Button x:Name="Btn_createProduct" Content="Create"  Margin="652,274,963,632" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click" Height="44" Width="110"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="767,274,850,632" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" Height="44" Width="108" />
-
-
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Customer" VerticalAlignment="Top" Width="398" FontSize="40"/>
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="592,347,1023,549" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click" Height="44" Width="110"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="707,347,910,549" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearProduct_Click" Height="44" Width="108" />
     </Grid>
+
+
+
+
+
 </Page>
 
 

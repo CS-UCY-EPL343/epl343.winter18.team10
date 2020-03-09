@@ -117,13 +117,30 @@
     <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\OrderForm.cs" />
     <Compile Include="Forms\QuoteForm.cs" />
+    <Compile Include="Models\CreditNote.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Order.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Forms\InvoiceForm.cs" />
     <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Pages\CreditNotePage\CreditNoteCreate.xaml.cs">
+      <DependentUpon>CreditNoteCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteEdit.xaml.cs">
+      <DependentUpon>CreditNoteEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteMain.xaml.cs">
+      <DependentUpon>CreditNoteMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteView.xaml.cs">
+      <DependentUpon>CreditNoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteViewAll.xaml.cs">
+      <DependentUpon>CreditNoteViewAll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\CustomerPage\CustomerEdit.xaml.cs">
       <DependentUpon>CustomerEdit.xaml</DependentUpon>
     </Compile>
@@ -187,15 +204,79 @@
     <Compile Include="Pages\ProductPage\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\QuotePage\QuoteEdit.xaml.cs">
+      <DependentUpon>QuoteEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuotePage\QuoteMain.xaml.cs">
+      <DependentUpon>QuoteMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuotePage\QuoteView.xaml.cs">
+      <DependentUpon>QuoteView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\QuotePage\QuoteViewAll.xaml.cs">
+      <DependentUpon>QuoteViewAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptCreate.xaml.cs">
+      <DependentUpon>ReceiptCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptMain.xaml.cs">
+      <DependentUpon>ReceiptMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptView.xaml.cs">
+      <DependentUpon>ReceiptView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptViewAll.xaml.cs">
+      <DependentUpon>ReceiptViewAll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SettingsPage\SettingsMain.xaml.cs">
       <DependentUpon>SettingsMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Tools\RatioConverter.cs" />
+    <Compile Include="ViewModels\CreditNoteViewModel.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\QuoteViewModel.cs" />
+    <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Page Include="Dictionary1.xaml">
+    <Page Include="Pages\CreditNotePage\CreditNoteCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteViewAll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuotePage\QuoteEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuotePage\QuoteMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuotePage\QuoteView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\QuotePage\QuoteViewAll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -295,6 +376,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptViewAll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SettingsPage\SettingsMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -376,5 +473,6 @@
   <ItemGroup>
     <Resource Include="Forms\Order.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

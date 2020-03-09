@@ -87,6 +87,7 @@ namespace InvoiceX.Pages.OrderPage
             dtPickerFrom.SelectedDate = null;
             dtPickerTo.SelectedDate = null;
             txtBoxCustomer.Clear();
+            cmbBoxStatus.SelectedIndex = 0;
             orderDataGrid.ItemsSource = orderViewModel.orderList;
         }
 
@@ -121,7 +122,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void ViewOrder_Click(object sender, RoutedEventArgs e)
         {
-           // mainPage.viewInvoice(((Invoice)invoiceDataGrid.SelectedItem).idInvoice);
+            orderMain.viewOrder(((Order)orderDataGrid.SelectedItem).idOrder);
         }
 
         private void EditOrder_Click(object sender, RoutedEventArgs e)
@@ -149,6 +150,28 @@ namespace InvoiceX.Pages.OrderPage
             }
         }
 
+        private void MarkOrderReady_Click(object sender, RoutedEventArgs e)
+        {
+            int orderID = ((Order)orderDataGrid.SelectedItem).idOrder;
+            string msgtext = "Mark order with ID = " + orderID + " as ready?";
+            string txt = "Order Ready";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
 
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    OrderViewModel.markOrderAsReady(orderID);                    
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
+        private void IssueOrderAsInvoice_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -10,56 +10,52 @@ using System.Windows;
 
 namespace InvoiceX.ViewModels
 {
-    public class OrderViewModel
+   
+    public class CreditNoteViewModel
     {
-        public List<Order> orderList { get; set; }
+        public List<CreditNote> creditNoteList { get; set; }
         static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
                                            "pwd=CCfHC5PWLjsSJi8G;database=invoice";
 
-        public OrderViewModel()
+        public CreditNoteViewModel()
         {
-            orderList = new List<Order>();
+            creditNoteList = new List<CreditNote>();
             MySqlConnection conn;
 
             try
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT `Order`.*, `Customer`.`CustomerName`,`Customer`.`City`  FROM `Order`" +
-                    " LEFT JOIN `Customer` ON `Order`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT `CreditNote`.*, `Customer`.`CustomerName` FROM `CreditNote`" +
+                    " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                Order order = new Order();
+                CreditNote cred = new CreditNote();
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customer = dataRow.Field<string>("CustomerName");
-                    var city = dataRow.Field<string>("City");
-                    var idOrder = dataRow.Field<Int32>("idOrder");
+                    var idCreditNote = dataRow.Field<Int32>("idCreditNote");
                     var cost = dataRow.Field<float>("Cost");
                     var VAT = dataRow.Field<float>("VAT");
-                    var TotalCost = dataRow.Field<float>("TotalCost");
-                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
-                    var shippingDate = dataRow.Field<DateTime>("ShippingDate");
+                    var credTotalCost = dataRow.Field<float>("TotalCost");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
-                    var status = (OrderStatus)Enum.Parse(typeof(OrderStatus), dataRow.Field<string>("Status"));
 
-                    order = new Order()
+                    cred = new CreditNote()
                     {
-                        idOrder = idOrder,
+                        idCreditNote = idCreditNote,
                         customerName = customer,
-                        city = city,
                         cost = cost,
                         VAT = VAT,
-                        totalCost = TotalCost,
+                        totalCost = credTotalCost,
                         createdDate = createdDate,
-                        shippingDate = shippingDate,
-                        status = status,
-                        issuedBy = issuedBy                        
+                        issuedBy = issuedBy
                     };
 
-                    orderList.Add(order);
+                    creditNoteList.Add(cred);
                 }
+
 
                 conn.Close();
             }
@@ -69,21 +65,21 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static Order getOrderById(int orderID)
+        public static CreditNote getCreditNoteById(int creditNoteID)
         {
             MySqlConnection conn;
 
-            Order order = new Order();
+            CreditNote cred = new CreditNote();
             try
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewOrder WHERE OrderID = " + orderID, conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewCreditNote WHERE CreditNoteID = " + creditNoteID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 if (dt.Rows.Count == 0)
-                    order = null;
+                    cred = null;
 
                 int count = 0;
                 foreach (DataRow dataRow in dt.Rows)
@@ -97,36 +93,32 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idOrder = dataRow.Field<Int32>("OrderID");
-                    var cost = dataRow.Field<float>("OrderCost");
-                    var VAT = dataRow.Field<float>("OrderVAT");
-                    var orderTotalCost = dataRow.Field<float>("OrderTotalCost");
-                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
-                    var shippingDate = dataRow.Field<DateTime>("ShippingDate");
-                    var status = (OrderStatus)Enum.Parse(typeof(OrderStatus), dataRow.Field<string>("Status"));
+                    var idCreditNote = dataRow.Field<Int32>("CreditNoteID");
+                    var cost = dataRow.Field<float>("CreditNoteCost");
+                    var VAT = dataRow.Field<float>("CreditNoteVAT");
+                    var credTotalCost = dataRow.Field<float>("CreditNoteTotalCost");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     var productID = dataRow.Field<Int32>("idProduct");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
-                    var proTotalCost = dataRow.Field<float>("OPCost");
-                    var proVat = dataRow.Field<float>("OPVAT");
+                    var proTotalCost = dataRow.Field<float>("IPCost");
+                    var proVat = dataRow.Field<float>("IPVAT");
                     var quantity = dataRow.Field<Int32>("Quantity");
 
                     if (count == 0)
                     {
                         count++;
-                        order = new Order()
+                        cred = new CreditNote()
                         {
-                            idOrder = idOrder,
+                            idCreditNote = idCreditNote,
                             customerName = customerName,
                             cost = cost,
                             VAT = VAT,
-                            totalCost = orderTotalCost,
+                            totalCost = credTotalCost,
                             createdDate = createdDate,
-                            shippingDate = shippingDate,
-                            status = status,
                             issuedBy = issuedBy,
                             products = new List<Product>(),
                             customer = new Customer()
@@ -143,7 +135,7 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    order.products.Add(new Product()
+                    cred.products.Add(new Product()
                     {
                         idProduct = productID,
                         ProductName = product,
@@ -151,7 +143,7 @@ namespace InvoiceX.ViewModels
                         Stock = stock,
                         Total = proTotalCost,
                         Quantity = quantity,
-                        Cost = proTotalCost / quantity,
+                        SellPrice = proTotalCost / quantity,
                         Vat = proVat
                     });
                 }
@@ -163,10 +155,10 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
 
-            return order;
+            return cred;
         }
 
-        public static void deleteOrderByID(int orderID)
+        public static void deleteCreditNoteById(int creditNoteID)
         {
             MySqlConnection conn;
 
@@ -174,10 +166,10 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM OrderProduct WHERE idOrder = " + orderID, conn);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM CreditNoteProduct WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
 
-                cmd = new MySqlCommand("DELETE FROM `Order` WHERE idOrder = " + orderID, conn);
+                cmd = new MySqlCommand("DELETE FROM CreditNote WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
 
                 conn.Close();
@@ -188,24 +180,5 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void markOrderAsReady(int orderID)
-        {
-            MySqlConnection conn;
-
-            try
-            {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("UPDATE `Order` SET Status = 'Ready' WHERE idOrder = " + orderID, conn);
-                cmd.ExecuteNonQuery();
-
-                conn.Close();
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
-            }
-        }
     }
 }

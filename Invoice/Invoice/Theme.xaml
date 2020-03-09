@@ -31,7 +31,7 @@
     </Style>
     <!-- DataGridRow style -->
     <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Height" Value="65"/>
+        <Setter Property="Height" Value="50"/>
         <Setter Property="TextBlock.TextAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="Focusable" Value="False"/>
@@ -127,6 +127,7 @@
         <Setter Property="FontSize" Value="30"/>
         <Setter Property="Foreground" Value="White"/>
     </Style>
+    <!--  Common button style -->
     <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">  
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Cursor" Value="Hand" />
@@ -153,6 +154,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <!--  All textboxes style -->
+    <Style TargetType="{x:Type TextBox}">
+        <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5,0,0,0" />
     </Style>
 
 </ResourceDictionary>

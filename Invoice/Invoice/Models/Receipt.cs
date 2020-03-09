@@ -20,7 +20,7 @@ namespace InvoiceX.Models
 
     public enum PaymentMethod
     {
-        CASH, BANK, CHEQUE
+        Cash, Bank, Cheque
     }
 
     public class Payment

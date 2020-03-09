@@ -1,15 +1,12 @@
-﻿<Page x:Class="InvoiceX.Pages.InvoicePage.InvoiceViewAll"
+﻿<Page x:Class="InvoiceX.Pages.QuotePage.QuoteViewAll"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:InvoiceX.Pages.QuotePage"
       mc:Ignorable="d" 
       d:DesignHeight="950" d:DesignWidth="1725"
-      Title="InvoiceViewAll">
-
-    <Page.Resources>
-
-    </Page.Resources>
+      Title="QuoteViewAll">
 
     <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
@@ -40,18 +37,16 @@
             <Label x:Name="label1_Copy4" Content="Search:" HorizontalAlignment="Left" Margin="37,27,0,0" VerticalAlignment="Top" FontSize="18"/>
             <TextBox x:Name="textBox3_Copy" HorizontalAlignment="Left" Height="37" Margin="37,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center"/>
         </Grid>
-        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="quoteDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
-            </DataGrid.Effect>            
+            </DataGrid.Effect>
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
-                <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding idInvoice}" />
+                <DataGridTextColumn Header = "Quote ID" Binding = "{Binding idQuote}" />
                 <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C}"/>
-                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C}" />
-                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C}" />
+                <DataGridTextColumn Header = "Issued By" Binding = "{Binding issuedBy}"/>
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -66,10 +61,10 @@
                                 </Button.Template>
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="View Invoice" Click="ViewInvoice_Click"/>
-                                        <MenuItem Header="Edit Invoice" Click="EditInvoice_Click"/>
+                                        <MenuItem Header="View Quote" Click="ViewQuote_Click"/>
+                                        <MenuItem Header="Edit Quote" Click="EditQuote_Click"/>
                                         <Separator />
-                                        <MenuItem Header="Delete Invoice" Click="DeleteInvoice_Click"/>
+                                        <MenuItem Header="Delete Quote" Click="DeleteQuote_Click"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                                 <Button.Style>
@@ -97,5 +92,4 @@
 
         </DataGrid>
     </Grid>
-
 </Page>
