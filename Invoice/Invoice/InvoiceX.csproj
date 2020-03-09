@@ -115,6 +115,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\HashSalt.cs" />
+    <Compile Include="Forms\OrderForm.cs" />
     <Compile Include="Forms\QuoteForm.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Order.cs" />
@@ -367,10 +368,13 @@
     <Resource Include="Images\logo-2.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Images\logout.png" />
+  </ItemGroup>
+  <ItemGroup>
     <Resource Include="Forms\Quote.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\logout.png" />
+    <Resource Include="Forms\Order.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
