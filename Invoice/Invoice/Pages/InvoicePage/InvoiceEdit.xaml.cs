@@ -72,18 +72,30 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
-
+        bool product_already_selected()
+        {
+            List<Product> gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
+            foreach (Product p in gridProducts)
+            {
+                if (p.idProduct == ((Product)comboBox_Product.SelectedItem).idProduct)
+                {
+                    MessageBox.Show("Product already selected");
+                    return true;
+                }
+            }
+            return false;
+        }
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
             int n;
-            if (comboBox_Product.SelectedIndex <= -1)
+            if ((comboBox_Product.SelectedIndex <= -1) || product_already_selected())
             {
                 all_completed = false;
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
-            if (!int.TryParse(textBox_ProductQuantity.Text, out n))
+            if (!int.TryParse(textBox_ProductQuantity.Text, out n) || (n < 0))
             {
                 all_completed = false;
                 textBox_ProductQuantity.BorderBrush = Brushes.Red;
@@ -92,7 +104,7 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
             }
-            if (!float.TryParse(textBox_ProductPrice.Text, out float f))
+            if (!float.TryParse(textBox_ProductPrice.Text, out float f) || (f < 0))
             {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;
@@ -227,7 +239,6 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Clear_Customer()
         {
-
             textBox_Customer.Text = "";
             textBox_Address.Text = "";
             textBox_Contact_Details.Text = "";
@@ -251,11 +262,10 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
-            Btn_clearProduct_Click(new object(), new RoutedEventArgs());
+            Btn_clearProduct_Click(null, null);
             Clear_Customer();
             Clear_Details();
             Clear_ProductGrid();
-            load();
         }
 
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)//mono meta to refresh whritable
@@ -264,7 +274,7 @@ namespace InvoiceX.Pages.InvoicePage
         }
 
         private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
-        {
+        {            
             int.TryParse(textBox_invoiceNumber.Text, out int invoiceID);
             if (invoiceID > 0)
             {
@@ -279,6 +289,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void loadInvoice(int invoiceId)
         {
+            Btn_clearAll_Click(null, null);
             int latestinvoiceid = InvoiceViewModel.ReturnLatestInvoiceID();
             if ((invoiceId <= latestinvoiceid) && (invoiceId > -1))
             {
@@ -300,7 +311,20 @@ namespace InvoiceX.Pages.InvoicePage
                 TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
 
                 // Invoice products        
-                ProductDataGrid.ItemsSource = invoice.products;
+                for (int i = 0; i < invoice.products.Count; i++)
+                {
+                    ProductDataGrid.Items.Add(new Product
+                    {
+                        idProduct = invoice.products[i].idProduct,
+                        ProductName = invoice.products[i].ProductName,
+                        ProductDescription = invoice.products[i].ProductDescription,
+                        Stock = invoice.products[i].Stock,
+                        SellPrice = invoice.products[i].SellPrice,
+                        Quantity = invoice.products[i].Quantity,
+                        Total = invoice.products[i].Total,
+                        Vat = invoice.products[i].Vat
+                    });
+                }                
             }
             else
             {
