@@ -95,7 +95,7 @@ namespace InvoiceX.ViewModels
                     var amount = dataRow.Field<float>("Amount");
                     var method = (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod")); 
                     var paymentDate = dataRow.Field<DateTime>("PaymentDate");
-                    var paymentNumber = dataRow.Field<Int32>("PaymentNumber");                   
+                    var paymentNumber = dataRow.Field<string>("PaymentNumber");                   
 
                     if (count == 0)
                     {

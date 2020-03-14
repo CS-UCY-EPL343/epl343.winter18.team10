@@ -28,7 +28,7 @@ namespace InvoiceX.Models
         public int idPayment { get; set; }
         public int idReceipt { get; set; }
         public float amount { get; set; }
-        public int paymentNumber { get; set; }
+        public string paymentNumber { get; set; }
         public DateTime paymentDate { get; set; }
         public PaymentMethod paymentMethod { get; set; }
     }
