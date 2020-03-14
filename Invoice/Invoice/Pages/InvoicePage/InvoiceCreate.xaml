@@ -78,9 +78,9 @@
                         </ComboBox.ItemTemplate>
                     </ComboBox>
                 </Border>
-                <TextBox   x:Name="textBox_Product"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  IsReadOnly="True"/>
+                <TextBox   x:Name="textBox_Product"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  IsReadOnly="True" TextChanged="textBox_Product_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductDescription"  HorizontalAlignment="Left" Height="30" Margin="423,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="596" />
-                <TextBox   x:Name="textBox_ProductStock"     HorizontalAlignment="Left" Margin="1024,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="80" RenderTransformOrigin="0.362,-2.4" IsReadOnly="True"/>
+                <TextBox   x:Name="textBox_ProductStock"     HorizontalAlignment="Left" Margin="1024,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="80" RenderTransformOrigin="0.362,-2.4" IsReadOnly="True" TextChanged="textBox_ProductStock_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductQuantity"     HorizontalAlignment="Left" Height="30" Margin="1109,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="60" TextChanged="TextBox_ProductQuantity_TextChanged"/>
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>

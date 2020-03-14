@@ -72,18 +72,30 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
-
+        bool product_already_selected()
+        {
+            List<Product> gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
+            foreach (Product p in gridProducts)
+            {
+                if (p.idProduct == ((Product)comboBox_Product.SelectedItem).idProduct)
+                {
+                    MessageBox.Show("Product already selected");
+                    return true;
+                }
+            }
+            return false;
+        }
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
             int n;
-            if (comboBox_Product.SelectedIndex <= -1)
+            if ((comboBox_Product.SelectedIndex <= -1) || product_already_selected())
             {
                 all_completed = false;
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
-            if (!int.TryParse(textBox_ProductQuantity.Text, out n))
+            if (!int.TryParse(textBox_ProductQuantity.Text, out n) || (n < 0))
             {
                 all_completed = false;
                 textBox_ProductQuantity.BorderBrush = Brushes.Red;
@@ -92,7 +104,7 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
             }
-            if (!float.TryParse(textBox_ProductPrice.Text, out float f))
+            if (!float.TryParse(textBox_ProductPrice.Text, out float f) || (f < 0))
             {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;

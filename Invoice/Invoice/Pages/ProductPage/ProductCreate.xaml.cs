@@ -53,10 +53,10 @@ namespace InvoiceX.Pages.ProductPage
             if (string.IsNullOrWhiteSpace(textBox_ProductName.Text)) { textBox_ProductName.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (string.IsNullOrWhiteSpace(textBox_ProductCategory.Text)) { textBox_ProductCategory.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (string.IsNullOrWhiteSpace(textBox_ProductDescription.Text)) { textBox_ProductDescription.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!int.TryParse(txtBlock_ProductCurrentStock.Text, out int a)) { txtBlock_ProductCurrentStock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!int.TryParse(txtBlock_ProductMinimun_Stock.Text, out a)) { txtBlock_ProductMinimun_Stock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!double.TryParse(txtBlock_ProductSellPrice.Text, out double b)) { txtBlock_ProductSellPrice.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!double.TryParse(txtBlock_ProductCost.Text, out b)) { txtBlock_ProductCost.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!int.TryParse(txtBlock_ProductCurrentStock.Text, out int a) || (a<0)) { txtBlock_ProductCurrentStock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!int.TryParse(txtBlock_ProductMinimun_Stock.Text, out a) || (a < 0) ) { txtBlock_ProductMinimun_Stock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!double.TryParse(txtBlock_ProductSellPrice.Text, out double b) || (b < 0)) { txtBlock_ProductSellPrice.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!double.TryParse(txtBlock_ProductCost.Text, out b) || (b < 0)) { txtBlock_ProductCost.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (!float.TryParse(txtBlock_ProductVat.Text, out float g)){ txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false; }
 
             if (float.TryParse(txtBlock_ProductVat.Text, out float k))
