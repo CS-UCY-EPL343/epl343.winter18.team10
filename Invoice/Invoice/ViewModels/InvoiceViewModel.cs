@@ -214,6 +214,38 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
+        public static int ReturnLatestReceiptID()
+        {
+            //int id_return = 0;
+            MySqlConnection conn;
+
+            try
+            {
+                int idReceipt;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idReceipt FROM Receipt ORDER BY idReceipt DESC LIMIT 1", conn);
+                conn.Open();
+                // id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idReceipt = Convert.ToInt32(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idReceipt = 0;
+
+                conn.Close();
+                return idReceipt;
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return 0;
+        }
+
+
         public static void Send_Ivoice_and_Products_to_DB(Invoice invoice)
         {
             MySqlConnection conn;
@@ -222,7 +254,7 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                //insert Invoice 
+                //insert invoice 
                 string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
@@ -242,7 +274,7 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
 
-                //insert products
+                //insert product
                 StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
                 List<string> Rows = new List<string>();
 
@@ -265,10 +297,81 @@ namespace InvoiceX.ViewModels
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
-                }
+                }               
 
                 conn.Close();
                 MessageBox.Show("Invoice was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+        public static void Send_Receipt_to_DB(Receipt receipt)
+        {
+            MySqlConnection conn;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert Invoice 
+                string query = "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, IssuedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @IssuedDate)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idReceipt", receipt.idReceipt);
+                    cmd.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@Amount", receipt.totalAmount);
+                    cmd.Parameters.AddWithValue("@IssuedBy", receipt.issuedBy);
+                    cmd.Parameters.AddWithValue("@IssuedDate", receipt.createdDate);
+                    
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
+                List<string> Rows = new List<string>();             
+
+                foreach (Payment p in receipt.payments)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                        MySqlHelper.EscapeString(receipt.idReceipt.ToString()),
+                        MySqlHelper.EscapeString(p.paymentMethod.ToString()),
+                        MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(p.paymentNumber.ToString()),
+                        MySqlHelper.EscapeString(p.paymentDate.ToString())
+                       ));
+
+                  
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+
+                //update customer total  
+                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
+               
+                    using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
+                    {
+                        cmd3.Parameters.AddWithValue("@amount",receipt.totalAmount);
+                        cmd3.Parameters.AddWithValue("@idCustomer",receipt.customer.idCustomer);
+                        cmd3.ExecuteNonQuery();
+                    }
+                
+
+                conn.Close();
+                MessageBox.Show("Receipt was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

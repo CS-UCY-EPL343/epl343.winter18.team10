@@ -46,7 +46,7 @@ namespace InvoiceX.Pages.ReceiptPage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             receiptPage.Content = createPage;
-            //createPage.load();
+            createPage.load();
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
