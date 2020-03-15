@@ -11,15 +11,15 @@ using System.Windows.Media;
 namespace InvoiceX.Pages.ReceiptPage
 {
     /// <summary>
-    /// Interaction logic for ReceiptCreate.xaml
+    /// Interaction logic for ReceiptEdit.xaml
     /// </summary>
-    public partial class ReceiptCreate : Page
+    public partial class ReceiptEdit : Page
     {
         //ProductViewModel productView;        
         CustomerViewModel customerView;
         bool Refresh_DB_data = true;
-
-        public ReceiptCreate()
+        private Receipt receipt;
+        public ReceiptEdit()
         {
             InitializeComponent();           
             TotalAmount_TextBlock.Text = (0).ToString("C");
@@ -33,7 +33,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
-                textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
+                //textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
             }
             Refresh_DB_data = false;
@@ -214,7 +214,8 @@ namespace InvoiceX.Pages.ReceiptPage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) InvoiceViewModel.Send_Receipt_to_DB(make_object_Receipt());
+            if (ALL_VALUES_OK) {                
+                InvoiceViewModel.Send_Receipt_to_DB(make_object_Receipt(),receipt); }
         }
 
         private void Clear_Customer()
@@ -254,6 +255,49 @@ namespace InvoiceX.Pages.ReceiptPage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
-      
+        private void Btn_LoadReceipt_Click(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(textBox_ReceiptNumber.Text, out int receiptID);
+            if (receiptID > 0)
+            {
+                loadReceipt(receiptID);
+            }
+            else
+            {
+                //not a number
+                MessageBox.Show("Please insert a valid value for receipt ID.");
+            }
+        }
+
+        public void loadReceipt(int receiptID)
+        {
+            receipt = ReceiptViewModel.getReceiptByID(receiptID);
+            if (receipt != null)
+            {
+                // Customer details
+                textBox_Customer.Text = receipt.customer.CustomerName;
+                textBox_Contact_Details.Text = receipt.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = receipt.customer.Email;
+                textBox_Address.Text = receipt.customer.Address + ", " + receipt.customer.City + ", " + receipt.customer.Country;
+
+                // Receipt details
+                textBox_ReceiptNumber.Text = receipt.idReceipt.ToString();
+                textBox_ReceiptNumber.IsReadOnly = true;
+                ReceiptDate.SelectedDate = receipt.createdDate;
+                issuedBy.Text = receipt.issuedBy;
+                TotalAmount_TextBlock.Text = receipt.totalAmount.ToString("C");
+
+                // Receipt payments           
+                foreach (Payment p in receipt.payments) 
+                {
+                    ReceiptDataGrid.Items.Add(p);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Receipt with ID = " + receiptID + ", does not exist");
+            }
+        }
+
     }
 }

@@ -216,6 +216,9 @@
     <Compile Include="Pages\QuotePage\QuoteViewAll.xaml.cs">
       <DependentUpon>QuoteViewAll.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptEdit.xaml.cs">
+      <DependentUpon>ReceiptEdit.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\ReceiptPage\ReceiptCreate.xaml.cs">
       <DependentUpon>ReceiptCreate.xaml</DependentUpon>
     </Compile>
@@ -275,6 +278,10 @@
     <Page Include="Pages\QuotePage\QuoteViewAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ReceiptPage\ReceiptCreate.xaml">
       <Generator>MSBuild:Compile</Generator>

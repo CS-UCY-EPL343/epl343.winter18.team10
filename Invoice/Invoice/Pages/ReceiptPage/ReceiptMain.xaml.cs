@@ -23,6 +23,7 @@ namespace InvoiceX.Pages.ReceiptPage
         ReceiptViewAll viewAllPage;
         ReceiptView viewPage;
         ReceiptCreate createPage;
+        ReceiptEdit editPage;
 
         public ReceiptMain()
         {
@@ -30,6 +31,7 @@ namespace InvoiceX.Pages.ReceiptPage
             viewAllPage = new ReceiptViewAll(this);
             viewPage = new ReceiptView();
             createPage = new ReceiptCreate();
+            editPage = new ReceiptEdit();
             btnViewAll_Click(null, null);
         }
 
@@ -60,7 +62,8 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
-            
+            receiptPage.Content = editPage;
+            editPage.load();
         }
 
         private void resetAllBtnStyles()
