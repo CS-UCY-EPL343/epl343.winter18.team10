@@ -15,7 +15,7 @@ namespace InvoiceX.Pages.ReceiptPage
     /// </summary>
     public partial class ReceiptCreate : Page
     {
-        ProductViewModel productView;        
+        //ProductViewModel productView;        
         CustomerViewModel customerView;
         bool Refresh_DB_data = true;
 
@@ -29,11 +29,11 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             if (Refresh_DB_data)
             {                
-                productView = new ProductViewModel();               
+                //productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
-                textBox_invoiceNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
+                textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
             }
             Refresh_DB_data = false;
@@ -124,7 +124,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
                 ReceiptDataGrid.Items.Add(new Payment
                 {                   
-                    idReceipt = Int32.Parse(textBox_invoiceNumber.Text),
+                    idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
                     amount = float.Parse(textBox_amount.Text, CultureInfo.InvariantCulture.NumberFormat),
                     paymentNumber = textBox_paymentNum.Text,
                     paymentDate = ReceiptDate.SelectedDate.Value.Date,
@@ -134,7 +134,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
                 double total_amount = 0;
                 total_amount = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
-                total_amount = total_amount + Double.Parse(textBox_amount.Text, CultureInfo.InvariantCulture);// CultureInfo.InvariantCulture
+                total_amount = total_amount + Double.Parse(textBox_amount.Text, CultureInfo.InvariantCulture);
                 TotalAmount_TextBlock.Text = (total_amount).ToString("C");
             }
         }
@@ -199,7 +199,7 @@ namespace InvoiceX.Pages.ReceiptPage
             myReceipt = new Receipt();
             myReceipt.createdDate = ReceiptDate.SelectedDate.Value.Date;
             //myReceipt.status=
-            myReceipt.idReceipt = Convert.ToInt32(textBox_invoiceNumber.Text);
+            myReceipt.idReceipt = Convert.ToInt32(textBox_ReceiptNumber.Text);
             myReceipt.customerName = ((Customer)comboBox_customer.SelectedItem).CustomerName;
             myReceipt.customer = ((Customer)comboBox_customer.SelectedItem);
             myReceipt.issuedBy = issuedBy.Text;

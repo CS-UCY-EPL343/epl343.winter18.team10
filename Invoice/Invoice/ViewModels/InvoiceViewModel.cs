@@ -345,10 +345,9 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
                         MySqlHelper.EscapeString(p.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(p.paymentDate.ToString())
+                        MySqlHelper.EscapeString(p.paymentDate.ToString())                      
                        ));
-
-                  
+                    
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
