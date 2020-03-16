@@ -31,7 +31,7 @@ namespace InvoiceX.Pages.ReceiptPage
             {                
                 //productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.CustomersList;
+                //comboBox_customer.ItemsSource = customerView.CustomersList;
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
                 //textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
@@ -39,7 +39,7 @@ namespace InvoiceX.Pages.ReceiptPage
             Refresh_DB_data = false;
         }        
 
-
+        /*
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             comboBox_customer_border.BorderThickness = new Thickness(0);
@@ -54,7 +54,7 @@ namespace InvoiceX.Pages.ReceiptPage
         }
 
        
-        
+        */
        
         
 
@@ -160,7 +160,7 @@ namespace InvoiceX.Pages.ReceiptPage
             textBox_paymentNum.ClearValue(TextBox.BorderBrushProperty);
             textBox_amount.ClearValue(TextBox.BorderBrushProperty);
         }
-
+        /*
         private bool Check_CustomerForm()
         {
             if (comboBox_customer.SelectedIndex <= -1)
@@ -171,7 +171,7 @@ namespace InvoiceX.Pages.ReceiptPage
             }
             return true;
         }
-
+        */
         private bool Check_DetailsForm()
         {
             if (issuedBy.Text.Equals(""))
@@ -200,8 +200,8 @@ namespace InvoiceX.Pages.ReceiptPage
             myReceipt.createdDate = ReceiptDate.SelectedDate.Value.Date;
             //myReceipt.status=
             myReceipt.idReceipt = Convert.ToInt32(textBox_ReceiptNumber.Text);
-            myReceipt.customerName = ((Customer)comboBox_customer.SelectedItem).CustomerName;
-            myReceipt.customer = ((Customer)comboBox_customer.SelectedItem);
+            myReceipt.customerName = receipt.customerName;
+            myReceipt.customer = receipt.customer;
             myReceipt.issuedBy = issuedBy.Text;
             myReceipt.totalAmount = float.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
             myReceipt.payments = ReceiptDataGrid.Items.OfType<Payment>().ToList();
@@ -211,7 +211,7 @@ namespace InvoiceX.Pages.ReceiptPage
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
             bool ALL_VALUES_OK = true;
-            if (!Check_CustomerForm()) ALL_VALUES_OK = false;
+            //if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK) {                
@@ -220,7 +220,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         private void Clear_Customer()
         {
-            comboBox_customer.SelectedIndex = -1;
+            //comboBox_customer.SelectedIndex = -1;
             textBox_Customer.Text = "";
             textBox_Address.Text = "";
             textBox_Contact_Details.Text = "";
@@ -241,7 +241,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
-            comboBox_customer_border.BorderThickness = new Thickness(0);
+           // comboBox_customer_border.BorderThickness = new Thickness(0);
             Btn_clearProduct_Click(new object(), new RoutedEventArgs());
             Clear_Customer();
             Clear_Details();
@@ -279,7 +279,6 @@ namespace InvoiceX.Pages.ReceiptPage
                 textBox_Contact_Details.Text = receipt.customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = receipt.customer.Email;
                 textBox_Address.Text = receipt.customer.Address + ", " + receipt.customer.City + ", " + receipt.customer.Country;
-
                 // Receipt details
                 textBox_ReceiptNumber.Text = receipt.idReceipt.ToString();
                 textBox_ReceiptNumber.IsReadOnly = true;

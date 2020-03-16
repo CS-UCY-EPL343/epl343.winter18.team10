@@ -337,7 +337,7 @@ namespace InvoiceX.ViewModels
                 }
 
                 //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
+                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
                 List<string> Rows = new List<string>();             
 
                 foreach (Payment p in receipt.payments)
@@ -347,9 +347,9 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
                         MySqlHelper.EscapeString(p.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(p.paymentDate.ToString())                      
+                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))                      
                        ));
-                    
+                    MessageBox.Show(p.paymentDate.ToString());
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
@@ -430,7 +430,7 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
                         MySqlHelper.EscapeString(p.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(p.paymentDate.ToString())
+                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
                        ));
 
                 }
@@ -448,7 +448,7 @@ namespace InvoiceX.ViewModels
 
                 using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
                 {
-                    cmd3.Parameters.AddWithValue("@amount", receipt.totalAmount- receipt.totalAmount);                    
+                    cmd3.Parameters.AddWithValue("@amount", receipt.totalAmount- oldreceipt.totalAmount);                    
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }

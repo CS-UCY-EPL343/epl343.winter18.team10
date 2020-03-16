@@ -23,26 +23,14 @@
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <Border  x:Name="comboBox_customer_border" Margin="178,31,35,241"  Width="371" Height="30">
-                    <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White"  >
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock  Text="{Binding CustomerName }"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </Border>
-                <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
-                <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
-                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,199,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
-                <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
-                <TextBlock HorizontalAlignment="Left" Margin="178,10,0,0" TextWrapping="Wrap" Text="Select Customer" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,66,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,122,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,178,0,0" TextWrapping="Wrap" Text="Contact Details" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,234,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="168,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="168,108,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="168,164,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="168,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="374" IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="170,32,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="170,88,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="170,144,0,0" TextWrapping="Wrap" Text="Contact Details" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="170,200,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
             </Grid>
 
             <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0" VerticalAlignment="Top" Width="584">
@@ -69,7 +57,7 @@
                     <ComboBox x:Name="comboBox_PaymentMethod" Width="200"  Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
                         <ComboBoxItem Name="Cash">Cash</ComboBoxItem>
                         <ComboBoxItem Name="Bank">Bank</ComboBoxItem>
-                        <ComboBoxItem Name="Cheque">Cheque</ComboBoxItem>                      
+                        <ComboBoxItem Name="Cheque">Cheque</ComboBoxItem>
                     </ComboBox>
                 </Border>
                 <TextBox   x:Name="textBox_paymentNum"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  />
@@ -96,7 +84,7 @@
                 <DataGridTextColumn Header = "Payment Method" Binding="{Binding paymentMethod}" />
                 <DataGridTextColumn Header = "Payment Number" Binding="{Binding paymentNumber}" />
                 <DataGridTextColumn Header = "Amount" Binding="{Binding amount, StringFormat=C, ConverterCulture='fr-FR'}" />
-              
+
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
