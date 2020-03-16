@@ -3,12 +3,16 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:InvoiceX.Pages.OrderPage"
+      xmlns:ViewModels="clr-namespace:InvoiceX.ViewModels"
       mc:Ignorable="d" 
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="OrderEdit">
 
-    <Grid x:Name="editOrder" Background="White" Visibility="Visible">
+    <Page.Resources>
+
+    </Page.Resources>
+
+    <Grid x:Name="createTab" Background="White" Visibility="Visible">
         <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="429" VerticalAlignment="Top" Width="1725">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
@@ -34,16 +38,18 @@
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
                 <TextBlock HorizontalAlignment="Left" Margin="135,18,0,0" TextWrapping="Wrap" Text="Order No." VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Order Date" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Created Date" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="269,73,0,0" TextWrapping="Wrap" Text="Shipping Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"   />
-                <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
-                <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                <TextBox x:Name="txtBox_orderNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="txtBox_orderNumber_TextChanged"   />
+                <DatePicker x:Name="DatePicker_orderDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
+                <DatePicker x:Name="DatePicker_shippingDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
-                <Button Content="Load Order" HorizontalAlignment="Left" Margin="269,39,0,0" VerticalAlignment="Top" Width="75" Height="30" Click="Btn_Load_Order"/>
+                <TextBox x:Name="txtBox_issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
+                <Button Content="Load Order" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Left" Margin="135,198,0,0" VerticalAlignment="Top" Width="120" Height="32" Click="btn_loadOrder_Click"/>
+                <Button x:Name="Btn_clearAll_Copy" Content="Clear" HorizontalAlignment="Left" Margin="269,198,0,0" VerticalAlignment="Top"  Width="120" Height="32"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
+
                 <TextBlock HorizontalAlignment="Left" Margin="269,129,0,0" TextWrapping="Wrap" Text="Status" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtBox_status" HorizontalAlignment="Left" Margin="269,150,0,0" VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True"/>
+                <TextBox x:Name="txtBox_status" HorizontalAlignment="Left" Margin="269,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
 
 
             </Grid>
@@ -82,9 +88,11 @@
                 <TextBlock HorizontalAlignment="Left" Margin="1335,39,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Width="12" Height="17"/>
                 <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{StaticResource ButtonStyle_X}" />
             </Grid>
+
         </Grid>
 
-        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+
+        <DataGrid x:Name="orderProductsGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None"  >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
@@ -95,24 +103,25 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice , StringFormat=C}" />
-                <DataGridTextColumn Header = "VAT" Binding="{Binding Vat, StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice , StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
+
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="X"/>
+                            <Button Content="X" Click="Button_Click_CreateInvoice_REMOVE"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Click="savePdf_Click" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button x:Name="printPdf_button"  Click="printPdf_click" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button Content="Preview"  Click="previewPdf_click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="74" Style="{StaticResource ButtonStyle_Complete}" />
-        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="74" Click="Btn_Complete_Click"  Style="{StaticResource ButtonStyle_Complete}"/>
-        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="74"  Click="Btn_clearAll_Click"  Style="{StaticResource ButtonStyle_Complete}" />
+        <Button x:Name="createpdf_button" Click="savePdf_Click" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Style="{DynamicResource CommonButtonStyle}"/>
+        <Button x:Name="printPdf_button"  Click="printPdf_click" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Style="{DynamicResource CommonButtonStyle}"/>
+        <Button Content="Preview"  Click="previewPdf_click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="44" Style="{DynamicResource CommonButtonStyle}" />
+        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
 
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>
@@ -126,4 +135,5 @@
 
 
     </Grid>
+    <!-- Create Invoice Ends Here -->
 </Page>

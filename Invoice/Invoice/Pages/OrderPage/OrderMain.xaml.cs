@@ -55,6 +55,7 @@ namespace InvoiceX.Pages.OrderPage
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
             orderPage.Content = editpage;
+            editpage.load();
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)
@@ -62,6 +63,7 @@ namespace InvoiceX.Pages.OrderPage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             orderPage.Content = createpage;
+            createpage.load();
         }
 
         private void resetAllBtnStyles()
@@ -78,7 +80,7 @@ namespace InvoiceX.Pages.OrderPage
 
         public void editOrder(int orderID)
         {
-            editpage.loadOrder(orderID);
+            //editpage.loadOrder(orderID);
             btnEdit_Click(null, null);
         }
     }

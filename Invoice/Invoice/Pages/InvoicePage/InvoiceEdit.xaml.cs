@@ -266,6 +266,7 @@ namespace InvoiceX.Pages.InvoicePage
             Clear_Customer();
             Clear_Details();
             Clear_ProductGrid();
+            load();
         }
 
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)//mono meta to refresh whritable
@@ -276,9 +277,11 @@ namespace InvoiceX.Pages.InvoicePage
         private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
         {            
             int.TryParse(textBox_invoiceNumber.Text, out int invoiceID);
-            if (invoiceID > 0)
+            if ((InvoiceViewModel.InvoiceID_exist_or_not(invoiceID)))
             {
+                Btn_clearAll_Click(null, null);
                 loadInvoice(invoiceID);
+                
             }
             else
             {
@@ -289,11 +292,9 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void loadInvoice(int invoiceId)
         {
-            Btn_clearAll_Click(null, null);
-            int latestinvoiceid = InvoiceViewModel.ReturnLatestInvoiceID();
-            if ((invoiceId <= latestinvoiceid) && (invoiceId > -1))
-            {
-                Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
+            Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
+            if (invoice!=null)
+            {        
 
                 // Customer details
                 textBox_Customer.Text = invoice.customer.CustomerName;

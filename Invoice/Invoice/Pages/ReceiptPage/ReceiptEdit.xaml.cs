@@ -258,8 +258,9 @@ namespace InvoiceX.Pages.ReceiptPage
         private void Btn_LoadReceipt_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(textBox_ReceiptNumber.Text, out int receiptID);
-            if (receiptID > 0)
+            if (InvoiceViewModel.ReceiptID_exist_or_not(receiptID))
             {
+                Btn_clearAll_Click(null, null);
                 loadReceipt(receiptID);
             }
             else
@@ -281,7 +282,6 @@ namespace InvoiceX.Pages.ReceiptPage
                 textBox_Address.Text = receipt.customer.Address + ", " + receipt.customer.City + ", " + receipt.customer.Country;
                 // Receipt details
                 textBox_ReceiptNumber.Text = receipt.idReceipt.ToString();
-                textBox_ReceiptNumber.IsReadOnly = true;
                 ReceiptDate.SelectedDate = receipt.createdDate;
                 issuedBy.Text = receipt.issuedBy;
                 TotalAmount_TextBlock.Text = receipt.totalAmount.ToString("C");

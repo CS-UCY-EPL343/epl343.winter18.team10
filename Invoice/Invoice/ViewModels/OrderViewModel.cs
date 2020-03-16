@@ -152,7 +152,8 @@ namespace InvoiceX.ViewModels
                         Total = proTotalCost,
                         Quantity = quantity,
                         Cost = proTotalCost / quantity,
-                        Vat = proVat
+                        Vat = proVat,
+                        SellPrice= proTotalCost / quantity //***Chrisi to cost to ekana gia to kostos paraogis, ego xrisimopio SellPrice **
                     });
                 }
 

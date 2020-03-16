@@ -159,11 +159,11 @@
     <Compile Include="Pages\InvoicePage\InvoiceEdit.xaml.cs">
       <DependentUpon>InvoiceEdit.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\OrderPage\OrderCreate.xaml.cs">
-      <DependentUpon>OrderCreate.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\OrderPage\OrderEdit.xaml.cs">
       <DependentUpon>OrderEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\OrderPage\OrderCreate.xaml.cs">
+      <DependentUpon>OrderCreate.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\OrderPage\OrderMain.xaml.cs">
       <DependentUpon>OrderMain.xaml</DependentUpon>
@@ -263,6 +263,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\OrderPage\OrderEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\OrderPage\OrderCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\QuotePage\QuoteEdit.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -326,14 +334,6 @@
     <Page Include="Pages\InvoicePage\InvoiceEdit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\OrderPage\OrderCreate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\OrderPage\OrderEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\OrderPage\OrderMain.xaml">
       <SubType>Designer</SubType>
