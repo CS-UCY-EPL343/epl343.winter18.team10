@@ -349,7 +349,6 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentNumber.ToString()),
                         MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))                      
                        ));
-                    MessageBox.Show(p.paymentDate.ToString());
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");

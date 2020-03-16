@@ -104,7 +104,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 textBox_paymentNum.ClearValue(TextBox.BorderBrushProperty);
             }
 
-            if ((!float.TryParse(textBox_amount.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float f)))//|| (f < 0)
+            if ((!float.TryParse(textBox_amount.Text, NumberStyles.Any, CultureInfo.InvariantCulture, out float f))|| (f <= 0))
             {
                 all_completed = false;
                 textBox_amount.BorderBrush = Brushes.Red;
@@ -125,7 +125,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 ReceiptDataGrid.Items.Add(new Payment
                 {                   
                     idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
-                    amount = float.Parse(textBox_amount.Text, CultureInfo.InvariantCulture.NumberFormat),
+                    amount = float.Parse(textBox_amount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentNumber = textBox_paymentNum.Text,
                     paymentDate = ReceiptDate.SelectedDate.Value.Date,
                     paymentMethod = paymentenum
@@ -134,7 +134,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
                 double total_amount = 0;
                 total_amount = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
-                total_amount = total_amount + Double.Parse(textBox_amount.Text, CultureInfo.InvariantCulture);
+                total_amount = total_amount + Double.Parse(textBox_amount.Text.Replace(',','.'), CultureInfo.InvariantCulture);
                 TotalAmount_TextBlock.Text = (total_amount).ToString("C");
             }
         }
