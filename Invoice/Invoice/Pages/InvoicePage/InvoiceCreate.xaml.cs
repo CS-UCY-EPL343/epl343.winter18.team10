@@ -224,7 +224,7 @@ namespace InvoiceX.Pages.InvoicePage
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) && 
-                float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
+                float.TryParse(textBox_ProductPrice.Text.Replace('.',','), out float price) && (comboBox_Product.SelectedIndex > -1))
             {
                 //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
@@ -234,7 +234,7 @@ namespace InvoiceX.Pages.InvoicePage
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
-                float.TryParse(textBox_ProductPrice.Text, out float price) && (comboBox_Product.SelectedIndex > -1))
+                float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out float price) && (comboBox_Product.SelectedIndex > -1))
             {
                 //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
@@ -272,7 +272,7 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
             }
-            if (!float.TryParse(textBox_ProductPrice.Text, out float f) || (f < 0))
+            if (!float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out float f) || (f < 0))
             {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;
@@ -295,7 +295,7 @@ namespace InvoiceX.Pages.InvoicePage
                     ProductName = textBox_Product.Text,
                     ProductDescription = textBox_ProductDescription.Text,
                     Stock = Convert.ToInt32(textBox_ProductStock.Text),
-                    SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
+                    SellPrice = Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')),
                     Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
                     Total = Convert.ToDouble(textBox_ProductTotal.Text),
                     Vat = ((Product)comboBox_Product.SelectedItem).Vat
