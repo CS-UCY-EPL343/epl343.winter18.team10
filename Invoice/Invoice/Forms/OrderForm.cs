@@ -135,7 +135,7 @@ namespace InvoiceX.Forms
             par.Format.Font.Size = 24;
             par.Format.Font.Color = LogoBlue;
             par.Format.SpaceBefore = 5;
-            par.AddFormattedText("QUOTE", TextFormat.Bold);
+            par.AddFormattedText("Order", TextFormat.Bold);
 
             // Create footer
 
@@ -304,7 +304,7 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("CUSTOMER ID");
-            paragraph.AddSpace(5);
+            paragraph.AddSpace(2);
             paragraph.AddText("SHIPPING DATE");
 
             paragraph = this.orderDetailsFrame.AddParagraph();
@@ -317,13 +317,11 @@ namespace InvoiceX.Forms
 
             paragraph = this.addressFrame.AddParagraph();
             paragraph.Format.SpaceBefore = 20;
-            paragraph.AddText(this.customer_details[0]);
+            paragraph.AddText(this.customer_details[1]);
             paragraph.AddLineBreak();
 
-            Row row1 = this.table2.AddRow();
-
             // Iterate the invoice items
-            /**
+            
             for (int i=0; i<products.Count;i++)
             {
                 double quantity = this.products[i].Quantity;
@@ -351,7 +349,7 @@ namespace InvoiceX.Forms
 
                 this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
-            */
+            
             // Add an invisible row as a space line to the table
             Row row = this.table.AddRow();
             row.Borders.Visible = false;

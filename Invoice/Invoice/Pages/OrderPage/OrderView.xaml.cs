@@ -182,7 +182,7 @@ namespace InvoiceX.Pages.OrderPage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Quote.pdf";
+            string filename = "Order.pdf";
             pdfRenderer.Save(filename);
             //open adobe acrobat
             Process proc = new Process();
@@ -211,9 +211,9 @@ namespace InvoiceX.Pages.OrderPage
         }
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("Quote_temp.pdf"))
+            if (File.Exists("Order_temp.pdf"))
             {
-                File.Delete("Quote_temp.pdf");
+                File.Delete("Order_temp.pdf");
             }
             MigraDoc.DocumentObjectModel.Document document = createPdf();
             document.UseCmykColor = true;

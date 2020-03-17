@@ -47,7 +47,7 @@ namespace InvoiceX.Forms
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
         /// </summary>
         string[] customer_details = new string[6];
-        string[] quote_details = new string[6];
+        string[] quote_details = new string[3];
         List<Models.Product> products = new List<Models.Product>();
 
         public QuoteForm(string filename, string[] cd, string[] id, List<Models.Product> p)
@@ -229,6 +229,17 @@ namespace InvoiceX.Forms
             row.Cells[2].AddParagraph("Terms");
             row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
 
+            row = table2.AddRow();
+            row.HeadingFormat = true;
+            row.Format.Alignment = ParagraphAlignment.Center;
+            row.Format.Font.Bold = true;
+            row.TopPadding = 3;
+            row.BottomPadding = 3;
+            row.Format.Font.Size = 10;
+            row.Cells[0].AddParagraph(quote_details[2]);
+            row.Cells[1].AddParagraph(quote_details[0]);
+            row.Cells[2].AddParagraph(quote_details[1]);
+
             this.table2.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
 
@@ -247,10 +258,10 @@ namespace InvoiceX.Forms
             column = this.table.AddColumn("1.5cm");
             column.Format.Alignment = ParagraphAlignment.Center;
 
-            column = this.table.AddColumn("8.5cm");
+            column = this.table.AddColumn("3.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            column = this.table.AddColumn("3cm");
+            column = this.table.AddColumn("8cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
             column = this.table.AddColumn("3cm");
@@ -359,7 +370,8 @@ namespace InvoiceX.Forms
             paragraph.AddTab(); 
             paragraph.AddTab();
             paragraph.AddTab();
-            paragraph.AddText(balance);
+            String[] year= quote_details[1].Split('/');
+            paragraph.AddText("31/12/"+year[year.Length-1]);
 
 
             paragraph = this.addressFrame.AddParagraph();
@@ -372,10 +384,9 @@ namespace InvoiceX.Forms
             paragraph.AddLineBreak();
             paragraph.AddText(this.customer_details[3]);
 
-            Row row1 = this.table2.AddRow();
 
             // Iterate the invoice items
-            /**
+          
             for (int i=0; i<products.Count;i++)
             {
                 double quantity = this.products[i].Quantity;
@@ -392,18 +403,18 @@ namespace InvoiceX.Forms
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[3].Shading.Color = TableGray;
 
-                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
+                row1.Cells[0].AddParagraph(this.products[i].idProduct.ToString());
                 paragraph = row1.Cells[1].AddParagraph();
                 paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
-                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString());
+                row1.Cells[2].AddParagraph(this.products[i].ProductDescription.ToString());
                 row1.Cells[2].AddParagraph();
-                row1.Cells[3].AddParagraph(this.products[i].Total.ToString());
+                row1.Cells[3].AddParagraph(this.products[i].SellPrice.ToString());
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                 row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
 
                 this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
-            */
+            
             // Add an invisible row as a space line to the table
             Row row = this.table.AddRow();
             row.Borders.Visible = false;

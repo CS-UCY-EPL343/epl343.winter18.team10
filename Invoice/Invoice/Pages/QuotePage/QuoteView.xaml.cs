@@ -173,7 +173,7 @@ namespace InvoiceX.Pages.QuotePage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Invoice.pdf";
+            string filename = "Quote.pdf";
             pdfRenderer.Save(filename);
             //open adobe acrobat
             Process proc = new Process();
@@ -203,9 +203,9 @@ namespace InvoiceX.Pages.QuotePage
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("Invoice_temp.pdf"))
+            if (File.Exists("Quote_temp.pdf"))
             {
-                File.Delete("Invoice_temp.pdf");
+                File.Delete("Quote_temp.pdf");
             }
             MigraDoc.DocumentObjectModel.Document document = createPdf();
             document.UseCmykColor = true;
@@ -219,7 +219,7 @@ namespace InvoiceX.Pages.QuotePage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Invoice_temp.pdf";
+            string filename = "Quote_temp.pdf";
             pdfRenderer.Save(filename);
 
             //open adobe acrobat
@@ -249,8 +249,8 @@ namespace InvoiceX.Pages.QuotePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_QuoteNumber.Text));
-            Customer customer = invoice.customer;
+            Quote quote = QuoteViewModel.getQuoteByID(int.Parse(txtBox_QuoteNumber.Text));
+            Customer customer = quote.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
             customerDetails[1] = customer.Address + ", " +
@@ -261,18 +261,18 @@ namespace InvoiceX.Pages.QuotePage
             customerDetails[5] = customer.idCustomer.ToString();
             MessageBox.Show(customer.idCustomer.ToString());
 
-            string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = txtBox_QuoteNumber.Text;
+            string[] quoteDetails = new string[3];
+            quoteDetails[0] = txtBox_QuoteNumber.Text;
             Console.WriteLine(txtBox_QuoteNumber.Text);
-            invoiceDetails[1] = txtBox_invoiceDate.Text;
-            invoiceDetails[2] = txtBox_issuedBy.Text;
+            quoteDetails[1] = txtBox_invoiceDate.Text;
+            quoteDetails[2] = txtBox_issuedBy.Text;
             
 
             List<Product> products = quoteProductsGrid.Items.OfType<Product>().ToList();
 
 
-            Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
+            Forms.QuoteForm quote2 = new Forms.QuoteForm("../../Forms/Quote.xml", customerDetails, quoteDetails, products);
+            MigraDoc.DocumentObjectModel.Document document = quote2.CreateDocument();
             return document;
         }
         #endregion
