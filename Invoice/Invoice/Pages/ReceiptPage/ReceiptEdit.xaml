@@ -48,24 +48,25 @@
 
             </Grid>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Receipt" VerticalAlignment="Top" Width="364" FontSize="40"/>
-            <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="413,347,0,0" VerticalAlignment="Top" Width="700">
+            <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="413,347,0,0" VerticalAlignment="Top" Width="829">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Margin="16,10,0,0" TextWrapping="Wrap" Text="Payment Method"  VerticalAlignment="Top"/>
-                <Border  x:Name="comboBox_paymentMethod_border" Margin="16,31,484,11" Width="200"  Height="30" >
+                <Border  x:Name="comboBox_paymentMethod_border" Margin="16,31,613,11" Width="200"  Height="30" >
                     <ComboBox x:Name="comboBox_PaymentMethod" Width="200"  Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
                         <ComboBoxItem Name="Cash">Cash</ComboBoxItem>
                         <ComboBoxItem Name="Bank">Bank</ComboBoxItem>
                         <ComboBoxItem Name="Cheque">Cheque</ComboBoxItem>
                     </ComboBox>
                 </Border>
-                <TextBox   x:Name="textBox_paymentNum"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  />
-                <TextBox   x:Name="textBox_amount"       HorizontalAlignment="Left" Height="30" Margin="423,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" RenderTransformOrigin="0.85,-2.767"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="544,31,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddPayment" Height="30"  Style="{DynamicResource CommonButtonStyle}" />
+                <TextBox   x:Name="textBox_paymentNum"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200" TextChanged="textBox_paymentNum_TextChanged"  />
+                <TextBox   x:Name="textBox_amount"       HorizontalAlignment="Left" Height="30" Margin="423,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" RenderTransformOrigin="0.85,-2.767" TextChanged="textBox_amount_TextChanged"/>
+                <DatePicker x:Name="PaymentDate" HorizontalAlignment="Left" Margin="544,32,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
+                <Button Content="Add" HorizontalAlignment="Left" Margin="669,32,0,0" VerticalAlignment="Top" Width="116" Click="Btn_AddPayment" Height="30"  Style="{DynamicResource CommonButtonStyle}" />
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Payment Number" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="424,10,0,0" TextWrapping="Wrap" Text="Amount" VerticalAlignment="Top"/>
-                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="665,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{DynamicResource CommonButtonStyle}" />
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="790,32,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{DynamicResource CommonButtonStyle}" />
             </Grid>
 
             <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="81,154,0,0" VerticalAlignment="Top" Width="174" Height="55"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />

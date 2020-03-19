@@ -513,11 +513,11 @@ namespace InvoiceX.ViewModels
 
 
                 //update customer total  
-                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
+                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
                 using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
                 {
-                    cmd3.Parameters.AddWithValue("@amount", receipt.totalAmount- oldreceipt.totalAmount);                    
+                    cmd3.Parameters.AddWithValue("@amount",  oldreceipt.totalAmount- receipt.totalAmount);                    
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }

@@ -35,6 +35,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
                 textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
+                PaymentDate.SelectedDate = DateTime.Today;//set curent date 
             }
             Refresh_DB_data = false;
         }        
@@ -60,6 +61,18 @@ namespace InvoiceX.Pages.ReceiptPage
                 comboBox_paymentMethod_border.BorderThickness = new Thickness(0);
                
             }
+            if (comboBox_PaymentMethod.SelectedIndex == 0)
+            {
+                textBox_paymentNum.IsReadOnly = true;
+                textBox_paymentNum.Text = "No number needed";
+
+            }
+            else
+            { 
+                textBox_paymentNum.IsReadOnly = false;
+                textBox_paymentNum.Clear();
+            }
+
         }
 
         bool paymenttype_already_selected()
@@ -106,8 +119,12 @@ namespace InvoiceX.Pages.ReceiptPage
             {
                 textBox_amount.ClearValue(TextBox.BorderBrushProperty);
             }
+            if (PaymentDate.SelectedDate == null)
+            {
+                PaymentDate.SelectedDate = DateTime.Today;//set curent date 
+            }
 
-            return all_completed;
+                return all_completed;
         }
 
         private void Btn_AddPayment(object sender, RoutedEventArgs e)
@@ -117,10 +134,10 @@ namespace InvoiceX.Pages.ReceiptPage
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
                 ReceiptDataGrid.Items.Add(new Payment
                 {                   
-                    idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
+                    //idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
                     amount = float.Parse(textBox_amount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    paymentNumber = textBox_paymentNum.Text,
-                    paymentDate = ReceiptDate.SelectedDate.Value.Date,
+                    paymentNumber =(comboBox_PaymentMethod.SelectedIndex == 0 ? "null": textBox_paymentNum.Text) ,
+                    paymentDate = PaymentDate.SelectedDate.Value.Date,
                     paymentMethod = paymentenum
 
                 });
@@ -246,6 +263,16 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
-      
+
+        private void textBox_paymentNum_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox_paymentNum.ClearValue(TextBox.BorderBrushProperty);
+           
+        }
+
+        private void textBox_amount_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox_amount.ClearValue(TextBox.BorderBrushProperty);
+        }
     }
 }
