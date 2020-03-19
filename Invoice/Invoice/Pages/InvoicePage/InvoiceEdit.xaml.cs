@@ -21,6 +21,7 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceEdit : Page
     {
         ProductViewModel productView;
+        bool invoice_loaded = false;
 
         public InvoiceEdit()
         {
@@ -121,7 +122,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_CompletedValues())
+            if (Check_AddProduct_CompletedValues() && invoice_loaded)
             {
                 ProductDataGrid.Items.Add(new Product
                 {
@@ -212,7 +213,7 @@ namespace InvoiceX.Pages.InvoicePage
                 myinvoice.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
                 myinvoice.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
                 myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
-                myinvoice.dueDate = invoiceDate.SelectedDate.Value.Date;
+                myinvoice.dueDate = dueDate.SelectedDate.Value.Date;
                 myinvoice.issuedBy = issuedBy.Text;
                 return myinvoice;
             }
@@ -250,6 +251,7 @@ namespace InvoiceX.Pages.InvoicePage
         private void Clear_Details()
         {
             issuedBy.Text = "";
+            textBox_invoiceNumber.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
@@ -264,6 +266,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
+            invoice_loaded = false;
             Btn_clearProduct_Click(null, null);
             Clear_Customer();
             Clear_Details();
@@ -283,6 +286,7 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 Btn_clearAll_Click(null, null);
                 loadInvoice(invoiceID);
+                invoice_loaded = true;
 
             }
             else

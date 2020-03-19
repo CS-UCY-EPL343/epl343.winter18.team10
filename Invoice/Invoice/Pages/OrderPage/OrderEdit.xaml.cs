@@ -22,6 +22,7 @@ namespace InvoiceX.Pages.OrderPage
     {
         ProductViewModel productView;
         Order order;
+        bool order_loaded = false;
         public OrderEdit()
         {
             InitializeComponent();
@@ -121,7 +122,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_CompletedValues())
+            if (Check_AddProduct_CompletedValues() && order_loaded)
             {
                 orderProductsGrid.Items.Add(new Product
                 {
@@ -238,6 +239,7 @@ namespace InvoiceX.Pages.OrderPage
         private void Clear_Details()
         {
             txtBox_issuedBy.Text = "";
+            txtBox_orderNumber.Clear();
             txtBox_issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
@@ -252,6 +254,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
+            order_loaded = false;
             Btn_clearProduct_Click(null, null);
             Clear_Customer();
             Clear_Details();
@@ -271,6 +274,7 @@ namespace InvoiceX.Pages.OrderPage
             {
                 Btn_clearAll_Click(null, null);
                 loadOrder(orderID);
+                order_loaded = true;
             }
             else
             {

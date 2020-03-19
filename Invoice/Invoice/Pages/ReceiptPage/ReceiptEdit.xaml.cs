@@ -222,6 +222,7 @@ namespace InvoiceX.Pages.ReceiptPage
         private void Clear_Details()
         {
             issuedBy.Text = "";
+            textBox_ReceiptNumber.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
