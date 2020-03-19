@@ -82,8 +82,6 @@ namespace InvoiceX.Pages.ReceiptPage
             return false;
         }
 
-
-
         private bool Check_AddPayment_CompletedValues()
         {
             bool all_completed = true;
@@ -147,9 +145,7 @@ namespace InvoiceX.Pages.ReceiptPage
             total_amount = total_amount - Convert.ToDouble(CurrentCell_Product.amount);  
             TotalAmount_TextBlock.Text = (total_amount).ToString("C");
             ReceiptDataGrid.Items.Remove(ReceiptDataGrid.CurrentCell.Item);
-        }
-
-     
+        }             
 
         public void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
         {

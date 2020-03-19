@@ -110,19 +110,19 @@
             </DataGrid.Effect>
             
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Shipping Date" Binding = "{Binding shippingDate, StringFormat=d, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
+                <DataGridTextColumn Header = "Shipping Date" Binding = "{Binding shippingDate, StringFormat=d}" />
                 <DataGridTextColumn Header = "Order ID" Binding = "{Binding idOrder}" />
                 <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
                 <DataGridTextColumn Header = "City" Binding = "{Binding city}" />
                 <DataGridTextColumn Header = "Status" Binding = "{Binding status}" CellStyle="{StaticResource orderStatusCellStyle}"/>
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C, ConverterCulture='fr-FR'}"/>
-                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C}"/>
+                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C}" />
+                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C}" />
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnOptions" Width="40" Height="40">
+                            <Button x:Name="btnOptions" Width="40" Height="40" Click="btnOptions_ContextMenuOpening">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
@@ -134,6 +134,7 @@
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Mark As Ready" Click="MarkOrderReady_Click"/>
+                                        <MenuItem Header="Mark As Pending" Click="MarkOrderPending_Click"/>
                                         <MenuItem Header="Issue As Invoice" Click="IssueOrderAsInvoice_Click"/>
                                         <MenuItem Header="View Order" Click="ViewOrder_Click"/>
                                         <MenuItem Header="Edit Order" Click="EditOrder_Click"/>                                        

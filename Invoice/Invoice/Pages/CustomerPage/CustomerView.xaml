@@ -52,7 +52,7 @@
                 <DataGridTextColumn Header = "Country" Binding = "{Binding Country}" />
                 <DataGridTextColumn Header = "City" Binding = "{Binding City}" />
                 <DataGridTextColumn Header = "Address" Binding = "{Binding Address}" />
-                <DataGridTextColumn Header = "Balance" Binding = "{Binding Balance, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Balance" Binding = "{Binding Balance, StringFormat=C}" />
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

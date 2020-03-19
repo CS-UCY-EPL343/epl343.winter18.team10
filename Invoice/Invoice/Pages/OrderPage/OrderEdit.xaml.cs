@@ -72,6 +72,7 @@ namespace InvoiceX.Pages.OrderPage
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
+
         bool product_already_selected()
         {
             List<Product> gridProducts = orderProductsGrid.Items.OfType<Product>().ToList();
@@ -85,6 +86,7 @@ namespace InvoiceX.Pages.OrderPage
             }
             return false;
         }
+
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
@@ -220,7 +222,7 @@ namespace InvoiceX.Pages.OrderPage
                 if (int.TryParse(txtBox_orderNumber.Text, out int n))
                 {
                     invoiceId = int.Parse(txtBox_orderNumber.Text);
-                    InvoiceViewModel.update_Order(make_object_Order(),order);
+                    InvoiceViewModel.update_Order(make_object_Order(), order);
                 }
             }
         }
@@ -289,7 +291,7 @@ namespace InvoiceX.Pages.OrderPage
                 textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
 
                 // Invoice details
-                txtBox_orderNumber.Text = order.idOrder.ToString();               
+                txtBox_orderNumber.Text = order.idOrder.ToString();
                 DatePicker_orderDate.SelectedDate = order.createdDate;
                 DatePicker_shippingDate.SelectedDate = order.shippingDate;
                 txtBox_issuedBy.Text = order.issuedBy;
@@ -301,166 +303,15 @@ namespace InvoiceX.Pages.OrderPage
                 // Order Products           
                 foreach (Product p in order.products)
                 {
-                    
+
                     orderProductsGrid.Items.Add(p);
                 }
-                
+
             }
             else
             {
                 MessageBox.Show("Please insert a valid value for order ID");
             }
         }
-
-
-        #region PDF
-        void savePdf_Click(object sender, RoutedEventArgs e)
-        {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice.pdf";
-            filename = "Invoice.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
-
-        }
-        void printPdf_click(object sender, RoutedEventArgs e)
-        {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
-            }
-
-            proc.EnableRaisingEvents = true;
-
-            proc.Close();
-
-        }
-        private void previewPdf_click(object sender, RoutedEventArgs e)
-        {
-            if (File.Exists("Invoice_temp.pdf"))
-            {
-                File.Delete("Invoice_temp.pdf");
-            }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
-            }
-
-            proc.EnableRaisingEvents = true;
-
-            proc.Close();
-
-
-        }
-
-        MigraDoc.DocumentObjectModel.Document createPdf()
-        {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_orderNumber.Text));
-            Customer customer = invoice.customer;
-            string[] customerDetails = new string[6];
-            customerDetails[0] = customer.CustomerName;
-            customerDetails[1] = customer.Address + ", " +
-            customer.City + ", " + customer.Country;
-            customerDetails[2] = customer.PhoneNumber.ToString();
-            customerDetails[3] = customer.Email;
-            customerDetails[4] = customer.Balance.ToString();
-            customerDetails[5] = customer.idCustomer.ToString();
-
-            string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = txtBox_orderNumber.Text;
-            Console.WriteLine(txtBox_orderNumber.Text);
-            invoiceDetails[1] = DatePicker_orderDate.SelectedDate.Value.ToString("dd/MM/yyyy");
-            invoiceDetails[2] = txtBox_issuedBy.Text;
-            invoiceDetails[3] = NetTotal_TextBlock.Text;
-            invoiceDetails[4] = Vat_TextBlock.Text;
-            invoiceDetails[5] = TotalAmount_TextBlock.Text;
-
-            List<Product> products = orderProductsGrid.Items.OfType<Product>().ToList();
-
-
-            Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
-            return document;
-
-
-        }
-
-        private void txtBox_orderNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
-    #endregion
-
 }

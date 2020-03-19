@@ -95,7 +95,7 @@
                 <DataGridTextColumn Header = "Payment Date " Binding="{Binding paymentDate, StringFormat=d}" />
                 <DataGridTextColumn Header = "Payment Method" Binding="{Binding paymentMethod}" />
                 <DataGridTextColumn Header = "Payment Number" Binding="{Binding paymentNumber}" />
-                <DataGridTextColumn Header = "Amount" Binding="{Binding amount, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Amount" Binding="{Binding amount, StringFormat=C}" />
               
 
                 <DataGridTemplateColumn Header = "REMOVE">
@@ -107,10 +107,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Style="{DynamicResource CommonButtonStyle}"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Style="{DynamicResource CommonButtonStyle}"/>
-        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="44"  Style="{DynamicResource CommonButtonStyle}" />
         <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
         <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
         <TextBlock HorizontalAlignment="Left" Height="19" Margin="1447,859,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>

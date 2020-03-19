@@ -61,150 +61,6 @@ namespace InvoiceX.Pages.InvoicePage
             }
         }
 
-        #region PDF
-        private string filenamePath = null;
-        void savePdf_Click(object sender, RoutedEventArgs e)
-        {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice.pdf";
-            filename = "Invoice.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
-
-        }
-        void printPdf_click(object sender, RoutedEventArgs e)
-        {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
-            }
-
-            proc.EnableRaisingEvents = true;
-
-            proc.Close();
-
-        }
-        private void previewPdf_click(object sender, RoutedEventArgs e)
-        {
-            if (File.Exists("Invoice_temp.pdf"))
-            {
-                File.Delete("Invoice_temp.pdf");
-            }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Invoice_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
-            }
-
-            proc.EnableRaisingEvents = true;
-
-            proc.Close();
-
-
-        }
-
-        MigraDoc.DocumentObjectModel.Document createPdf()
-        {
-
-            string[] customerDetails = new string[6];
-            customerDetails[0] = ((Customer)comboBox_customer.SelectedItem).CustomerName;
-            customerDetails[1] = ((Customer)comboBox_customer.SelectedItem).Address + ", " +
-            ((Customer)comboBox_customer.SelectedItem).City + ", " + ((Customer)comboBox_customer.SelectedItem).Country;
-            customerDetails[2] = ((Customer)comboBox_customer.SelectedItem).PhoneNumber.ToString();
-            customerDetails[3] = ((Customer)comboBox_customer.SelectedItem).Email;
-            customerDetails[4] = ((Customer)comboBox_customer.SelectedItem).Balance.ToString();
-            customerDetails[5] = ((Customer)comboBox_customer.SelectedItem).idCustomer.ToString();
-
-            string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = textBox_invoiceNumber.Text;
-            Console.WriteLine(textBox_invoiceNumber.Text);
-            invoiceDetails[1] = invoiceDate.SelectedDate.Value.ToString("dd/MM/yyyy");
-            invoiceDetails[2] = issuedBy.Text;
-            invoiceDetails[3] = NetTotal_TextBlock.Text;
-            invoiceDetails[4] = Vat_TextBlock.Text;
-            invoiceDetails[5] = TotalAmount_TextBlock.Text;
-
-            List<Product> products = ProductDataGrid.Items.OfType<Product>().ToList();
-
-
-            Forms.InvoiceForm invoice = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = invoice.CreateDocument();
-            return document;
-
-
-        }
-        #endregion
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_Product.SelectedIndex > -1)
@@ -226,7 +82,6 @@ namespace InvoiceX.Pages.InvoicePage
             if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) && 
                 float.TryParse(textBox_ProductPrice.Text.Replace('.',','), out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
@@ -236,10 +91,10 @@ namespace InvoiceX.Pages.InvoicePage
             if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
                 float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out float price) && (comboBox_Product.SelectedIndex > -1))
             {
-                //textBox_ProductTotal.Text = (Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
             }
         }
+
         bool product_already_selected() 
         {
             List<Product> gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
@@ -253,6 +108,7 @@ namespace InvoiceX.Pages.InvoicePage
             }
             return false;
         }
+
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
@@ -452,6 +308,41 @@ namespace InvoiceX.Pages.InvoicePage
         private void textBox_ProductStock_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        public void loadOrder(Order order)
+        {
+            Btn_clearAll_Click(null, null);
+            if (order != null)
+            {
+                // Customer details                                
+                comboBox_customer.SelectedValue = order.customer.CustomerName;
+                textBox_Customer.Text = order.customer.CustomerName;
+                textBox_Contact_Details.Text = order.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = order.customer.Email;
+                textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
+
+                // Invoice details
+                NetTotal_TextBlock.Text = order.cost.ToString("C");
+                Vat_TextBlock.Text = order.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
+
+                // Invoice products        
+                for (int i = 0; i < order.products.Count; i++)
+                {
+                    ProductDataGrid.Items.Add(new Product
+                    {
+                        idProduct = order.products[i].idProduct,
+                        ProductName = order.products[i].ProductName,
+                        ProductDescription = order.products[i].ProductDescription,
+                        Stock = order.products[i].Stock,
+                        SellPrice = order.products[i].SellPrice,
+                        Quantity = order.products[i].Quantity,
+                        Total = order.products[i].Total,
+                        Vat = order.products[i].Vat
+                    });
+                }
+            }
         }
     }
 }

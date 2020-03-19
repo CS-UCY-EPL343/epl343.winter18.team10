@@ -24,15 +24,7 @@
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
                 <Border  x:Name="comboBox_customer_border" Margin="178,31,35,241"  Width="371" Height="30">
-                    <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White"  >
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock  Text="{Binding CustomerName }"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                    <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White" SelectedValuePath="CustomerName" DisplayMemberPath="CustomerName"/>
                 </Border>
                 <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
                 <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
@@ -113,9 +105,9 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C}" />
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
@@ -126,10 +118,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button x:Name="createpdf_button" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="savePdf_Click" Style="{DynamicResource CommonButtonStyle}"/>
-        <Button x:Name="printPdf_button" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="printPdf_click" Style="{DynamicResource CommonButtonStyle}"/>
-        <Button Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="44" Click="previewPdf_click" Style="{DynamicResource CommonButtonStyle}" />
         <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
         <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
 

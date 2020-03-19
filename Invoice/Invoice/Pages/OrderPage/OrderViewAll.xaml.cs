@@ -150,6 +150,35 @@ namespace InvoiceX.Pages.OrderPage
             }
         }
 
+        private void btnOptions_ContextMenuOpening(object sender, RoutedEventArgs e)
+        {
+            OrderStatus status = ((Order)orderDataGrid.SelectedItem).status;
+            var btn = (Button)sender;
+            
+            var itemMarkReady = (MenuItem)btn.ContextMenu.Items.GetItemAt(0);
+            var itemMarkPending = (MenuItem)btn.ContextMenu.Items.GetItemAt(1);
+            var itemIssueInvoice = (MenuItem)btn.ContextMenu.Items.GetItemAt(2);
+
+            if (status == OrderStatus.Pending)
+            {
+                itemMarkReady.Visibility = Visibility.Visible;
+                itemMarkPending.Visibility = Visibility.Collapsed;
+                itemIssueInvoice.Visibility = Visibility.Collapsed;
+            }
+            else if (status == OrderStatus.Ready)
+            {
+                itemMarkReady.Visibility = Visibility.Collapsed;
+                itemMarkPending.Visibility = Visibility.Visible;
+                itemIssueInvoice.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                itemMarkReady.Visibility = Visibility.Collapsed;
+                itemMarkPending.Visibility = Visibility.Collapsed;
+                itemIssueInvoice.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void MarkOrderReady_Click(object sender, RoutedEventArgs e)
         {
             int orderID = ((Order)orderDataGrid.SelectedItem).idOrder;
@@ -169,9 +198,31 @@ namespace InvoiceX.Pages.OrderPage
             }
         }
 
+        private void MarkOrderPending_Click(object sender, RoutedEventArgs e)
+        {
+            int orderID = ((Order)orderDataGrid.SelectedItem).idOrder;
+            string msgtext = "Mark order with ID = " + orderID + " as pending?";
+            string txt = "Order Pending";
+            MessageBoxButton button = MessageBoxButton.YesNo;
+            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
+
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    OrderViewModel.markOrderAsPending(orderID);
+                    load();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+            }
+        }
+
         private void IssueOrderAsInvoice_Click(object sender, RoutedEventArgs e)
         {
-
+            Order order = OrderViewModel.getOrderById(((Order)orderDataGrid.SelectedItem).idOrder); 
+            orderMain.issueOrderAsInvoice(order);
         }
+
+        
     }
 }

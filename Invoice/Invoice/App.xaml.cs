@@ -24,12 +24,12 @@ namespace InvoiceX
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            var vCulture = new CultureInfo("fr-FR");
+            var vCulture = new CultureInfo("el-GR");
 
             Thread.CurrentThread.CurrentCulture = vCulture;
-            Thread.CurrentThread.CurrentUICulture = vCulture;
+            //Thread.CurrentThread.CurrentUICulture = vCulture;
             CultureInfo.DefaultThreadCurrentCulture = vCulture;
-            CultureInfo.DefaultThreadCurrentUICulture = vCulture;
+            //CultureInfo.DefaultThreadCurrentUICulture = vCulture;
 
             FrameworkElement.LanguageProperty.OverrideMetadata(
             typeof(FrameworkElement),

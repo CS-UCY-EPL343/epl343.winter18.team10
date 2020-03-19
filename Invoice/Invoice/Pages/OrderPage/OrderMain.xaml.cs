@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvoiceX.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,11 +24,13 @@ namespace InvoiceX.Pages.OrderPage
         OrderViewAll viewAllPage;
         OrderView viewPage;
         OrderCreate createpage;
-        OrderEdit editpage; 
+        OrderEdit editpage;
+        MainWindow mainWindow;
 
-        public OrderMain()
+        public OrderMain(MainWindow mainWindow)
         {
             InitializeComponent();
+            this.mainWindow = mainWindow;
             viewAllPage = new OrderViewAll(this);
             viewPage = new OrderView(this);
             createpage = new OrderCreate();
@@ -82,6 +85,11 @@ namespace InvoiceX.Pages.OrderPage
         {
             //editpage.loadOrder(orderID);
             btnEdit_Click(null, null);
+        }
+
+        public void issueOrderAsInvoice(Order order)
+        {
+            mainWindow.issueOrderAsInvoice(order);
         }
     }
 }

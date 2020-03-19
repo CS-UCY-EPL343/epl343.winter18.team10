@@ -58,11 +58,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "ITEMS " Binding="{Binding ProductName}" />
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
-                <!--DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" /-->
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat, StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C}" />
             </DataGrid.Columns>
         </DataGrid>
 

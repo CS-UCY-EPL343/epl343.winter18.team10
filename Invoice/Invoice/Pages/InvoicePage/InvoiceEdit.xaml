@@ -99,9 +99,9 @@
                 <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
                 <DataGridTextColumn Header = "STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice , StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice , StringFormat=C}" />
                 <DataGridTextColumn Header = "VAT" Binding="{Binding Vat,StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C}" />
 
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
@@ -112,10 +112,6 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <Button x:Name="createpdf_button" Click="savePdf_Click" Content="Save as PDF" HorizontalAlignment="Left" Margin="824,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Style="{DynamicResource CommonButtonStyle}"/>
-        <Button x:Name="printPdf_button"  Click="printPdf_click" Content="Print" HorizontalAlignment="Left" Margin="646,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Style="{DynamicResource CommonButtonStyle}"/>
-        <Button Content="Preview"  Click="previewPdf_click" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="468,856,0,0" Height="44" Style="{DynamicResource CommonButtonStyle}" />
         <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
         <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
 

@@ -1,4 +1,5 @@
-﻿using InvoiceX.Pages;
+﻿using InvoiceX.Models;
+using InvoiceX.Pages;
 using InvoiceX.Pages.CreditNotePage;
 using InvoiceX.Pages.CustomerPage;
 using InvoiceX.Pages.InvoicePage;
@@ -29,13 +30,13 @@ namespace InvoiceX
     public partial class MainWindow : Window
     {
         private Page m_dashboard = new Dashboard();
-        private Page m_invoice = new InvoiceMain();
+        private InvoiceMain m_invoice = new InvoiceMain();
         private Page m_receipt = new ReceiptMain();
         private Page m_creditNote = new CreditNoteMain();
         //private Page m_statement;
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
-        private Page m_order = new OrderMain();
+        private Page m_order;
         private Page m_quote = new QuoteMain();
         //private Page m_expenses;
         private Page m_settings = new SettingsMain();
@@ -43,7 +44,8 @@ namespace InvoiceX
         public MainWindow()
         {
             InitializeComponent();
-            BtnDashboard_Click(new object(), new RoutedEventArgs());
+            m_order = new OrderMain(this);
+            BtnDashboard_Click(null, null);
         }
            
         private void resetAllBtnStyles()
@@ -158,6 +160,12 @@ namespace InvoiceX
                     break;                
             }
             
+        }
+
+        public void issueOrderAsInvoice(Order order)
+        {
+            m_invoice.issueOrderAsInvoice(order);
+            BtnInvoice_Click(null, null);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvoiceX.Models;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
@@ -76,6 +77,12 @@ namespace InvoiceX.Pages.InvoicePage
         {
             editpage.loadInvoice(invID);
             btnEdit_Click(null, null);
+        }
+
+        public void issueOrderAsInvoice(Order order)
+        {
+            createpage.loadOrder(order);
+            btnCreate_Click(null, null);
         }
     }
 }

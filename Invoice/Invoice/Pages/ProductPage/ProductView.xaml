@@ -97,8 +97,8 @@
                 <DataGridTextColumn Header = "Product ID" Binding = "{Binding idProduct}" />
                 <DataGridTextColumn Header = "Product" Binding = "{Binding ProductName}" />
                 <DataGridTextColumn Header = "Description" Binding = "{Binding ProductDescription}" />
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding Cost, StringFormat=C, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Sell Price" Binding = "{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Cost" Binding = "{Binding Cost, StringFormat=C}" />
+                <DataGridTextColumn Header = "Sell Price" Binding = "{Binding SellPrice, StringFormat=C}" />
                 <DataGridTextColumn Header = "VAT" Binding = "{Binding Vat, StringFormat=P}" />
                 <DataGridTextColumn Header = "Status" CellStyle="{StaticResource productCellStyle}"/>
                 <DataGridTextColumn Header = "Stock" Binding = "{Binding Stock}" />

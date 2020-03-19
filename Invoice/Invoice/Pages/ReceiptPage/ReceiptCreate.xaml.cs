@@ -53,11 +53,6 @@ namespace InvoiceX.Pages.ReceiptPage
             }
         }
 
-       
-        
-       
-        
-
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_PaymentMethod.SelectedIndex > -1)
@@ -81,8 +76,6 @@ namespace InvoiceX.Pages.ReceiptPage
             }
             return false;
         }
-
-
 
         private bool Check_AddPayment_CompletedValues()
         {
@@ -253,7 +246,6 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
-
       
     }
 }

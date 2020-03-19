@@ -56,8 +56,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Product " Binding="{Binding ProductName}" />
                 <DataGridTextColumn Header = "Description" Binding="{Binding ProductDescription}" />
-                <DataGridTextColumn Header = "Actual Price" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Offer Price" Binding="{Binding OfferPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Actual Price" Binding="{Binding SellPrice, StringFormat=C}" />
+                <DataGridTextColumn Header = "Offer Price" Binding="{Binding OfferPrice, StringFormat=C}" />
             </DataGrid.Columns>
         </DataGrid>
 
