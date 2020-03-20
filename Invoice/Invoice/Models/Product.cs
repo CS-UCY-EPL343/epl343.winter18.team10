@@ -36,6 +36,7 @@ namespace InvoiceX.Models
         public int Quantity { get; set; }
 
         public float OfferPrice { get; set; }
-
+        
     }
+    
 }

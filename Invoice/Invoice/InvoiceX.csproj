@@ -181,6 +181,9 @@
     <Compile Include="Pages\ProductPage\ProductCreate.xaml.cs">
       <DependentUpon>ProductCreate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\ProductPage\ProductStatistics.xaml.cs">
+      <DependentUpon>ProductStatistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\QuotePage\QuoteCreate.xaml.cs">
       <DependentUpon>QuoteCreate.xaml</DependentUpon>
     </Compile>
@@ -269,6 +272,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\OrderPage\OrderCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ProductPage\ProductStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

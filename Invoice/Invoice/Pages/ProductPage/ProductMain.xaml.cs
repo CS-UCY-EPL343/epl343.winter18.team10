@@ -24,13 +24,14 @@ namespace InvoiceX.Pages.ProductPage
         ProductView viewPage;
         ProductCreate createPage;
         ProductEdit editPage;
-
+        ProductStatistics statisticsPage;
         public ProductMain()
         {
             InitializeComponent();
             viewPage = new ProductView(this);
             createPage = new ProductCreate();
             editPage = new ProductEdit();
+            statisticsPage = new ProductStatistics();
             btnView_Click(new object(), new RoutedEventArgs());
         }
 
@@ -41,7 +42,13 @@ namespace InvoiceX.Pages.ProductPage
             productPage.Content = viewPage;
             viewPage.load();
         }
+        private void btnStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            resetAllBtnStyles();
+            btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
+            productPage.Content = statisticsPage;
 
+        }
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             resetAllBtnStyles();
@@ -59,7 +66,7 @@ namespace InvoiceX.Pages.ProductPage
 
         private void resetAllBtnStyles()
         {
-            btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
+            btnEdit.Style = btnView.Style = btnCreate.Style = btnStatistics.Style= FindResource("ButtonStyle") as Style;
         }
 
         public void editProduct(int prodID)

@@ -11,6 +11,9 @@ namespace InvoiceX.ViewModels
 {
     class ProductViewModel
     {
+        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
+                                   "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+
         public List<Product> ProductList { get; set; }
         public ProductViewModel()
         {
@@ -244,6 +247,34 @@ namespace InvoiceX.ViewModels
             {
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
+        }
+        public static int getProductCount(int productId, int months)
+        {
+            MySqlConnection conn;
+            int total=0 ;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("getTotalProducts", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
+                cmd.Parameters["@productId"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@months", SqlDbType.Int).Value = months;
+                cmd.Parameters["@months"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                String total2 = cmd.ExecuteScalar().ToString();
+                total = int.Parse(total2);
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
         }
     }
 }
