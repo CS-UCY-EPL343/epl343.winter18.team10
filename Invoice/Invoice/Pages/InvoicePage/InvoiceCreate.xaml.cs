@@ -310,6 +310,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         }
 
+        
         public void loadOrder(Order order)
         {
             Btn_clearAll_Click(null, null);

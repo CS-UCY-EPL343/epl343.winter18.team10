@@ -1,266 +1,299 @@
 ﻿using InvoiceX.Models;
+using InvoiceX.ViewModels;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace InvoiceX.Pages.QuotePage
 {
     /// <summary>
-    /// Interaction logic for InvoiceCreate.xaml
+    /// Interaction logic for QuoteCreate.xaml
     /// </summary>
     public partial class QuoteCreate : Page
     {
+        ProductViewModel productView;        
+        CustomerViewModel customerView;
+        bool Refresh_DB_data = true;
+
         public QuoteCreate()
         {
             InitializeComponent();
+           
         }
 
-        private void comboBox1_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public void load()
         {
-
-            textBox_Address.Text = ((Customer)comboBox1.SelectedItem).Address + ", " +
-            ((Customer)comboBox1.SelectedItem).City + ", " + ((Customer)comboBox1.SelectedItem).Country;
-            textBox_Contact_Details.Text = ((Customer)comboBox1.SelectedItem).PhoneNumber.ToString();
-            textBox_Email_Address.Text = ((Customer)comboBox1.SelectedItem).Email;
-
-
-        }
-        private string filenamePath = null;
-        void savePdf_Click(object sender, RoutedEventArgs e)
-        {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Quote.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
-
-        }
-        void printPdf_click(object sender, RoutedEventArgs e)
-        {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Quote.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat 11.0\Acrobat\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
+            if (Refresh_DB_data)
+            {                
+                productView = new ProductViewModel();               
+                customerView = new CustomerViewModel();               
+                comboBox_customer.ItemsSource = customerView.CustomersList;
+                comboBox_Product.ItemsSource = productView.ProductList;
+                textBox_idQuote.Text = (InvoiceViewModel.ReturnLatestQuoteID()+1).ToString();
+                invoiceDate.SelectedDate = DateTime.Today;//set curent date 
             }
+            Refresh_DB_data = false;
+        }        
 
-            proc.EnableRaisingEvents = true;
 
-            proc.Close();
-
-        }
-        private void previewPdf_click(object sender, RoutedEventArgs e)
+        private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (File.Exists("Quote_temp.pdf"))
+            comboBox_customer_border.BorderThickness = new Thickness(0);
+            if (comboBox_customer.SelectedIndex > -1)
             {
-                File.Delete("Quote_temp.pdf");
+                textBox_Customer.Text = ((Customer)comboBox_customer.SelectedItem).CustomerName;
+                textBox_Address.Text = ((Customer)comboBox_customer.SelectedItem).Address + ", " +
+                 ((Customer)comboBox_customer.SelectedItem).City + ", " + ((Customer)comboBox_customer.SelectedItem).Country;
+                textBox_Contact_Details.Text = ((Customer)comboBox_customer.SelectedItem).PhoneNumber.ToString();
+                textBox_Email_Address.Text = ((Customer)comboBox_customer.SelectedItem).Email;
             }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Quote_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-@"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
-            {
-                proc.WaitForExit(10000);
-            }
-
-            proc.EnableRaisingEvents = true;
-
-            proc.Close();
-
-
         }
-
-        MigraDoc.DocumentObjectModel.Document createPdf()
-        {
-            string[] quoteDetails = new string[6];
-            string[] customerDetails = new string[6];
-            List<Product> products = invoiceDataGrid2.Items.OfType<Product>().ToList();
-            
-                        customerDetails[0] = ((Customer)comboBox1.SelectedItem).CustomerName;
-                        customerDetails[1] = ((Customer)comboBox1.SelectedItem).Address + ", " +
-                        ((Customer)comboBox1.SelectedItem).City + ", " + ((Customer)comboBox1.SelectedItem).Country;
-                        customerDetails[2] = ((Customer)comboBox1.SelectedItem).PhoneNumber.ToString();
-                        customerDetails[3] = ((Customer)comboBox1.SelectedItem).Email;
-                        customerDetails[4] = ((Customer)comboBox1.SelectedItem).Balance.ToString();
-                        customerDetails[5] = ((Customer)comboBox1.SelectedItem).idCustomer.ToString();
-    
-                        quoteDetails[0] = quoteNumber.Text;
-                        Console.WriteLine(quoteNumber.Text);
-                        quoteDetails[1] = quoteDate.SelectedDate.Value.ToString("dd/MM/yyyy");
-                        quoteDetails[2] = issuedBy.Text;
-                        quoteDetails[3] = NetTotal_TextBlock.Text;
-                        quoteDetails[4] = Vat_TextBlock.Text;
-                        quoteDetails[5] = TotalAmount_TextBlock.Text;
-                
-
-
-            Forms.QuoteForm quote = new Forms.QuoteForm("../../Forms/Quote.xml", customerDetails, quoteDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = quote.CreateDocument();
-            return document;
-
-        }
-
-
-
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_1(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
-        private void TextBox_TextChanged_2(object sender, TextChangedEventArgs e)
-        {
-
-        }
-
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
-            textBlock_ProductStock.Text = ((Product)comboBox_Product.SelectedItem).Stock.ToString();
-            textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString();
-            textBlock_ProductVat.Text = "19%";
-
-
-        }
-
-        private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int n;
-            if (int.TryParse(textBox_ProductQuantity.Text, out n))
+            if (comboBox_Product.SelectedIndex > -1)
             {
-                textBlock_ProductAmount.Text = (((Product)comboBox_Product.SelectedItem).SellPrice * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
-            }
-
-
-        }
-
-        private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            int n;
-            if (int.TryParse(textBox_ProductPrice.Text, out n) && int.TryParse(textBox_ProductQuantity.Text, out n))
-            {
-                textBlock_ProductAmount.Text = (Convert.ToInt32(textBox_ProductPrice.Text) * Convert.ToInt32(textBox_ProductQuantity.Text)).ToString();
+                comboBox_Product_border.BorderThickness = new Thickness(0);
+                textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+                textBox_Product.Text = ((Product)comboBox_Product.SelectedItem).ProductName;
+                textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
+                textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        
 
-            invoiceDataGrid2.Items.Add(new Product
+       
+
+        bool product_already_selected() 
+        {
+            List<Product> gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
+            foreach (Product p in gridProducts)
+            {               
+                if (p.idProduct == ((Product)comboBox_Product.SelectedItem).idProduct)
+                {
+                    MessageBox.Show("Product already selected");
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool Check_AddProduct_CompletedValues()
+        {
+            bool all_completed = true;
+            int n;     
+            if ((comboBox_Product.SelectedIndex <= -1) || product_already_selected())
             {
-                ProductName = ((Product)comboBox_Product.SelectedItem).ProductName,
-                ProductDescription = textBox_ProductDescription.Text,
-                Stock = Convert.ToInt32(textBox_ProductQuantity.Text),
-                SellPrice = Convert.ToDouble(textBox_ProductPrice.Text),
-                Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
-                Total = Convert.ToDouble(textBlock_ProductAmount.Text),
-                //Vat = Convert.ToDouble(textBlock_ProductAmount.Text) + (Convert.ToDouble(textBlock_ProductAmount.Text) * 0.19)
-            });
+                all_completed = false;
+                comboBox_Product_border.BorderBrush = Brushes.Red;
+                comboBox_Product_border.BorderThickness = new Thickness(1);
+            }
+            
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0))
+            {
+                all_completed = false;
+                textBox_ProductQuote.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
+            }
 
-            double NetTotal_TextBlock_var = 0;
-            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var + Convert.ToDouble(textBlock_ProductAmount.Text);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
-
+            return all_completed;
         }
 
-        private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
+        private void Btn_AddProduct(object sender, RoutedEventArgs e)
+        {
+            if (Check_AddProduct_CompletedValues())
+            {
+                ProductDataGrid.Items.Add(new Product
+                {
+                    idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
+                    ProductName = textBox_Product.Text,
+                    ProductDescription = textBox_ProductDescription.Text,
+                    SellPrice = Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')),
+                    OfferPrice = Convert.ToDouble(textBox_ProductQuote.Text.Replace('.', ','))
+
+                });
+
+              
+            }
+        }
+
+        private void Button_Click_remove_offer_from_grid(object sender, RoutedEventArgs e)
+        {
+            
+            ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
+        }
+
+        /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
+        public void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = (TextBox)sender;
+            tb.Text = string.Empty;
+            tb.GotFocus -= TextBox_GotFocus;
+        }
+
+        public void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
+        {
+            comboBox_Product.SelectedIndex = -1;
+            textBox_Product.Text = "";
+            textBox_ProductDescription.Text = "";
+            textBox_ProductPrice.Text = "";
+            textBox_ProductQuote.Text = "";
+            comboBox_Product_border.BorderThickness = new Thickness(0);
+            textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+            textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private bool Check_CustomerForm()
+        {
+            if (comboBox_customer.SelectedIndex <= -1)
+            {
+                comboBox_customer_border.BorderBrush = Brushes.Red;
+                comboBox_customer_border.BorderThickness = new Thickness(1);
+                return false;
+            }
+            return true;
+        }
+
+        private bool Check_DetailsForm()
+        {
+            if (issuedBy.Text.Equals(""))
+            {
+                issuedBy.BorderBrush = Brushes.Red;
+                return false;
+            }
+            return true;
+        }
+
+        private bool Has_Items_Selected()
+        {
+            if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
+            {
+                MessageBox.Show("You havent selectet any products");
+                return false;
+            }
+            return true;
+        }
+        
+        private Quote make_object_Quote()
+        {
+            Quote myquote;
+            myquote = new Quote();
+            myquote.customer = ((Customer)comboBox_customer.SelectedItem);           
+            myquote.products = ProductDataGrid.Items.OfType<Product>().ToList();
+            myquote.idQuote = Int32.Parse(textBox_idQuote.Text);          
+            myquote.createdDate = invoiceDate.SelectedDate.Value.Date;
+            myquote.issuedBy = issuedBy.Text;
+            return myquote;
+        }             
+
+        private void Btn_Complete_Click(object sender, RoutedEventArgs e)
+        {
+            bool ALL_VALUES_OK = true;
+            if (!Check_CustomerForm()) ALL_VALUES_OK = false;
+            if (!Check_DetailsForm()) ALL_VALUES_OK = false;
+            if (!Has_Items_Selected()) ALL_VALUES_OK = false;
+            if (ALL_VALUES_OK) InvoiceViewModel.Send_Quote_to_DB(make_object_Quote());
+        }
+
+        private void Clear_Customer()
+        {
+            comboBox_customer.SelectedIndex = -1;
+            textBox_Customer.Text = "";
+            textBox_Address.Text = "";
+            textBox_Contact_Details.Text = "";
+            textBox_Email_Address.Text = "";
+        }
+
+        private void Clear_Details()
+        {
+            issuedBy.Text = "";
+            issuedBy.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void Clear_ProductGrid()
+        {
+            ProductDataGrid.Items.Clear();
+            
+        }
+
+        private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
+        {
+            comboBox_customer_border.BorderThickness = new Thickness(0);
+            Btn_clearProduct_Click(new object(), new RoutedEventArgs());
+            Clear_Customer();
+            Clear_Details();
+            Clear_ProductGrid();
+            Refresh_DB_data = true;
+            load();                       
+        }
+
+        private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            issuedBy.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void textBox_Product_TextChanged(object sender, TextChangedEventArgs e)
         {
 
-            Product CurrentCell_Product = (Product)(invoiceDataGrid2.CurrentCell.Item);
-            double NetTotal_TextBlock_var = 0;
-            NetTotal_TextBlock_var = Convert.ToDouble(NetTotal_TextBlock.Text);
-            NetTotal_TextBlock_var = NetTotal_TextBlock_var - Convert.ToDouble(CurrentCell_Product.Total);
-            NetTotal_TextBlock.Text = NetTotal_TextBlock_var.ToString();
-            Vat_TextBlock.Text = (NetTotal_TextBlock_var * 0.19).ToString();
-            TotalAmount_TextBlock.Text = (NetTotal_TextBlock_var + (NetTotal_TextBlock_var * 0.19)).ToString();
-            invoiceDataGrid2.Items.Remove(invoiceDataGrid2.CurrentCell.Item);
+        }
+
+        private void textBox_ProductStock_TextChanged(object sender, TextChangedEventArgs e)
+        {
 
         }
+
+        private void textBox_ProductQuote_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        /*
+        public void loadOrder(Order order)
+        {
+            Btn_clearAll_Click(null, null);
+            if (order != null)
+            {
+                // Customer details                                
+                comboBox_customer.SelectedValue = order.customer.CustomerName;
+                textBox_Customer.Text = order.customer.CustomerName;
+                textBox_Contact_Details.Text = order.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = order.customer.Email;
+                textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
+
+                // Invoice details
+                NetTotal_TextBlock.Text = order.cost.ToString("C");
+                Vat_TextBlock.Text = order.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
+
+                // Invoice products        
+                for (int i = 0; i < order.products.Count; i++)
+                {
+                    ProductDataGrid.Items.Add(new Product
+                    {
+                        idProduct = order.products[i].idProduct,
+                        ProductName = order.products[i].ProductName,
+                        ProductDescription = order.products[i].ProductDescription,
+                        Stock = order.products[i].Stock,
+                        SellPrice = order.products[i].SellPrice,
+                        Quantity = order.products[i].Quantity,
+                        Total = order.products[i].Total,
+                        Vat = order.products[i].Vat
+                    });
+                }
+            }
+        }*/
     }
 }
