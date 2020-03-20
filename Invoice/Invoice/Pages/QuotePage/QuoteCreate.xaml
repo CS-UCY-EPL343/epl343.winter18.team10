@@ -51,7 +51,7 @@
 
 
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Quote" VerticalAlignment="Top" Width="364" FontSize="40"/>
             <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="22,340,0,0" VerticalAlignment="Top" Width="1427">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>

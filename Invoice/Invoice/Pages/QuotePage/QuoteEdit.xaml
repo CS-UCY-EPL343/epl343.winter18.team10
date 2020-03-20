@@ -43,11 +43,11 @@
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
-                <Button Content="Load Invoice" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Left" Margin="135,194,0,0" VerticalAlignment="Top" Width="120" Height="32" Click="Btn_Load_Invoice"/>
+                <Button Content="Load Quote" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Left" Margin="135,194,0,0" VerticalAlignment="Top" Width="120" Height="32" Click="Btn_Load_Invoice"/>
 
 
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Edit Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Edit Quote" VerticalAlignment="Top" Width="364" FontSize="40"/>
             <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="22,340,0,0" VerticalAlignment="Top" Width="1427">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
