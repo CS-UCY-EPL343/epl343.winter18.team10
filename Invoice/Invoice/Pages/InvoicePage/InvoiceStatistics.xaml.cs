@@ -20,16 +20,16 @@ using System.Windows.Shapes;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace InvoiceX.Pages.ProductPage
+namespace InvoiceX.Pages.InvoicePage
 {
     /// <summary>
     /// Interaction logic for ProductView.xaml
     /// </summary>
-    public partial class ProductStatistics : Page
+    public partial class InvoiceStatistics : Page
     {
         ProductViewModel prodViewModel;
 
-        public ProductStatistics()
+        public InvoiceStatistics()
         {
             InitializeComponent();
             load();
@@ -38,65 +38,41 @@ namespace InvoiceX.Pages.ProductPage
         public void load()
         {
             prodViewModel = new ProductViewModel();
-            productComboBox.ItemsSource = prodViewModel.ProductList;
-            productComboBox.DisplayMemberPath = "ProductName";
-            productComboBox.SelectedValuePath = "ProductName";
         }
 
 
 
         private void BtnSelectProduct_Click(object sender, RoutedEventArgs e)
         {
-            ChartValues<int> total = new ChartValues<int>();
             ChartValues<float> totalSales = new ChartValues<float>();
-
-            ChartValues<int> totalLastYear = new ChartValues<int>();
             ChartValues<float> totalSalesLastYear = new ChartValues<float>();
-
-            Product selectedProduct = (Product)productComboBox.SelectedItem;
+            
             System.DateTime moment = DateTime.Now;
 
-
-            for (int i= 1; i <= 12; i++)
+            for (int i = 1; i <= 12; i++)
             {
-                total.Add(ProductViewModel.getProductCount(selectedProduct.idProduct, i,moment.Year));
-                totalSales.Add(ProductViewModel.getProductSales(selectedProduct.idProduct, i,moment.Year));
-                Console.WriteLine(moment.Year);
-                totalLastYear.Add(ProductViewModel.getProductCount(selectedProduct.idProduct, i, moment.Year-1));
-                totalSalesLastYear.Add(ProductViewModel.getProductSales(selectedProduct.idProduct, i, moment.Year-1));
+                totalSales.Add(InvoiceViewModel.getTotalSalesMonthYear(i, moment.Year));
+                totalSalesLastYear.Add(InvoiceViewModel.getTotalSalesMonthYear(i, moment.Year - 1));
 
             }
+
+
             SeriesCollection = new SeriesCollection
             {
               
-                new LiveCharts.Wpf.ColumnSeries
+                new LiveCharts.Wpf.LineSeries
                 {
                     Title = "Total Sales",
                     Values = totalSales
                 },
-                new LiveCharts.Wpf.ColumnSeries
+                new LiveCharts.Wpf.LineSeries
                 {
                     Title = "Last Year Sales",
                     Values = totalSalesLastYear
                 },
             };
-            SeriesCollection2 = new SeriesCollection
-            {
-                 new LiveCharts.Wpf.ColumnSeries
-                {
-                    Title = "Total Products",
-                    Values =total
-                },
-                new LiveCharts.Wpf.ColumnSeries
-                {
-                    Title = "Last Year Total Products",
-                    Values =totalLastYear
-                },
 
-
-            };
             YFormatter = value => value.ToString("C");
-            YFormatter2 = value => value.ToString();
 
             DataContext = this;
 

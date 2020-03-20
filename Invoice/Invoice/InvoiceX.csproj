@@ -154,11 +154,17 @@
     <Compile Include="Pages\CustomerPage\CustomerView.xaml.cs">
       <DependentUpon>CustomerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\CustomerPage\CustomerStatistics.xaml.cs">
+      <DependentUpon>CustomerStatistics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InvoicePage\InvoiceEdit.xaml.cs">
       <DependentUpon>InvoiceEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\InvoicePage\InvoiceStatistics.xaml.cs">
+      <DependentUpon>InvoiceStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\OrderPage\OrderEdit.xaml.cs">
       <DependentUpon>OrderEdit.xaml</DependentUpon>
@@ -180,6 +186,9 @@
     </Compile>
     <Compile Include="Pages\ProductPage\ProductCreate.xaml.cs">
       <DependentUpon>ProductCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ProductPage\ProductStatistics.xaml.cs">
+      <DependentUpon>ProductStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\QuotePage\QuoteEdit.xaml.cs">
       <DependentUpon>QuoteEdit.xaml</DependentUpon>
@@ -216,6 +225,9 @@
     </Compile>
     <Compile Include="Pages\QuotePage\QuoteViewAll.xaml.cs">
       <DependentUpon>QuoteViewAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ReceiptPage\ReceiptStatistics.xaml.cs">
+      <DependentUpon>ReceiptStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ReceiptPage\ReceiptEdit.xaml.cs">
       <DependentUpon>ReceiptEdit.xaml</DependentUpon>
@@ -264,11 +276,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\CustomerPage\CustomerStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\InvoicePage\InvoiceStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\OrderPage\OrderEdit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\OrderPage\OrderCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ProductPage\ProductStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -291,6 +315,10 @@
     <Page Include="Pages\QuotePage\QuoteViewAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ReceiptPage\ReceiptStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\ReceiptPage\ReceiptEdit.xaml">
       <Generator>MSBuild:Compile</Generator>

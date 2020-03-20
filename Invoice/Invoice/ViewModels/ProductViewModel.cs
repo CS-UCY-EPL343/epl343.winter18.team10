@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.DataVisualization.Charting;
 using System.Windows;
 using InvoiceX.Models;
 using MySql.Data.MySqlClient;
@@ -248,7 +249,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-        public static int getProductCount(int productId, int months)
+        public static int getProductCount(int productId, int months,int year)
         {
             MySqlConnection conn;
             int total=0 ;
@@ -264,10 +265,15 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters["@productId"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@months", SqlDbType.Int).Value = months;
                 cmd.Parameters["@months"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();
-                total = int.Parse(total2);
+                int total3 = 0;
+                if (int.TryParse(total2,out total3)) { 
+                    total = total3;
+                }
                 conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -276,7 +282,44 @@ namespace InvoiceX.ViewModels
             }
             return total;
         }
+        public static float getProductSales(int productId, int months,int year)
+        {
+            MySqlConnection conn;
+            float total = 0;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("getTotalProductSales", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
+                cmd.Parameters["@productId"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@months", SqlDbType.Int).Value = months;
+                cmd.Parameters["@months"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                String total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3))
+                {
+                    total = total3;
+                }
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
+        }
+
     }
 }
+
+
 
 

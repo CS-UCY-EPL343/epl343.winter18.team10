@@ -23,13 +23,14 @@ namespace InvoiceX.Pages.CustomerPage
         CustomerView viewPage;
         CustomerCreate createPage;
         CustomerEdit editPage;
-
+        CustomerStatistics statisticsPage;
         public CustomerMain()
         {
             InitializeComponent();
             viewPage = new CustomerView(this);
             createPage = new CustomerCreate();
             editPage = new CustomerEdit();
+            statisticsPage = new CustomerStatistics();
             btnView_Click(new object(), new RoutedEventArgs());
         }
 
@@ -48,6 +49,13 @@ namespace InvoiceX.Pages.CustomerPage
             customerPage.Content = createPage;
             
         }
+        private void btnStatistics_Click(object sender, RoutedEventArgs e)
+        {
+            resetAllBtnStyles();
+            btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
+            customerPage.Content = statisticsPage;
+
+        }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)
         {
@@ -59,7 +67,7 @@ namespace InvoiceX.Pages.CustomerPage
 
         private void resetAllBtnStyles()
         {
-            btnEdit.Style = btnView.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
+            btnEdit.Style = btnView.Style = btnStatistics.Style = btnCreate.Style = FindResource("ButtonStyle") as Style;
         }
 
         public void editCustomer(int custID)

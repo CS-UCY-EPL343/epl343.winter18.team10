@@ -1094,8 +1094,41 @@ namespace InvoiceX.ViewModels
         }
         /*Quote finish-----------------------------------------------------------------------------------------------------*/
 
+        public static float getTotalSalesMonthYear(int months, int year)
+        {
+            MySqlConnection conn;
+            float total = 0;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand("getSalesByMonthYear", conn);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year "].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                String total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3))
+                {
+                    total = total3;
+                }
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return total;
+        }
 
     }
+
 
 }
 
