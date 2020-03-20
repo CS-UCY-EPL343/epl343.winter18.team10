@@ -78,7 +78,7 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             bool all_completed = true;
             int n;     
-            if ((comboBox_PaymentMethod.SelectedIndex <= -1)|| paymenttype_already_selected())
+            if ((comboBox_PaymentMethod.SelectedIndex <= -1))//|| paymenttype_already_selected()
             {
                 all_completed = false;
                 comboBox_paymentMethod_border.BorderBrush = Brushes.Red;
@@ -120,7 +120,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 {                   
                     //idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
                     amount = float.Parse(textBox_amount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "null" : textBox_paymentNum.Text),
+                    paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
                     paymentDate = PaymentDate.SelectedDate.Value.Date,
                     paymentMethod = paymentenum
 
