@@ -181,8 +181,8 @@
     <Compile Include="Pages\ProductPage\ProductCreate.xaml.cs">
       <DependentUpon>ProductCreate.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ProductPage\ProductStatistics.xaml.cs">
-      <DependentUpon>ProductStatistics.xaml</DependentUpon>
+    <Compile Include="Pages\QuotePage\QuoteEdit.xaml.cs">
+      <DependentUpon>QuoteEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\QuotePage\QuoteCreate.xaml.cs">
       <DependentUpon>QuoteCreate.xaml</DependentUpon>
@@ -207,9 +207,6 @@
     </Compile>
     <Compile Include="Pages\ProductPage\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\QuotePage\QuoteEdit.xaml.cs">
-      <DependentUpon>QuoteEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\QuotePage\QuoteMain.xaml.cs">
       <DependentUpon>QuoteMain.xaml</DependentUpon>
@@ -275,13 +272,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ProductPage\ProductStatistics.xaml">
+    <Page Include="Pages\QuotePage\QuoteEdit.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\QuotePage\QuoteEdit.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="Pages\QuotePage\QuoteCreate.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\QuotePage\QuoteMain.xaml">
       <SubType>Designer</SubType>
@@ -362,10 +359,6 @@
     <Page Include="Pages\ProductPage\ProductCreate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\QuotePage\QuoteCreate.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\InvoicePage\InvoiceCreate.xaml">
       <SubType>Designer</SubType>

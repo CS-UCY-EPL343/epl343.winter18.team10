@@ -906,6 +906,195 @@ namespace InvoiceX.ViewModels
 
         /*Order finish-----------------------------------------------------------------------------------------------------*/
 
+        /*Quote Start-----------------------------------------------------------------------------------------------------*/
+        public static void Send_Quote_to_DB(Quote quote)
+        {
+
+            MySqlConnection conn;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert invoice 
+                string query = "INSERT INTO Quote (idQuote, idCustomer, CreatedDate, IssuedBy) Values (@idQuote, @idCustomer, @CreatedDate, @IssuedBy)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idQuote", quote.idQuote);
+                    cmd.Parameters.AddWithValue("@idCustomer", quote.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@CreatedDate", quote.createdDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", quote.issuedBy);
+                  
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO QuoteProduct (idQuote, idProduct, Price) VALUES ");
+                List<string> Rows = new List<string>();
+
+                foreach (Product p in quote.products)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}')",
+                        MySqlHelper.EscapeString(quote.idQuote.ToString()),
+                        MySqlHelper.EscapeString(p.idProduct.ToString()),                        
+                        MySqlHelper.EscapeString(p.OfferPrice.ToString().Replace(",", "."))
+                       ));
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Quote was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+
+        public static void Send_Quote_to_DB(Quote quote, Quote old_quote)
+        {
+            MySqlConnection conn;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+
+                //update Order 
+                string query = "UPDATE Quote SET idQuote=@idQuote, CreatedDate=@CreatedDate, IssuedBy=@IssuedBy  WHERE idQuote=@idQuote ";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idQuote", quote.idQuote);
+                    cmd.Parameters.AddWithValue("@idCustomer", quote.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@CreatedDate", quote.createdDate);
+                    cmd.Parameters.AddWithValue("@IssuedBy", quote.issuedBy);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+
+                //delete old Order products
+                string query_delete_invoiceProducts = "DELETE from QuoteProduct WHERE idQuote=@idQuote;";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idQuote", old_quote.idQuote);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO QuoteProduct (idQuote, idProduct, Price) VALUES ");
+                List<string> Rows = new List<string>();
+
+                foreach (Product p in quote.products)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}')",
+                        MySqlHelper.EscapeString(quote.idQuote.ToString()),
+                        MySqlHelper.EscapeString(p.idProduct.ToString()),
+                        MySqlHelper.EscapeString(p.OfferPrice.ToString().Replace(",", "."))
+                       ));
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Quote was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+        public static int ReturnLatestQuoteID()
+        {
+            //int id_return = 0;
+            MySqlConnection conn;
+
+            try
+            {
+                int idInvoice;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idQuote FROM Quote ORDER BY idQuote DESC LIMIT 1", conn);
+                conn.Open();
+                // id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idInvoice = Convert.ToInt32(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idInvoice = 0;
+
+                conn.Close();
+                return idInvoice;
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return 0;
+        }
+
+        public static bool QuoteID_exist_or_not(int id)
+        {
+            //int id_return = 0;
+            MySqlConnection conn;
+
+            try
+            {
+                int idInvoice;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idQuote FROM Quote where idQuote=" + id.ToString(), conn);
+                conn.Open();
+                // id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idInvoice = Convert.ToInt32(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idInvoice = 0;
+
+                conn.Close();
+                return ((idInvoice == 0) ? false : true);
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return false;
+        }
+        /*Quote finish-----------------------------------------------------------------------------------------------------*/
+
+
     }
 
 }

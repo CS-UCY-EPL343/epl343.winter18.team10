@@ -3,12 +3,110 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:InvoiceX.Pages.QuotePage"
+      xmlns:ViewModels="clr-namespace:InvoiceX.ViewModels"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="950" d:DesignWidth="1725"
       Title="QuoteEdit">
 
-    <Grid>
-        
+    <Page.Resources>
+
+    </Page.Resources>
+
+    <Grid x:Name="createTab" Background="White" Visibility="Visible">
+        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="429" VerticalAlignment="Top" Width="1725">
+            <Grid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </Grid.Effect>
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0" VerticalAlignment="Top" Width="584">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
+                <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,42,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,154,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True"  />
+                <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,210,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="178,21,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="178,77,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="178,133,0,0" TextWrapping="Wrap" Text="Contact Details" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="178,189,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
+            </Grid>
+
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0" VerticalAlignment="Top" Width="584">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
+                <TextBlock HorizontalAlignment="Left" Margin="135,18,0,0" TextWrapping="Wrap" Text="Quote No." VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Quote Date" VerticalAlignment="Top"/>
+                <TextBox x:Name="textBox_idQuote" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"   />
+                <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
+                <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
+                <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30"  IsReadOnly="True"/>
+                <Button Content="Load Quote" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Left" Margin="135,194,0,0" VerticalAlignment="Top" Width="120" Height="32" Click="Btn_Load_Invoice"/>
+
+
+            </Grid>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Edit Quote" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72" Margin="22,340,0,0" VerticalAlignment="Top" Width="1427">
+                <Grid.Effect>
+                    <DropShadowEffect Opacity="0.16"/>
+                </Grid.Effect>
+                <TextBlock HorizontalAlignment="Left" Margin="10,11,0,0" TextWrapping="Wrap" Text="Select Product"  VerticalAlignment="Top"/>
+                <Border  x:Name="comboBox_Product_border" Margin="10,31,1217,11" Width="200"  Height="30" >
+                    <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"  Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock  Text="{Binding ProductName }"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Border>
+                <TextBox   x:Name="textBox_Product"  HorizontalAlignment="Left" Height="30" Margin="218,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="200"  IsReadOnly="True"/>
+                <TextBox   x:Name="textBox_ProductDescription"  HorizontalAlignment="Left" Height="30" Margin="423,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="596" />
+                <TextBox   x:Name="textBox_ProductPrice"  IsReadOnly="true"     HorizontalAlignment="Left" Height="30" Margin="1024,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"  RenderTransformOrigin="0.85,-2.767"/>
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1266,31,0,11" VerticalAlignment="Stretch" Width="116" Click="Btn_AddProduct" Height="Auto" Style="{DynamicResource CommonButtonStyle}" />
+                <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Margin="1024,10,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1387,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{DynamicResource CommonButtonStyle}" />
+                <TextBlock HorizontalAlignment="Left" Margin="1145,11,0,0" TextWrapping="Wrap" Text="Offer Price" VerticalAlignment="Top"/>
+                <TextBox   x:Name="textBox_ProductQuote"       HorizontalAlignment="Left" Height="30" Margin="1145,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"  RenderTransformOrigin="0.85,-2.767" TextChanged="textBox_ProductQuote_TextChanged"/>
+            </Grid>
+
+        </Grid>
+
+
+        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None"  >
+            <DataGrid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </DataGrid.Effect>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header = "ITEMS " Binding="{Binding ProductName}" />
+                <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
+                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
+                <DataGridTextColumn Header = "OFFER PRICE" Binding="{Binding OfferPrice, StringFormat=C}" />
+
+                <DataGridTemplateColumn Header = "REMOVE">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="X" Click="Button_Click_remove_offer_from_grid"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
+
+
+        <Grid/>
+
+
     </Grid>
+    <!-- Create Invoice Ends Here -->
 </Page>

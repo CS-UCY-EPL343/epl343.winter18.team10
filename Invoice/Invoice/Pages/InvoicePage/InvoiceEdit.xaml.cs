@@ -22,6 +22,7 @@ namespace InvoiceX.Pages.InvoicePage
     {
         ProductViewModel productView;
         bool invoice_loaded = false;
+        Invoice oldInvoice;
 
         public InvoiceEdit()
         {
@@ -235,7 +236,7 @@ namespace InvoiceX.Pages.InvoicePage
                 if (int.TryParse(textBox_invoiceNumber.Text, out int n))
                 {
                     invoiceId = int.Parse(textBox_invoiceNumber.Text);
-                    InvoiceViewModel.edit_Invoice(make_object_Invoice(), InvoiceViewModel.getInvoiceById(invoiceId));
+                    InvoiceViewModel.edit_Invoice(make_object_Invoice(), oldInvoice);
                 }
             }
         }
@@ -298,39 +299,45 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void loadInvoice(int invoiceId)
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
-            if (invoice != null)
+            oldInvoice = InvoiceViewModel.getInvoiceById(invoiceId);
+            if (oldInvoice != null)
             {
 
                 // Customer details
-                textBox_Customer.Text = invoice.customer.CustomerName;
-                textBox_Contact_Details.Text = invoice.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = invoice.customer.Email;
-                textBox_Address.Text = invoice.customer.Address + ", " + invoice.customer.City + ", " + invoice.customer.Country;
+                textBox_Customer.Text = oldInvoice.customer.CustomerName;
+                textBox_Contact_Details.Text = oldInvoice.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = oldInvoice.customer.Email;
+                textBox_Address.Text = oldInvoice.customer.Address + ", " + oldInvoice.customer.City + ", " + oldInvoice.customer.Country;
 
                 // Invoice details
-                textBox_invoiceNumber.Text = invoice.idInvoice.ToString();
-                invoiceDate.SelectedDate = invoice.createdDate;
-                dueDate.SelectedDate = invoice.dueDate;
-                issuedBy.Text = invoice.issuedBy;
-                NetTotal_TextBlock.Text = invoice.cost.ToString("C");
-                Vat_TextBlock.Text = invoice.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
-
+                textBox_invoiceNumber.Text = oldInvoice.idInvoice.ToString();
+                invoiceDate.SelectedDate = oldInvoice.createdDate;
+                dueDate.SelectedDate = oldInvoice.dueDate;
+                issuedBy.Text = oldInvoice.issuedBy;
+                NetTotal_TextBlock.Text = oldInvoice.cost.ToString("C");
+                Vat_TextBlock.Text = oldInvoice.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = oldInvoice.totalCost.ToString("C");
+                /*
                 // Invoice products        
-                for (int i = 0; i < invoice.products.Count; i++)
+                for (int i = 0; i < oldInvoice.products.Count; i++)
                 {
                     ProductDataGrid.Items.Add(new Product
                     {
-                        idProduct = invoice.products[i].idProduct,
-                        ProductName = invoice.products[i].ProductName,
-                        ProductDescription = invoice.products[i].ProductDescription,
-                        Stock = invoice.products[i].Stock,
-                        SellPrice = invoice.products[i].SellPrice,
-                        Quantity = invoice.products[i].Quantity,
-                        Total = invoice.products[i].Total,
-                        Vat = invoice.products[i].Vat
+                        idProduct = oldInvoice.products[i].idProduct,
+                        ProductName = oldInvoice.products[i].ProductName,
+                        ProductDescription = oldInvoice.products[i].ProductDescription,
+                        Stock = oldInvoice.products[i].Stock,
+                        SellPrice = oldInvoice.products[i].SellPrice,
+                        Quantity = oldInvoice.products[i].Quantity,
+                        Total = oldInvoice.products[i].Total,
+                        Vat = oldInvoice.products[i].Vat
                     });
+                }*/
+                
+                foreach (Product p in oldInvoice.products)
+                {
+
+                    ProductDataGrid.Items.Add(p);
                 }
             }
             else

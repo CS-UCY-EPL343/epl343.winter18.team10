@@ -48,7 +48,7 @@ namespace InvoiceX.Pages.QuotePage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             quotePage.Content = createpage;
-            //createpage.load();
+            createpage.load();
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -63,7 +63,7 @@ namespace InvoiceX.Pages.QuotePage
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
             quotePage.Content = editpage;
-            //editpage.load();
+            editpage.load();
         }
 
         private void resetAllBtnStyles()

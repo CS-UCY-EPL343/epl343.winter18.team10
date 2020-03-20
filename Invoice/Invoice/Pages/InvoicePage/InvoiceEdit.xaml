@@ -73,7 +73,7 @@
                 <TextBox   x:Name="textBox_ProductPrice"       HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767"/>
                 <TextBox x:Name="textBox_ProductVat"         HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True"/>
                 <TextBox x:Name="textBox_ProductTotal"    HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True"/>
-                <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,11" VerticalAlignment="Stretch" Width="116" Click="Btn_AddProduct" Height="Auto"  Style="{StaticResource ButtonStyle_Complete}" />
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,11" VerticalAlignment="Stretch" Width="116" Click="Btn_AddProduct" Height="Auto" Style="{DynamicResource CommonButtonStyle}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1024,11,0,0" TextWrapping="Wrap" Text="Stock" VerticalAlignment="Top"/>
@@ -82,7 +82,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="1295,11,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" RenderTransformOrigin="0.418,1.734"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1350,11,0,0" TextWrapping="Wrap" Text="Total" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1335,39,0,0" TextWrapping="Wrap" Text="%" VerticalAlignment="Top" Width="12" Height="17"/>
-                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{StaticResource ButtonStyle_X}" />
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click" Style="{DynamicResource CommonButtonStyle}" />
             </Grid>
 
         </Grid>
