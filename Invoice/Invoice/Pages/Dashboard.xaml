@@ -112,54 +112,27 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
             </Canvas>
             <Border  Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5" CornerRadius="30"  />
         </Canvas>
-        <TextBlock  Text="OUTSTANDING ORDERS(tOTAL: 9)" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="10,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,432,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Collabee Private Co." TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,451,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <TextBlock  Text="OUTSTANDING ORDERS(TOTAL:)" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="10,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <TextBlock  Text="DUE" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="596,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
         <TextBlock  Text="CREATED" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="408,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,501,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Wed, 25 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,520,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,522,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,570,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Target" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,589,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Tue, 24 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,589,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,591,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Cambr Card" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,520,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Border  Width="54" Height="54" BorderBrush="#ff707070" Margin="29,436,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,639,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Canvas  Width="39" Height="28" Margin="36,514,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Canvas  Width="39" Height="28" Canvas.Left="0" Canvas.Top="0" >
-                <Path  Width="29" Height="21" Stretch="uniform" Data="M 29.91716194152832 16.8164005279541 L 29.91716194152832 31.19091606140137 C 29.91716194152832 33.04169845581055 28.41654396057129 34.54232025146484 26.56575775146484 34.54232025146484 L 14.95858097076416 34.59059143066406 L 11.425537109375 34.54232025146484 L 8.159224510192871 34.59059143066406 L 3.351401805877686 34.59059143066406 C 1.500617504119873 34.59059143066406 1.473079702662972e-08 33.0899772644043 1.473079702662972e-08 31.23918724060059 L 1.473079702662972e-08 16.86467552185059 C 1.473079702662972e-08 15.01389217376709 1.500617504119873 13.51327514648438 3.351401805877686 13.51327514648438 L 26.56507873535156 13.46499824523926 C 28.41654396057129 13.46500110626221 29.91716194152832 14.96562004089355 29.91716194152832 16.8164005279541 Z" Fill="#ff1dc6ac" Stroke="#ff707070" Canvas.Left="0" Canvas.Top="7.47930908203125"  />
-                <Path  Width="29" Height="23" Stretch="uniform" Data="M 40.56575775146484 2.512595653533936 L 17.35208511352539 2.46500039100647 C 15.50061988830566 2.464999914169312 14 3.965617895126343 14 5.816401481628418 L 14 9.978969573974609 L 31.04666709899902 9.943610191345215 C 32.89744567871094 9.943610191345215 34.39806747436523 11.44422817230225 34.39806747436523 13.29569339752197 L 34.39806747436523 25.83438110351563 L 34.39806747436523 23.5905933380127 L 39.15761184692383 23.5905933380127 L 40.56575775146484 23.5905933380127 C 42.41654205322266 23.5905933380127 43.91716384887695 22.08997344970703 43.91716384887695 20.23919105529785 L 43.91716384887695 5.864677906036377 C 43.91716384887695 4.013213634490967 42.41654205322266 2.512595653533936 40.56575775146484 2.512595653533936 Z" Fill="#ffffd179" Stroke="#ff707070" Canvas.Left="9.519088745117188" Canvas.Top="0"  />
-                <Border  Width="7" Height="2" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="4.999755859375" Canvas.Top="18.99908447265625"  />
-                <Border  Width="19" Height="2" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="4.999755859375" Canvas.Top="22.99908447265625"  />
-            </Canvas>
-        </Canvas>
-        <Canvas  Width="42" Height="44" Margin="31,578,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Border  Width="82" Height="82" BorderBrush="#ff707070" Canvas.Left="-7" Canvas.Top="-12"  />
-            <Border  Width="42" Height="44" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
-        </Canvas>
-        <TextBlock  Text="Mon, 23 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Gramma Limited" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,658,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Border  Width="53" Height="53" BorderBrush="#ff707070" Margin="29,644,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Path  Width="686" Height="62" Stretch="uniform" Data="M 2.208996534347534 0 L 684.7890014648438 0 C 686.0089721679688 0 686.9978637695313 1.790861129760742 686.9978637695313 4 L 686.9978637695313 58 C 686.9978637695313 60.20913696289063 686.0089721679688 62 684.7890014648438 62 L 2.208996534347534 62 C 0.9890015721321106 62 0 60.20913696289063 0 58 L 0 4 C 0 1.790861129760742 0.9890015721321106 0 2.208996534347534 0 Z" Fill="#ffffffff" Stroke="#ffd5e3d6" Margin="10,708,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Mon, 23 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="408,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Thu, 26 Oct" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="596,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="Gramma Limited" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff000000" Margin="119,727,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Border  Width="53" Height="53" BorderBrush="#ff707070" Margin="29,713,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        
+        <DataGrid x:Name="quoteProductsGrid" HorizontalAlignment="Left" Height="363" Margin="10,427,0,0" VerticalAlignment="Top" Width="714" Style="{DynamicResource viewDataGridStyle}"
+                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
+            <DataGrid.Effect>
+                <DropShadowEffect Opacity="0.16"/>
+            </DataGrid.Effect>
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header = "Customer " Binding="{Binding ProductName}" />
+                <DataGridTextColumn Header = "Town" Binding="{Binding ProductDescription}" />
+                <DataGridTextColumn Header = "Date" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Due" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
         <Canvas  Width="16" Height="345" Margin="708,425,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Path  Width="16" Height="345" Stretch="uniform" Data="M 0 0 L 16 0 L 16 345 L 0 345 L 0 0 Z" Fill="#ffe6e6e6" Canvas.Left="0" Canvas.Top="0"  />
-            <Path  Width="16" Height="126" Stretch="uniform" Data="M 0 0 L 16 0 L 16 126.775032043457 L 0 126.775032043457 L 0 0 Z" Fill="#33000000" Canvas.Left="0" Canvas.Top="16"  />
-            <Canvas  Width="16" Height="16" Canvas.Left="0" Canvas.Top="329" >
-                <Path  Width="16" Height="16" Stretch="uniform" Data="M 0 0 L 16 0 L 16 16 L 0 16 L 0 0 Z" Stroke="#ff979797" Canvas.Left="0" Canvas.Top="0"  />
-                <TextBlock  Text="" TextAlignment="left" FontFamily="Segoe MDL2 Assets"  FontSize="8" Foreground="#ff000000" Canvas.Left="4" Canvas.Top="4"  />
-            </Canvas>
             <Canvas  Width="16" Height="16" Canvas.Left="0" Canvas.Top="0" >
                 <Border  Width="16" Height="16" BorderBrush="#ff979797" Canvas.Left="0" Canvas.Top="0"  />
-                <TextBlock  Text="" TextAlignment="left" FontFamily="Segoe MDL2 Assets"  FontSize="8" Foreground="#ff000000" Canvas.Left="4" Canvas.Top="4"  />
             </Canvas>
             <lvc:CartesianChart Series="{Binding SeriesCollection}"  LegendLocation="Bottom" Width="920" Height="300" AutomationProperties.IsRequiredForForm="True" Canvas.Left="-683" Canvas.Top="-373" >
                 <lvc:CartesianChart.AxisY>

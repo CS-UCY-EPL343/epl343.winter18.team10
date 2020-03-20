@@ -2,6 +2,8 @@
 using InvoiceX.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -102,23 +104,146 @@ namespace InvoiceX.Pages.ReceiptPage
         }
 
         #region PDF
+        void savePdf_Click(object sender, RoutedEventArgs e)
+        {
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Receipt"+ txtBox_receiptNumber.Text+".pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+
+        }
+
+        void printPdf_click(object sender, RoutedEventArgs e)
+        {
+            //Create and save the pdf
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Receipt.pdf";
+            pdfRenderer.Save(filename);
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
+        }
+
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
+            if (File.Exists("Receipt_temp.pdf"))
+            {
+                File.Delete("Receipt_temp.pdf");
+            }
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Receipt_temp.pdf";
+            pdfRenderer.Save(filename);
+
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
         }
 
-        private void printPdf_click(object sender, RoutedEventArgs e)
+        private MigraDoc.DocumentObjectModel.Document createPdf()
         {
+            Receipt receipt = ReceiptViewModel.getReceiptByID(int.Parse(txtBox_receiptNumber.Text));
+            Customer customer = receipt.customer;
+            string[] customerDetails = new string[6];
+            customerDetails[0] = customer.CustomerName;
+            customerDetails[1] = customer.Address + ", " +
+            customer.City + ", " + customer.Country;
+            customerDetails[2] = customer.PhoneNumber.ToString();
+            customerDetails[3] = customer.Email;
+            customerDetails[4] = customer.Balance.ToString();
+            customerDetails[5] = customer.idCustomer.ToString();
+            MessageBox.Show(customer.idCustomer.ToString());
 
-        }
+            string[] receiptDetails = new string[4];
+            receiptDetails[0] = txtBox_receiptNumber.Text;
+            receiptDetails[1] = txtBox_receiptDate.Text;
+            receiptDetails[2] = txtBox_issuedBy.Text;
+            receiptDetails[3] = receipt.totalAmount.ToString();
 
-        private void savePdf_Click(object sender, RoutedEventArgs e)
-        {
 
+            List<Payment> payments = receiptPaymentsGrid.Items.OfType<Payment>().ToList();
+
+
+            Forms.ReceiptForm receipt2 = new Forms.ReceiptForm("../../Forms/Receipt.xml", customerDetails, receiptDetails, payments);
+            MigraDoc.DocumentObjectModel.Document document = receipt2.CreateDocument();
+            return document;
         }
         #endregion
-
-        private void Btn_delete_Click(object sender, RoutedEventArgs e)
+    
+    private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_receiptNumber.Text, out int receiptID);
             if (txtBox_receiptNumber.IsReadOnly)
@@ -143,7 +268,12 @@ namespace InvoiceX.Pages.ReceiptPage
             {
                 MessageBox.Show("No receipt is loaded");
             }
-        }       
+        }
+
+        private void receiptPaymentsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
 
     }
 }
