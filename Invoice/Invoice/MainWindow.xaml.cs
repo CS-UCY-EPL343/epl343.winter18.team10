@@ -2,6 +2,7 @@
 using InvoiceX.Pages;
 using InvoiceX.Pages.CreditNotePage;
 using InvoiceX.Pages.CustomerPage;
+using InvoiceX.Pages.ExpensesPage;
 using InvoiceX.Pages.InvoicePage;
 using InvoiceX.Pages.OrderPage;
 using InvoiceX.Pages.ProductPage;
@@ -38,7 +39,7 @@ namespace InvoiceX
         private Page m_customer = new CustomerMain();
         private Page m_order;
         private Page m_quote = new QuoteMain();
-        //private Page m_expenses;
+        private Page m_expenses = new ExpensesMain();
         private Page m_settings = new SettingsMain();
 
         public MainWindow()
@@ -130,6 +131,7 @@ namespace InvoiceX
         private void BtnExpenses_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Expenses";
+            MainPage.Content = m_expenses;
             resetAllBtnStyles();
             btnExpenses.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
