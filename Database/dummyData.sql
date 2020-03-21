@@ -20,6 +20,9 @@ INSERT INTO `Order` (`idOrder`, `idCustomer`, `IssuedDate`, `ShippingDate`, `Cos
 
 INSERT INTO `OrderProduct` (`idOrder`, `idProduct`, `Quantity`, `Cost`, `VAT`) VALUES ('1', '1', '1', '10', '0.19');
 
+INSERT INTO `Expense` (`idExpense`, `CompanyName`, `Category`, `PhoneNumber`, `Description`, `InvoiceNo`, `CreatedDate`, `Cost`, `VAT`, `TotalCost`, `IsPaid`, `IssuedBy`) 
+			VALUES (NULL, 'Company', 'Chemicals', '99454545', 'smth about smth', '456', '2020-03-21', '100', '0.19', '119', '1', 'me');
+
 INSERT INTO `Receipt` (`idReceipt`, `idCustomer`, `Amount`, `IssuedBy`, `IssuedDate`) VALUES (NULL, '2', '250', 'me', '2020-02-27');
 
 INSERT INTO `Payment` (`idPayment`, `idReceipt`, `PaymentMethod`, `Amount`, `PaymentNumber`, `PaymentDate`) 

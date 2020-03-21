@@ -29,6 +29,7 @@ namespace InvoiceX.Pages.ExpensesPage
         {
             InitializeComponent();
             this.expensesMain = expensesMain;
+            cmbBoxStatus.SelectionChanged += new SelectionChangedEventHandler(CmbBoxStatus_SelectionChanged);
         }
 
         public void load()
@@ -43,7 +44,9 @@ namespace InvoiceX.Pages.ExpensesPage
 
             System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
 
-            if (dtPickerFrom.SelectedDate.HasValue || dtPickerTo.SelectedDate.HasValue || !string.IsNullOrWhiteSpace(txtBoxCustomer.Text))
+            if (dtPickerFrom.SelectedDate.HasValue || dtPickerTo.SelectedDate.HasValue 
+                || !string.IsNullOrWhiteSpace(txtBoxCompanyName.Text) || !string.IsNullOrWhiteSpace(txtBoxCategory.Text)
+                || cmbBoxStatus.SelectedIndex != 0)
             {
                 var filter = new Predicate<object>(customFilter);
                 Itemlist.Filter = filter;
@@ -57,17 +60,28 @@ namespace InvoiceX.Pages.ExpensesPage
             bool logic = true;
             DateTime? dateFrom = dtPickerFrom.SelectedDate;
             DateTime? dateTo = dtPickerTo.SelectedDate;
-            string customerName = txtBoxCustomer.Text;
+            string companyName = txtBoxCompanyName.Text;
+            string category = txtBoxCategory.Text;
+            int status = cmbBoxStatus.SelectedIndex;
 
             var item = obj as Expense;
             if (dateFrom.HasValue)
-                logic = logic & (item.createdDate.CompareTo(dateFrom.Value) >= 0);
+                logic &= (item.createdDate.CompareTo(dateFrom.Value) >= 0);
 
             if (dateTo.HasValue)
-                logic = logic & (item.createdDate.CompareTo(dateTo.Value) <= 0);
+                logic &= (item.createdDate.CompareTo(dateTo.Value) <= 0);
 
-            if (!string.IsNullOrWhiteSpace(customerName))
-                logic = logic & (item.customerName.ToLower().Contains(customerName.ToLower()));
+            if (!string.IsNullOrWhiteSpace(companyName))
+                logic &= (item.companyName.ToLower().Contains(companyName.ToLower()));
+
+            if (!string.IsNullOrWhiteSpace(category))
+                logic &= (item.category.ToLower().Contains(category.ToLower()));
+
+            if (status == 1)
+                logic &= item.isPaid;
+
+            if (status == 2)
+                logic &= !item.isPaid;
 
             return logic;
         }
@@ -91,11 +105,23 @@ namespace InvoiceX.Pages.ExpensesPage
             filterList();
         }
 
+        private void txtBoxCategory_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            filterList();
+        }
+
+        private void CmbBoxStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            filterList();
+        }
+
         private void btnClearFilters_Click(object sender, RoutedEventArgs e)
         {
             dtPickerFrom.SelectedDate = null;
             dtPickerTo.SelectedDate = null;
-            txtBoxCustomer.Clear();
+            txtBoxCompanyName.Clear();
+            txtBoxCategory.Clear();
+            cmbBoxStatus.SelectedIndex = 0;
             expensesDataGrid.ItemsSource = expViewModel.expensesList;
         }
 
@@ -122,5 +148,7 @@ namespace InvoiceX.Pages.ExpensesPage
                     break;
             }
         }
+
+       
     }
 }

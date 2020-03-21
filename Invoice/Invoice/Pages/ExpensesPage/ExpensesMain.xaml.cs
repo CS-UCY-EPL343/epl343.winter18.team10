@@ -81,9 +81,9 @@ namespace InvoiceX.Pages.ExpensesPage
             btnViewAll.Style = FindResource("ButtonStyle") as Style;
         }
 
-        public void viewExpense(int recID)
+        public void viewExpense(int expID)
         {
-            //viewPage.loadReceipt(recID);
+            viewPage.loadExpense(expID);
             btnView_Click(null, null);
         }
     }

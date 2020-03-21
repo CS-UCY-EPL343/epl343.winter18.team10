@@ -29,7 +29,6 @@ namespace InvoiceX.Pages.ReceiptPage
         public ReceiptView()
         {
             InitializeComponent();
-            InitializeComponent();
            
             TotalAmount_TextBlock.Text = (0).ToString("C");
             txtBox_receiptNumber.Focus();

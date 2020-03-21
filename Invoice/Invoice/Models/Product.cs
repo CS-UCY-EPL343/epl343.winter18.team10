@@ -17,7 +17,6 @@ namespace InvoiceX.Models
         public double SellPrice { get; set; }
         public float Vat { get; set; }
         public string Category { get; set; }
-        private bool _LowStock;
         public bool LowStock
         {
             get
@@ -27,7 +26,6 @@ namespace InvoiceX.Models
                 else
                     return true;
             }
-            set { _LowStock = value; }
         }
 
 

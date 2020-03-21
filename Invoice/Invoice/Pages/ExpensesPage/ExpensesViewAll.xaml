@@ -8,6 +8,51 @@
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="ExpensesViewAll">
 
+    <Page.Resources>
+        <Style x:Key="expenseStatusCellStyle" TargetType="{x:Type DataGridCell}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="auto"/>
+            <Setter Property="Width" Value="auto"/>
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="{x:Null}"/>
+                    <Setter Property="Foreground" Value="Black"/>
+                </Trigger>
+                <DataTrigger Binding="{Binding isPaid}" Value="False">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid>
+                                    <Ellipse Fill="Red" Width="10" Height="10" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="Unpaid" Margin="20,0,0,0" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding isPaid}" Value="True">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <Grid>
+                                    <Ellipse Fill="Green" Width="10" Height="10" HorizontalAlignment="Left"/>
+                                    <TextBlock Text="Paid" Margin="20,0,0,0" HorizontalAlignment="Right"/>
+                                </Grid>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    
     <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
             <Border.Effect>
@@ -20,14 +65,22 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBoxCustomer_TextChanged"/>
+            <TextBox x:Name="txtBoxCompanyName" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBoxCustomer_TextChanged"/>
             <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
             <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerTo_SelectedDateChanged"/>
-            <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <Button x:Name="btnClearFilters" Content="Clear Filters" Style="{DynamicResource CommonButtonStyle}"  HorizontalAlignment="Left" Margin="661,76,0,0" VerticalAlignment="Top" Width="145" Height="37" Click="btnClearFilters_Click"/>
+            <Label x:Name="label1_Copy" Content="By Company: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Button x:Name="btnClearFilters" Content="Clear Filters" Style="{DynamicResource CommonButtonStyle}"  HorizontalAlignment="Left" Margin="926,76,0,0" VerticalAlignment="Top" Width="145" Height="37" Click="btnClearFilters_Click"/>
+            <Label x:Name="label1_Copy1" Content="By Status: " HorizontalAlignment="Left" Margin="575,33,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <ComboBox x:Name="cmbBoxStatus" HorizontalAlignment="Left" Margin="671,37,0,0" VerticalAlignment="Top" Width="222" Height="30" >
+                <ComboBoxItem IsSelected="True" Content="All"/>
+                <ComboBoxItem Content="Paid"/>
+                <ComboBoxItem Content="Unpaid"/>
+            </ComboBox>
+            <TextBox x:Name="txtBoxCategory" HorizontalAlignment="Left" Height="37" Margin="671,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBoxCategory_TextChanged"/>
+            <Label x:Name="label1_Copy2" Content="By Category: " HorizontalAlignment="Left" Margin="547,79,0,0" VerticalAlignment="Top" FontSize="18"/>
         </Grid>
 
         <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
@@ -45,9 +98,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
                 <DataGridTextColumn Header = "Expense ID" Binding = "{Binding idExpense}" />
-                <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
-                <DataGridTextColumn Header = "Amount" Binding = "{Binding totalAmount, StringFormat=C}"/>
-                <DataGridTextColumn Header = "Status" Binding = "{Binding status}" />
+                <DataGridTextColumn Header = "Company" Binding = "{Binding companyName}" />
+                <DataGridTextColumn Header = "Category" Binding = "{Binding category}" />
+                <DataGridTextColumn Header = "Status" CellStyle="{StaticResource expenseStatusCellStyle}" />
+                <DataGridTextColumn Header = "Amount" Binding = "{Binding totalCost, StringFormat=C}"/>
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

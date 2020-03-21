@@ -44,7 +44,7 @@
 
 
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364" FontSize="40"><Run Text="View "/><Run Text="Receipt"/></TextBlock>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="364" Text="View Receipt" FontSize="40"/>
         </Grid>
 
         <DataGrid x:Name="receiptPaymentsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"

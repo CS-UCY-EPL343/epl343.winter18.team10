@@ -8,13 +8,21 @@ namespace InvoiceX.Models
 {
     public class Expense
     {
-        public DateTime createdDate { get; set; }
-        public string status { get; set; }
+        public string companyName { get; set; }
+        public string category { get; set; }
+        public int contactDetails { get; set; }
+        public string description { get; set; }
+
         public int idExpense { get; set; }
-        public string customerName { get; set; }
-        public Customer customer { get; set; }
+        public int invoiceNo { get; set; }
+        public DateTime createdDate { get; set; }
+        public float cost { get; set; }
+        public float VAT { get; set; }
+        public float totalCost { get; set; }
         public string issuedBy { get; set; }
-        public float totalAmount { get; set; }
+
+        public bool isPaid { get; set; }      
+
         public List<Payment> payments { get; set; }
     }
 }
