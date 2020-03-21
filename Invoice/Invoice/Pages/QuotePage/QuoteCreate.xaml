@@ -75,7 +75,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1024,10,0,0" TextWrapping="Wrap" Text="Price" VerticalAlignment="Top"/>
-                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1387,31,0,0" VerticalAlignment="Top" Width="26" Height="30" Click="Btn_clearProduct_Click"  Style="{DynamicResource CommonButtonStyle}" />
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1387,31,0,0" VerticalAlignment="Top" Click="Btn_clearProduct_Click"  Style="{DynamicResource RemoveButtonStyle}" />
                 <TextBox   x:Name="textBox_ProductQuote"       HorizontalAlignment="Left" Height="30" Margin="1145,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="116"  RenderTransformOrigin="0.85,-2.767" TextChanged="textBox_ProductQuote_TextChanged"/>
                 <TextBlock HorizontalAlignment="Left" Margin="1145,11,0,0" TextWrapping="Wrap" Text="Offer Price" VerticalAlignment="Top"/>
             </Grid>
@@ -101,7 +101,7 @@
                 <DataGridTemplateColumn Header = "REMOVE">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="X" Click="Button_Click_remove_offer_from_grid"/>
+                            <Button Content="X" Click="Button_Click_remove_offer_from_grid" Style="{DynamicResource RemoveButtonStyle}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

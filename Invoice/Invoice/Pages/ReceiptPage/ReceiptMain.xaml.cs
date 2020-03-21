@@ -25,6 +25,7 @@ namespace InvoiceX.Pages.ReceiptPage
         ReceiptCreate createPage;
         ReceiptEdit editPage;
         ReceiptStatistics statisticsPage;
+
         public ReceiptMain()
         {
             InitializeComponent();
@@ -51,14 +52,13 @@ namespace InvoiceX.Pages.ReceiptPage
             receiptPage.Content = createPage;
             createPage.load();
         }
+
         private void btnStatistics_Click(object sender, RoutedEventArgs e)
         {
             resetAllBtnStyles();
-            btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
+            btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
             receiptPage.Content = statisticsPage;
-            createPage.load();
         }
-
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
@@ -77,7 +77,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         private void resetAllBtnStyles()
         {
-            btnEdit.Style = btnView.Style = btnCreate.Style =btnStatistics.Style=
+            btnEdit.Style = btnView.Style = btnCreate.Style = btnStatistics.Style =
             btnViewAll.Style = FindResource("ButtonStyle") as Style;
         }
 

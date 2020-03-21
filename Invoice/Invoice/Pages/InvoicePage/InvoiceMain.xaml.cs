@@ -26,7 +26,7 @@ namespace InvoiceX.Pages.InvoicePage
             InitializeComponent();
             viewAllPage = new InvoiceViewAll(this);
             viewPage = new InvoiceView(this);
-            createpage = new InvoiceCreate();
+            createpage = new InvoiceCreate(this);
             editpage = new InvoiceEdit();
             invoiceStatistics = new InvoiceStatistics();
             btnViewAll_Click(null,null);
@@ -39,12 +39,12 @@ namespace InvoiceX.Pages.InvoicePage
             invoicePage.Content = viewAllPage;
             viewAllPage.load();
         }
+
         public void btnStatistics_Click(object sender, RoutedEventArgs e)
         {
             resetAllBtnStyles();
             btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
             invoicePage.Content = invoiceStatistics;
-
         }
 
         private void btnCreate_Click(object sender, RoutedEventArgs e)

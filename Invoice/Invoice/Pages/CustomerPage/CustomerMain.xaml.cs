@@ -24,6 +24,7 @@ namespace InvoiceX.Pages.CustomerPage
         CustomerCreate createPage;
         CustomerEdit editPage;
         CustomerStatistics statisticsPage;
+
         public CustomerMain()
         {
             InitializeComponent();
@@ -31,7 +32,7 @@ namespace InvoiceX.Pages.CustomerPage
             createPage = new CustomerCreate();
             editPage = new CustomerEdit();
             statisticsPage = new CustomerStatistics();
-            btnView_Click(new object(), new RoutedEventArgs());
+            btnView_Click(null, null);
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -54,7 +55,6 @@ namespace InvoiceX.Pages.CustomerPage
             resetAllBtnStyles();
             btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
             customerPage.Content = statisticsPage;
-
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

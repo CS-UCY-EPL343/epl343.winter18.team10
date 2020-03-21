@@ -147,11 +147,11 @@ namespace InvoiceX.ViewModels
             {
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM Quote WHERE QuoteID = " + quoteID, conn);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM QuoteProduct WHERE idQuote = " + quoteID, conn);
                 cmd.ExecuteNonQuery();
 
-                //cmd = new MySqlCommand("DELETE FROM Invoice WHERE idInvoice = " + quoteID, conn);
-                //cmd.ExecuteNonQuery();
+                cmd = new MySqlCommand("DELETE FROM Quote WHERE idQuote = " + quoteID, conn);
+                cmd.ExecuteNonQuery();
 
                 conn.Close();
             }

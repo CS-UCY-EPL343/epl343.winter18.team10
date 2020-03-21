@@ -25,6 +25,7 @@ namespace InvoiceX.Pages.ProductPage
         ProductCreate createPage;
         ProductEdit editPage;
         ProductStatistics statisticsPage;
+
         public ProductMain()
         {
             InitializeComponent();
@@ -47,14 +48,13 @@ namespace InvoiceX.Pages.ProductPage
             resetAllBtnStyles();
             btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
             productPage.Content = statisticsPage;
-
         }
+
         private void btnCreate_Click(object sender, RoutedEventArgs e)
         {
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
-            productPage.Content = createPage;
-           
+            productPage.Content = createPage;           
         }
 
         private void btnEdit_Click(object sender, RoutedEventArgs e)

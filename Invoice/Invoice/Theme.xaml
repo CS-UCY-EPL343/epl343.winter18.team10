@@ -155,9 +155,20 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <!--  Remove button style -->
+    <Style x:Key="RemoveButtonStyle" BasedOn="{StaticResource CommonButtonStyle}" TargetType="{x:Type Button}">
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+    </Style>
     <!--  All textboxes style -->
     <Style TargetType="{x:Type TextBox}">
         <Setter Property="TextWrapping" Value="Wrap" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5,0,0,0" />
+    </Style>
+    <!--  All comboboxes style -->
+    <Style TargetType="{x:Type ComboBox}">
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Padding" Value="5,0,0,0" />

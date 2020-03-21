@@ -308,7 +308,7 @@ namespace InvoiceX.ViewModels
         }
 
 
-        public static void Send_Ivoice_and_Products_to_DB(Invoice invoice)
+        public static void addInvoiceToDB(Invoice invoice)
         {
             MySqlConnection conn;
             
@@ -372,7 +372,6 @@ namespace InvoiceX.ViewModels
                 }
 
                 conn.Close();
-                MessageBox.Show("Invoice was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

@@ -163,6 +163,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
+
         public static float getTotalReceiptsMonthYear(int months, int year)
         {
             MySqlConnection conn;

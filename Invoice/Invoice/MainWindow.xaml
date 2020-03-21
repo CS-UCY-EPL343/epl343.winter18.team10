@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState = "Maximized"
         WindowStyle ="ThreeDBorderWindow"
-        Title="MainWindow" Height="1080" Width="1920">
+        Title="Eco-Bright" Height="1080" Width="1920">
 
     <Window.Resources>
         <Style x:Key="sideMenuBtnStyle" TargetType="Button">
