@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using InvoiceX.Forms;
+using InvoiceX.Models;
+using InvoiceX.ViewModels;
 using LiveCharts;
 using LiveCharts.Wpf;
 using MigraDoc.DocumentObjectModel;
@@ -31,16 +33,51 @@ namespace InvoiceX.Pages
             createChart2();
             invoicesCount.Text = ViewModels.InvoiceViewModel.get30DaysTotalInvoices();
             totalSales.Text = "€"+ ViewModels.InvoiceViewModel.get30DaysTotalSales();
-
+            loadOrderTable();
 
         }
 
+        public void loadOrderTable() {
+            OrderViewModel orderViewModel = new OrderViewModel();
+            //find the pending orders
+            List<Order> list = orderViewModel.orderList;
+            List<Order> list2 = new List<Order>();
+
+            for (int i=0; i < list.Count; i++)
+            {
+                if ((int)(list.ElementAt(i).status)==2)
+                {
+                    list2.Add(list.ElementAt(i));
+                }
+            }
+
+            var _itemSourceList = new CollectionViewSource() { Source = list2 };
+            System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
+
+            orderDataGrid.ItemsSource = Itemlist;
+
+        }
 
         void createChart1()
         {
+            double[] receipts = new double[12];
+            for (int i=0; i<12; i++)
+            {
+                receipts[i] = ViewModels.ReceiptViewModel.getTotalReceiptsMonthYear(i, DateTime.Now.Year);
+            }
+            ChartValues<double> totalReceipt = new ChartValues<double>();
+            totalReceipt.AddRange(receipts);
+
+            double[] invoices = new double[12];
+            for (int i = 0; i < 12; i++)
+            {
+                invoices[i] = ViewModels.InvoiceViewModel.getTotalSalesMonthYear(i, DateTime.Now.Year);
+            }
+
             ChartValues<double> total = new ChartValues<double>();
-            total.AddRange(ViewModels.InvoiceViewModel.getTotalAmountByMonth());
+            total.AddRange(invoices);
             SeriesCollection = new SeriesCollection
+
             {
                 new LineSeries
                 {
@@ -50,7 +87,7 @@ namespace InvoiceX.Pages
                 new LineSeries
                 {
                     Title = "Receipts",
-                    Values = new ChartValues<double> { 6, 7, 3, 4 ,6,10,20,30,40,50,60,10 },
+                    Values = totalReceipt,
                     PointGeometry = null
                 },
             };
@@ -61,17 +98,38 @@ namespace InvoiceX.Pages
         }
         void createChart2()
         {
+            var today = DateTime.Today;
+            var month = new DateTime(today.Year, today.Month, 1);
+            var lastMonth = month.AddMonths(-4);
+            double[] invoices = new double[4];
+            double[] receipts = new double[4];
+            Labels2 = new string[4];
+
+            for (int i = 0; i < 4; i++)
+            {
+                Console.WriteLine(lastMonth);
+                receipts[i] = ViewModels.ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year);
+                invoices[i] = ViewModels.InvoiceViewModel.getTotalSalesMonthYear(lastMonth.Month, lastMonth.Year);
+                Labels2[i] = lastMonth.Month.ToString();
+                lastMonth = lastMonth.AddMonths(1);
+            }
+            ChartValues<double> totalReceipt = new ChartValues<double>();
+            totalReceipt.AddRange(receipts);
+
+            ChartValues<double> total = new ChartValues<double>();
+            total.AddRange(invoices);
+
             SeriesCollection2 = new SeriesCollection
             {
                 new ColumnSeries
                 {
                     Title = "Sales",
-                    Values = new ChartValues<double> { 10, 50, 39, 50 }
+                    Values = total
                 },
                 new ColumnSeries
                 {
                     Title = "Receipts",
-                    Values = new ChartValues<double> { 10, 20, 22, 44 }
+                    Values = totalReceipt
                 },
                 new ColumnSeries
                 {
@@ -81,9 +139,6 @@ namespace InvoiceX.Pages
 
             };
 
-            SeriesCollection2[1].Values.Add(48d);
-
-            Labels2 = new[] { "Jun", "Jul", "Aug", "Sep" };
             Formatter = value => value.ToString("N");
 
             DataContext = this;

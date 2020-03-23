@@ -113,20 +113,18 @@ United States" TextAlignment="left" FontFamily="Avenir"  FontSize="12" Foregroun
             <Border  Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5" CornerRadius="30"  />
         </Canvas>
         <TextBlock  Text="OUTSTANDING ORDERS(TOTAL:)" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="10,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="DUE" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="596,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <TextBlock  Text="CREATED" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff484848" Margin="408,392,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        
-        <DataGrid x:Name="quoteProductsGrid" HorizontalAlignment="Left" Height="363" Margin="10,427,0,0" VerticalAlignment="Top" Width="714" Style="{DynamicResource viewDataGridStyle}"
+
+        <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="363" Margin="10,427,0,0" VerticalAlignment="Top" Width="714" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Customer " Binding="{Binding ProductName}" />
-                <DataGridTextColumn Header = "Town" Binding="{Binding ProductDescription}" />
-                <DataGridTextColumn Header = "Date" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
-                <DataGridTextColumn Header = "Due" Binding="{Binding SellPrice, StringFormat=C, ConverterCulture='fr-FR'}" />
+                <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
+                <DataGridTextColumn Header = "City" Binding = "{Binding city}" />
+                <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
+                <DataGridTextColumn Header = "Shipping Date" Binding = "{Binding shippingDate, StringFormat=d}" />
             </DataGrid.Columns>
         </DataGrid>
 
