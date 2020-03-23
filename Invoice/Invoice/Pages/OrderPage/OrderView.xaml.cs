@@ -192,7 +192,7 @@ namespace InvoiceX.Pages.OrderPage
             //Define location of adobe reader/command line
             //switches to launch adobe in "print" mode
             proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat 11.0\Acrobat\AcroRd32.exe";
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
             proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.CreateNoWindow = true;
