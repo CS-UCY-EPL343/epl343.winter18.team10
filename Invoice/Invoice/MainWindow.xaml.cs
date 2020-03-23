@@ -61,6 +61,7 @@ namespace InvoiceX
         {
             pageTitle.Text = "Dashboard";
             MainPage.Content = m_dashboard;
+            ((Dashboard)m_dashboard).loadOrderTable();
             resetAllBtnStyles();
             btnDashboard.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
