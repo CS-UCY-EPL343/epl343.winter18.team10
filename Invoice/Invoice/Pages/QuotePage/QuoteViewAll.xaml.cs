@@ -115,7 +115,7 @@ namespace InvoiceX.Pages.QuotePage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    QuoteViewModel.deleteQuoteByID(quoteID);
+                    QuoteViewModel.deleteQuote(quoteID);
                     load();
                     break;
                 case MessageBoxResult.No:

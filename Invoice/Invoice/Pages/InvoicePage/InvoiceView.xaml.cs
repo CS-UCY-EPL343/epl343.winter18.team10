@@ -54,7 +54,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void loadInvoice(int invoiceID)
         {
-            invoice = InvoiceViewModel.getInvoiceById(invoiceID);
+            invoice = InvoiceViewModel.getInvoice(invoiceID);
             if (invoice != null)
             {
                 // Customer details
@@ -124,7 +124,7 @@ namespace InvoiceX.Pages.InvoicePage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        InvoiceViewModel.deleteInvoiceByID(invoiceID);
+                        InvoiceViewModel.deleteInvoice(invoiceID);
                         Btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
                         break;
@@ -259,7 +259,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_invoiceNumber.Text));
+            Invoice invoice = InvoiceViewModel.getInvoice(int.Parse(txtBox_invoiceNumber.Text));
             Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;

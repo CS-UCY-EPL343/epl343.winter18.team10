@@ -116,7 +116,7 @@ namespace InvoiceX.Pages.ProductPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    ProductViewModel.deleteProductByID(productID);
+                    ProductViewModel.deleteProduct(productID);
                     load();
                     break;
                 case MessageBoxResult.No:

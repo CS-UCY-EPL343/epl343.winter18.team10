@@ -66,7 +66,7 @@ namespace InvoiceX.ViewModels
         }
 
 
-        public static void SendCustomerToDB(Customer customer)
+        public static void insertCustomer(Customer customer)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -105,7 +105,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void UpdateCustomerToDB(Customer customer)
+        public static void updateCustomer(Customer customer)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -145,7 +145,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static int ReturnLatestCustomerID()
+        public static int returnLatestCustomerID()
         {
             int id_return = 0;
             MySqlConnection conn;
@@ -178,7 +178,7 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
-        public static Customer ReturnCustomerByid(int customerid)
+        public static Customer getCustomer(int customerid)
         {
 
             MySqlConnection conn;
@@ -221,7 +221,7 @@ namespace InvoiceX.ViewModels
             return customer;
         }
 
-        public static void deleteCustomerByID(int customerID)
+        public static void deleteCustomer(int customerID)
         {
             MySqlConnection conn;
             string myConnectionString;

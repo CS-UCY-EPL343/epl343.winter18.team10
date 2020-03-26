@@ -83,7 +83,7 @@ namespace InvoiceX.ViewModels
             return user;
         }
 
-        public static void addUserToDB(string username, string hash, string salt, bool admin_privileges)
+        public static void insertUser(string username, string hash, string salt, bool admin_privileges)
         {
             MySqlConnection conn;            
 
@@ -112,7 +112,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void removeUser(string username)
+        public static void deleteUser(string username)
         {
             MySqlConnection conn;            
 

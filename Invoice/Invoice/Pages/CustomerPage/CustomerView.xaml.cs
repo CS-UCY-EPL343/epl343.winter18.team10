@@ -122,7 +122,7 @@ namespace InvoiceX.Pages.CustomerPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    CustomerViewModel.deleteCustomerByID(customerID);
+                    CustomerViewModel.deleteCustomer(customerID);
                     load();
                     break;
                 case MessageBoxResult.No:

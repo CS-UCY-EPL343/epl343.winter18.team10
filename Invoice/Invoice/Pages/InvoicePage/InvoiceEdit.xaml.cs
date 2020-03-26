@@ -21,12 +21,15 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceEdit : Page
     {
         ProductViewModel productView;
+        InvoiceMain invoiceMain;
+
         bool invoice_loaded = false;
         Invoice oldInvoice;
 
-        public InvoiceEdit()
+        public InvoiceEdit(InvoiceMain invoiceMain)
         {
             InitializeComponent();
+            this.invoiceMain = invoiceMain;
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
@@ -195,7 +198,7 @@ namespace InvoiceX.Pages.InvoicePage
             return true;
         }
 
-        private Invoice make_object_Invoice()
+        private Invoice createInvoiceObject()
         {
             Invoice myinvoice;
             int invoiceId = 0;
@@ -203,9 +206,9 @@ namespace InvoiceX.Pages.InvoicePage
             {
                 invoiceId = int.Parse(textBox_invoiceNumber.Text);
             }
-            if (invoiceId <= InvoiceViewModel.ReturnLatestInvoiceID())
+            if (invoiceId <= InvoiceViewModel.returnLatestInvoiceID())
             {
-                Invoice invoice = InvoiceViewModel.getInvoiceById(invoiceId);
+                Invoice invoice = InvoiceViewModel.getInvoice(invoiceId);
                 myinvoice = new Invoice();
                 myinvoice.customer = invoice.customer;
                 myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
@@ -232,11 +235,11 @@ namespace InvoiceX.Pages.InvoicePage
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK)
             {
-                int invoiceId = -1;
-                if (int.TryParse(textBox_invoiceNumber.Text, out int n))
+                if (int.TryParse(textBox_invoiceNumber.Text, out int invoiceId))
                 {
-                    invoiceId = int.Parse(textBox_invoiceNumber.Text);
-                    InvoiceViewModel.edit_Invoice(make_object_Invoice(), oldInvoice);
+                    InvoiceViewModel.updateInvoice(createInvoiceObject(), oldInvoice);
+                    invoiceMain.viewInvoice(invoiceId);
+                    Btn_clearAll_Click(null, null);
                 }
             }
         }
@@ -283,7 +286,7 @@ namespace InvoiceX.Pages.InvoicePage
         private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
         {
             int.TryParse(textBox_invoiceNumber.Text, out int invoiceID);
-            if ((InvoiceViewModel.InvoiceID_exist_or_not(invoiceID)))
+            if ((InvoiceViewModel.invoiceExists(invoiceID)))
             {
                 Btn_clearAll_Click(null, null);
                 loadInvoice(invoiceID);
@@ -299,7 +302,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void loadInvoice(int invoiceId)
         {
-            oldInvoice = InvoiceViewModel.getInvoiceById(invoiceId);
+            oldInvoice = InvoiceViewModel.getInvoice(invoiceId);
             if (oldInvoice != null)
             {
 

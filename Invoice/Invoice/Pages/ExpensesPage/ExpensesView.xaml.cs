@@ -49,7 +49,7 @@ namespace InvoiceX.Pages.ExpensesPage
 
         public void loadExpense(int expenseID)
         {
-            expense = ExpensesViewModel.getExpenseByID(expenseID);
+            expense = ExpensesViewModel.getExpense(expenseID);
             if (expense != null)
             {
                 // Supllier details
@@ -215,7 +215,7 @@ namespace InvoiceX.Pages.ExpensesPage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Receipt receipt = ReceiptViewModel.getReceiptByID(int.Parse(txtBox_expenseNumber.Text));
+            Receipt receipt = ReceiptViewModel.getReceipt(int.Parse(txtBox_expenseNumber.Text));
             Customer customer = receipt.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
@@ -256,7 +256,7 @@ namespace InvoiceX.Pages.ExpensesPage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        ReceiptViewModel.deleteReceiptByID(receiptID);
+                        ReceiptViewModel.deleteReceipt(receiptID);
                         Btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Receipt with ID = " + receiptID);
                         break;

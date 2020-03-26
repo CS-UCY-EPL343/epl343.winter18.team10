@@ -50,7 +50,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         public void loadReceipt(int receiptID)
         {
-            receipt = ReceiptViewModel.getReceiptByID(receiptID);
+            receipt = ReceiptViewModel.getReceipt(receiptID);
             if (receipt != null)
             {
                 // Customer details
@@ -214,7 +214,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Receipt receipt = ReceiptViewModel.getReceiptByID(int.Parse(txtBox_receiptNumber.Text));
+            Receipt receipt = ReceiptViewModel.getReceipt(int.Parse(txtBox_receiptNumber.Text));
             Customer customer = receipt.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
@@ -255,7 +255,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        ReceiptViewModel.deleteReceiptByID(receiptID);
+                        ReceiptViewModel.deleteReceipt(receiptID);
                         Btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Receipt with ID = " + receiptID);
                         break;

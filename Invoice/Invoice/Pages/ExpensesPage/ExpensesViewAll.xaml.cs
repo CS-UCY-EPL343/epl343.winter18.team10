@@ -141,7 +141,7 @@ namespace InvoiceX.Pages.ExpensesPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    ExpensesViewModel.deleteExpenseByID(expenseID);
+                    ExpensesViewModel.deleteExpense(expenseID);
                     load();
                     break;
                 case MessageBoxResult.No:

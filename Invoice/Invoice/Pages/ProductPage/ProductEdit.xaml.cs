@@ -59,7 +59,7 @@ namespace InvoiceX.Pages.ProductPage
             
             if (int.TryParse(txtbox_productId.Text, out int productid))
             {
-                if (productid < 0 || productid > ProductViewModel.ReturnLatestProductID())
+                if (productid < 0 || productid > ProductViewModel.returnLatestProductID())
                 {
                     MessageBox.Show("Product ID doesn't exist");
                     txtbox_productId.BorderBrush = Brushes.Red;
@@ -85,12 +85,12 @@ namespace InvoiceX.Pages.ProductPage
             if (int.TryParse(txtbox_productId.Text, out int n))
             {
                 productid = int.Parse(txtbox_productId.Text);
-                int latestproductid = ProductViewModel.ReturnLatestProductID();
+                int latestproductid = ProductViewModel.returnLatestProductID();
                 if ((productid <= latestproductid) && (productid > -1))
                 {
                     if (validate_product())
                     {                        
-                        ProductViewModel.UpdateProductToDB(createObjectProduct());
+                        ProductViewModel.updateProduct(createObjectProduct());
                     }                 
 
                 }
@@ -181,10 +181,10 @@ namespace InvoiceX.Pages.ProductPage
             if (int.TryParse(txtbox_productId.Text, out int n))
             {
                 productid = int.Parse(txtbox_productId.Text);
-                int latestproductid = ProductViewModel.ReturnLatestProductID();
+                int latestproductid = ProductViewModel.returnLatestProductID();
                 if ((productid <= latestproductid) && (productid > -1))
                 {
-                    Product product=ProductViewModel.ReturnProductByid( productid);
+                    Product product=ProductViewModel.getProduct( productid);
                      textBox_ProductName.Text = product.ProductName;
                      textBox_ProductCategory.Text = product.Category;
                      textBox_ProductDescription.Text = product.ProductDescription;

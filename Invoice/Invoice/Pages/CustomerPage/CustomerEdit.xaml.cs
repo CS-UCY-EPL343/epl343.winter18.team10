@@ -62,13 +62,13 @@ namespace InvoiceX.Pages.CustomerPage
             if (int.TryParse(txtBox_Customerid.Text, out int n))
             {
                 customerid = int.Parse(txtBox_Customerid.Text);
-                int latestcustomerid = CustomerViewModel.ReturnLatestCustomerID();
+                int latestcustomerid = CustomerViewModel.returnLatestCustomerID();
                 if ((customerid <= latestcustomerid) && (customerid > -1))
                 {
                     // Customers customer = CustomerViewModel.ReturnCustomerByid(customerid);
                     if (validate_customer())
                     {
-                        CustomerViewModel.UpdateCustomerToDB(create_Object_customer());
+                        CustomerViewModel.updateCustomer(create_Object_customer());
                     }
                 }
                 else
@@ -153,10 +153,10 @@ namespace InvoiceX.Pages.CustomerPage
             if (int.TryParse(txtBox_Customerid.Text, out int n))
             {
                 customerid = int.Parse(txtBox_Customerid.Text);
-                int latestcustomerid = CustomerViewModel.ReturnLatestCustomerID();
+                int latestcustomerid = CustomerViewModel.returnLatestCustomerID();
                 if ((customerid <= latestcustomerid) && (customerid > -1))
                 {
-                    Customer customer = CustomerViewModel.ReturnCustomerByid(customerid);
+                    Customer customer = CustomerViewModel.getCustomer(customerid);
                     textBox_CustomerName.Text =customer.CustomerName;
                     textBox_PhoneNumber.Text = customer.PhoneNumber.ToString();
                     textBox_CustomerEmail.Text = customer.Email;

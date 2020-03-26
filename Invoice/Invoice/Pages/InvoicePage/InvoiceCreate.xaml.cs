@@ -42,7 +42,7 @@ namespace InvoiceX.Pages.InvoicePage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 comboBox_Product.ItemsSource = productView.ProductList;
-                textBox_invoiceNumber.Text = (InvoiceViewModel.ReturnLatestInvoiceID()+1).ToString();
+                textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
             }
@@ -266,7 +266,7 @@ namespace InvoiceX.Pages.InvoicePage
             if (allValuesOK)
             {
                 Invoice inv = createInvoiceObject();
-                InvoiceViewModel.addInvoiceToDB(inv);
+                InvoiceViewModel.insertInvoice(inv);
                 MessageBox.Show("Invoice with ID " + inv.idInvoice + " was created.");
                 invoiceMain.viewInvoice(inv.idInvoice);
                 Btn_clearAll_Click(null, null);                

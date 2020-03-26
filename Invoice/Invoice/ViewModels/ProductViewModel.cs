@@ -70,7 +70,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void SendProductToDB(Product product)
+        public static void insertProduct(Product product)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -110,7 +110,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void UpdateProductToDB(Product product)
+        public static void updateProduct(Product product)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -151,7 +151,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static int ReturnLatestProductID()
+        public static int returnLatestProductID()
         {
             int id_return = 0;
             MySqlConnection conn;
@@ -185,7 +185,7 @@ namespace InvoiceX.ViewModels
         }
 
         
-        public static Product ReturnProductByid(int productid)
+        public static Product getProduct(int productid)
         {
            
             MySqlConnection conn;
@@ -228,7 +228,7 @@ namespace InvoiceX.ViewModels
             return product;
         }
 
-        public static void deleteProductByID(int productID)
+        public static void deleteProduct(int productID)
         {
             MySqlConnection conn;
             string myConnectionString;
@@ -249,7 +249,7 @@ namespace InvoiceX.ViewModels
                 MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
             }
         }
-        public static int getProductCount(int productId, int months,int year)
+        public static int getProductCount(int productId, int months, int year)
         {
             MySqlConnection conn;
             int total=0 ;

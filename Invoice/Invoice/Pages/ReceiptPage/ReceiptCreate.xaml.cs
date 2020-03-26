@@ -15,13 +15,14 @@ namespace InvoiceX.Pages.ReceiptPage
     /// </summary>
     public partial class ReceiptCreate : Page
     {
-        //ProductViewModel productView;        
         CustomerViewModel customerView;
+        ReceiptMain receiptMain;
         bool Refresh_DB_data = true;
 
-        public ReceiptCreate()
+        public ReceiptCreate(ReceiptMain receiptMain)
         {
-            InitializeComponent();           
+            InitializeComponent();
+            this.receiptMain = receiptMain;
             TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
@@ -33,7 +34,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
-                textBox_ReceiptNumber.Text = (InvoiceViewModel.ReturnLatestReceiptID()+1).ToString();
+                textBox_ReceiptNumber.Text = (ReceiptViewModel.returnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
                 PaymentDate.SelectedDate = DateTime.Today;//set curent date 
             }
@@ -202,7 +203,7 @@ namespace InvoiceX.Pages.ReceiptPage
             return true;
         }
         
-        private Receipt make_object_Receipt()
+        private Receipt createReceiptObject()
         {
            
             Receipt myReceipt;
@@ -224,7 +225,14 @@ namespace InvoiceX.Pages.ReceiptPage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) InvoiceViewModel.Send_Receipt_to_DB(make_object_Receipt());
+            if (ALL_VALUES_OK)
+            {
+                Receipt rec = createReceiptObject();
+                ReceiptViewModel.insertReceipt(rec);
+                MessageBox.Show("Receipt with ID " + rec.idReceipt + " was created.");
+                receiptMain.viewReceipt(rec.idReceipt);
+                Btn_clearAll_Click(null, null);
+            }
         }
 
         private void Clear_Customer()

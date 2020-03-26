@@ -56,7 +56,7 @@ namespace InvoiceX.Pages.CustomerPage
         }
         private void Btn_createCustomer_Click(object sender, RoutedEventArgs e)
         {  
-            if (validate_customer()) CustomerViewModel.SendCustomerToDB(create_Object_customer());
+            if (validate_customer()) CustomerViewModel.insertCustomer(create_Object_customer());
         }
 
         private void TextBox_CustomerName_TextChanged(object sender, TextChangedEventArgs e)

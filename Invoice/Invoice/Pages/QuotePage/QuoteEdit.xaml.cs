@@ -167,7 +167,7 @@ namespace InvoiceX.Pages.QuotePage
                 if (int.TryParse(textBox_idQuote.Text, out int n))
                 {
                     invoiceId = int.Parse(textBox_idQuote.Text);
-                    InvoiceViewModel.Send_Quote_to_DB(make_object_Quote(), oldQuote);
+                    QuoteViewModel.updateQuote(make_object_Quote(), oldQuote);
                 }
             }
         }
@@ -212,7 +212,7 @@ namespace InvoiceX.Pages.QuotePage
         private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
         {
             int.TryParse(textBox_idQuote.Text, out int invoiceID);
-            if ((InvoiceViewModel.QuoteID_exist_or_not(invoiceID)))
+            if ((QuoteViewModel.quoteExists(invoiceID)))
             {
                 Btn_clearAll_Click(null, null);
                 loadInvoice(invoiceID);
@@ -228,7 +228,7 @@ namespace InvoiceX.Pages.QuotePage
 
         public void loadInvoice(int invoiceId)
         {
-            oldQuote = QuoteViewModel.getQuoteByID(invoiceId);
+            oldQuote = QuoteViewModel.getQuote(invoiceId);
             if (oldQuote != null)
             {
 

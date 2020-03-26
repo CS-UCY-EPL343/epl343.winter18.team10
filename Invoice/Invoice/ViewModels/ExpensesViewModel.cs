@@ -59,7 +59,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void deleteExpenseByID(int expenseID)
+        public static void deleteExpense(int expenseID)
         {
             MySqlConnection conn;
 
@@ -81,7 +81,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static Expense getExpenseByID(int expenseID)
+        public static Expense getExpense(int expenseID)
         {
             MySqlConnection conn;
             Expense exp = new Expense();

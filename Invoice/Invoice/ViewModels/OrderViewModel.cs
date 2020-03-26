@@ -69,7 +69,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static Order getOrderById(int orderID)
+        public static Order getOrder(int orderID)
         {
             MySqlConnection conn;
 
@@ -167,7 +167,7 @@ namespace InvoiceX.ViewModels
             return order;
         }
 
-        public static void deleteOrderByID(int orderID)
+        public static void deleteOrder(int orderID)
         {
             MySqlConnection conn;
 
@@ -189,7 +189,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void markOrderAsReady(int orderID)
+        public static void updateOrderStatus(int orderID, OrderStatus status)
         {
             MySqlConnection conn;
 
@@ -198,7 +198,7 @@ namespace InvoiceX.ViewModels
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("UPDATE `Order` SET Status = 'Ready' WHERE idOrder = " + orderID, conn);
+                MySqlCommand cmd = new MySqlCommand("UPDATE `Order` SET Status = '" + status.ToString() + "' WHERE idOrder = " + orderID, conn);
                 cmd.ExecuteNonQuery();
 
                 conn.Close();
@@ -209,7 +209,126 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static void markOrderAsPending(int orderID)
+        public static bool orderExists(int id)
+        {
+            //int id_return = 0;
+            MySqlConnection conn;
+
+            try
+            {
+                int idOrder;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idOrder FROM `Order` where idOrder=" + id.ToString(), conn);
+                conn.Open();
+                // id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idOrder = Convert.ToInt32(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idOrder = 0;
+
+                conn.Close();
+                return ((idOrder == 0) ? false : true);
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return false;
+        }
+
+
+        public static int returnLatestOrderID()
+        {
+            MySqlConnection conn;
+            try
+            {
+                int idOrder;
+                conn = new MySqlConnection(myConnectionString);
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idOrder FROM `Order` ORDER BY idOrder DESC LIMIT 1", conn);
+                conn.Open();
+                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                if (queryResult != null)
+                    // If we have result, then convert it from object to string.
+                    idOrder = Convert.ToInt32(queryResult);
+                else
+                    // Else make id = "" so you can later check it.
+                    idOrder = 0;
+
+                conn.Close();
+                return idOrder;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+            return 0;
+        }
+
+        public static void insertOrder(Order order)
+        {
+            MySqlConnection conn;
+
+            try
+            {
+                conn = new MySqlConnection(myConnectionString);
+                conn.Open();
+                //insert invoice 
+                string query = "INSERT INTO `Order` (idOrder, idCustomer, IssuedDate, ShippingDate, Cost, Vat, TotalCost, IssuedBy, Status) Values (@idOrder, @idCustomer, @IssuedDate, @ShippingDate, @Cost, @Vat, @TotalCost, @IssuedBy, @Status)";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idOrder", order.idOrder);
+                    cmd.Parameters.AddWithValue("@idCustomer", order.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@IssuedDate", order.createdDate);
+                    cmd.Parameters.AddWithValue("@ShippingDate", order.shippingDate);
+                    cmd.Parameters.AddWithValue("@Cost", order.cost);
+                    cmd.Parameters.AddWithValue("@Vat", order.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", order.totalCost);
+                    cmd.Parameters.AddWithValue("@IssuedBy", order.issuedBy);
+                    cmd.Parameters.AddWithValue("@Status", "Pending");
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO OrderProduct (idOrder, idProduct, Quantity, Cost, Vat) VALUES ");
+                List<string> Rows = new List<string>();
+
+                foreach (Product p in order.products)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                        MySqlHelper.EscapeString(order.idOrder.ToString()),
+                        MySqlHelper.EscapeString(p.idProduct.ToString()),
+                        MySqlHelper.EscapeString(p.Quantity.ToString()),
+                        MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))
+                       ));
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+                conn.Close();
+                MessageBox.Show("Order was send to Data Base");
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+            }
+        }
+
+        public static void updateOrder(Order order, Order old_Order)
         {
             MySqlConnection conn;
 
@@ -218,10 +337,65 @@ namespace InvoiceX.ViewModels
                 conn = new MySqlConnection(myConnectionString);
                 conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand("UPDATE `Order` SET Status = 'Pending' WHERE idOrder = " + orderID, conn);
-                cmd.ExecuteNonQuery();
+                //update Order 
+                string query = "UPDATE `Order` SET  idOrder=@idOrder, idCustomer=@idCustomer, IssuedDate=@IssuedDate, ShippingDate=@ShippingDate, Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, IssuedBy=@IssuedBy, Status=@Status WHERE idOrder=@idOrder ";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+
+                    cmd.Parameters.AddWithValue("@idOrder", order.idOrder);
+                    cmd.Parameters.AddWithValue("@idCustomer", order.customer.idCustomer);
+                    cmd.Parameters.AddWithValue("@IssuedDate", order.createdDate);
+                    cmd.Parameters.AddWithValue("@ShippingDate", order.shippingDate);
+                    cmd.Parameters.AddWithValue("@Cost", order.cost);
+                    cmd.Parameters.AddWithValue("@Vat", order.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", order.totalCost);
+                    cmd.Parameters.AddWithValue("@IssuedBy", order.issuedBy);
+                    cmd.Parameters.AddWithValue("@Status", "Pending");
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+
+                //delete old Order products
+                string query_delete_invoiceProducts = "DELETE from OrderProduct WHERE idOrder=@idOrder;";
+                // Yet again, we are creating a new object that implements the IDisposable
+                // interface. So we create a new using statement.
+                using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idOrder", old_Order.idOrder);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+
+                //insert products
+                StringBuilder sCommand = new StringBuilder("INSERT INTO OrderProduct (idOrder, idProduct, Quantity, Cost, Vat) VALUES ");
+                List<string> Rows = new List<string>();
+
+                foreach (Product p in order.products)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                        MySqlHelper.EscapeString(order.idOrder.ToString()),
+                        MySqlHelper.EscapeString(p.idProduct.ToString()),
+                        MySqlHelper.EscapeString(p.Quantity.ToString()),
+                        MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))
+                       ));
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
 
                 conn.Close();
+                MessageBox.Show("Order was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

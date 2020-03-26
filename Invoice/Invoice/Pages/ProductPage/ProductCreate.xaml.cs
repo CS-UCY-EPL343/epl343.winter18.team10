@@ -73,7 +73,7 @@ namespace InvoiceX.Pages.ProductPage
                 
             }
 
-            if (ProductCreateOK) ProductViewModel.SendProductToDB(createObjectProduct());
+            if (ProductCreateOK) ProductViewModel.insertProduct(createObjectProduct());
 
 
         }

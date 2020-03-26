@@ -65,7 +65,7 @@ namespace InvoiceX.ViewModels
             }
         }
 
-        public static CreditNote getCreditNoteById(int creditNoteID)
+        public static CreditNote getCreditNote(int creditNoteID)
         {
             MySqlConnection conn;
 
@@ -158,7 +158,7 @@ namespace InvoiceX.ViewModels
             return cred;
         }
 
-        public static void deleteCreditNoteById(int creditNoteID)
+        public static void deleteCreditNote(int creditNoteID)
         {
             MySqlConnection conn;
 

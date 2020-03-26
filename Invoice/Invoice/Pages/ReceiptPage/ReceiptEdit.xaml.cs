@@ -15,14 +15,17 @@ namespace InvoiceX.Pages.ReceiptPage
     /// </summary>
     public partial class ReceiptEdit : Page
     {
-        //ProductViewModel productView;        
         CustomerViewModel customerView;
+        ReceiptMain receiptMain;
+
         bool Refresh_DB_data = true;
         private Receipt receipt;
         bool receipt_loaded = false;
-        public ReceiptEdit()
+
+        public ReceiptEdit(ReceiptMain receiptMain)
         {
-            InitializeComponent();           
+            InitializeComponent();
+            this.receiptMain = receiptMain;
             TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
@@ -185,8 +188,7 @@ namespace InvoiceX.Pages.ReceiptPage
         }
         
         private Receipt make_object_Receipt()
-        {
-           
+        {           
             Receipt myReceipt;
             myReceipt = new Receipt();
             myReceipt.createdDate = ReceiptDate.SelectedDate.Value.Date;
@@ -206,8 +208,10 @@ namespace InvoiceX.Pages.ReceiptPage
             //if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) {                
-                InvoiceViewModel.Send_Receipt_to_DB(make_object_Receipt(),receipt); }
+            if (ALL_VALUES_OK) 
+            {
+                ReceiptViewModel.updateReceipt(make_object_Receipt(),receipt); 
+            }
         }
 
         private void Clear_Customer()
@@ -251,7 +255,7 @@ namespace InvoiceX.Pages.ReceiptPage
         private void Btn_LoadReceipt_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(textBox_ReceiptNumber.Text, out int receiptID);
-            if (InvoiceViewModel.ReceiptID_exist_or_not(receiptID))
+            if (ReceiptViewModel.receiptExists(receiptID))
             {
                 Btn_clearAll_Click(null, null);
                 loadReceipt(receiptID);
@@ -266,7 +270,7 @@ namespace InvoiceX.Pages.ReceiptPage
 
         public void loadReceipt(int receiptID)
         {
-            receipt = ReceiptViewModel.getReceiptByID(receiptID);
+            receipt = ReceiptViewModel.getReceipt(receiptID);
             if (receipt != null)
             {
                 // Customer details

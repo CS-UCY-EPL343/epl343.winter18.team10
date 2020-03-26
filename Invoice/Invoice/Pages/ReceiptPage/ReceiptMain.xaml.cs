@@ -31,8 +31,8 @@ namespace InvoiceX.Pages.ReceiptPage
             InitializeComponent();
             viewAllPage = new ReceiptViewAll(this);
             viewPage = new ReceiptView();
-            createPage = new ReceiptCreate();
-            editPage = new ReceiptEdit();
+            createPage = new ReceiptCreate(this);
+            editPage = new ReceiptEdit(this);
             statisticsPage = new ReceiptStatistics();
             btnViewAll_Click(null, null);
         }

@@ -40,7 +40,7 @@ namespace InvoiceX.Pages.OrderPage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 comboBox_Product.ItemsSource = productView.ProductList;
-                textBox_orderNumber.Text = (InvoiceViewModel.ReturnLatestOrderID()+1).ToString();
+                textBox_orderNumber.Text = (OrderViewModel.returnLatestOrderID()+1).ToString();
                 OrderDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
             }
@@ -266,7 +266,7 @@ namespace InvoiceX.Pages.OrderPage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false; 
-            if (ALL_VALUES_OK) InvoiceViewModel.Send_Order_to_DB(make_object_Order());
+            if (ALL_VALUES_OK) OrderViewModel.insertOrder(make_object_Order());
         }
 
         private void Clear_Customer()

@@ -53,7 +53,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
         public void loadCreditNote(int creditNoteID)
         {
-            creditNote = CreditNoteViewModel.getCreditNoteById(creditNoteID);
+            creditNote = CreditNoteViewModel.getCreditNote(creditNoteID);
             if (creditNote != null)
             {
                 // Customer details
@@ -122,7 +122,7 @@ namespace InvoiceX.Pages.CreditNotePage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        CreditNoteViewModel.deleteCreditNoteById(creditNoteID);
+                        CreditNoteViewModel.deleteCreditNote(creditNoteID);
                         Btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Credit Note with ID = " + creditNoteID);
                         break;
@@ -257,7 +257,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoiceById(int.Parse(txtBox_creditNoteNumber.Text));
+            Invoice invoice = InvoiceViewModel.getInvoice(int.Parse(txtBox_creditNoteNumber.Text));
             Customer customer = invoice.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;

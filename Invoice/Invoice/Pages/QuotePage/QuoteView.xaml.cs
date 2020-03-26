@@ -51,7 +51,7 @@ namespace InvoiceX.Pages.QuotePage
 
         public void loadQuote(int quoteID)
         {
-            quote = QuoteViewModel.getQuoteByID(quoteID);
+            quote = QuoteViewModel.getQuote(quoteID);
             if (quote != null)
             {
                 // Customer details
@@ -114,7 +114,7 @@ namespace InvoiceX.Pages.QuotePage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        QuoteViewModel.deleteQuoteByID(quoteID);
+                        QuoteViewModel.deleteQuote(quoteID);
                         Btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Quote with ID = " + quoteID);
                         break;
@@ -249,7 +249,7 @@ namespace InvoiceX.Pages.QuotePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Quote quote = QuoteViewModel.getQuoteByID(int.Parse(txtBox_QuoteNumber.Text));
+            Quote quote = QuoteViewModel.getQuote(int.Parse(txtBox_QuoteNumber.Text));
             Customer customer = quote.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;

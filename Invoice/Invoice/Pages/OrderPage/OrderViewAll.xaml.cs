@@ -141,7 +141,7 @@ namespace InvoiceX.Pages.OrderPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    OrderViewModel.deleteOrderByID(orderID);                    
+                    OrderViewModel.deleteOrder(orderID);                    
                     MessageBox.Show("Deleted Order with ID = " + orderID);
                     load();
                     break;
@@ -190,7 +190,7 @@ namespace InvoiceX.Pages.OrderPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    OrderViewModel.markOrderAsReady(orderID);                    
+                    OrderViewModel.updateOrderStatus(orderID, OrderStatus.Ready);                    
                     load();
                     break;
                 case MessageBoxResult.No:
@@ -209,7 +209,7 @@ namespace InvoiceX.Pages.OrderPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    OrderViewModel.markOrderAsPending(orderID);
+                    OrderViewModel.updateOrderStatus(orderID, OrderStatus.Pending);
                     load();
                     break;
                 case MessageBoxResult.No:
@@ -219,7 +219,7 @@ namespace InvoiceX.Pages.OrderPage
 
         private void IssueOrderAsInvoice_Click(object sender, RoutedEventArgs e)
         {
-            Order order = OrderViewModel.getOrderById(((Order)orderDataGrid.SelectedItem).idOrder); 
+            Order order = OrderViewModel.getOrder(((Order)orderDataGrid.SelectedItem).idOrder); 
             orderMain.issueOrderAsInvoice(order);
         }
 

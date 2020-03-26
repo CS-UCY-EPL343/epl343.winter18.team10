@@ -27,7 +27,7 @@ namespace InvoiceX.Pages.InvoicePage
             viewAllPage = new InvoiceViewAll(this);
             viewPage = new InvoiceView(this);
             createpage = new InvoiceCreate(this);
-            editpage = new InvoiceEdit();
+            editpage = new InvoiceEdit(this);
             invoiceStatistics = new InvoiceStatistics();
             btnViewAll_Click(null,null);
         }        

@@ -40,7 +40,7 @@ namespace InvoiceX.Pages.SettingsPage
             if (user.username == null)
             {
                 HashSalt hashSalt = HashSalt.GenerateSaltedHash(password);
-                UserViewModel.addUserToDB(username, hashSalt.Hash, hashSalt.Salt, admin_privileges);
+                UserViewModel.insertUser(username, hashSalt.Hash, hashSalt.Salt, admin_privileges);
                 btn_loadUsers_Click();
             }
             else
@@ -66,7 +66,7 @@ namespace InvoiceX.Pages.SettingsPage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    UserViewModel.removeUser(user.username);
+                    UserViewModel.deleteUser(user.username);
                     btn_loadUsers_Click();
                     break;
                 case MessageBoxResult.No:

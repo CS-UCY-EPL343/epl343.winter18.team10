@@ -114,7 +114,7 @@ namespace InvoiceX.Pages.CreditNotePage
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    CreditNoteViewModel.deleteCreditNoteById(credID);
+                    CreditNoteViewModel.deleteCreditNote(credID);
                     load();
                     break;
                 case MessageBoxResult.No:

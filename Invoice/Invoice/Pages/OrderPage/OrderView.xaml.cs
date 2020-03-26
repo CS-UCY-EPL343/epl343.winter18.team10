@@ -55,7 +55,7 @@ namespace InvoiceX.Pages.OrderPage
 
         public void loadOrder(int orderID)
         {
-            order = OrderViewModel.getOrderById(orderID);
+            order = OrderViewModel.getOrder(orderID);
             if (order != null)
             {
                 // Customer details
@@ -134,7 +134,7 @@ namespace InvoiceX.Pages.OrderPage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        OrderViewModel.deleteOrderByID(orderID);
+                        OrderViewModel.deleteOrder(orderID);
                         btn_clearView_Click(null, null);
                         MessageBox.Show("Deleted Order with ID = " + orderID);
                         break;
@@ -262,7 +262,7 @@ namespace InvoiceX.Pages.OrderPage
             string[] orderDetails = new string[3];
             string[] customerDetails = new string[2];
 
-            Order order1 = OrderViewModel.getOrderById(int.Parse(txtBox_orderNumber.Text));
+            Order order1 = OrderViewModel.getOrder(int.Parse(txtBox_orderNumber.Text));
             Customer customer = order1.customer;
             customerDetails[1]=customer.CustomerName;
             customerDetails[0] = customer.idCustomer.ToString();

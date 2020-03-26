@@ -38,7 +38,7 @@ namespace InvoiceX.Pages.QuotePage
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.CustomersList;
                 comboBox_Product.ItemsSource = productView.ProductList;
-                textBox_idQuote.Text = (InvoiceViewModel.ReturnLatestQuoteID()+1).ToString();
+                textBox_idQuote.Text = (QuoteViewModel.returnLatestQuoteID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
             }
             Refresh_DB_data = false;
@@ -205,7 +205,7 @@ namespace InvoiceX.Pages.QuotePage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) InvoiceViewModel.Send_Quote_to_DB(make_object_Quote());
+            if (ALL_VALUES_OK) QuoteViewModel.insertQuote(make_object_Quote());
         }
 
         private void Clear_Customer()

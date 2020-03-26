@@ -223,7 +223,7 @@ namespace InvoiceX.Pages.OrderPage
                 if (int.TryParse(txtBox_orderNumber.Text, out int n))
                 {
                     invoiceId = int.Parse(txtBox_orderNumber.Text);
-                    InvoiceViewModel.update_Order(make_object_Order(), order);
+                    OrderViewModel.updateOrder(make_object_Order(), order);
                 }
             }
         }
@@ -270,7 +270,7 @@ namespace InvoiceX.Pages.OrderPage
         private void btn_loadOrder_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_orderNumber.Text, out int orderID);
-            if (InvoiceViewModel.OrderID_exist_or_not(orderID))
+            if (OrderViewModel.orderExists(orderID))
             {
                 Btn_clearAll_Click(null, null);
                 loadOrder(orderID);
@@ -285,7 +285,7 @@ namespace InvoiceX.Pages.OrderPage
 
         public void loadOrder(int orderID)
         {
-            order = OrderViewModel.getOrderById(orderID);
+            order = OrderViewModel.getOrder(orderID);
             if (order != null)
             {
                 // Customer details
