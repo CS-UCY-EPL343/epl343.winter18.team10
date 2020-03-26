@@ -28,10 +28,10 @@ namespace InvoiceX.Pages.ProductPage
         public ProductCreate()
         {
             InitializeComponent();
-        } 
+        }
 
 
-        private Product createObjectProduct()
+        private Product createProductObject()
         {
             Product product = new Product();
             product.ProductName = textBox_ProductName.Text;
@@ -42,7 +42,7 @@ namespace InvoiceX.Pages.ProductPage
             product.SellPrice = double.Parse(txtBlock_ProductSellPrice.Text);
             product.Cost = double.Parse(txtBlock_ProductCost.Text);
             product.SellPrice = double.Parse(txtBlock_ProductSellPrice.Text);
-            product.Vat = float.Parse(txtBlock_ProductVat.Text)/100;
+            product.Vat = float.Parse(txtBlock_ProductVat.Text) / 100;
             return product;
         }
 
@@ -53,28 +53,29 @@ namespace InvoiceX.Pages.ProductPage
             if (string.IsNullOrWhiteSpace(textBox_ProductName.Text)) { textBox_ProductName.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (string.IsNullOrWhiteSpace(textBox_ProductCategory.Text)) { textBox_ProductCategory.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (string.IsNullOrWhiteSpace(textBox_ProductDescription.Text)) { textBox_ProductDescription.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!int.TryParse(txtBlock_ProductCurrentStock.Text, out int a) || (a<0)) { txtBlock_ProductCurrentStock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!int.TryParse(txtBlock_ProductMinimun_Stock.Text, out a) || (a < 0) ) { txtBlock_ProductMinimun_Stock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!int.TryParse(txtBlock_ProductCurrentStock.Text, out int a) || (a < 0)) { txtBlock_ProductCurrentStock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!int.TryParse(txtBlock_ProductMinimun_Stock.Text, out a) || (a < 0)) { txtBlock_ProductMinimun_Stock.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (!double.TryParse(txtBlock_ProductSellPrice.Text, out double b) || (b < 0)) { txtBlock_ProductSellPrice.BorderBrush = Brushes.Red; ProductCreateOK = false; }
             if (!double.TryParse(txtBlock_ProductCost.Text, out b) || (b < 0)) { txtBlock_ProductCost.BorderBrush = Brushes.Red; ProductCreateOK = false; }
-            if (!float.TryParse(txtBlock_ProductVat.Text, out float g)){ txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false; }
+            if (!float.TryParse(txtBlock_ProductVat.Text, out float g)) { txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false; }
 
             if (float.TryParse(txtBlock_ProductVat.Text, out float k))
-            {                
-                    float vat = float.Parse(txtBlock_ProductVat.Text);
-                    if (vat <0 || vat>100) 
-                    {
-
-                     MessageBox.Show("VAT is not in range 0-100");
-                     txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false;
+            {
+                float vat = float.Parse(txtBlock_ProductVat.Text);
+                if (vat < 0 || vat > 100)
+                {
+                    MessageBox.Show("VAT is not in range 0-100");
+                    txtBlock_ProductVat.BorderBrush = Brushes.Red;
                     ProductCreateOK = false;
                 }
-                
-                
             }
-
-            if (ProductCreateOK) ProductViewModel.insertProduct(createObjectProduct());
-
+            if (ProductCreateOK)
+            {
+                Product pro = createProductObject();
+                ProductViewModel.insertProduct(pro);
+                MessageBox.Show("Product " + pro.ProductName + " was created");
+                Btn_clearProduct_Click(null, null);
+            }
 
         }
 

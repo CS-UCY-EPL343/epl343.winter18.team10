@@ -18,7 +18,7 @@ namespace InvoiceX.Pages.InvoicePage
         InvoiceViewAll viewAllPage;
         InvoiceView viewPage;
         InvoiceCreate createpage;
-        InvoiceEdit editpage;
+        InvoiceEdit editPage;
         InvoiceStatistics invoiceStatistics;
 
         public InvoiceMain()
@@ -27,7 +27,7 @@ namespace InvoiceX.Pages.InvoicePage
             viewAllPage = new InvoiceViewAll(this);
             viewPage = new InvoiceView(this);
             createpage = new InvoiceCreate(this);
-            editpage = new InvoiceEdit(this);
+            editPage = new InvoiceEdit(this);
             invoiceStatistics = new InvoiceStatistics();
             btnViewAll_Click(null,null);
         }        
@@ -66,8 +66,8 @@ namespace InvoiceX.Pages.InvoicePage
         {
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
-            invoicePage.Content = editpage;
-            editpage.load();
+            invoicePage.Content = editPage;
+            editPage.load();
         }
 
         private void resetAllBtnStyles()
@@ -84,7 +84,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void editInvoice(int invID)
         {
-            editpage.loadInvoice(invID);
+            editPage.loadInvoice(invID);
             btnEdit_Click(null, null);
         }
 

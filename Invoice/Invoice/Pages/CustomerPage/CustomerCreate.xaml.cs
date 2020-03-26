@@ -42,21 +42,30 @@ namespace InvoiceX.Pages.CustomerPage
             return ProductCreateOK;
         }
 
-        private Customer create_Object_customer()
+        private Customer createCustomerObject()
         {
-            Customer customer = new Customer();
-            customer.CustomerName= textBox_CustomerName.Text;
-            customer.PhoneNumber=Int32.Parse(textBox_PhoneNumber.Text);
-            customer.Email=textBox_CustomerEmail.Text;
-            customer.Country= textBox_CustomerCountry.Text;
-            customer.City=textBox_CustomerCity.Text;
-            customer.Address=textBox_CustomerAddress.Text;
-            customer.Balance=float.Parse(textBox_CustomerBalance.Text);
+            Customer customer = new Customer
+            {
+                CustomerName = textBox_CustomerName.Text,
+                PhoneNumber = Int32.Parse(textBox_PhoneNumber.Text),
+                Email = textBox_CustomerEmail.Text,
+                Country = textBox_CustomerCountry.Text,
+                City = textBox_CustomerCity.Text,
+                Address = textBox_CustomerAddress.Text,
+                Balance = float.Parse(textBox_CustomerBalance.Text)
+            };
             return customer;
         }
+
         private void Btn_createCustomer_Click(object sender, RoutedEventArgs e)
-        {  
-            if (validate_customer()) CustomerViewModel.insertCustomer(create_Object_customer());
+        {
+            if (validate_customer()) 
+            {
+                Customer cust = createCustomerObject();
+                CustomerViewModel.insertCustomer(cust);
+                MessageBox.Show("Customer " + cust.CustomerName + " was created");
+                Btn_clearAll_Click(null, null);
+            }
         }
 
         private void TextBox_CustomerName_TextChanged(object sender, TextChangedEventArgs e)
@@ -96,7 +105,7 @@ namespace InvoiceX.Pages.CustomerPage
 
       
 
-        private void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
+        private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
             textBox_CustomerName.ClearValue(TextBox.BorderBrushProperty);
             textBox_PhoneNumber.ClearValue(TextBox.BorderBrushProperty);

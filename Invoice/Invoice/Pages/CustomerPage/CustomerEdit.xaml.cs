@@ -42,7 +42,7 @@ namespace InvoiceX.Pages.CustomerPage
             return ProductCreateOK;
         }
 
-        private Customer create_Object_customer()
+        private Customer createCustomerObject()
         {
             Customer customer = new Customer();
             customer.CustomerName= textBox_CustomerName.Text;
@@ -58,17 +58,17 @@ namespace InvoiceX.Pages.CustomerPage
 
         private void Btn_updateCustomer_Click(object sender, RoutedEventArgs e)
         {
-            int customerid = -1;
-            if (int.TryParse(txtBox_Customerid.Text, out int n))
+            if (int.TryParse(txtBox_Customerid.Text, out int customerid))
             {
-                customerid = int.Parse(txtBox_Customerid.Text);
                 int latestcustomerid = CustomerViewModel.returnLatestCustomerID();
                 if ((customerid <= latestcustomerid) && (customerid > -1))
                 {
-                    // Customers customer = CustomerViewModel.ReturnCustomerByid(customerid);
                     if (validate_customer())
                     {
-                        CustomerViewModel.updateCustomer(create_Object_customer());
+                        Customer cust = createCustomerObject();
+                        CustomerViewModel.updateCustomer(cust);
+                        MessageBox.Show("Customer with ID " + cust.idCustomer + " was updated");
+                        Btn_clearAll_Click(null, null);
                     }
                 }
                 else
@@ -79,7 +79,7 @@ namespace InvoiceX.Pages.CustomerPage
             }
             else
             {
-                MessageBox.Show("Customer ID doesn't exist");
+                MessageBox.Show("Please enter a valid customer ID");
                 txtBox_Customerid.BorderBrush = Brushes.Red;
             }
            
@@ -126,7 +126,7 @@ namespace InvoiceX.Pages.CustomerPage
         }
 
 
-        private void Btn_clearProduct_Click(object sender, RoutedEventArgs e)
+        private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
             textBox_CustomerName.ClearValue(TextBox.BorderBrushProperty);
             textBox_PhoneNumber.ClearValue(TextBox.BorderBrushProperty);

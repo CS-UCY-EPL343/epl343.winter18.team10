@@ -187,7 +187,7 @@ namespace InvoiceX.Pages.ReceiptPage
             return true;
         }
         
-        private Receipt make_object_Receipt()
+        private Receipt createReceiptObject()
         {           
             Receipt myReceipt;
             myReceipt = new Receipt();
@@ -210,7 +210,9 @@ namespace InvoiceX.Pages.ReceiptPage
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK) 
             {
-                ReceiptViewModel.updateReceipt(make_object_Receipt(),receipt); 
+                ReceiptViewModel.updateReceipt(createReceiptObject(), receipt);
+                receiptMain.viewReceipt(receipt.idReceipt);
+                Btn_clearAll_Click(null, null);
             }
         }
 

@@ -33,8 +33,8 @@ namespace InvoiceX.Pages.OrderPage
             this.mainWindow = mainWindow;
             viewAllPage = new OrderViewAll(this);
             viewPage = new OrderView(this);
-            createpage = new OrderCreate();
-            editpage = new OrderEdit();
+            createpage = new OrderCreate(this);
+            editpage = new OrderEdit(this);
             btnViewAll_Click(null,null);
         }
 

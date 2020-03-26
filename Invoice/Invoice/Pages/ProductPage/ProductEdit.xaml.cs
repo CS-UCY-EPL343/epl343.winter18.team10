@@ -30,7 +30,7 @@ namespace InvoiceX.Pages.ProductPage
             InitializeComponent();
         } 
         
-        private Product createObjectProduct()
+        private Product createProductObject()
         {
             Product product = new Product();
             product.ProductName = textBox_ProductName.Text;
@@ -72,7 +72,7 @@ namespace InvoiceX.Pages.ProductPage
                 if (vat < 0 || vat > 100)
                 {
                     MessageBox.Show("VAT is not in range 0-100");
-                    txtBlock_ProductVat.BorderBrush = Brushes.Red; ProductCreateOK = false;
+                    txtBlock_ProductVat.BorderBrush = Brushes.Red;
                     ProductCreateOK = false;
                 }
             }
@@ -81,16 +81,17 @@ namespace InvoiceX.Pages.ProductPage
         
         private void Btn_UpdateProduct_Click(object sender, RoutedEventArgs e)
         {
-            int productid = -1;
-            if (int.TryParse(txtbox_productId.Text, out int n))
+            if (int.TryParse(txtbox_productId.Text, out int productid))
             {
-                productid = int.Parse(txtbox_productId.Text);
                 int latestproductid = ProductViewModel.returnLatestProductID();
                 if ((productid <= latestproductid) && (productid > -1))
                 {
                     if (validate_product())
-                    {                        
-                        ProductViewModel.updateProduct(createObjectProduct());
+                    {    
+                        Product pro = createProductObject();
+                        ProductViewModel.updateProduct(pro);
+                        MessageBox.Show("Product with ID " + pro.idProduct + " was updated");
+                        Btn_clearProduct_Click(null, null);
                     }                 
 
                 }
@@ -102,7 +103,7 @@ namespace InvoiceX.Pages.ProductPage
             }
             else
             {
-                MessageBox.Show("Product ID doesn't exist");
+                MessageBox.Show("Pleas insert a valid product ID");
                 txtbox_productId.BorderBrush = Brushes.Red;
             }         
         }

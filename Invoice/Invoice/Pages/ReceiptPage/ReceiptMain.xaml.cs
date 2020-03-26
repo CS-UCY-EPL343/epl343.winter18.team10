@@ -30,7 +30,7 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             InitializeComponent();
             viewAllPage = new ReceiptViewAll(this);
-            viewPage = new ReceiptView();
+            viewPage = new ReceiptView(this);
             createPage = new ReceiptCreate(this);
             editPage = new ReceiptEdit(this);
             statisticsPage = new ReceiptStatistics();
@@ -85,6 +85,12 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             viewPage.loadReceipt(recID);
             btnView_Click(null, null);
+        }
+
+        public void editReceipt(int recID)
+        {
+            editPage.loadReceipt(recID);
+            btnEdit_Click(null, null);
         }
     }
 }

@@ -314,7 +314,6 @@ namespace InvoiceX.ViewModels
 
 
                 conn.Close();
-                MessageBox.Show("Receipt was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {

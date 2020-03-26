@@ -22,10 +22,13 @@ namespace InvoiceX.Pages.OrderPage
     {
         ProductViewModel productView;
         Order order;
+        OrderMain orderMain;
+
         bool order_loaded = false;
-        public OrderEdit()
+        public OrderEdit(OrderMain orderMain)
         {
             InitializeComponent();
+            this.orderMain = orderMain;
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
@@ -194,7 +197,7 @@ namespace InvoiceX.Pages.OrderPage
             return true;
         }
 
-        private Order make_object_Order()
+        private Order createOrderObject()
         {
             Order my_order;
             my_order = new Order();
@@ -218,12 +221,12 @@ namespace InvoiceX.Pages.OrderPage
 
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK)
-            {
-                int invoiceId = -1;
+            {                
                 if (int.TryParse(txtBox_orderNumber.Text, out int n))
-                {
-                    invoiceId = int.Parse(txtBox_orderNumber.Text);
-                    OrderViewModel.updateOrder(make_object_Order(), order);
+                {                    
+                    OrderViewModel.updateOrder(createOrderObject(), order);
+                    orderMain.viewOrder(order.idOrder);
+                    Btn_clearAll_Click(null, null);
                 }
             }
         }

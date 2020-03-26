@@ -22,11 +22,14 @@ namespace InvoiceX.Pages.OrderPage
     {
         ProductViewModel productView;        
         CustomerViewModel customerView;
+        OrderMain orderMain;
+
         bool Refresh_DB_data = true;
 
-        public OrderCreate()
+        public OrderCreate(OrderMain orderMain)
         {
             InitializeComponent();
+            this.orderMain = orderMain;
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
             TotalAmount_TextBlock.Text = (0).ToString("C");
@@ -242,7 +245,7 @@ namespace InvoiceX.Pages.OrderPage
             return true;
         }
         
-        private Order make_object_Order()
+        private Order createOrderObject()
         {
             Order my_order;
             my_order = new Order();
@@ -265,8 +268,15 @@ namespace InvoiceX.Pages.OrderPage
             bool ALL_VALUES_OK = true;
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
-            if (!Has_Items_Selected()) ALL_VALUES_OK = false; 
-            if (ALL_VALUES_OK) OrderViewModel.insertOrder(make_object_Order());
+            if (!Has_Items_Selected()) ALL_VALUES_OK = false;
+            if (ALL_VALUES_OK) 
+            {                 
+                Order order = createOrderObject();
+                OrderViewModel.insertOrder(order);
+                MessageBox.Show("Order with ID " + order.idOrder + " was created.");
+                orderMain.viewOrder(order.idOrder);
+                Btn_clearAll_Click(null, null);
+            }
         }
 
         private void Clear_Customer()

@@ -25,11 +25,12 @@ namespace InvoiceX.Pages.ReceiptPage
     public partial class ReceiptView : Page
     {
         private Receipt receipt;
+        ReceiptMain receiptMain;
 
-        public ReceiptView()
+        public ReceiptView(ReceiptMain receiptMain)
         {
             InitializeComponent();
-           
+            this.receiptMain = receiptMain;
             TotalAmount_TextBlock.Text = (0).ToString("C");
             txtBox_receiptNumber.Focus();
         }
@@ -63,7 +64,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 txtBox_receiptNumber.Text = receipt.idReceipt.ToString();
                 txtBox_receiptNumber.IsReadOnly = true;
                 txtBox_receiptDate.Text = receipt.createdDate.ToString("d");
-                txtBox_issuedBy.Text = receipt.issuedBy;               
+                txtBox_issuedBy.Text = receipt.issuedBy;
                 TotalAmount_TextBlock.Text = receipt.totalAmount.ToString("C");
 
                 // Receipt payments           
@@ -96,7 +97,7 @@ namespace InvoiceX.Pages.ReceiptPage
                 if (ctrl.GetType() == typeof(TextBox))
                     ((TextBox)ctrl).Clear();
             }
-            receiptPaymentsGrid.ItemsSource = null;            
+            receiptPaymentsGrid.ItemsSource = null;
             TotalAmount_TextBlock.Text = (0).ToString("C");
             txtBox_receiptNumber.IsReadOnly = false;
             txtBox_receiptNumber.Focus();
@@ -117,7 +118,7 @@ namespace InvoiceX.Pages.ReceiptPage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Receipt"+ txtBox_receiptNumber.Text+".pdf";
+            string filename = "Receipt" + txtBox_receiptNumber.Text + ".pdf";
             pdfRenderer.Save(filename);
             System.Diagnostics.Process.Start(filename);
 
@@ -241,8 +242,8 @@ namespace InvoiceX.Pages.ReceiptPage
             return document;
         }
         #endregion
-    
-    private void Btn_delete_Click(object sender, RoutedEventArgs e)
+
+        private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_receiptNumber.Text, out int receiptID);
             if (txtBox_receiptNumber.IsReadOnly)
@@ -266,6 +267,14 @@ namespace InvoiceX.Pages.ReceiptPage
             else
             {
                 MessageBox.Show("No receipt is loaded");
+            }
+        }
+
+        private void btn_edit_Click(object sender, RoutedEventArgs e)
+        {
+            if (receipt != null)
+            {
+                receiptMain.editReceipt(receipt.idReceipt);
             }
         }
 
