@@ -1,4 +1,5 @@
-﻿using InvoiceX.Models;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,14 @@ namespace InvoiceX.ViewModels
     public class OrderViewModel
     {
         public List<Order> orderList { get; set; }
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public OrderViewModel()
         {
             orderList = new List<Order>();
-            MySqlConnection conn;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT `Order`.*, `Customer`.`CustomerName`,`Customer`.`City`  FROM `Order`" +
                     " LEFT JOIN `Customer` ON `Order`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
@@ -55,29 +52,23 @@ namespace InvoiceX.ViewModels
                         createdDate = createdDate,
                         shippingDate = shippingDate,
                         status = status,
-                        issuedBy = issuedBy                        
+                        issuedBy = issuedBy
                     };
 
                     orderList.Add(order);
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static Order getOrder(int orderID)
         {
-            MySqlConnection conn;
-
             Order order = new Order();
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewOrder WHERE OrderID = " + orderID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -153,15 +144,13 @@ namespace InvoiceX.ViewModels
                         Quantity = quantity,
                         Cost = proTotalCost / quantity,
                         Vat = proVat,
-                        SellPrice= proTotalCost / quantity //***Chrisi to cost to ekana gia to kostos paraogis, ego xrisimopio SellPrice **
+                        SellPrice = proTotalCost / quantity //***Chrisi to cost to ekana gia to kostos paraogis, ego xrisimopio SellPrice **
                     });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return order;
@@ -169,57 +158,40 @@ namespace InvoiceX.ViewModels
 
         public static void deleteOrder(int orderID)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM OrderProduct WHERE idOrder = " + orderID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM `Order` WHERE idOrder = " + orderID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void updateOrderStatus(int orderID, OrderStatus status)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("UPDATE `Order` SET Status = '" + status.ToString() + "' WHERE idOrder = " + orderID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static bool orderExists(int id)
         {
-            //int id_return = 0;
-            MySqlConnection conn;
-
             try
             {
                 int idOrder;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idOrder FROM `Order` where idOrder=" + id.ToString(), conn);
-                conn.Open();
+
                 // id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
@@ -229,27 +201,24 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idOrder = 0;
 
-                conn.Close();
                 return ((idOrder == 0) ? false : true);
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return false;
         }
 
 
         public static int returnLatestOrderID()
         {
-            MySqlConnection conn;
             try
             {
                 int idOrder;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idOrder FROM `Order` ORDER BY idOrder DESC LIMIT 1", conn);
-                conn.Open();
+
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
@@ -258,24 +227,20 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idOrder = 0;
 
-                conn.Close();
                 return idOrder;
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
         public static void insertOrder(Order order)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert invoice 
                 string query = "INSERT INTO `Order` (idOrder, idCustomer, IssuedDate, ShippingDate, Cost, Vat, TotalCost, IssuedBy, Status) Values (@idOrder, @idCustomer, @IssuedDate, @ShippingDate, @Cost, @Vat, @TotalCost, @IssuedBy, @Status)";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -318,25 +283,17 @@ namespace InvoiceX.ViewModels
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Order was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void updateOrder(Order order, Order old_Order)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 //update Order 
                 string query = "UPDATE `Order` SET  idOrder=@idOrder, idCustomer=@idCustomer, IssuedDate=@IssuedDate, ShippingDate=@ShippingDate, Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, IssuedBy=@IssuedBy, Status=@Status WHERE idOrder=@idOrder ";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -358,7 +315,6 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
 
-
                 //delete old Order products
                 string query_delete_invoiceProducts = "DELETE from OrderProduct WHERE idOrder=@idOrder;";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -370,7 +326,6 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
 
                 //insert products
                 StringBuilder sCommand = new StringBuilder("INSERT INTO OrderProduct (idOrder, idProduct, Quantity, Cost, Vat) VALUES ");
@@ -393,13 +348,10 @@ namespace InvoiceX.ViewModels
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Order was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -41,7 +41,6 @@ namespace InvoiceX.Forms
         /// The table of the MigraDoc document that contains the quote items.
         /// </summary>
         Table table;
-        Table table2;
 
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.

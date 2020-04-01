@@ -80,7 +80,6 @@ namespace InvoiceX.Pages.ReceiptPage
         private bool Check_AddPayment_CompletedValues()
         {
             bool all_completed = true;
-            int n;     
             if ((comboBox_PaymentMethod.SelectedIndex <= -1))//|| paymenttype_already_selected()
             {
                 all_completed = false;

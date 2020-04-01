@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using InvoiceX.Classes;
 using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 
@@ -12,21 +13,15 @@ namespace InvoiceX.ViewModels
 {
     public class CustomerViewModel
     {
-        public List<Customer> CustomersList { get; set; }
+        public List<Customer> customersList { get; set; }
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public CustomerViewModel()
         {
-            CustomersList = new List<Customer>();
-            MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            customersList = new List<Customer>();
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM Customer", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -42,7 +37,7 @@ namespace InvoiceX.ViewModels
                     var AddressDB = dataRow.Field<string>("Address");
                     var BalanceDB = dataRow.Field<float>("Balance");
 
-                    CustomersList.Add(
+                    customersList.Add(
                         new Customer()
                         {
                             idCustomer = idCustomerDB,
@@ -56,27 +51,18 @@ namespace InvoiceX.ViewModels
 
                         });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
 
         public static void insertCustomer(Customer customer)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert Invoice 
                 string query = "INSERT INTO Customer (CustomerName,PhoneNumber,Email,Country,City,Address,Balance) Values (@CustomerName,@PhoneNumber,@Email,@Country,@City,@Address,@Balance)";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -95,27 +81,17 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Customer addet to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void updateCustomer(Customer customer)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert Invoice 
                 string query = "UPDATE Customer SET CustomerName=@CustomerName,PhoneNumber=@PhoneNumber,Email=@Email,Country=@Country,City=@City,Address=@Address,Balance=@Balance  WHERE idCustomer=@idCustomer";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -135,30 +111,21 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Customer was Updated");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static int returnLatestCustomerID()
         {
-            int id_return = 0;
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             try
             {
                 string idCustomer;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idCustomer FROM Customer ORDER BY idCustomer DESC LIMIT 1", conn);
-                conn.Open();
-                id_return = cmd.ExecuteNonQuery();
+
+                int id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
@@ -167,96 +134,68 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idCustomer = "";
 
-                conn.Close();
                 return Convert.ToInt32(idCustomer);
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
         public static Customer getCustomer(int customerid)
         {
-
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             Customer customer = new Customer();
             try
             {
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Customer WHERE idCustomer=" + customerid, conn);
-                conn.Open();
-                var custome = cmd.ExecuteReader();
+                var queryResult = cmd.ExecuteReader();
 
                 // Now check if any rows returned.
-                if (custome.HasRows)
+                if (queryResult.HasRows)
                 {
-                    custome.Read();// Get first record.                     
+                    queryResult.Read();// Get first record.                     
                     customer.idCustomer = customerid; //get  values of first row
-                    customer.CustomerName = custome.GetString(1);
-                    customer.PhoneNumber = custome.GetInt32(2);
-                    customer.Email = custome.GetString(3);
-                    customer.Country = custome.GetString(4);
-                    customer.City = custome.GetString(5);
-                    customer.Address = custome.GetString(6);
-                    customer.Balance = custome.GetFloat(7);
-                    
+                    customer.CustomerName = queryResult.GetString(1);
+                    customer.PhoneNumber = queryResult.GetInt32(2);
+                    customer.Email = queryResult.GetString(3);
+                    customer.Country = queryResult.GetString(4);
+                    customer.City = queryResult.GetString(5);
+                    customer.Address = queryResult.GetString(6);
+                    customer.Balance = queryResult.GetFloat(7);
+
                 }
-                custome.Close();// Close reader.
-
-
-                conn.Close();
-                //return Convert.ToInt32(idInvoice);
-
+                queryResult.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return customer;
         }
 
         public static void deleteCustomer(int customerID)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM Customer WHERE idCustomer = " + customerID, conn);
-                cmd.ExecuteNonQuery();                
-
-                conn.Close();
+                cmd.ExecuteNonQuery();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
         }
+
         public static float getTotalSalesMonthYear(int id, int months, int year)
         {
-            MySqlConnection conn;
             float total = 0;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("getCustomerSalesByMonthYear", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@customerId", SqlDbType.Int).Value = id;
@@ -270,16 +209,17 @@ namespace InvoiceX.ViewModels
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
+
                 if (float.TryParse(total2, out total3))
                 {
                     total = total3;
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return total;
         }
 

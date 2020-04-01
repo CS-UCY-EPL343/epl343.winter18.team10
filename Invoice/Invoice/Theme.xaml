@@ -173,5 +173,11 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Padding" Value="5,0,0,0" />
     </Style>
+    <!--  All datepickers style -->
+    <Style TargetType="{x:Type DatePicker}">
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5,0,0,0" />
+    </Style>
 
 </ResourceDictionary>

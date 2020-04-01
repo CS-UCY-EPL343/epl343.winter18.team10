@@ -1,4 +1,5 @@
-﻿using InvoiceX.Models;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,14 @@ namespace InvoiceX.ViewModels
     public class ExpensesViewModel
     {
         public List<Expense> expensesList { get; set; }
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public ExpensesViewModel()
         {
             expensesList = new List<Expense>();
-            MySqlConnection conn;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM `Expense`", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -51,45 +48,35 @@ namespace InvoiceX.ViewModels
 
                     expensesList.Add(exp);
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void deleteExpense(int expenseID)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM ExpensePayment WHERE idExpense = " + expenseID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Expense WHERE idExpense = " + expenseID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static Expense getExpense(int expenseID)
         {
-            MySqlConnection conn;
             Expense exp = new Expense();
+
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-                
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM `Expense` LEFT JOIN `ExpensePayment` ON `Expense`.`idExpense` = `ExpensePayment`.`idExpense`" +
                     " WHERE `Expense`.`idExpense` = " + expenseID, conn);
                 DataTable dt = new DataTable();
@@ -150,11 +137,10 @@ namespace InvoiceX.ViewModels
                         paymentDate = paymentDate
                     });
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return exp;

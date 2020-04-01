@@ -39,7 +39,7 @@ namespace InvoiceX.Pages.CustomerPage
 
         private void filterList()
         {
-            var _itemSourceList = new CollectionViewSource() { Source = custViewModel.CustomersList };
+            var _itemSourceList = new CollectionViewSource() { Source = custViewModel.customersList };
 
             System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
 
@@ -93,7 +93,7 @@ namespace InvoiceX.Pages.CustomerPage
             txtBoxTo.Clear();
             txtBoxCustomer.Clear();
             txtBoxCity.Clear();
-            customerDataGrid.ItemsSource = custViewModel.CustomersList;
+            customerDataGrid.ItemsSource = custViewModel.customersList;
         }
 
         private void TxtBoxFrom_TextChanged(object sender, TextChangedEventArgs e)

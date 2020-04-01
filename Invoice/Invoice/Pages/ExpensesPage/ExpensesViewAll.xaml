@@ -67,10 +67,10 @@
             </Grid.Effect>
             <TextBox x:Name="txtBoxCompanyName" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBoxCustomer_TextChanged"/>
             <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
+            <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130" SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
             <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130" FontSize="16" SelectedDateChanged="dtPickerTo_SelectedDateChanged"/>
+            <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130" SelectedDateChanged="dtPickerTo_SelectedDateChanged"/>
             <Label x:Name="label1_Copy" Content="By Company: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
             <Button x:Name="btnClearFilters" Content="Clear Filters" Style="{DynamicResource CommonButtonStyle}"  HorizontalAlignment="Left" Margin="926,76,0,0" VerticalAlignment="Top" Width="145" Height="37" Click="btnClearFilters_Click"/>
             <Label x:Name="label1_Copy1" Content="By Status: " HorizontalAlignment="Left" Margin="575,33,0,0" VerticalAlignment="Top" FontSize="18"/>

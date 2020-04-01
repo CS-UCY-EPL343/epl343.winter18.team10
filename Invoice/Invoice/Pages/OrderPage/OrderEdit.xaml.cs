@@ -38,7 +38,7 @@ namespace InvoiceX.Pages.OrderPage
         public void load()
         {
             productView = new ProductViewModel();
-            comboBox_Product.ItemsSource = productView.ProductList;
+            comboBox_Product.ItemsSource = productView.productList;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

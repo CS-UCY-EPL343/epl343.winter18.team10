@@ -1,4 +1,5 @@
-﻿using InvoiceX.Models;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,14 @@ namespace InvoiceX.ViewModels
     public class ReceiptViewModel
     {
         public List<Receipt> receiptList { get; set; }
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public ReceiptViewModel()
         {
             receiptList = new List<Receipt>();
-            MySqlConnection conn;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT `Receipt`.*, `Customer`.`CustomerName` FROM `Receipt`" +
                     " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
@@ -50,23 +47,19 @@ namespace InvoiceX.ViewModels
 
                     receiptList.Add(rec);
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static Receipt getReceipt(int receiptID)
         {
-            MySqlConnection conn;
-
             Receipt rec = new Receipt();
+
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewReceipt WHERE ReceiptID = " + receiptID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -93,9 +86,9 @@ namespace InvoiceX.ViewModels
 
                     var paymentID = dataRow.Field<Int32>("idPayment");
                     var amount = dataRow.Field<float>("Amount");
-                    var method = (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod")); 
+                    var method = (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod"));
                     var paymentDate = dataRow.Field<DateTime>("PaymentDate");
-                    var paymentNumber = dataRow.Field<string>("PaymentNumber");                   
+                    var paymentNumber = dataRow.Field<string>("PaymentNumber");
 
                     if (count == 0)
                     {
@@ -131,12 +124,10 @@ namespace InvoiceX.ViewModels
                         paymentDate = paymentDate
                     });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return rec;
@@ -144,36 +135,26 @@ namespace InvoiceX.ViewModels
 
         public static void deleteReceipt(int receiptID)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM Payments WHERE idReceipt = " + receiptID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Receipt WHERE idReceipt = " + receiptID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static float getTotalReceiptsMonthYear(int months, int year)
         {
-            MySqlConnection conn;
             float total = 0;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("getReceiptsByMonthYear", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
@@ -188,25 +169,21 @@ namespace InvoiceX.ViewModels
                 {
                     total = total3;
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return total;
         }
 
         public static bool receiptExists(int id)
         {
-            MySqlConnection conn;
-
             try
             {
                 int idOrder;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idReceipt FROM Receipt where idReceipt=" + id.ToString(), conn);
-                conn.Open();
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -214,27 +191,22 @@ namespace InvoiceX.ViewModels
                 else
                     idOrder = 0;
 
-                conn.Close();
                 return ((idOrder == 0) ? false : true);
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return false;
         }
 
         public static int returnLatestReceiptID()
         {
-            MySqlConnection conn;
-
             try
             {
                 int idReceipt;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idReceipt FROM Receipt ORDER BY idReceipt DESC LIMIT 1", conn);
-                conn.Open();
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -242,25 +214,20 @@ namespace InvoiceX.ViewModels
                 else
                     idReceipt = 0;
 
-                conn.Close();
                 return idReceipt;
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
         public static void insertReceipt(Receipt receipt)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert receipt 
                 string query = "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, IssuedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @IssuedDate)";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -293,14 +260,15 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
                        ));
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
+
                 using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
 
                 //update customer total  
                 string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
@@ -311,26 +279,17 @@ namespace InvoiceX.ViewModels
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
-
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void updateReceipt(Receipt receipt, Receipt oldreceipt)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
-
                 //update receipt 
                 string query = "UPDATE Receipt SET  idCustomer=@idCustomer,Amount=@Amount, IssuedBy=@IssuedBy, IssuedDate=@IssuedDate  WHERE idReceipt=@idReceipt ";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -375,14 +334,15 @@ namespace InvoiceX.ViewModels
                        ));
 
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
+
                 using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
 
                 //update customer total  
                 string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
@@ -393,14 +353,10 @@ namespace InvoiceX.ViewModels
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
-
-
-                conn.Close();
-                MessageBox.Show("Receipt was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
     }

@@ -5,25 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using InvoiceX.Classes;
 using InvoiceX.Models;
 using MySql.Data.MySqlClient;
+
 namespace InvoiceX.ViewModels
 {
     class UserViewModel
     {
         public List<User> UsersList { get; set; }
-        private static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                                   "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public UserViewModel()
         {
             UsersList = new List<User>();
-            MySqlConnection conn;
             
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM User", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -42,23 +40,18 @@ namespace InvoiceX.ViewModels
                             admin = AdminDB
                         });
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static User getUserByUsername(string username)
         {
-            MySqlConnection conn;
-            
             User user = new User();
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM User WHERE idUser = \"" + username + "\"", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -73,11 +66,10 @@ namespace InvoiceX.ViewModels
                         admin = dt.Rows[0].Field<bool>("AdminPrivileges"),
                     };
                 }
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return user;
@@ -85,13 +77,8 @@ namespace InvoiceX.ViewModels
 
         public static void insertUser(string username, string hash, string salt, bool admin_privileges)
         {
-            MySqlConnection conn;            
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-                
                 string query = "INSERT INTO User (idUser, Hash, Salt, AdminPrivileges) Values (@idUser, @Hash, @Salt, @AdminPrivileges)";
                 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -104,33 +91,25 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void deleteUser(string username)
         {
-            MySqlConnection conn;            
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-                
                 string query = "DELETE FROM User WHERE idUser = \"" + username + "\"";
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);                
                 cmd.ExecuteNonQuery();
-                
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
     }

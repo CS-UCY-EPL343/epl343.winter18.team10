@@ -1,4 +1,5 @@
-﻿using InvoiceX.Models;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,18 @@ using System.Windows;
 
 namespace InvoiceX.ViewModels
 {
-   
+
     public class CreditNoteViewModel
     {
         public List<CreditNote> creditNoteList { get; set; }
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public CreditNoteViewModel()
         {
             creditNoteList = new List<CreditNote>();
-            MySqlConnection conn;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT `CreditNote`.*, `Customer`.`CustomerName` FROM `CreditNote`" +
                     " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
@@ -55,25 +52,18 @@ namespace InvoiceX.ViewModels
 
                     creditNoteList.Add(cred);
                 }
-
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static CreditNote getCreditNote(int creditNoteID)
         {
-            MySqlConnection conn;
-
             CreditNote cred = new CreditNote();
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewCreditNote WHERE CreditNoteID = " + creditNoteID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -147,12 +137,10 @@ namespace InvoiceX.ViewModels
                         Vat = proVat
                     });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return cred;
@@ -160,23 +148,17 @@ namespace InvoiceX.ViewModels
 
         public static void deleteCreditNote(int creditNoteID)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM CreditNoteProduct WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM CreditNote WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 

@@ -40,7 +40,7 @@ namespace InvoiceX.Pages.ProductPage
 
         private void filterList()
         {
-            var _itemSourceList = new CollectionViewSource() { Source = prodViewModel.ProductList };
+            var _itemSourceList = new CollectionViewSource() { Source = prodViewModel.productList };
 
             System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
 
@@ -97,7 +97,7 @@ namespace InvoiceX.Pages.ProductPage
             txtBoxCategory.Clear();
             txtBoxProduct.Clear();
             cmbBoxStatus.SelectedIndex = 0;
-            productDataGrid.ItemsSource = prodViewModel.ProductList;
+            productDataGrid.ItemsSource = prodViewModel.productList;
         }
 
         private void EditProduct_Click(object sender, RoutedEventArgs e)

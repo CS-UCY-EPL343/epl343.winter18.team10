@@ -36,8 +36,8 @@ namespace InvoiceX.Pages.QuotePage
             {                
                 productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.CustomersList;
-                comboBox_Product.ItemsSource = productView.ProductList;
+                comboBox_customer.ItemsSource = customerView.customersList;
+                comboBox_Product.ItemsSource = productView.productList;
                 textBox_idQuote.Text = (QuoteViewModel.returnLatestQuoteID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
             }
@@ -91,7 +91,6 @@ namespace InvoiceX.Pages.QuotePage
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
-            int n;     
             if ((comboBox_Product.SelectedIndex <= -1) || product_already_selected())
             {
                 all_completed = false;

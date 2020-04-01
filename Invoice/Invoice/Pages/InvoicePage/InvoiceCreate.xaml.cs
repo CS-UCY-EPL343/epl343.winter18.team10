@@ -40,8 +40,8 @@ namespace InvoiceX.Pages.InvoicePage
             {                
                 productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.CustomersList;
-                comboBox_Product.ItemsSource = productView.ProductList;
+                comboBox_customer.ItemsSource = customerView.customersList;
+                comboBox_Product.ItemsSource = productView.productList;
                 textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60

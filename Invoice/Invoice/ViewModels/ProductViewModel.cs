@@ -6,30 +6,23 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.DataVisualization.Charting;
 using System.Windows;
+using InvoiceX.Classes;
 using InvoiceX.Models;
 using MySql.Data.MySqlClient;
+
 namespace InvoiceX.ViewModels
 {
-    class ProductViewModel
+    public class ProductViewModel
     {
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                   "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        public List<Product> productList { get; set; }
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
 
-        public List<Product> ProductList { get; set; }
         public ProductViewModel()
         {
-            ProductList = new List<Product>();
-
-            MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+            productList = new List<Product>();
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM Product", conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -42,11 +35,11 @@ namespace InvoiceX.ViewModels
                     var Stockdb = dataRow.Field<int>("Stock");
                     var MinStockdb = dataRow.Field<int>("MinStock");
                     var Costdb = dataRow.Field<float>("Cost");
-                    var SellPricedb = dataRow.Field<float>("SellPrice");       
+                    var SellPricedb = dataRow.Field<float>("SellPrice");
                     var Vatdb = dataRow.Field<float>("VAT");
                     var Categorydb = dataRow.Field<string>("Category");
 
-                    ProductList.Add(
+                    productList.Add(
                         new Product()
                         {
                             idProduct = idProductsdb,
@@ -58,29 +51,20 @@ namespace InvoiceX.ViewModels
                             SellPrice = SellPricedb,
                             Vat = Vatdb,
                             Category = Categorydb,
-                            Quantity=1
+                            Quantity = 1
                         });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void insertProduct(Product product)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert Invoice 
                 string query = "INSERT INTO Product (ProductName, Description, Stock, MinStock, Cost, SellPrice, VAT,Category) Values (@ProductName, @Description, @Stock, @MinStock, @Cost, @SellPrice, @VAT,@Category)";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -100,26 +84,17 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void updateProduct(Product product)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert Invoice 
                 string query = "UPDATE Product SET ProductName=@ProductName, Description=@Description, Stock=@Stock, MinStock=@MinStock, Cost=@Cost, SellPrice=@SellPrice, VAT=@VAT,Category=@Category  WHERE idProduct=@idProduct";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -140,30 +115,21 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Product was Updated");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static int returnLatestProductID()
         {
-            int id_return = 0;
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             try
             {
                 string idProduct;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idProduct FROM Product ORDER BY idProduct DESC LIMIT 1", conn);
-                conn.Open();
-                id_return = cmd.ExecuteNonQuery();
+
+                int id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
@@ -172,40 +138,33 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idProduct = "";
 
-                conn.Close();
                 return Convert.ToInt32(idProduct);
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
-        
+
         public static Product getProduct(int productid)
         {
-           
-            MySqlConnection conn;
-            string myConnectionString;
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             Product product = new Product();
+
             try
-            {                
-                conn = new MySqlConnection(myConnectionString);
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Product WHERE idProduct="+ productid, conn);
-                conn.Open();
+            {
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Product WHERE idProduct=" + productid, conn);
                 var produc = cmd.ExecuteReader();
-               
+
                 // Now check if any rows returned.
                 if (produc.HasRows)
                 {
                     produc.Read();// Get first record.                     
                     product.idProduct = productid; //get  values of first row
-                    product.ProductName= produc.GetString(1);
-                    product.ProductDescription= produc.GetString(2);
+                    product.ProductName = produc.GetString(1);
+                    product.ProductDescription = produc.GetString(2);
                     product.Stock = produc.GetInt32(3);
                     product.MinStock = produc.GetInt32(4);
                     product.Cost = produc.GetDouble(5);
@@ -213,51 +172,35 @@ namespace InvoiceX.ViewModels
                     product.Vat = produc.GetFloat(7);
                     product.Category = produc.GetString(8);
                 }
-                produc.Close();// Close reader.
-                
 
-                conn.Close();
-                //return Convert.ToInt32(idInvoice);
-
+                produc.Close();// Close reader.  
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return product;
         }
 
         public static void deleteProduct(int productID)
         {
-            MySqlConnection conn;
-            string myConnectionString;
-
-            myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                 "pwd=CCfHC5PWLjsSJi8G;database=invoice";
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM Product WHERE idProduct = " + productID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
         public static int getProductCount(int productId, int months, int year)
         {
-            MySqlConnection conn;
-            int total=0 ;
+            int total = 0;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("getTotalProducts", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
@@ -270,27 +213,25 @@ namespace InvoiceX.ViewModels
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();
                 int total3 = 0;
-                if (int.TryParse(total2,out total3)) { 
+
+                if (int.TryParse(total2, out total3))
+                {
                     total = total3;
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return total;
         }
-        public static float getProductSales(int productId, int months,int year)
+        public static float getProductSales(int productId, int months, int year)
         {
-            MySqlConnection conn;
             float total = 0;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 MySqlCommand cmd = new MySqlCommand("getTotalProductSales", conn);
                 cmd.CommandType = System.Data.CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
@@ -303,16 +244,17 @@ namespace InvoiceX.ViewModels
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
+
                 if (float.TryParse(total2, out total3))
                 {
                     total = total3;
                 }
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return total;
         }
 

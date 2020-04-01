@@ -2,23 +2,8 @@
 using InvoiceX.ViewModels;
 using LiveCharts;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.DataVisualization.Charting;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace InvoiceX.Pages.CustomerPage
 {
@@ -38,7 +23,7 @@ namespace InvoiceX.Pages.CustomerPage
         public void load()
         {
             custViewModel = new CustomerViewModel();
-            customerComboBox.ItemsSource = custViewModel.CustomersList;
+            customerComboBox.ItemsSource = custViewModel.customersList;
             customerComboBox.DisplayMemberPath = "CustomerName";
             customerComboBox.SelectedValuePath = "CustomerName";
         }

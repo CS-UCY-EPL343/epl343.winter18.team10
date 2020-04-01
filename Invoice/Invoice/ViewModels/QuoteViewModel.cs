@@ -1,4 +1,5 @@
-﻿using InvoiceX.Models;
+﻿using InvoiceX.Classes;
+using InvoiceX.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,17 +14,14 @@ namespace InvoiceX.ViewModels
     public class QuoteViewModel
     {
         public List<Quote> quoteList { get; set; }
-        static string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                           "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+        private static MySqlConnection conn = DBConnection.Instance.Connection;
+
         public QuoteViewModel()
         {
             quoteList = new List<Quote>();
-            MySqlConnection conn;
 
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT `Quote`.*, `Customer`.`CustomerName` FROM `Quote`" +
                     " LEFT JOIN `Customer` ON `Quote`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
                 DataTable dt = new DataTable();
@@ -47,25 +45,18 @@ namespace InvoiceX.ViewModels
 
                     quoteList.Add(quote);
                 }
-
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static Quote getQuote(int quoteID)
         {
-            MySqlConnection conn;
-
             Quote quote = new Quote();
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewQuote WHERE QuoteID = " + quoteID, conn);
                 DataTable dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
@@ -123,17 +114,15 @@ namespace InvoiceX.ViewModels
                     {
                         idProduct = productID,
                         ProductName = product,
-                        ProductDescription = prodDescription,                        
+                        ProductDescription = prodDescription,
                         SellPrice = sellPrice,
                         OfferPrice = offerPrice
                     });
                 }
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
 
             return quote;
@@ -141,34 +130,24 @@ namespace InvoiceX.ViewModels
 
         public static void deleteQuote(int quoteID)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 MySqlCommand cmd = new MySqlCommand("DELETE FROM QuoteProduct WHERE idQuote = " + quoteID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Quote WHERE idQuote = " + quoteID, conn);
                 cmd.ExecuteNonQuery();
-
-                conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static void insertQuote(Quote quote)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
                 //insert invoice 
                 string query = "INSERT INTO Quote (idQuote, idCustomer, CreatedDate, IssuedBy) Values (@idQuote, @idCustomer, @CreatedDate, @IssuedBy)";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -198,33 +177,27 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.OfferPrice.ToString().Replace(",", "."))
                        ));
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
+
                 using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Quote was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
 
         public static void updateQuote(Quote quote, Quote old_quote)
         {
-            MySqlConnection conn;
-
             try
             {
-                conn = new MySqlConnection(myConnectionString);
-                conn.Open();
-
                 //update Order 
                 string query = "UPDATE Quote SET idQuote=@idQuote, CreatedDate=@CreatedDate, IssuedBy=@IssuedBy  WHERE idQuote=@idQuote ";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -241,7 +214,6 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
 
-
                 //delete old Order products
                 string query_delete_invoiceProducts = "DELETE from QuoteProduct WHERE idQuote=@idQuote;";
                 // Yet again, we are creating a new object that implements the IDisposable
@@ -253,7 +225,6 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
-
 
                 //insert products
                 StringBuilder sCommand = new StringBuilder("INSERT INTO QuoteProduct (idQuote, idProduct, Price) VALUES ");
@@ -267,34 +238,29 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.OfferPrice.ToString().Replace(",", "."))
                        ));
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
+
                 using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
-
-                conn.Close();
-                MessageBox.Show("Quote was send to Data Base");
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
         }
 
         public static int returnLatestQuoteID()
         {
-            //int id_return = 0;
-            MySqlConnection conn;
-
             try
             {
                 int idInvoice;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idQuote FROM Quote ORDER BY idQuote DESC LIMIT 1", conn);
-                conn.Open();
+
                 // id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
@@ -304,28 +270,23 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idInvoice = 0;
 
-                conn.Close();
                 return idInvoice;
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
         public static bool quoteExists(int id)
         {
-            //int id_return = 0;
-            MySqlConnection conn;
-
             try
             {
                 int idInvoice;
-                conn = new MySqlConnection(myConnectionString);
                 MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idQuote FROM Quote where idQuote=" + id.ToString(), conn);
-                conn.Open();
+
                 // id_return = cmd.ExecuteNonQuery();
                 var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
                 if (queryResult != null)
@@ -335,14 +296,13 @@ namespace InvoiceX.ViewModels
                     // Else make id = "" so you can later check it.
                     idInvoice = 0;
 
-                conn.Close();
                 return ((idInvoice == 0) ? false : true);
-
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nMallon dn ise sto VPN tou UCY");
+                MessageBox.Show(ex.Message);
             }
+
             return false;
         }
     }

@@ -41,8 +41,8 @@ namespace InvoiceX.Pages.OrderPage
             {                
                 productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.CustomersList;
-                comboBox_Product.ItemsSource = productView.ProductList;
+                comboBox_customer.ItemsSource = customerView.customersList;
+                comboBox_Product.ItemsSource = productView.productList;
                 textBox_orderNumber.Text = (OrderViewModel.returnLatestOrderID()+1).ToString();
                 OrderDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60

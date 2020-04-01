@@ -33,7 +33,7 @@ namespace InvoiceX.Pages.QuotePage
         public void load()
         {
             productView = new ProductViewModel();
-            comboBox_Product.ItemsSource = productView.ProductList;
+            comboBox_Product.ItemsSource = productView.productList;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -69,7 +69,6 @@ namespace InvoiceX.Pages.QuotePage
         private bool Check_AddProduct_CompletedValues()
         {
             bool all_completed = true;
-            int n;
             if ((comboBox_Product.SelectedIndex <= -1) || product_already_selected())
             {
                 all_completed = false;

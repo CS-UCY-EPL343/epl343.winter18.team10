@@ -265,6 +265,7 @@
     </Compile>
     <Compile Include="Tools\RatioConverter.cs" />
     <Compile Include="ViewModels\CreditNoteViewModel.cs" />
+    <Compile Include="Classes\DBConnection.cs" />
     <Compile Include="ViewModels\ExpensesViewModel.cs" />
     <Compile Include="ViewModels\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\CustomerViewModel.cs" />

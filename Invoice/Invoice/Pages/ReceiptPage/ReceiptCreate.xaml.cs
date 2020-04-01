@@ -32,7 +32,7 @@ namespace InvoiceX.Pages.ReceiptPage
             {                
                 //productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.CustomersList;
+                comboBox_customer.ItemsSource = customerView.customersList;
                 //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
                 textBox_ReceiptNumber.Text = (ReceiptViewModel.returnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
@@ -94,7 +94,6 @@ namespace InvoiceX.Pages.ReceiptPage
         private bool Check_AddPayment_CompletedValues()
         {
             bool all_completed = true;
-            int n;     
             if ((comboBox_PaymentMethod.SelectedIndex <= -1))//|| paymenttype_already_selected()
             {
                 all_completed = false;
