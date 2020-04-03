@@ -133,6 +133,51 @@ namespace InvoiceX.ViewModels
             return rec;
         }
 
+        public static List<StatementItem> getReceiptsForStatement(int customerID, DateTime from, DateTime to)
+        {
+            List<StatementItem> list = new List<StatementItem>();
+
+            try
+            {
+                string query = "SELECT `Receipt`.* FROM `Receipt`" +
+                    " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
+                    "`Receipt`.`IssuedDate` >= @from AND `Receipt`.`IssuedDate` <= @to; ";
+                DataTable dt = new DataTable();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@customerID", customerID);
+                    cmd.Parameters.AddWithValue("@from", from);
+                    cmd.Parameters.AddWithValue("@to", to);
+
+                    dt.Load(cmd.ExecuteReader());
+                }
+
+                StatementItem inv = new StatementItem();
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idReceipt = dataRow.Field<Int32>("idReceipt");
+                    var amount = dataRow.Field<float>("Amount");
+                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
+
+                    inv = new StatementItem()
+                    {
+                        idItem = idReceipt,
+                        credits = amount,
+                        createdDate = createdDate,
+                        itemType = ItemType.Receipt
+                    };
+
+                    list.Add(inv);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return list;
+        }
+
         public static void deleteReceipt(int receiptID)
         {
             try

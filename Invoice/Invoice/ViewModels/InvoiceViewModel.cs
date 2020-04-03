@@ -150,6 +150,51 @@ namespace InvoiceX.ViewModels
             return inv;
         }
 
+        public static List<StatementItem> getInvoicesForStatement(int customerID, DateTime from, DateTime to)
+        {
+            List<StatementItem> list = new List<StatementItem>();            
+
+            try
+            {
+                string query = "SELECT `Invoice`.* FROM `Invoice`" +
+                    " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
+                    "`Invoice`.`CreatedDate` >= @from AND `Invoice`.`CreatedDate` <= @to; ";
+                DataTable dt = new DataTable();
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("@customerID", customerID);
+                    cmd.Parameters.AddWithValue("@from", from);
+                    cmd.Parameters.AddWithValue("@to", to);
+
+                    dt.Load(cmd.ExecuteReader());
+                }           
+
+                StatementItem inv = new StatementItem();
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    var invTotalCost = dataRow.Field<float>("TotalCost");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
+
+                    inv = new StatementItem()
+                    {
+                        idItem = idInvoice,                        
+                        charges = invTotalCost,
+                        createdDate = createdDate,
+                        itemType = ItemType.Invoice
+                    };
+
+                    list.Add(inv);
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return list;
+        }
+
         public static void deleteInvoice(int invoiceID)
         {
             try

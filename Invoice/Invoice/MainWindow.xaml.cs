@@ -9,6 +9,7 @@ using InvoiceX.Pages.ProductPage;
 using InvoiceX.Pages.QuotePage;
 using InvoiceX.Pages.ReceiptPage;
 using InvoiceX.Pages.SettingsPage;
+using InvoiceX.Pages.StatementPage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,7 +35,7 @@ namespace InvoiceX
         private InvoiceMain m_invoice = new InvoiceMain();
         private Page m_receipt = new ReceiptMain();
         private Page m_creditNote = new CreditNoteMain();
-        //private Page m_statement;
+        private Page m_statement = new StatementMain();
         private Page m_product = new ProductMain();
         private Page m_customer = new CustomerMain();
         private Page m_order;
@@ -95,6 +96,7 @@ namespace InvoiceX
             pageTitle.Text = "Statement";
             resetAllBtnStyles();
             btnStatement.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_statement;
         }
 
         private void BtnProduct_Click(object sender, RoutedEventArgs e)

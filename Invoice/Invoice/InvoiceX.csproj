@@ -127,6 +127,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\Quote.cs" />
     <Compile Include="Models\Receipt.cs" />
+    <Compile Include="Models\StatementItem.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Pages\CreditNotePage\CreditNoteCreate.xaml.cs">
       <DependentUpon>CreditNoteCreate.xaml</DependentUpon>
@@ -263,6 +264,12 @@
     <Compile Include="Pages\SettingsPage\SettingsMain.xaml.cs">
       <DependentUpon>SettingsMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\StatementPage\StatementCreate.xaml.cs">
+      <DependentUpon>StatementCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\StatementPage\StatementMain.xaml.cs">
+      <DependentUpon>StatementMain.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools\RatioConverter.cs" />
     <Compile Include="ViewModels\CreditNoteViewModel.cs" />
     <Compile Include="Classes\DBConnection.cs" />
@@ -365,6 +372,14 @@
     <Page Include="Pages\ReceiptPage\ReceiptCreate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\StatementPage\StatementCreate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\StatementPage\StatementMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Theme.xaml">
       <SubType>Designer</SubType>
