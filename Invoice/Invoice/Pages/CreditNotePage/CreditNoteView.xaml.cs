@@ -159,8 +159,8 @@ namespace InvoiceX.Pages.CreditNotePage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Invoice.pdf";
-            filename = "Invoice.pdf";
+            string filename = "creditNote.pdf";
+            filename = "creditNote.pdf";
             pdfRenderer.Save(filename);
             System.Diagnostics.Process.Start(filename);
 
@@ -181,7 +181,7 @@ namespace InvoiceX.Pages.CreditNotePage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Invoice.pdf";
+            string filename = "CreditNote.pdf";
             pdfRenderer.Save(filename);
             //open adobe acrobat
             Process proc = new Process();
@@ -211,9 +211,9 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("Invoice_temp.pdf"))
+            if (File.Exists("creditNote_temp.pdf"))
             {
-                File.Delete("Invoice_temp.pdf");
+                File.Delete("creditNote_temp.pdf");
             }
             MigraDoc.DocumentObjectModel.Document document = createPdf();
             document.UseCmykColor = true;
@@ -227,7 +227,7 @@ namespace InvoiceX.Pages.CreditNotePage
             pdfRenderer.RenderDocument();
 
             // Save the PDF document...
-            string filename = "Invoice_temp.pdf";
+            string filename = "creditNote_temp.pdf";
             pdfRenderer.Save(filename);
 
             //open adobe acrobat
@@ -257,8 +257,8 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Invoice invoice = InvoiceViewModel.getInvoice(int.Parse(txtBox_creditNoteNumber.Text));
-            Customer customer = invoice.customer;
+            CreditNote creditNote = CreditNoteViewModel.getCreditNote(int.Parse(txtBox_creditNoteNumber.Text));
+            Customer customer = creditNote.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
             customerDetails[1] = customer.Address + ", " +
@@ -269,20 +269,20 @@ namespace InvoiceX.Pages.CreditNotePage
             customerDetails[5] = customer.idCustomer.ToString();
             MessageBox.Show(customer.idCustomer.ToString());
 
-            string[] invoiceDetails = new string[6];
-            invoiceDetails[0] = txtBox_creditNoteNumber.Text;
+            string[] creditNoteDetails = new string[6];
+            creditNoteDetails[0] = txtBox_creditNoteNumber.Text;
             Console.WriteLine(txtBox_creditNoteNumber.Text);
-            invoiceDetails[1] = txtBox_createdDate.Text;
-            invoiceDetails[2] = txtBox_issuedBy.Text;
-            invoiceDetails[3] = NetTotal_TextBlock.Text;
-            invoiceDetails[4] = Vat_TextBlock.Text;
-            invoiceDetails[5] = TotalAmount_TextBlock.Text;
+            creditNoteDetails[1] = txtBox_createdDate.Text;
+            creditNoteDetails[2] = txtBox_issuedBy.Text;
+            creditNoteDetails[3] = NetTotal_TextBlock.Text;
+            creditNoteDetails[4] = Vat_TextBlock.Text;
+            creditNoteDetails[5] = TotalAmount_TextBlock.Text;
 
             List<Product> products = creditNoteProductsGrid.Items.OfType<Product>().ToList();
 
 
-            Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
+            Forms.CreditNoteForm creditnote2 = new Forms.CreditNoteForm("../../Forms/creditNote.xml", customerDetails, creditNoteDetails, products);
+            MigraDoc.DocumentObjectModel.Document document = creditnote2.CreateDocument();
             return document;
         }
         #endregion
