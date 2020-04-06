@@ -272,7 +272,6 @@ namespace InvoiceX.Pages.InvoicePage
 
             string[] invoiceDetails = new string[6];
             invoiceDetails[0] = txtBox_invoiceNumber.Text;
-            Console.WriteLine(txtBox_invoiceNumber.Text);
             invoiceDetails[1] = txtBox_invoiceDate.Text;
             invoiceDetails[2] = txtBox_issuedBy.Text;
             invoiceDetails[3] = NetTotal_TextBlock.Text;

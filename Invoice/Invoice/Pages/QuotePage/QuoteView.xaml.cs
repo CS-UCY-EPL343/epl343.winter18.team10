@@ -259,7 +259,6 @@ namespace InvoiceX.Pages.QuotePage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
-            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] quoteDetails = new string[3];
             quoteDetails[0] = txtBox_QuoteNumber.Text;

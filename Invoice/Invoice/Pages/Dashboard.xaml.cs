@@ -103,13 +103,16 @@ namespace InvoiceX.Pages
             var lastMonth = month.AddMonths(-4);
             double[] invoices = new double[4];
             double[] receipts = new double[4];
+            double[] expenses = new double[4];
+
             Labels2 = new string[4];
 
             for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine(lastMonth);
                 receipts[i] = ViewModels.ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year);
                 invoices[i] = ViewModels.InvoiceViewModel.getTotalSalesMonthYear(lastMonth.Month, lastMonth.Year);
+                expenses[i] = ViewModels.ExpensesViewModel.getTotalExpensesMonthYear(lastMonth.Month, lastMonth.Year);
+                Console.WriteLine(expenses[i]);
                 Labels2[i] = lastMonth.Month.ToString();
                 lastMonth = lastMonth.AddMonths(1);
             }
@@ -118,6 +121,9 @@ namespace InvoiceX.Pages
 
             ChartValues<double> total = new ChartValues<double>();
             total.AddRange(invoices);
+
+            ChartValues<double> totalExpenses = new ChartValues<double>();
+            totalExpenses.AddRange(expenses);
 
             SeriesCollection2 = new SeriesCollection
             {
@@ -134,8 +140,8 @@ namespace InvoiceX.Pages
                 new ColumnSeries
                 {
                     Title = "Expenses",
-                    Values = new ChartValues<double> { 10, 2, 6, 10 }
-                }
+                    Values = totalExpenses
+                },
 
             };
 

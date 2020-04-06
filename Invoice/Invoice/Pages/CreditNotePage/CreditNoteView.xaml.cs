@@ -267,7 +267,6 @@ namespace InvoiceX.Pages.CreditNotePage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
-            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] creditNoteDetails = new string[6];
             creditNoteDetails[0] = txtBox_creditNoteNumber.Text;
