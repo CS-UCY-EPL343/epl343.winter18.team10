@@ -251,8 +251,8 @@ namespace InvoiceX.Pages.InvoicePage
                 cost = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency),
                 VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency),
                 totalCost = Double.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
-                createdDate = invoiceDate.SelectedDate.Value.Date,
-                dueDate = invoiceDate.SelectedDate.Value.Date,
+                createdDate = invoiceDate.SelectedDate.Value,
+                dueDate = invoiceDate.SelectedDate.Value,
                 issuedBy = issuedBy.Text
             };            
         }             
@@ -266,6 +266,7 @@ namespace InvoiceX.Pages.InvoicePage
             if (allValuesOK)
             {
                 Invoice inv = createInvoiceObject();
+                inv.createdDate += DateTime.Now.TimeOfDay;
                 InvoiceViewModel.insertInvoice(inv);
                 MessageBox.Show("Invoice with ID " + inv.idInvoice + " was created.");
                 invoiceMain.viewInvoice(inv.idInvoice);

@@ -31,30 +31,50 @@ namespace InvoiceX
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Page m_dashboard = new Dashboard();
-        private InvoiceMain m_invoice = new InvoiceMain();
-        private Page m_receipt = new ReceiptMain();
-        private Page m_creditNote = new CreditNoteMain();
-        private Page m_statement = new StatementMain();
-        private Page m_product = new ProductMain();
-        private Page m_customer = new CustomerMain();
-        private Page m_order;
-        private Page m_quote = new QuoteMain();
-        private Page m_expenses = new ExpensesMain();
-        private Page m_settings = new SettingsMain();
+        private Dashboard m_dashboard;
+        private InvoiceMain m_invoice;
+        private ReceiptMain m_receipt;
+        private CreditNoteMain m_creditNote;
+        private StatementMain m_statement;
+        private ProductMain m_product;
+        private CustomerMain m_customer;
+        private OrderMain m_order;
+        private QuoteMain m_quote;
+        private ExpensesMain m_expenses;
+        private SettingsMain m_settings;
+
+        private User user;
 
         public MainWindow()
         {
             InitializeComponent();
+            //this.user = user;
+            //userName.Text = this.user.username;
+            //if (this.user.admin)
+            //    userPermissions.Text = "Administrator";
+            //else
+            //    userPermissions.Text = "User";
+
+            m_dashboard = new Dashboard();
+            m_invoice = new InvoiceMain();
+            m_receipt = new ReceiptMain();
+            m_creditNote = new CreditNoteMain();
+            m_statement = new StatementMain();
+            m_product = new ProductMain();
+            m_customer = new CustomerMain();
+            m_quote = new QuoteMain();
+            m_expenses = new ExpensesMain();
+            m_settings = new SettingsMain();
             m_order = new OrderMain(this);
+
             BtnDashboard_Click(null, null);
         }
-           
+
         private void resetAllBtnStyles()
         {
-            btnDashboard.Style = btnInvoice.Style = btnReceipt.Style = 
-            btnCreditNote.Style = btnStatement.Style = btnProduct.Style = 
-            btnCustomers.Style = btnOrder.Style = btnQuote.Style = 
+            btnDashboard.Style = btnInvoice.Style = btnReceipt.Style =
+            btnCreditNote.Style = btnStatement.Style = btnProduct.Style =
+            btnCustomers.Style = btnOrder.Style = btnQuote.Style =
             btnExpenses.Style = btnSettings.Style = FindResource("sideMenuBtnStyle") as Style;
         }
 
@@ -62,7 +82,7 @@ namespace InvoiceX
         {
             pageTitle.Text = "Dashboard";
             MainPage.Content = m_dashboard;
-            ((Dashboard)m_dashboard).loadOrderTable();
+            m_dashboard.loadOrderTable();
             resetAllBtnStyles();
             btnDashboard.Style = FindResource("sideMenuBtnStyle_selected") as Style;
         }
@@ -72,7 +92,7 @@ namespace InvoiceX
             pageTitle.Text = "Invoice";
             resetAllBtnStyles();
             btnInvoice.Style = FindResource("sideMenuBtnStyle_selected") as Style;
-            MainPage.Content = m_invoice;           
+            MainPage.Content = m_invoice;
         }
 
         private void BtnReceipt_Click(object sender, RoutedEventArgs e)
@@ -161,10 +181,10 @@ namespace InvoiceX
                     loginWindow.Show();
                     this.Close();
                     break;
-                case MessageBoxResult.No:                    
-                    break;                
+                case MessageBoxResult.No:
+                    break;
             }
-            
+
         }
 
         public void issueOrderAsInvoice(Order order)

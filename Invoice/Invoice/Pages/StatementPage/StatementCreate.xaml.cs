@@ -51,8 +51,10 @@ namespace InvoiceX.Pages.StatementPage
         private void loadStatementItems()
         {
             int customerID = ((Customer)comboBox_customer.SelectedItem).idCustomer;
-            DateTime from = (DateTime)fromDate.SelectedDate;
-            DateTime to = (DateTime)toDate.SelectedDate;
+            DateTime from = fromDate.SelectedDate.Value.Date;
+            from += new TimeSpan(0, 0, 0);  // start from 00:00:00 of from date
+            DateTime to = toDate.SelectedDate.Value.Date;
+            to += new TimeSpan(23, 59, 59); // end on 23:59:59 of to date
 
             List<StatementItem> statement = new List<StatementItem>();
             statement.AddRange(InvoiceViewModel.getInvoicesForStatement(customerID, from, to));

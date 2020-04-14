@@ -8,8 +8,8 @@ INSERT INTO `Product` (`idProduct`, `ProductName`, `Description`, `Stock`, `MinS
 				   (NULL, 'xlorini', 'kati kami', 5, 30, 4.50, 7.15, 0.19, 'cat 1'),
 				   (NULL, 'tidepods', 'kati kami', 30, 5, 4.50, 7.68, 0.19, 'cat 2');		
 
-INSERT INTO `Invoice` (`idInvoice`, `idCustomer`, `Cost`, `VAT`, `TotalCost`, `CreatedDate`, `DueDate`, `IssuedBy`) 
-			VALUES (NULL, '1', '62.24', '11.83', '74.07', '2020-02-29', '2020-02-29', 'chr');		
+INSERT INTO `Invoice` (`idInvoice`, `idCustomer`, `Cost`, `VAT`, `TotalCost`, `CreatedDate`, `DueDate`, `PreviousBalance`, `IssuedBy`) 
+			VALUES (NULL, '1', '62.24', '11.83', '74.07', '2020-02-29', '2020-02-29', 1000, 'chr');		
 
 INSERT INTO `InvoiceProduct` (`idInvoice`, `idProduct`, `Quantity`, `Cost`, `VAT`) 
 			VALUES ('1', '1', '10', '55', '0.19'),	
@@ -23,15 +23,15 @@ INSERT INTO `OrderProduct` (`idOrder`, `idProduct`, `Quantity`, `Cost`, `VAT`) V
 INSERT INTO `Expense` (`idExpense`, `CompanyName`, `Category`, `PhoneNumber`, `Description`, `InvoiceNo`, `CreatedDate`, `Cost`, `VAT`, `TotalCost`, `IsPaid`, `IssuedBy`) 
 			VALUES (NULL, 'Company', 'Chemicals', '99454545', 'smth about smth', '456', '2020-03-21', '100', '0.19', '119', '1', 'me');
 
-INSERT INTO `Receipt` (`idReceipt`, `idCustomer`, `Amount`, `IssuedBy`, `IssuedDate`) VALUES (NULL, '2', '250', 'me', '2020-02-27');
+INSERT INTO `Receipt` (`idReceipt`, `idCustomer`, `Amount`, `CreatedDate`, `PreviousBalance`, `IssuedBy`) VALUES (NULL, '1', '250', '2020-02-27', 1300, 'me');
 
 INSERT INTO `Payment` (`idPayment`, `idReceipt`, `PaymentMethod`, `Amount`, `PaymentNumber`, `PaymentDate`) 
 			VALUES (NULL, '1', 'Cash', '150', '-1', '2020-02-26'), 
 				   (NULL, '1', 'Bank', '50', '12ad34', '2020-02-26'),
 				   (NULL, '1', 'Cheque', '50', '45698sdfb7', '2020-02-29');
 				   
-INSERT INTO `CreditNote` (`idCreditNote`, `idCustomer`, `Cost`, `VAT`, `TotalCost`, `CreatedDate`, `IssuedBy`) 
-			VALUES (NULL, '1', '62.24', '11.83', '74.07', '2020-02-29', 'chr');		
+INSERT INTO `CreditNote` (`idCreditNote`, `idCustomer`, `Cost`, `VAT`, `TotalCost`, `CreatedDate`, `PreviousBalance`, `IssuedBy`) 
+			VALUES (NULL, '1', '62.24', '11.83', '74.07', '2020-02-29', 1000, 'chr');		
 
 INSERT INTO `CreditNoteProduct` (`idCreditNote`, `idProduct`, `idInvoice`, `Quantity`) 
 			VALUES ('1', '1', '1', '5');				   

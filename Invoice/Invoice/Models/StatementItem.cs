@@ -19,7 +19,21 @@ namespace InvoiceX.Models
         }
         public float charges { get; set; }
         public float credits { get; set; }
-        public float balance { get; set; }
+        private float prevBalance;
+        public float balance
+        {
+            get
+            {
+                if (itemType == ItemType.Invoice)
+                    return prevBalance + charges;
+                else
+                    return prevBalance - credits;
+            }
+            set
+            {
+                prevBalance = value;
+            }
+        }
         public int idItem { get; set; }
         public ItemType itemType { get; set; }
 

@@ -60,10 +60,10 @@ namespace InvoiceX.Pages.CreditNotePage
 
             var item = obj as CreditNote;
             if (dateFrom.HasValue)
-                logic = logic & (item.createdDate.CompareTo(dateFrom.Value) >= 0);
+                logic = logic & (item.createdDate.Date.CompareTo(dateFrom.Value) >= 0);
 
             if (dateTo.HasValue)
-                logic = logic & (item.createdDate.CompareTo(dateTo.Value) <= 0);
+                logic = logic & (item.createdDate.Date.CompareTo(dateTo.Value) <= 0);
 
             if (!string.IsNullOrWhiteSpace(customerName))
                 logic = logic & (item.customerName.ToLower().Contains(customerName.ToLower()));

@@ -171,13 +171,15 @@ namespace InvoiceX.ViewModels
                     var idCreditNote = dataRow.Field<Int32>("idCreditNote");
                     var credTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                    var balance = dataRow.Field<float>("PreviousBalance");
 
                     inv = new StatementItem()
                     {
                         idItem = idCreditNote,
                         credits = credTotalCost,
                         createdDate = createdDate,
-                        itemType = ItemType.CreditNote
+                        itemType = ItemType.CreditNote,
+                        balance = balance
                     };
 
                     list.Add(inv);

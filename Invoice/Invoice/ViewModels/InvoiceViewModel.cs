@@ -175,13 +175,15 @@ namespace InvoiceX.ViewModels
                     var idInvoice = dataRow.Field<Int32>("idInvoice");
                     var invTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                    var balance = dataRow.Field<float>("PreviousBalance");
 
                     inv = new StatementItem()
                     {
                         idItem = idInvoice,                        
                         charges = invTotalCost,
                         createdDate = createdDate,
-                        itemType = ItemType.Invoice
+                        itemType = ItemType.Invoice,
+                        balance = balance
                     };
 
                     list.Add(inv);
@@ -260,13 +262,11 @@ namespace InvoiceX.ViewModels
             try
             {
                 //insert invoice 
-                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @IssuedBy)";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
+                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, PreviousBalance, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @PreviousBalance, @IssuedBy)";
+                
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
-
                     cmd.Parameters.AddWithValue("@idInvoice", invoice.idInvoice);
                     cmd.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
                     cmd.Parameters.AddWithValue("@Cost", invoice.cost);
@@ -275,6 +275,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@CreatedDate", invoice.createdDate);
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
+                    cmd.Parameters.AddWithValue("@PreviousBalance", invoice.customer.Balance);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
@@ -305,9 +306,9 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update customer total  
-                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
+                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", invoice.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
@@ -325,9 +326,8 @@ namespace InvoiceX.ViewModels
             try
             {
                 //update Invoice 
-                string query = "UPDATE Invoice SET  Cost=@Cost,Vat=@Vat, TotalCost=@TotalCost, CreatedDate=@CreatedDate, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
+                string query = "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, CreatedDate=@CreatedDate, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
+                
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
@@ -345,10 +345,10 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update old stock  
-                string query_update_old_stock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
+                string queryStock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
                 for (int i = 0; i < old_invoice.products.Count; i++)
                 {
-                    using (MySqlCommand cmd3 = new MySqlCommand(query_update_old_stock, conn))
+                    using (MySqlCommand cmd3 = new MySqlCommand(queryStock, conn))
                     {
                         cmd3.Parameters.AddWithValue("@Quantity", old_invoice.products[i].Quantity);
                         cmd3.Parameters.AddWithValue("@idProduct", old_invoice.products[i].idProduct);
@@ -356,10 +356,9 @@ namespace InvoiceX.ViewModels
                     }
                 }
                 //delete old invoice products
-                string query_delete_invoiceProducts = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
+                string queryDelete = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
+                
+                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
                 {
                     // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idInvoice", old_invoice.idInvoice);
@@ -392,9 +391,9 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update customer total  
-                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
+                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", invoice.totalCost - old_invoice.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
