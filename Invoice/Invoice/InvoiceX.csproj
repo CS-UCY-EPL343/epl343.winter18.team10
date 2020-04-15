@@ -130,12 +130,6 @@
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\StatementItem.cs" />
     <Compile Include="Models\User.cs" />
-    <Compile Include="Pages\CreditNotePage\CreditNoteCreate.xaml.cs">
-      <DependentUpon>CreditNoteCreate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\CreditNotePage\CreditNoteEdit.xaml.cs">
-      <DependentUpon>CreditNoteEdit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\CreditNotePage\CreditNoteMain.xaml.cs">
       <DependentUpon>CreditNoteMain.xaml</DependentUpon>
     </Compile>
@@ -144,6 +138,12 @@
     </Compile>
     <Compile Include="Pages\CreditNotePage\CreditNoteViewAll.xaml.cs">
       <DependentUpon>CreditNoteViewAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteCreate.xaml.cs">
+      <DependentUpon>CreditNoteCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\CreditNotePage\CreditNoteEdit.xaml.cs">
+      <DependentUpon>CreditNoteEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CustomerPage\CustomerEdit.xaml.cs">
       <DependentUpon>CustomerEdit.xaml</DependentUpon>
@@ -282,14 +282,6 @@
     <Compile Include="ViewModels\QuoteViewModel.cs" />
     <Compile Include="ViewModels\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
-    <Page Include="Pages\CreditNotePage\CreditNoteCreate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\CreditNotePage\CreditNoteEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\CreditNotePage\CreditNoteMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -301,6 +293,14 @@
     <Page Include="Pages\CreditNotePage\CreditNoteViewAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\CreditNotePage\CreditNoteEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\CustomerPage\CustomerStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>
