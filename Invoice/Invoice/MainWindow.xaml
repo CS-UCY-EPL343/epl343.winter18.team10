@@ -46,20 +46,11 @@
             <Border.Effect>
                 <DropShadowEffect Direction="270" ShadowDepth="5" Opacity="0.16" BlurRadius="7"/>
             </Border.Effect>
+            <Grid HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="266"/>
         </Border>
+        <TextBlock x:Name="userName" Text="Username" TextAlignment="Left" FontFamily="Avenir"  FontSize="16" Foreground="#ff1f2026"  Width="90" Margin="10,10,166,32"  />
+        <TextBlock x:Name="userPermissions" Text="UserPermissions" TextAlignment="Left" FontFamily="Avenir"  FontSize="14" Foreground="#ff8f9198"  Width="119" Margin="10,32,137,6"  />
 
-        <Path  Width="86" Height="0" Stretch="uniform" Data="M -17371.21875 -22641 L -17284.443359375 -22641" Stroke="#ffec4e6e" Margin="173.5,75.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Canvas  Width="40" Height="49" Margin="29,24,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Border  Width="40" Height="40" Background="#ffec4e6e" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0"  />
-            <TextBlock  Text="Pr" TextAlignment="left" FontFamily="Poppins"  FontSize="27" Foreground="#ffffffff" Canvas.Left="9" Canvas.Top="12"  />
-            <Ellipse  Width="6" Height="6" Fill="#ffffffff" Stroke="#ff707070" Canvas.Left="29" Canvas.Top="14"  />
-        </Canvas>
-        <Canvas  Width="206" Height="50" Margin="1670,13,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Ellipse  Width="50" Height="50" Stroke="#fffbdcd7" Canvas.Left="132" Canvas.Top="0"  />
-            <TextBlock  Text="Diane Ward" TextAlignment="left" FontFamily="Avenir"  FontSize="16" Foreground="#ff1f2026" Canvas.Left="22" Canvas.Top="5"  />
-            <TextBlock  Text="Product Manager" TextAlignment="right" FontFamily="Avenir"  FontSize="14" Foreground="#ff8f9198" Canvas.Left="0" Canvas.Top="25"  />
-            <Path  Width="5" Height="5" Stretch="uniform" Data="M 0 0 L 0 5.8046875 L 5.81103515625 5.8046875" Stroke="#ff8f9198" Canvas.Left="197.9530029296875" Canvas.Top="20.500106811523438"  />
-        </Canvas>
 
         <Canvas  Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
             <Border  Width="170" Height="965" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="7"  >

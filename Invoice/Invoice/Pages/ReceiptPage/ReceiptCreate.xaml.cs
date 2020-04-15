@@ -227,6 +227,7 @@ namespace InvoiceX.Pages.ReceiptPage
             if (ALL_VALUES_OK)
             {
                 Receipt rec = createReceiptObject();
+                rec.createdDate += DateTime.Now.TimeOfDay;
                 ReceiptViewModel.insertReceipt(rec);
                 MessageBox.Show("Receipt with ID " + rec.idReceipt + " was created.");
                 receiptMain.viewReceipt(rec.idReceipt);

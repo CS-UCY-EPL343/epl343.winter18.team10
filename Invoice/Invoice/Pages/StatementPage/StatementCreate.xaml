@@ -60,7 +60,7 @@
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Date " Binding="{Binding createdDate, StringFormat=d}"/>
+                <DataGridTextColumn Header = "Date " Binding="{Binding createdDate}"/>
                 <DataGridTextColumn Header = "Description" Binding="{Binding description}" />
                 <DataGridTextColumn Header = "Charges" Binding="{Binding charges, StringFormat=C}" />
                 <DataGridTextColumn Header = "Credits" Binding="{Binding credits, StringFormat=C}" />

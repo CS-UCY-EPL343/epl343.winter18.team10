@@ -33,7 +33,7 @@ namespace InvoiceX.ViewModels
                     var customer = dataRow.Field<string>("CustomerName");
                     var idReceipt = dataRow.Field<Int32>("idReceipt");
                     var amount = dataRow.Field<float>("Amount");
-                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     rec = new Receipt()
@@ -81,7 +81,7 @@ namespace InvoiceX.ViewModels
 
                     var idReceipt = dataRow.Field<Int32>("ReceiptID");
                     var totalAmount = dataRow.Field<float>("TotalAmount");
-                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     var paymentID = dataRow.Field<Int32>("idPayment");
@@ -141,7 +141,7 @@ namespace InvoiceX.ViewModels
             {
                 string query = "SELECT `Receipt`.* FROM `Receipt`" +
                     " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
-                    "`Receipt`.`IssuedDate` >= @from AND `Receipt`.`IssuedDate` <= @to; ";
+                    "`Receipt`.`CreatedDate` >= @from AND `Receipt`.`CreatedDate` <= @to; ";
                 DataTable dt = new DataTable();
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -157,14 +157,16 @@ namespace InvoiceX.ViewModels
                 {
                     var idReceipt = dataRow.Field<Int32>("idReceipt");
                     var amount = dataRow.Field<float>("Amount");
-                    var createdDate = dataRow.Field<DateTime>("IssuedDate");
+                    var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                    var balance = dataRow.Field<float>("PreviousBalance");
 
                     inv = new StatementItem()
                     {
                         idItem = idReceipt,
                         credits = amount,
                         createdDate = createdDate,
-                        itemType = ItemType.Receipt
+                        itemType = ItemType.Receipt,
+                        balance = balance
                     };
 
                     list.Add(inv);
@@ -182,7 +184,7 @@ namespace InvoiceX.ViewModels
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM Payments WHERE idReceipt = " + receiptID, conn);
+                MySqlCommand cmd = new MySqlCommand("DELETE FROM Payment WHERE idReceipt = " + receiptID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Receipt WHERE idReceipt = " + receiptID, conn);
@@ -274,7 +276,7 @@ namespace InvoiceX.ViewModels
             try
             {
                 //insert receipt 
-                string query = "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, IssuedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @IssuedDate)";
+                string query = "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, PreviousBalance, CreatedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @PreviousBalance, @CreatedDate)";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -285,7 +287,8 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd.Parameters.AddWithValue("@Amount", receipt.totalAmount);
                     cmd.Parameters.AddWithValue("@IssuedBy", receipt.issuedBy);
-                    cmd.Parameters.AddWithValue("@IssuedDate", receipt.createdDate);
+                    cmd.Parameters.AddWithValue("@CreatedDate", receipt.createdDate);
+                    cmd.Parameters.AddWithValue("@PreviousBalance", receipt.customer.Balance);
 
                     // Execute the query
                     cmd.ExecuteNonQuery();
@@ -336,7 +339,7 @@ namespace InvoiceX.ViewModels
             try
             {
                 //update receipt 
-                string query = "UPDATE Receipt SET  idCustomer=@idCustomer,Amount=@Amount, IssuedBy=@IssuedBy, IssuedDate=@IssuedDate  WHERE idReceipt=@idReceipt ";
+                string query = "UPDATE Receipt SET  Amount=@Amount, IssuedBy=@IssuedBy, CreatedDate=@CreatedDate  WHERE idReceipt=@idReceipt ";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -344,28 +347,24 @@ namespace InvoiceX.ViewModels
                     // Now we can start using the passed values in our parameters:
 
                     cmd.Parameters.AddWithValue("@idReceipt", receipt.idReceipt);
-                    cmd.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd.Parameters.AddWithValue("@Amount", receipt.totalAmount);
                     cmd.Parameters.AddWithValue("@IssuedBy", receipt.issuedBy);
-                    cmd.Parameters.AddWithValue("@IssuedDate", receipt.createdDate);
+                    cmd.Parameters.AddWithValue("@CreatedDate", receipt.createdDate);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
 
                 //delete old payments
-                string query_delete_invoiceProducts = "DELETE from Payment WHERE idReceipt=@idReceipt; ";
-                // Yet again, we are creating a new object that implements the IDisposable
-                // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query_delete_invoiceProducts, conn))
+                string queryDelete = "DELETE from Payment WHERE idReceipt=@idReceipt; ";
+                
+                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
                 {
-                    // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idReceipt", oldreceipt.idReceipt);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
 
-                //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
+                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
                 List<string> Rows = new List<string>();
 
                 foreach (Payment p in receipt.payments)
@@ -377,7 +376,6 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(p.paymentNumber.ToString()),
                         MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
                        ));
-
                 }
 
                 sCommand.Append(string.Join(",", Rows));
@@ -390,9 +388,9 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update customer total  
-                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
+                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", oldreceipt.totalAmount - receipt.totalAmount);
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);

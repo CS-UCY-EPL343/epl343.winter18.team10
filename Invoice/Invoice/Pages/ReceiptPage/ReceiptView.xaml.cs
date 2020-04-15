@@ -225,7 +225,6 @@ namespace InvoiceX.Pages.ReceiptPage
             customerDetails[3] = customer.Email;
             customerDetails[4] = customer.Balance.ToString();
             customerDetails[5] = customer.idCustomer.ToString();
-            MessageBox.Show(customer.idCustomer.ToString());
 
             string[] receiptDetails = new string[4];
             receiptDetails[0] = txtBox_receiptNumber.Text;

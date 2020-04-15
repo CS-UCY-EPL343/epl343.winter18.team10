@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace InvoiceX.Models
 {
-    class User
+    public class User
     {
         public string username { get; set; }
         public string hash { get; set; }
