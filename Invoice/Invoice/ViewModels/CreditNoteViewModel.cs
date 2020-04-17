@@ -96,6 +96,7 @@ namespace InvoiceX.ViewModels
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
                     var productID = dataRow.Field<Int32>("idProduct");
+                    var invoiceID = dataRow.Field<Int32>("idInvoice");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
@@ -133,6 +134,7 @@ namespace InvoiceX.ViewModels
                     cred.products.Add(new Product()
                     {
                         idProduct = productID,
+                        productInvoiceID = invoiceID,
                         ProductName = product,
                         ProductDescription = prodDescription,
                         Stock = stock,
