@@ -116,6 +116,7 @@
     </ApplicationDefinition>
     <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\CreditNoteForm.cs" />
+    <Compile Include="Forms\StatementForm.cs" />
     <Compile Include="Forms\ReceiptForm.cs" />
     <Compile Include="Forms\OrderForm.cs" />
     <Compile Include="Forms\QuoteForm.cs" />
