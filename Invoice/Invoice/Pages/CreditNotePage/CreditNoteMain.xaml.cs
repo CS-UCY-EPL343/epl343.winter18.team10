@@ -48,7 +48,7 @@ namespace InvoiceX.Pages.CreditNotePage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             creditNotePage.Content = createpage;
-            //createpage.load();
+            createpage.load();
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)

@@ -35,6 +35,8 @@ namespace InvoiceX.Models
 
         public double OfferPrice { get; set; }
 
+        public int productInvoiceID { get; set; }
+
     }
     
 }
