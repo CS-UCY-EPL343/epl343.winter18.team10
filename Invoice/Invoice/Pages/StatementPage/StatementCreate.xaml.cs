@@ -3,6 +3,8 @@ using InvoiceX.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -139,21 +141,143 @@ namespace InvoiceX.Pages.StatementPage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
+        #region PDF
+        void savePdf_Click(object sender, RoutedEventArgs e)
+        {
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Statement.pdf";
+            pdfRenderer.Save(filename);
+            System.Diagnostics.Process.Start(filename);
+
+        }
+
+        void printPdf_click(object sender, RoutedEventArgs e)
+        {
+            //Create and save the pdf
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Statement.pdf";
+            pdfRenderer.Save(filename);
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
+
+        }
+
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
+            if (File.Exists("Statement_temp.pdf"))
+            {
+                File.Delete("Statement_temp.pdf");
+            }
+            MigraDoc.DocumentObjectModel.Document document = createPdf();
+            document.UseCmykColor = true;
+            // Create a renderer for PDF that uses Unicode font encoding
+            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+
+            // Save the PDF document...
+            string filename = "Statement_temp.pdf";
+            pdfRenderer.Save(filename);
+
+            //open adobe acrobat
+            Process proc = new Process();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.Verb = "print";
+
+            //Define location of adobe reader/command line
+            //switches to launch adobe in "print" mode
+            proc.StartInfo.FileName =
+              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.CreateNoWindow = true;
+
+            proc.Start();
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            if (proc.HasExited == false)
+            {
+                proc.WaitForExit(10000);
+            }
+
+            proc.EnableRaisingEvents = true;
+
+            proc.Close();
         }
 
-        private void printPdf_click(object sender, RoutedEventArgs e)
+        private MigraDoc.DocumentObjectModel.Document createPdf()
         {
+            string[] customerDetails = new string[6];
+            Customer customer = (Customer)comboBox_customer.SelectedItem;
+            Console.WriteLine(customer.CustomerName);
+            customerDetails[0] = textBox_Customer.Text;
+            customerDetails[1] = textBox_Address.Text;
+            customerDetails[2] = textBox_Contact_Details.Text;
+            customerDetails[3] = textBox_Email_Address.Text;
+            customerDetails[4] = customer.idCustomer.ToString();
+            customerDetails[5] = customer.Balance.ToString();
 
+            string[] statementDetails = new string[4];
+            statementDetails[0] = fromDate.Text;
+            statementDetails[1] = toDate.Text;
+            statementDetails[2] = issuedBy.Text;
+
+
+            List<StatementItem> items = statementDataGrid.Items.OfType<StatementItem>().ToList();
+
+
+            Forms.StatementForm statement2 = new Forms.StatementForm("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
+            MigraDoc.DocumentObjectModel.Document document = statement2.CreateDocument();
+            return document;
         }
+        #endregion
 
-        private void savePdf_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
-
-        
     }
 }

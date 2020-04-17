@@ -12,17 +12,17 @@ using System.Collections.Generic;
 namespace InvoiceX.Forms
 {
     /// <summary>
-    /// Creates the quote form.
+    /// Creates the statement form.
     /// </summary>
     public class StatementForm
     {
         /// <summary>
-        /// The MigraDoc document that represents the quote.
+        /// The MigraDoc document that represents the statement.
         /// </summary>
         Document document;
 
         /// <summary>
-        /// An XML quote based on a sample created with Microsoft InfoPath.
+        /// An XML statement based on a sample created with Microsoft InfoPath.
         /// </summary>
         readonly XmlDocument statement;
 
@@ -38,29 +38,29 @@ namespace InvoiceX.Forms
         TextFrame statementDetailsFrame;
         TextFrame customerDetails;
         /// <summary>
-        /// The table of the MigraDoc document that contains the quote items.
+        /// The table of the MigraDoc document that contains the statement items.
         /// </summary>
         Table table;
 
         /// <summary>
         /// Initializes a new instance of the class BillFrom and opens the specified XML document.
         /// </summary>
-        string[] customer_details = new string[2];
-        string[] statement_details = new string[6];
-        List<Models.Product> products = new List<Models.Product>();
+        string[] customer_details = new string[6];
+        string[] statement_details = new string[4];
+        List<Models.StatementItem> items = new List<Models.StatementItem>();
 
-        public StatementForm(string filename, string[] cd, string[] id, List<Models.Product> p)
+        public StatementForm(string filename, string[] cd, string[] id, List<Models.StatementItem> p)
         {
             this.statement = new XmlDocument();
             this.statement.Load(filename);
             this.navigator = this.statement.CreateNavigator();
             this.customer_details = cd;
             this.statement_details = id;
-            this.products = p;
+            this.items = p;
         }
 
         /// <summary>
-        /// Creates the quote document.
+        /// Creates the statement document.
         /// </summary>
         public Document CreateDocument()
         {
@@ -111,7 +111,7 @@ namespace InvoiceX.Forms
         }
 
         /// <summary>
-        /// Creates the static parts of the quote.
+        /// Creates the static parts of the statement.
         /// </summary>
         void CreatePage()
         {
@@ -134,17 +134,10 @@ namespace InvoiceX.Forms
             par.Format.Font.Size = 24;
             par.Format.Font.Color = LogoBlue;
             par.Format.SpaceBefore = 5;
-            par.AddFormattedText("Statement", TextFormat.Bold);
+            par.AddFormattedText("STATEMENT", TextFormat.Bold);
 
             // Create footer
-
             Paragraph paragraph = section.Footers.Primary.AddParagraph();
-            paragraph.Format.SpaceBefore = 5;
-            paragraph.AddText("If you have any questions concerning this quotation, please contact us. Thank you for your business!");
-            paragraph.Format.Alignment = ParagraphAlignment.Left;
-            paragraph.AddLineBreak();
-
-            paragraph = section.Footers.Primary.AddParagraph();
             paragraph.AddText("PowerBooks Inc · Sample Street 42 · 56789 Cologne · Germany");
             paragraph.Format.Font.Size = 9;
             paragraph.Format.Alignment = ParagraphAlignment.Center;
@@ -158,7 +151,7 @@ namespace InvoiceX.Forms
             this.addressFrame.Top = "3cm";
             this.addressFrame.RelativeVertical = RelativeVertical.Page;
 
-            //create the quote detail frame
+            //create the statement detail frame
 
             this.statementDetailsFrame = section.AddTextFrame();
             this.statementDetailsFrame.Height = "3.0cm";
@@ -183,9 +176,7 @@ namespace InvoiceX.Forms
             paragraph = section.AddParagraph();
             paragraph.Format.SpaceBefore = "6cm";
             paragraph.Style = "Reference";
-            paragraph.AddFormattedText("Comments or Special Instructions: ", TextFormat.Italic);
-            paragraph.Format.Font.Color = LogoBlue;
-
+            paragraph.AddFormattedText("STATEMENT", TextFormat.Bold);
 
             // Create the item table
             this.table = section.AddTable();
@@ -199,18 +190,20 @@ namespace InvoiceX.Forms
 
 
             // Before you can add a row, you must define the columns
-            Column column = this.table.AddColumn("1.5cm");
+            Column column = this.table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Center;
 
-            column = this.table.AddColumn("8.5cm");
+            column = this.table.AddColumn("4cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            column = this.table.AddColumn("2.5cm");
+            column.Format.Alignment = ParagraphAlignment.Right;
+
+            column = this.table.AddColumn("2.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
             column = this.table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
-
-            column = this.table.AddColumn("3cm");
-            column.Format.Alignment = ParagraphAlignment.Right;
-
 
 
             // Create the header of the table
@@ -224,45 +217,45 @@ namespace InvoiceX.Forms
             row.BottomPadding = 3;
             row.Format.Font.Size = 10;
 
-            row.Cells[0].AddParagraph("CODE");
+            row.Cells[0].AddParagraph("DATE");
             row.Cells[0].Format.Font.Bold = true;
             row.Format.LineSpacing = 10;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Center;
             row.Cells[0].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[1].AddParagraph("ITEM");
+            row.Cells[1].AddParagraph("DESCRIPTION");
             row.Cells[1].Format.Font.Bold = true;
             row.Cells[1].Format.Alignment = ParagraphAlignment.Center;
             row.Cells[1].VerticalAlignment = VerticalAlignment.Bottom;
-            row.Cells[2].AddParagraph("DESCRIPTION");
+            row.Cells[2].AddParagraph("CHARGES");
             row.Cells[2].Format.Alignment = ParagraphAlignment.Center;
-            row.Cells[3].AddParagraph("PRICE");
+            row.Cells[3].AddParagraph("CREDITS");
             row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
+            row.Cells[4].AddParagraph("BALANCE");
+            row.Cells[4].Format.Alignment = ParagraphAlignment.Center;
 
             this.table.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
 
-            
+
 
         }
 
         /// <summary>
-        /// Creates the dynamic parts of the quote.
+        /// Creates the dynamic parts of the statement.
         /// </summary>
         void FillContent()
         {
-            
             // Fill address in address text frame
-            XPathNavigator item = SelectItem("/quote/to");
+            XPathNavigator item = SelectItem("/invoice/to");
             Paragraph paragraph = this.addressFrame.AddParagraph();
-            paragraph.AddText("Andreas Panteli Trading LTD");
+            paragraph.AddText(GetValue(item, "name/singleName"));
             paragraph.AddLineBreak();
-            paragraph.AddText("Neas Ionias 18, Aradippou, Larnaca");
+            paragraph.AddText(GetValue(item, "address/line1")+" "+ (GetValue(item, "address/postalCode") + " " + GetValue(item, "address/city")));
             paragraph.AddLineBreak();
-            paragraph.AddText("+357 24433172, +357 99560755");
+            paragraph.AddText(GetValue(item, "telephoneNumberHome") +", "+ GetValue(item, "telephoneNumberCell"));
             paragraph.AddLineBreak();
-            paragraph.AddText("info@ecobrightcy.com");
+            paragraph.AddText(GetValue(item, "emailAddressPrimary"));
             paragraph.AddLineBreak();
-            paragraph.AddText("www.ecobrightcy.com");
-            
+            paragraph.AddText(GetValue(item, "webSite"));
 
             paragraph = this.statementDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
@@ -271,15 +264,15 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Color=new Color(255, 255, 255);
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
-            paragraph.AddText("STATEMENT #");
+            paragraph.AddText("DATE FROM");
             paragraph.AddSpace(16);
-            paragraph.AddText("DATE");
-            
+            paragraph.AddText("DATE TO");
+
             paragraph = this.statementDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Right;
-            String quoteNumber = this.statement_details[0];
+            String statementNumber = this.statement_details[0];
             String date = this.statement_details[1];
-            paragraph.AddText(quoteNumber);
+            paragraph.AddText(statementNumber);
             paragraph.AddSpace(24);
             paragraph.AddText(date);
 
@@ -293,7 +286,7 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Color = new Color(255, 255, 255);
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
-            paragraph.AddText("CUSTOMER INFO");
+            paragraph.AddText("BILL TO");
 
             paragraph = this.statementDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
@@ -303,56 +296,67 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("CUSTOMER ID");
-            paragraph.AddSpace(2);
-            paragraph.AddText("SHIPPING DATE");
+            paragraph.AddTab();
+            paragraph.AddText("BALANCE");
 
             paragraph = this.statementDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
-            paragraph.AddText(customer_details[0]);
+            paragraph.AddText(customer_details[4]);
             paragraph.AddTab(); 
             paragraph.AddTab();
-            paragraph.AddText(statement_details[2]);
+            paragraph.AddTab();
+            paragraph.AddText(customer_details[5]);
 
 
             paragraph = this.addressFrame.AddParagraph();
             paragraph.Format.SpaceBefore = 20;
+            paragraph.AddText(this.customer_details[0]);
+            paragraph.AddLineBreak();
             paragraph.AddText(this.customer_details[1]);
             paragraph.AddLineBreak();
+            paragraph.AddText(this.customer_details[2]);
+            paragraph.AddLineBreak();
+            paragraph.AddText(this.customer_details[3]);
 
-            // Iterate the invoice items
-            
-            for (int i=0; i<products.Count;i++)
+            // Iterate the statement items
+
+            for (int i=0; i< items.Count;i++)
             {
-                double quantity = this.products[i].Quantity;
-                double price = GetValueAsDouble(item, "price");
-                double discount = GetValueAsDouble(item, "discount");
 
                 // Each item fills two rows
                 Row row1 = this.table.AddRow();
+                row1.VerticalAlignment = VerticalAlignment.Center;
                 row1.TopPadding = 1.5;
+
                 row1.Cells[0].Shading.Color = TableGray;
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[0].AddParagraph(this.items[i].createdDate.ToString("dd/MM/yyyy"));
+
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
                 row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                paragraph = row1.Cells[1].AddParagraph();
+                paragraph.AddFormattedText(this.items[i].description, TextFormat.Bold);
+
+                row1.Cells[2].AddParagraph();
+                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[2].AddParagraph(this.items[i].charges.ToString());
+
+                row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[3].Shading.Color = TableGray;
+                row1.Cells[3].AddParagraph(this.items[i].credits.ToString());
 
-                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
-                paragraph = row1.Cells[1].AddParagraph();
-                paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
-                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString());
-                row1.Cells[2].AddParagraph();
-                row1.Cells[3].AddParagraph(this.products[i].Total.ToString());
-                row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
-                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[4].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[4].Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[4].Shading.Color = TableGray;
+                row1.Cells[4].AddParagraph(this.items[i].balance.ToString());
 
                 this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
-            
+
             // Add an invisible row as a space line to the table
             Row row = this.table.AddRow();
             row.Borders.Visible = false;
-
 
         }
 
