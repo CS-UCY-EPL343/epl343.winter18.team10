@@ -506,6 +506,73 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
+        public static List<int> customer_invoices_list(int customerID)
+        {
+            List<int> customer_invoices_list = new List<int>();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT idInvoice FROM Invoice WHERE idCustomer = " + customerID, conn);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    customer_invoices_list.Add(idInvoice);
+                }
+                return customer_invoices_list;
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+
+        }
+
+        public static List<Product> invoice_products_list(int invoiceID)
+        {
+            List<Product>  invoice_products_list = new List<Product>();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idProductsdb = dataRow.Field<int>("idProduct");
+                    var ProductNamedb = dataRow.Field<string>("ProductName");
+                    var ProductDescriptiondb = dataRow.Field<string>("Description");
+                    var Quantitydb = dataRow.Field<int>("Quantity");
+                    var IPCostdb = dataRow.Field<float>("IPCost");
+                    var IPVATdb = dataRow.Field<float>("IPVAT");
+
+
+                    invoice_products_list.Add(
+                        new Product()
+                        {
+                            idProduct = idProductsdb,
+                            ProductName = ProductNamedb,
+                            ProductDescription = ProductDescriptiondb,
+                            Quantity = Quantitydb,
+                            SellPrice = IPCostdb,
+                            Vat = IPVATdb
+                        });
+                }
+                return invoice_products_list;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
+        }
+
     }
 
 

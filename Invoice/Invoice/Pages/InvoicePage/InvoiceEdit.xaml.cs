@@ -190,7 +190,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private bool Has_Items_Selected()
         {
-            if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
+            if (ProductDataGrid.Items.Count == 0)
             {
                 MessageBox.Show("You havent selectet any products");
                 return false;
@@ -229,11 +229,8 @@ namespace InvoiceX.Pages.InvoicePage
         }
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
-        {
-            bool ALL_VALUES_OK = true;
-
-            if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK)
+        {            
+            if (Has_Items_Selected())
             {
                 if (int.TryParse(textBox_invoiceNumber.Text, out int invoiceId))
                 {
@@ -320,22 +317,7 @@ namespace InvoiceX.Pages.InvoicePage
                 NetTotal_TextBlock.Text = oldInvoice.cost.ToString("C");
                 Vat_TextBlock.Text = oldInvoice.VAT.ToString("C");
                 TotalAmount_TextBlock.Text = oldInvoice.totalCost.ToString("C");
-                /*
-                // Invoice products        
-                for (int i = 0; i < oldInvoice.products.Count; i++)
-                {
-                    ProductDataGrid.Items.Add(new Product
-                    {
-                        idProduct = oldInvoice.products[i].idProduct,
-                        ProductName = oldInvoice.products[i].ProductName,
-                        ProductDescription = oldInvoice.products[i].ProductDescription,
-                        Stock = oldInvoice.products[i].Stock,
-                        SellPrice = oldInvoice.products[i].SellPrice,
-                        Quantity = oldInvoice.products[i].Quantity,
-                        Total = oldInvoice.products[i].Total,
-                        Vat = oldInvoice.products[i].Vat
-                    });
-                }*/
+                
                 
                 foreach (Product p in oldInvoice.products)
                 {

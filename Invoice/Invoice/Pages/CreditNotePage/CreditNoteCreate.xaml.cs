@@ -57,8 +57,7 @@ namespace InvoiceX.Pages.CreditNotePage
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = customer.Email;
 
-                creditNoteView.load_customer_invoices(customer.idCustomer);
-                comboBox_invoiceID.ItemsSource = creditNoteView.customer_invoices_list;
+                comboBox_invoiceID.ItemsSource = InvoiceViewModel.customer_invoices_list(customer.idCustomer);
 
             }
         }
@@ -67,10 +66,9 @@ namespace InvoiceX.Pages.CreditNotePage
         {
             if (comboBox_invoiceID.SelectedIndex > -1)
             {
-                comboBox_invoiceID.BorderThickness = new Thickness(0);
-                creditNoteView.load_invoice_products(int.Parse(comboBox_invoiceID.SelectedItem.ToString()));
-                comboBox_Product.ItemsSource = creditNoteView.invoice_products_list;
-             }
+                comboBox_incoiceID_border.BorderThickness = new Thickness(0);
+                comboBox_Product.ItemsSource = InvoiceViewModel.invoice_products_list(int.Parse(comboBox_invoiceID.SelectedItem.ToString()));
+            }
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -131,6 +129,12 @@ namespace InvoiceX.Pages.CreditNotePage
                 all_completed = false;
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
+            }
+            if ((comboBox_invoiceID.SelectedIndex <= -1))
+            {
+                all_completed = false;
+                comboBox_incoiceID_border.BorderBrush = Brushes.Red;
+                comboBox_incoiceID_border.BorderThickness = new Thickness(1);
             }
             if (!int.TryParse(textBox_ProductQuantity.Text, out n) || (n<0) )
             {

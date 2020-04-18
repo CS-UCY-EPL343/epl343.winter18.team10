@@ -258,12 +258,8 @@ namespace InvoiceX.Pages.InvoicePage
         }             
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
-        {
-            bool allValuesOK = true;
-            if (!checkCustomerForm()) allValuesOK = false;
-            if (!checkDetailsForm()) allValuesOK = false;
-            if (!hasItemsSelected()) allValuesOK = false;
-            if (allValuesOK)
+        {           
+            if (checkCustomerForm()&checkDetailsForm()&hasItemsSelected())
             {
                 Invoice inv = createInvoiceObject();
                 inv.createdDate += DateTime.Now.TimeOfDay;
