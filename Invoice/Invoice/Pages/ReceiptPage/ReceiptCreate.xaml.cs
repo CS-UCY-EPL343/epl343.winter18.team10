@@ -30,10 +30,8 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             if (Refresh_DB_data)
             {                
-                //productView = new ProductViewModel();               
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.customersList;
-                //comboBox_PaymentMethod.ItemsSource = productView.ProductList;
                 textBox_ReceiptNumber.Text = (ReceiptViewModel.returnLatestReceiptID()+1).ToString();
                 ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
                 PaymentDate.SelectedDate = DateTime.Today;//set curent date 
@@ -55,7 +53,7 @@ namespace InvoiceX.Pages.ReceiptPage
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_paymentmethod(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_PaymentMethod.SelectedIndex > -1)
             {
@@ -94,7 +92,7 @@ namespace InvoiceX.Pages.ReceiptPage
         private bool Check_AddPayment_CompletedValues()
         {
             bool all_completed = true;
-            if ((comboBox_PaymentMethod.SelectedIndex <= -1))//|| paymenttype_already_selected()
+            if ((comboBox_PaymentMethod.SelectedIndex <= -1))
             {
                 all_completed = false;
                 comboBox_paymentMethod_border.BorderBrush = Brushes.Red;
@@ -134,7 +132,6 @@ namespace InvoiceX.Pages.ReceiptPage
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
                 ReceiptDataGrid.Items.Add(new Payment
                 {                   
-                    //idReceipt = Int32.Parse(textBox_ReceiptNumber.Text),
                     amount = float.Parse(textBox_amount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentNumber =(comboBox_PaymentMethod.SelectedIndex == 0 ? "": textBox_paymentNum.Text) ,
                     paymentDate = PaymentDate.SelectedDate.Value.Date,

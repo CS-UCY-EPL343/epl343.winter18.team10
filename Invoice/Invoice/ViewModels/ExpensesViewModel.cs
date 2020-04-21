@@ -174,5 +174,90 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
+        public static void insertExpens(Expense expence)
+        {
+            try
+            {
+                //insert invoice 
+                string query = "INSERT INTO Expense (idExpense,CompanyName,Category,PhoneNumber,Description,InvoiceNo,CreatedDate,Cost,VAT,TotalCost,IsPaid,IssuedBy)" +
+                    " Values (@idExpense,@CompanyName,@Category,@PhoneNumber,@Description,@InvoiceNo,@CreatedDate,@Cost,@VAT,@TotalCost,@IsPaid,@IssuedBy)";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idExpense", expence.idExpense);
+                    cmd.Parameters.AddWithValue("@CompanyName", expence.companyName);
+                    cmd.Parameters.AddWithValue("@Category", expence.category);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", expence.contactDetails);
+                    cmd.Parameters.AddWithValue("@Description", expence.description);
+                    cmd.Parameters.AddWithValue("@InvoiceNo", expence.invoiceNo);
+                    cmd.Parameters.AddWithValue("@CreatedDate", expence.createdDate);
+                    cmd.Parameters.AddWithValue("@Cost", expence.cost);
+                    cmd.Parameters.AddWithValue("@VAT", expence.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", expence.totalCost);
+                    cmd.Parameters.AddWithValue("@IsPaid", expence.isPaid);
+                    cmd.Parameters.AddWithValue("@IssuedBy", expence.issuedBy);
+                   
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert product
+                StringBuilder sCommand = new StringBuilder("INSERT INTO ExpensePayment ( idExpense, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
+                List<string> Rows = new List<string>();
+                
+                
+
+                foreach (Payment expe in expence.payments)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                       
+                        MySqlHelper.EscapeString(expence.idExpense.ToString()),
+                        MySqlHelper.EscapeString(expe.paymentMethod.ToString()),
+                        MySqlHelper.EscapeString(expe.amount.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(expe.paymentNumber.ToString()),
+                        MySqlHelper.EscapeString(expe.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
+));                   
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+             
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+
+        public static int returnLatestExpenseID()
+        {
+            try
+            {
+                int idInvoice;
+                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idExpense FROM Expense ORDER BY idExpense DESC LIMIT 1", conn);
+
+                var queryResult = cmd.ExecuteScalar();
+                if (queryResult != null)
+                    idInvoice = Convert.ToInt32(queryResult);
+                else
+                    idInvoice = 0;
+
+                return idInvoice;
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return 0;
+        }
+
     }
 }

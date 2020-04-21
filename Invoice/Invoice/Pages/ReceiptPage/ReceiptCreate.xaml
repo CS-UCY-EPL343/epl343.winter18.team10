@@ -66,7 +66,7 @@
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Margin="16,10,0,0" TextWrapping="Wrap" Text="Payment Method"  VerticalAlignment="Top"/>
                 <Border  x:Name="comboBox_paymentMethod_border" Margin="16,31,612,11" Width="200"  Height="30" >
-                    <ComboBox x:Name="comboBox_PaymentMethod" Width="200"  Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
+                    <ComboBox x:Name="comboBox_PaymentMethod" Width="200"  Height="30"  SelectionChanged="ComboBox_paymentmethod" >
                         <ComboBoxItem Name="Cash">Cash</ComboBoxItem>
                         <ComboBoxItem Name="Bank">Bank</ComboBoxItem>
                         <ComboBoxItem Name="Cheque">Cheque</ComboBoxItem>

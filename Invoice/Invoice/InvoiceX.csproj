@@ -164,12 +164,6 @@
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ExpensesPage\ExpensesCreate.xaml.cs">
-      <DependentUpon>ExpensesCreate.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ExpensesPage\ExpensesEdit.xaml.cs">
-      <DependentUpon>ExpensesEdit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\ExpensesPage\ExpensesMain.xaml.cs">
       <DependentUpon>ExpensesMain.xaml</DependentUpon>
     </Compile>
@@ -178,6 +172,12 @@
     </Compile>
     <Compile Include="Pages\ExpensesPage\ExpensesViewAll.xaml.cs">
       <DependentUpon>ExpensesViewAll.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ExpensesPage\ExpensesCreate.xaml.cs">
+      <DependentUpon>ExpensesCreate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ExpensesPage\ExpensesEdit.xaml.cs">
+      <DependentUpon>ExpensesEdit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\InvoicePage\InvoiceEdit.xaml.cs">
       <DependentUpon>InvoiceEdit.xaml</DependentUpon>
@@ -307,14 +307,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\ExpensesPage\ExpensesCreate.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Pages\ExpensesPage\ExpensesEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\ExpensesPage\ExpensesMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -326,6 +318,14 @@
     <Page Include="Pages\ExpensesPage\ExpensesViewAll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ExpensesPage\ExpensesCreate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ExpensesPage\ExpensesEdit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\InvoicePage\InvoiceStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>

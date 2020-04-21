@@ -50,7 +50,7 @@ namespace InvoiceX.Pages.ExpensesPage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             expensesPage.Content = createPage;
-            //createPage.load();
+            createPage.load();
         }
 
         private void btnStatistics_Click(object sender, RoutedEventArgs e)
@@ -72,7 +72,7 @@ namespace InvoiceX.Pages.ExpensesPage
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
             expensesPage.Content = editPage;
-            //editPage.load();
+            editPage.load();
         }
 
         private void resetAllBtnStyles()

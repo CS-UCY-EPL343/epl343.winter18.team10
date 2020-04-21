@@ -43,7 +43,7 @@ namespace InvoiceX
         private ExpensesMain m_expenses;
         private SettingsMain m_settings;
 
-        private User user;
+        
 
         public MainWindow()
         {
