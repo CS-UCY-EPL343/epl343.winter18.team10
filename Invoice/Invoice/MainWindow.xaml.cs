@@ -41,9 +41,7 @@ namespace InvoiceX
         private OrderMain m_order;
         private QuoteMain m_quote;
         private ExpensesMain m_expenses;
-        private SettingsMain m_settings;
-
-        
+        private SettingsMain m_settings;              
 
         public MainWindow()
         {
@@ -59,7 +57,7 @@ namespace InvoiceX
             m_invoice = new InvoiceMain();
             m_receipt = new ReceiptMain();
             m_creditNote = new CreditNoteMain();
-            m_statement = new StatementMain();
+            m_statement = new StatementMain(this);
             m_product = new ProductMain();
             m_customer = new CustomerMain();
             m_quote = new QuoteMain();
@@ -191,6 +189,25 @@ namespace InvoiceX
         {
             m_invoice.issueOrderAsInvoice(order);
             BtnInvoice_Click(null, null);
+        }
+
+        public void viewStatementItem(StatementItem item)
+        {
+            switch (item.itemType)
+            {
+                case ItemType.Invoice:
+                    m_invoice.viewInvoice(item.idItem);
+                    BtnInvoice_Click(null, null);
+                    break;
+                case ItemType.Receipt:
+                    m_receipt.viewReceipt(item.idItem);
+                    BtnReceipt_Click(null, null);
+                    break;
+                case ItemType.CreditNote:
+                    m_creditNote.viewCreditNote(item.idItem);
+                    BtnCreditNote_Click(null, null);
+                    break;
+            }
         }
     }
 }

@@ -79,7 +79,7 @@
                                 </Button.Template>
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="View Item"/>
+                                        <MenuItem Header="View Item" Click="ViewItem_Click"/>
                                     </ContextMenu>
                                 </Button.ContextMenu>
                                 <Button.Style>
@@ -106,8 +106,8 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1433,856,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="txtBlock_TotalAmount" HorizontalAlignment="Left" Margin="1519,855,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" />
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1328,851,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top" Width="81" FontSize="16"/>
+        <TextBlock x:Name="txtBlock_Balance" HorizontalAlignment="Left" Margin="1414,851,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16" />
 
 
         <Grid>

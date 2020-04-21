@@ -26,10 +26,13 @@ namespace InvoiceX.Pages.StatementPage
     public partial class StatementCreate : Page
     {
         CustomerViewModel customerView;
+        StatementMain statementMain;
 
-        public StatementCreate()
+        public StatementCreate(StatementMain statementMain)
         {
             InitializeComponent();
+            this.statementMain = statementMain;
+            txtBlock_Balance.Text = 0.ToString("C");
         }
 
         public void load()
@@ -67,6 +70,9 @@ namespace InvoiceX.Pages.StatementPage
             var firstCol = statementDataGrid.Columns.First();
             firstCol.SortDirection = ListSortDirection.Ascending;
             statementDataGrid.Items.SortDescriptions.Add(new SortDescription(firstCol.SortMemberPath, ListSortDirection.Ascending));
+
+            StatementItem item = (StatementItem)statementDataGrid.Items.GetItemAt(statementDataGrid.Items.Count - 1);
+            txtBlock_Balance.Text = item.balance.ToString("C");
         }
 
         private bool dateRangeSelected()
@@ -110,6 +116,7 @@ namespace InvoiceX.Pages.StatementPage
             toDate.ClearValue(DatePicker.BorderBrushProperty);
             issuedBy.Text = null;
             statementDataGrid.ItemsSource = null;
+            txtBlock_Balance.Text = 0.ToString("C");
             load();
         }
 
@@ -276,8 +283,12 @@ namespace InvoiceX.Pages.StatementPage
             MigraDoc.DocumentObjectModel.Document document = statement2.CreateDocument();
             return document;
         }
+
         #endregion
 
-
+        private void ViewItem_Click(object sender, RoutedEventArgs e)
+        {
+            statementMain.viewItem((StatementItem)statementDataGrid.SelectedItem);
+        }
     }
 }
