@@ -23,56 +23,36 @@ namespace InvoiceX.Pages.SettingsPage
     /// </summary>
     public partial class SettingsMain : Page
     {
-        private UserViewModel userView;
-        
+        SettingsUsers usersPage;
+        SettingsDatabase databasePage;
+
         public SettingsMain()
         {
             InitializeComponent();
+            usersPage = new SettingsUsers();
+            databasePage = new SettingsDatabase();
+            btnUsers_Click(null, null);
         }
 
-        private void btn_addUser_Click(object sender, RoutedEventArgs e)
+        private void btnUsers_Click(object sender, RoutedEventArgs e)
         {
-            string username = textBox_username.Text;
-            string password = textBox_password.Text;
-            bool admin_privileges = (bool)checkBox_admin.IsChecked;
-            User user = UserViewModel.getUserByUsername(username);
+            resetAllBtnStyles();
+            btnUsers.Style = FindResource("ButtonStyleSelected") as Style;
+            settingsPage.Content = usersPage;
+            usersPage.load();
+        }
 
-            if (user.username == null)
-            {
-                HashSalt hashSalt = HashSalt.GenerateSaltedHash(password);
-                UserViewModel.insertUser(username, hashSalt.Hash, hashSalt.Salt, admin_privileges);
-                btn_loadUsers_Click();
-            }
-            else
-            {
-                MessageBox.Show("Username \"" + username + "\" is taken.");
-            }
+        private void btnDatabase_Click(object sender, RoutedEventArgs e)
+        {
+            resetAllBtnStyles();
+            btnDatabase.Style = FindResource("ButtonStyleSelected") as Style;
+            settingsPage.Content = databasePage;
             
         }
 
-        private void btn_loadUsers_Click(object sender = null, RoutedEventArgs e = null)
-        {
-            userView = new UserViewModel();
-            dataGrid_Users.ItemsSource = userView.UsersList;
-        }
-
-        private void btn_removeUser_Click(object sender, RoutedEventArgs e)
-        {
-            User user = (User)dataGrid_Users.CurrentCell.Item;
-            string msgtext = "You are about to remove user \"" + user.username + "\". Are you sure?";
-            string txt = "Remove User";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    UserViewModel.deleteUser(user.username);
-                    btn_loadUsers_Click();
-                    break;
-                case MessageBoxResult.No:
-                    break;
-            }
-            
+        private void resetAllBtnStyles()
+        {           
+            btnUsers.Style = btnDatabase.Style = FindResource("ButtonStyle") as Style;
         }
     }
 }

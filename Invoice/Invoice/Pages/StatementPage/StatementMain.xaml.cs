@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InvoiceX.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +22,13 @@ namespace InvoiceX.Pages.StatementPage
     public partial class StatementMain : Page
     {
         StatementCreate createPage;
+        MainWindow mainWindow;
 
-        public StatementMain()
+        public StatementMain(MainWindow mainWindow)
         {
             InitializeComponent();
-            createPage = new StatementCreate();
+            this.mainWindow = mainWindow;
+            createPage = new StatementCreate(this);
             btnCreate_Click(null, null);
         }
 
@@ -40,6 +43,11 @@ namespace InvoiceX.Pages.StatementPage
         private void resetAllBtnStyles()
         {
             btnCreate.Style = FindResource("ButtonStyle") as Style;
+        }
+
+        public void viewItem(StatementItem item)
+        {
+            mainWindow.viewStatementItem(item);
         }
     }
 }

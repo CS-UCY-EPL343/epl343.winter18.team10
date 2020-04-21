@@ -83,7 +83,7 @@ namespace InvoiceX.Pages.OrderPage
 
         public void editOrder(int orderID)
         {
-            //editpage.loadOrder(orderID);
+            editpage.loadOrder(orderID);
             btnEdit_Click(null, null);
         }
 
