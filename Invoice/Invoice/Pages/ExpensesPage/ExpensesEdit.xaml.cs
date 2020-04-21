@@ -213,8 +213,8 @@ namespace InvoiceX.Pages.ExpensesPage
             {
                 if (int.TryParse(textBox_expenseID.Text, out int invoiceId))
                 {
-                    // InvoiceViewModel.updateInvoice(createExpensesObject(), oldExpense);-------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------);--------------vv-------
-                    expensesMain.viewExpense(invoiceId);
+                    ExpensesViewModel.updateExpense(createExpensesObject(), oldExpense);
+                    //expensesMain.viewExpense(invoiceId);
                     Btn_clearAll_Click(null, null);
                 }
             }
@@ -267,10 +267,10 @@ namespace InvoiceX.Pages.ExpensesPage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
-        private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
+        private void Btn_Load_Expense(object sender, RoutedEventArgs e)
         {
             int.TryParse(textBox_expenseID.Text, out int expenseID);
-            if ((InvoiceViewModel.invoiceExists(expenseID)))
+            if ((ExpensesViewModel.expenseExists(expenseID)))
             {
                 Btn_clearAll_Click(null, null);
                 loadExpense(expenseID);
@@ -280,7 +280,7 @@ namespace InvoiceX.Pages.ExpensesPage
             else
             {
                 //not a number
-                MessageBox.Show("Please insert a valid value for invoice ID.");
+                MessageBox.Show("Please insert a valid value for Expense ID.");
             }
         }
 
@@ -301,14 +301,13 @@ namespace InvoiceX.Pages.ExpensesPage
                 issuedBy.Text = oldExpense.issuedBy;
                 checkBox_Paid.IsChecked = oldExpense.isPaid;
                 txtBlock_NetTotal.Text = oldExpense.cost.ToString("C");
-                txtBlock_VAT.Text = oldExpense.VAT.ToString("P");
+                txtBlock_VAT.Text = oldExpense.VAT.ToString("C");
                 txtBlock_TotalAmount.Text = oldExpense.totalCost.ToString("C");
                 txtBox_invoiceNumber.Text = oldExpense.invoiceNo.ToString();
 
                 // Receipt payments 
                 foreach (Payment p in oldExpense.payments)
                 {
-
                     expensesDataGrid.Items.Add(p);
                 }
                 

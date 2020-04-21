@@ -204,10 +204,7 @@ namespace InvoiceX.ViewModels
 
                 //insert product
                 StringBuilder sCommand = new StringBuilder("INSERT INTO ExpensePayment ( idExpense, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
-                List<string> Rows = new List<string>();
-                
-                
-
+                List<string> Rows = new List<string>();    
                 foreach (Payment expe in expence.payments)
                 {
                     Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
@@ -216,8 +213,7 @@ namespace InvoiceX.ViewModels
                         MySqlHelper.EscapeString(expe.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(expe.amount.ToString().Replace(",", ".")),
                         MySqlHelper.EscapeString(expe.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(expe.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
-));                   
+                        MySqlHelper.EscapeString(expe.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))));                 
                 }
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
@@ -225,9 +221,7 @@ namespace InvoiceX.ViewModels
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
-                }
-
-             
+                }             
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
@@ -259,5 +253,93 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
+        public static bool expenseExists(int id)
+        {
+            try
+            {
+                int idInvoice;
+                MySqlCommand cmd = new MySqlCommand("SELECT idExpense FROM Expense where idExpense=" + id.ToString(), conn);
+
+                var queryResult = cmd.ExecuteScalar();
+                if (queryResult != null)
+                    idInvoice = Convert.ToInt32(queryResult);
+                else
+                    idInvoice = 0;
+
+                return ((idInvoice == 0) ? false : true);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return false;
+        }
+
+        public static void updateExpense(Expense expense, Expense old_expense)
+        {
+            try
+            {
+                //update Expense 
+                string query = "UPDATE Expense SET CompanyName=@CompanyName,Category=@Category,PhoneNumber=@PhoneNumber,Description=@Description,InvoiceNo=@InvoiceNo,CreatedDate=@CreatedDate,Cost=@Cost,VAT=@VAT,TotalCost=@TotalCost,IsPaid=@IsPaid,IssuedBy=@IssuedBy WHERE idExpense=@idExpense ";
+
+                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idExpense", expense.idExpense);
+                    cmd.Parameters.AddWithValue("@CompanyName", expense.companyName);
+                    cmd.Parameters.AddWithValue("@Category", expense.category);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", expense.contactDetails);
+                    cmd.Parameters.AddWithValue("@Description", expense.description);
+                    cmd.Parameters.AddWithValue("@InvoiceNo", expense.invoiceNo);
+                    cmd.Parameters.AddWithValue("@CreatedDate", expense.createdDate);
+                    cmd.Parameters.AddWithValue("@Cost", expense.cost);
+                    cmd.Parameters.AddWithValue("@VAT", expense.VAT);
+                    cmd.Parameters.AddWithValue("@TotalCost", expense.totalCost);
+                    cmd.Parameters.AddWithValue("@IsPaid", expense.issuedBy);
+                    cmd.Parameters.AddWithValue("@IssuedBy", expense.issuedBy);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                
+                //delete old Expense payments
+                string queryDelete = "DELETE from ExpensePayments WHERE idExpense=@idExpense; ";
+
+                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
+                {
+                    // Now we can start using the passed values in our parameters:
+                    cmd.Parameters.AddWithValue("@idExpense", old_expense.idExpense);
+                    // Execute the query
+                    cmd.ExecuteNonQuery();
+                }
+
+                //insert payents
+                StringBuilder sCommand = new StringBuilder("INSERT INTO ExpensePayment ( idExpense, PaymentMethod, Amount, PaymentNumber,PaymentDate) VALUES ");
+                List<string> Rows = new List<string>();
+                foreach (Payment expe in expense.payments)
+                {
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+
+                        MySqlHelper.EscapeString(expense.idExpense.ToString()),
+                        MySqlHelper.EscapeString(expe.paymentMethod.ToString()),
+                        MySqlHelper.EscapeString(expe.amount.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(expe.paymentNumber.ToString()),
+                        MySqlHelper.EscapeString(expe.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))));
+                }
+                sCommand.Append(string.Join(",", Rows));
+                sCommand.Append(";");
+                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                {
+                    myCmd.CommandType = CommandType.Text;
+                    myCmd.ExecuteNonQuery();
+                }
+
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
