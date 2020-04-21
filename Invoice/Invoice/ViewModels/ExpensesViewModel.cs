@@ -193,7 +193,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@InvoiceNo", expence.invoiceNo);
                     cmd.Parameters.AddWithValue("@CreatedDate", expence.createdDate);
                     cmd.Parameters.AddWithValue("@Cost", expence.cost);
-                    cmd.Parameters.AddWithValue("@VAT", expence.VAT);
+                    cmd.Parameters.AddWithValue("@VAT", expence.VAT/100);
                     cmd.Parameters.AddWithValue("@TotalCost", expence.totalCost);
                     cmd.Parameters.AddWithValue("@IsPaid", expence.isPaid);
                     cmd.Parameters.AddWithValue("@IssuedBy", expence.issuedBy);
@@ -303,7 +303,7 @@ namespace InvoiceX.ViewModels
 
                 
                 //delete old Expense payments
-                string queryDelete = "DELETE from ExpensePayments WHERE idExpense=@idExpense; ";
+                string queryDelete = "DELETE from ExpensePayment WHERE idExpense=@idExpense; ";
 
                 using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
                 {
