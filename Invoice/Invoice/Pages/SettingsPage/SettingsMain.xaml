@@ -8,41 +8,14 @@
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="SettingsMain">
 
-    <Grid Background="LightGray">
-        <Grid Background="White" HorizontalAlignment="Left" Height="451" Margin="107,105,0,0" VerticalAlignment="Top" Width="948">
-            <Grid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
-            </Grid.Effect>
-            <Label x:Name="lbl_newUser" Content="New User" HorizontalAlignment="Left" Margin="42,46,0,0" VerticalAlignment="Top" Height="24" Width="63"/>
-            <Label x:Name="lbl_username" Content="Username :" HorizontalAlignment="Left" Margin="42,75,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="lbl_password" Content="Password :" HorizontalAlignment="Left" Margin="42,106,0,0" VerticalAlignment="Top"/>
-            <TextBox x:Name="textBox_username" HorizontalAlignment="Left" Height="23" Margin="120,78,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <TextBox x:Name="textBox_password" HorizontalAlignment="Left" Height="23" Margin="120,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
-            <Button x:Name="btn_addUser" Style="{DynamicResource CommonButtonStyle}" Content="Add User" HorizontalAlignment="Left" Margin="120,166,0,0" VerticalAlignment="Top" Width="120" Click="btn_addUser_Click" Height="23"/>
-            <Label x:Name="lbl_users" Content="Users" HorizontalAlignment="Left" Margin="42,188,0,0" VerticalAlignment="Top"/>
-            <CheckBox x:Name="checkBox_admin" Content="Admin Privileges" HorizontalAlignment="Left" Margin="120,143,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.338,0.367"/>
-
-            <DataGrid x:Name="dataGrid_Users" HorizontalAlignment="Left" Height="159" Margin="56,219,0,0" VerticalAlignment="Top" Width="250" AutoGenerateColumns="False" IsReadOnly="True"
-                      VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Disabled" CanUserResizeColumns="False" CanUserAddRows="False" CanUserResizeRows="False">
-                <DataGrid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
-                </DataGrid.Effect>
-
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header = "Username " Binding="{Binding username}" />
-                    <DataGridTextColumn Header = "Admin Privileges" Binding="{Binding admin}" />
-                    <DataGridTemplateColumn Header = "Remove">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="btn_removeUser" Content="X" Click="btn_removeUser_Click"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
-            </DataGrid>
-            <Button x:Name="btn_loadUsers" Style="{DynamicResource CommonButtonStyle}" Content="Load Users" HorizontalAlignment="Left" Margin="120,383,0,0" VerticalAlignment="Top" Width="120" Click="btn_loadUsers_Click" Height="30"/>
-
+    <Grid Background="LightGray" Panel.ZIndex="1">
+        <Grid Background="Transparent" HorizontalAlignment="Left" Height="70" Margin="0,-85,0,0" VerticalAlignment="Top" Width="646" Panel.ZIndex="1">
+            <Button x:Name="btnUsers" Content="Users" Margin="0,10,0,0" Style="{StaticResource ButtonStyle}" Click="btnUsers_Click" />
+            <Button x:Name="btnDatabase" Content="Database" Margin="130,10,0,0" Style="{StaticResource ButtonStyle}" Click="btnDatabase_Click" />
+            
         </Grid>
+
+        <Frame x:Name="settingsPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950" VerticalAlignment="Top" Width="1725" RenderTransformOrigin="0.465,0.404"/>
 
     </Grid>
 </Page>

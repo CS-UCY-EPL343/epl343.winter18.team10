@@ -160,9 +160,9 @@ namespace InvoiceX
         private void BtnSettings_Click(object sender, RoutedEventArgs e)
         {
             pageTitle.Text = "Settings";
-            MainPage.Content = m_settings;
             resetAllBtnStyles();
             btnSettings.Style = FindResource("sideMenuBtnStyle_selected") as Style;
+            MainPage.Content = m_settings;           
         }
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
