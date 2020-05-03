@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         WindowState = "Maximized"
         WindowStyle ="ThreeDBorderWindow"
-        Title="Eco-Bright" Height="1080" Width="1920">
+        Title="Eco-Bright" Height="1080" Width="1920" Closing="Window_Closing">
 
     <Window.Resources>
         <Style x:Key="sideMenuBtnStyle" TargetType="Button">
@@ -35,7 +35,11 @@
     </Window.Resources>
 
     <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >
-        <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="1" Grid.Column="1" Grid.Row="1" Grid.RowSpan="1" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
+        <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0,0,-3,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="1" >
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
                     <GradientStop Color="#FF30455D" Offset="1"/>
@@ -48,8 +52,8 @@
             </Border.Effect>
             <Grid HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="266"/>
         </Border>
-        <TextBlock x:Name="userName" Text="Username" TextAlignment="Left" FontFamily="Avenir"  FontSize="16" Foreground="#ff1f2026"  Width="90" Margin="10,10,166,32"  />
-        <TextBlock x:Name="userPermissions" Text="UserPermissions" TextAlignment="Left" FontFamily="Avenir"  FontSize="14" Foreground="#ff8f9198"  Width="119" Margin="10,32,137,6"  />
+        <TextBlock x:Name="userName" Text="Username" TextAlignment="Right" FontFamily="Avenir"  FontSize="26" Foreground="#ff1f2026" Margin="760,0,25,1045" Height="25" VerticalAlignment="Bottom" Grid.Column="1"  />
+        <TextBlock x:Name="userPermissions" Text="UserPermissions" TextAlignment="Right" FontFamily="Avenir"  FontSize="24" Foreground="#ff8f9198" Margin="725,40,25,1015" Grid.Column="1"  />
 
 
         <Canvas  Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
@@ -176,7 +180,7 @@
             </Button>
         </Canvas>
 
-        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950" Margin="180,90,0,0" VerticalAlignment="Top" Width="1725"/>
+        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950" Margin="180,90,0,0" VerticalAlignment="Top" Width="1725" Grid.ColumnSpan="2"/>
         <Border BorderBrush="Black" HorizontalAlignment="Left" Height="30" Margin="6,914,0,136"  Width="158">
             <Border.Background>
                 <ImageBrush ImageSource="Images/logo-2.png"/>

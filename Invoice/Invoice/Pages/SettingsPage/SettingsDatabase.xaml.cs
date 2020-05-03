@@ -24,9 +24,14 @@ namespace InvoiceX.Pages.SettingsPage
         public SettingsDatabase()
         {
             InitializeComponent();
-        }
+            if (MainWindow.user.admin == false)
+            {
+                Btn_import.IsEnabled = false;
+                Btn_import.Background = Brushes.Gray;
+            }
+        }              
 
-        private void Btn_exportPath_Click(object sender, RoutedEventArgs e)
+        private void Btn_export_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
             {
@@ -35,47 +40,21 @@ namespace InvoiceX.Pages.SettingsPage
                 Filter = "All Files (*.*)|*.*" // Filter files by extension
             };
 
-            Nullable<bool> result = dlg.ShowDialog();
-            string filename = "";
+            Nullable<bool> result = dlg.ShowDialog();            
 
             if (result == true)
             {
-                filename = dlg.FileName;
+                if (DatabaseViewModel.exportDatabase(dlg.FileName))
+                {
+                    txtBlock_exportPath.Text = dlg.FileName;
+                    MessageBox.Show("Database successfully exported to : " + dlg.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("Database failed to export.");
+                }
             }
 
-            txtBlock_exportPath.Text = filename;
-        }
-
-        private void Btn_export_Click(object sender, RoutedEventArgs e)
-        {
-            string filename = txtBlock_exportPath.Text;
-            if (DatabaseViewModel.exportDatabase(filename))
-            {
-                MessageBox.Show("Database successfully exported to : " + filename);
-            }
-            else
-            {
-                MessageBox.Show("Database failed to export.");
-            }
-        }
-
-        private void Btn_importPath_Click(object sender, RoutedEventArgs e)
-        {
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
-            {
-                FileName = "database", // Default file name
-                DefaultExt = ".sql", // Default file extension
-                Filter = "All Files (*.*)|*.*" // Filter files by extension
-            };
-
-            Nullable<bool> result = dlg.ShowDialog();
-            string filename = "";
-            if (result == true)
-            {                
-                 filename = dlg.FileName;
-            }
-
-            txtBlock_importPath.Text = filename;
         }
 
         private void Btn_import_Click(object sender, RoutedEventArgs e)
@@ -83,27 +62,40 @@ namespace InvoiceX.Pages.SettingsPage
             string msgtext = "You are about to import into to the database. Are you sure?";
             string txt = "Import Database";
             MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
-            string filename = txtBlock_importPath.Text;
+            MessageBoxResult msgresult = MessageBox.Show(msgtext, txt, button);
 
-            switch (result)
+            switch (msgresult)
             {
                 case MessageBoxResult.Yes:
-                    if (DatabaseViewModel.importDatabase(filename))
+                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog
                     {
-                        MessageBox.Show("Database successfully imported");
-                    }
-                    else
+                        FileName = "database", // Default file name
+                        DefaultExt = ".sql", // Default file extension
+                        Filter = "All Files (*.*)|*.*" // Filter files by extension
+                    };
+
+                    Nullable<bool> result = dlg.ShowDialog();
+                    
+                    if (result == true)
                     {
-                        MessageBox.Show("Database failed to import file : " + filename);
-                    }
+                        txtBlock_importPath.Text = dlg.FileName;
+
+                        if (DatabaseViewModel.importDatabase(dlg.FileName))
+                        {
+                            MessageBox.Show("Database successfully imported");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Database failed to import file : " + dlg.FileName);
+                        }
+                    }                    
                     break;
                 case MessageBoxResult.No:
                     break;
             }
-        }
+        }               
 
-        private void Btn_exportPathCSV_Click(object sender, RoutedEventArgs e)
+        private void Btn_exportCSV_Click(object sender, RoutedEventArgs e)
         {
             Microsoft.Win32.SaveFileDialog dlg = new Microsoft.Win32.SaveFileDialog
             {
@@ -113,27 +105,21 @@ namespace InvoiceX.Pages.SettingsPage
             };
 
             Nullable<bool> result = dlg.ShowDialog();
-            string filename = "";
 
             if (result == true)
             {
-                filename = dlg.FileName;
-            }
+                txtBlock_exportPathCSV.Text = dlg.FileName;
 
-            txtBlock_exportPathCSV.Text = filename;
+                if (DatabaseViewModel.exportDatabaseAsCSV(dlg.FileName))
+                {
+                    MessageBox.Show("Database successfully exported as CSV to : " + dlg.FileName);
+                }
+                else
+                {
+                    MessageBox.Show("Database failed to export.");
+                }
+            }            
         }
 
-        private void Btn_exportCSV_Click(object sender, RoutedEventArgs e)
-        {
-            string filename = txtBlock_exportPathCSV.Text;
-            if (DatabaseViewModel.exportDatabaseAsCSV(filename))
-            {
-                MessageBox.Show("Database successfully exported as CSV to : " + filename);
-            }
-            else
-            {
-                MessageBox.Show("Database failed to export.");
-            }
-        }
     }
 }

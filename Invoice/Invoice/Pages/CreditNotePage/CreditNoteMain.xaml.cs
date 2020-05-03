@@ -30,7 +30,7 @@ namespace InvoiceX.Pages.CreditNotePage
             InitializeComponent();
             viewAllPage = new CreditNoteViewAll(this);
             viewPage = new CreditNoteView(this);
-            createpage = new CreditNoteCreate();
+            createpage = new CreditNoteCreate(this);
             editpage = new CreditNoteEdit();
             btnViewAll_Click(null, null);
         }
@@ -80,7 +80,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
         public void editCreditNote(int cdID)
         {
-            //editpage.loadInvoice(cdID);
+            editpage.loadCreditNote(cdID);
             btnEdit_Click(null, null);
         }
     }

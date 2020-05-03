@@ -44,7 +44,7 @@ namespace InvoiceX
                 if (isPasswordMatched)
                 {
                     //Login Successfull
-                    MainWindow mainWindow = new MainWindow();
+                    MainWindow mainWindow = new MainWindow(user);
                     mainWindow.Show();
                     this.Close();
                 }

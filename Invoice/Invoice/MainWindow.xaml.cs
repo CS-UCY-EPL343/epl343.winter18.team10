@@ -41,17 +41,20 @@ namespace InvoiceX
         private OrderMain m_order;
         private QuoteMain m_quote;
         private ExpensesMain m_expenses;
-        private SettingsMain m_settings;              
+        private SettingsMain m_settings;
 
-        public MainWindow()
+        public static User user;
+        private bool logout = false;
+
+        public MainWindow(User user)
         {
             InitializeComponent();
-            //this.user = user;
-            //userName.Text = this.user.username;
-            //if (this.user.admin)
-            //    userPermissions.Text = "Administrator";
-            //else
-            //    userPermissions.Text = "User";
+            MainWindow.user = user;
+            userName.Text = MainWindow.user.username;
+            if (MainWindow.user.admin)
+                userPermissions.Text = "Administrator";
+            else
+                userPermissions.Text = "User";
 
             m_dashboard = new Dashboard();
             m_invoice = new InvoiceMain();
@@ -66,6 +69,11 @@ namespace InvoiceX
             m_order = new OrderMain(this);
 
             BtnDashboard_Click(null, null);
+        }
+
+        ~MainWindow()
+        {
+           
         }
 
         private void resetAllBtnStyles()
@@ -167,22 +175,8 @@ namespace InvoiceX
 
         private void btnLogout_Click(object sender, RoutedEventArgs e)
         {
-            string msgtext = "You are about to logout and return to the login screen. Are you sure?";
-            string txt = "Logout";
-            MessageBoxButton button = MessageBoxButton.YesNo;
-            MessageBoxResult result = MessageBox.Show(msgtext, txt, button);
-
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    LoginWindow loginWindow = new LoginWindow();
-                    loginWindow.Show();
-                    this.Close();
-                    break;
-                case MessageBoxResult.No:
-                    break;
-            }
-
+            this.logout = true;
+            this.Close();            
         }
 
         public void issueOrderAsInvoice(Order order)
@@ -209,5 +203,50 @@ namespace InvoiceX
                     break;
             }
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            string msgtext,txt;
+            MessageBoxButton button;
+            MessageBoxResult result;
+            if (logout)
+            {
+                logout = false;
+                msgtext = "You are about to logout and return to the login screen. Are you sure?";
+                txt = "Logout";
+                button = MessageBoxButton.YesNo;
+                result = MessageBox.Show(msgtext, txt, button);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        LoginWindow loginWindow = new LoginWindow();
+                        loginWindow.Show();
+                        e.Cancel = false;
+                        break;
+                    case MessageBoxResult.No:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+            else
+            {
+                msgtext = "You are about to exit the application. Are you sure?";
+                txt = "Exit";
+                button = MessageBoxButton.YesNo;
+                result = MessageBox.Show(msgtext, txt, button);
+
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        e.Cancel = false;
+                        break;
+                    case MessageBoxResult.No:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+        }
+
     }
 }

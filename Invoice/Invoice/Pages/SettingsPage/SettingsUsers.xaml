@@ -35,7 +35,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header = "Username " Binding="{Binding username}" />
                 <DataGridTextColumn Header = "Admin Privileges" Binding="{Binding admin}" />
-                <DataGridTemplateColumn Header = "Remove">
+                <DataGridTemplateColumn Header = "Remove" x:Name="colRemove">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btn_removeUser" Content="X" Click="btn_removeUser_Click" Style="{StaticResource RemoveButtonStyle}"/>

@@ -24,10 +24,12 @@ namespace InvoiceX.Pages.CreditNotePage
         CustomerViewModel customerView;
         CreditNoteViewModel creditNoteView;
         bool refreshDataDB = true;
+        CreditNoteMain creditNoteMain;
 
-        public CreditNoteCreate()
+        public CreditNoteCreate(CreditNoteMain creditNoteMain)
         {
             InitializeComponent();
+            this.creditNoteMain = creditNoteMain;
             txtBlock_NetTotal.Text = (0).ToString("C");
             txtBlock_VAT.Text = (0).ToString("C");
             txtBlock_TotalAmount.Text = (0).ToString("C");
@@ -275,9 +277,10 @@ namespace InvoiceX.Pages.CreditNotePage
             if (checkCustomerForm() && checkDetailsForm() && hasItemsSelected())
             {
                 CreditNote creditNote = createCreditNoteObject();
+                creditNote.createdDate += DateTime.Now.TimeOfDay;
                 CreditNoteViewModel.insertCreditNote(creditNote);
                 MessageBox.Show("Credit Note with ID " + creditNote.idCreditNote + " was created.");
-               // invoiceMain.viewInvoice(inv.idInvoice);
+                creditNoteMain.viewCreditNote(creditNote.idCreditNote);
                 Btn_clearAll_Click(null, null);                
             }
         }

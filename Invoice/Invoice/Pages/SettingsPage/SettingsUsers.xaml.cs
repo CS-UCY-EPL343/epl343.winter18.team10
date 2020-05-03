@@ -28,6 +28,12 @@ namespace InvoiceX.Pages.SettingsPage
         public SettingsUsers()
         {
             InitializeComponent();
+            if (MainWindow.user.admin == false)
+            {
+                btn_addUser.IsEnabled = false;
+                btn_addUser.Background = Brushes.Gray;
+                colRemove.Visibility = Visibility.Collapsed;
+            }
         }
 
         public void load()
