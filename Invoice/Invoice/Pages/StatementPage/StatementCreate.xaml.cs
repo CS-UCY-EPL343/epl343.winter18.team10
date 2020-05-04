@@ -27,7 +27,7 @@ namespace InvoiceX.Pages.StatementPage
     {
         CustomerViewModel customerView;
         StatementMain statementMain;
-
+        private bool isCreated=false;
         public StatementCreate(StatementMain statementMain)
         {
             InitializeComponent();
@@ -45,6 +45,7 @@ namespace InvoiceX.Pages.StatementPage
         {
             if (checkCustomerForm() && dateRangeSelected())            
             {
+                isCreated = true;
                 loadStatementItems();
             }
             else
@@ -104,6 +105,7 @@ namespace InvoiceX.Pages.StatementPage
 
         private void btn_clear_Click(object sender, RoutedEventArgs e)
         {
+            isCreated = false;
             comboBox_customer_border.BorderThickness = new Thickness(0);
             foreach (var ctrl in grid_Customer.Children)
             {
@@ -149,67 +151,86 @@ namespace InvoiceX.Pages.StatementPage
         }
 
         #region PDF
+        bool isCompleted()
+        {
+            if (comboBox_customer.Text == null || textBox_Customer.Text == null || textBox_Address.Text == null || textBox_Contact_Details == null || textBox_Email_Address== null
+                || !fromDate.SelectedDate.HasValue || !toDate.SelectedDate.HasValue || issuedBy.Text == null) return false;
+            else return true;
+        }
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+            if (!isCreated)
+            {
+                MessageBox.Show("Statement is not completed!");
+            }
+            else
+            {
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
 
-            // Save the PDF document...
-            string filename = "Statement.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
-
+                // Save the PDF document...
+                string filename = "Statement.pdf";
+                pdfRenderer.Save(filename);
+                System.Diagnostics.Process.Start(filename);
+            }
         }
 
         void printPdf_click(object sender, RoutedEventArgs e)
         {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Statement.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (!isCreated)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Statement is not completed!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                //Create and save the pdf
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Statement.pdf";
+                pdfRenderer.Save(filename);
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
@@ -218,44 +239,52 @@ namespace InvoiceX.Pages.StatementPage
             {
                 File.Delete("Statement_temp.pdf");
             }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Statement_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (!isCreated)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Statement is not completed!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
+
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Statement_temp.pdf";
+                pdfRenderer.Save(filename);
+
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private MigraDoc.DocumentObjectModel.Document createPdf()

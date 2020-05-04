@@ -106,65 +106,79 @@ namespace InvoiceX.Pages.ReceiptPage
         #region PDF
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+            if (receipt == null)
+            {
+                MessageBox.Show("Receipt is not loaded!");
+            }
+            else
+            {
 
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
-            // Save the PDF document...
-            string filename = "Receipt" + txtBox_receiptNumber.Text + ".pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
 
+                // Save the PDF document...
+                string filename = "Receipt" + txtBox_receiptNumber.Text + ".pdf";
+                pdfRenderer.Save(filename);
+                System.Diagnostics.Process.Start(filename);
+            }
         }
 
         void printPdf_click(object sender, RoutedEventArgs e)
         {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Receipt.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (receipt == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Receipt is not loaded!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                //Create and save the pdf
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Receipt.pdf";
+                pdfRenderer.Save(filename);
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
@@ -173,49 +187,56 @@ namespace InvoiceX.Pages.ReceiptPage
             {
                 File.Delete("Receipt_temp.pdf");
             }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Receipt_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (receipt == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Receipt is not loaded!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
+
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Receipt_temp.pdf";
+                pdfRenderer.Save(filename);
+
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Receipt receipt = ReceiptViewModel.getReceipt(int.Parse(txtBox_receiptNumber.Text));
             Customer customer = receipt.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;

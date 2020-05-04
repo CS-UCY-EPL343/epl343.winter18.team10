@@ -147,66 +147,79 @@ namespace InvoiceX.Pages.CreditNotePage
         #region PDF
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+            if (creditNote == null)
+            {
+                MessageBox.Show("Credit Note is not loaded!");
+            }
+            else
+            {
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
 
-            // Save the PDF document...
-            string filename = "creditNote.pdf";
-            filename = "creditNote.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
-
+                // Save the PDF document...
+                string filename = "creditNote.pdf";
+                filename = "creditNote.pdf";
+                pdfRenderer.Save(filename);
+                System.Diagnostics.Process.Start(filename);
+            }
         }
 
         void printPdf_click(object sender, RoutedEventArgs e)
         {
             //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "CreditNote.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (creditNote == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Credit Note is not loaded!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "CreditNote.pdf";
+                pdfRenderer.Save(filename);
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
@@ -215,49 +228,55 @@ namespace InvoiceX.Pages.CreditNotePage
             {
                 File.Delete("creditNote_temp.pdf");
             }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "creditNote_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (creditNote == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Credit Note is not loaded!");
             }
+            else
+            {
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.EnableRaisingEvents = true;
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
-            proc.Close();
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "creditNote_temp.pdf";
+                pdfRenderer.Save(filename);
+
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            CreditNote creditNote = CreditNoteViewModel.getCreditNote(int.Parse(txtBox_creditNoteNumber.Text));
             Customer customer = creditNote.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
