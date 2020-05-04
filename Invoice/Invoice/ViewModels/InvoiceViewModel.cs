@@ -209,7 +209,14 @@ namespace InvoiceX.ViewModels
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                {
+                    MessageBox.Show("Cannot delete invoice with ID = " + invoiceID + " as a credit note has been issued on it.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
         }
 

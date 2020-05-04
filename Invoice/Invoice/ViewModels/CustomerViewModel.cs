@@ -185,7 +185,14 @@ namespace InvoiceX.ViewModels
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                {
+                    MessageBox.Show("Cannot delete customer with ID = " + customerID + " as he is referenced in other documents.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
 
         }

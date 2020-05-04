@@ -123,5 +123,7 @@ namespace InvoiceX.Pages.ProductPage
                     break;
             }
         }
+
+        
     }
 }

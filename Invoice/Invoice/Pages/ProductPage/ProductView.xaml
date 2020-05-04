@@ -105,7 +105,7 @@
                 <DataGridTemplateColumn Header = "Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnOptions" Width="40" Height="40">
+                            <Button x:Name="btnOptions" Width="40" Height="40" >
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
