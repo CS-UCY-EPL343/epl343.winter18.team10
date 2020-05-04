@@ -27,15 +27,15 @@ namespace InvoiceX.Pages.StatementPage
     {
         CustomerViewModel customerView;
         StatementMain statementMain;
-        private bool isCreated=false;
+        private bool isCreated = false;
+
         public StatementCreate(StatementMain statementMain)
         {
             InitializeComponent();
             this.statementMain = statementMain;
-            txtBlock_Balance.Text = 0.ToString("C");
         }
-
-        public void load()
+        
+        private void comboBox_customer_DropDownOpened(object sender, EventArgs e)
         {
             customerView = new CustomerViewModel();
             comboBox_customer.ItemsSource = customerView.customersList;
@@ -45,8 +45,18 @@ namespace InvoiceX.Pages.StatementPage
         {
             if (checkCustomerForm() && dateRangeSelected())            
             {
-                isCreated = true;
-                loadStatementItems();
+                if (loadStatementItems())
+                {
+                    isCreated = true;
+                    fromDate.IsHitTestVisible = false;
+                    toDate.IsHitTestVisible = false;
+                    comboBox_customer.IsHitTestVisible = false;
+                }
+                else
+                {
+                    isCreated = false;
+                    MessageBox.Show("For the specific customer and date range nothing could be found.");
+                }
             }
             else
             {
@@ -54,7 +64,7 @@ namespace InvoiceX.Pages.StatementPage
             }
         }
 
-        private void loadStatementItems()
+        private bool loadStatementItems()
         {
             int customerID = ((Customer)comboBox_customer.SelectedItem).idCustomer;
             DateTime from = fromDate.SelectedDate.Value.Date;
@@ -67,13 +77,18 @@ namespace InvoiceX.Pages.StatementPage
             statement.AddRange(CreditNoteViewModel.getCreditNotesForStatement(customerID, from, to));
             statement.AddRange(ReceiptViewModel.getReceiptsForStatement(customerID, from, to));
 
-            statementDataGrid.ItemsSource = statement;
-            var firstCol = statementDataGrid.Columns.First();
-            firstCol.SortDirection = ListSortDirection.Ascending;
-            statementDataGrid.Items.SortDescriptions.Add(new SortDescription(firstCol.SortMemberPath, ListSortDirection.Ascending));
-
-            StatementItem item = (StatementItem)statementDataGrid.Items.GetItemAt(statementDataGrid.Items.Count - 1);
-            txtBlock_Balance.Text = item.balance.ToString("C");
+            if (statement.Count > 0)
+            {
+                statementDataGrid.ItemsSource = statement;
+                var firstCol = statementDataGrid.Columns.First();
+                firstCol.SortDirection = ListSortDirection.Ascending;
+                statementDataGrid.Items.SortDescriptions.Add(new SortDescription(firstCol.SortMemberPath, ListSortDirection.Ascending));
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         private bool dateRangeSelected()
@@ -114,12 +129,13 @@ namespace InvoiceX.Pages.StatementPage
             }
             fromDate.SelectedDate = null;
             toDate.SelectedDate = null;
+            comboBox_customer.SelectedIndex = -1;
             fromDate.ClearValue(DatePicker.BorderBrushProperty);
             toDate.ClearValue(DatePicker.BorderBrushProperty);
-            issuedBy.Text = null;
             statementDataGrid.ItemsSource = null;
-            txtBlock_Balance.Text = 0.ToString("C");
-            load();
+            fromDate.IsHitTestVisible = true;
+            toDate.IsHitTestVisible = true;
+            comboBox_customer.IsHitTestVisible = true;
         }
 
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -144,19 +160,15 @@ namespace InvoiceX.Pages.StatementPage
         {
             toDate.ClearValue(DatePicker.BorderBrushProperty);
         }
-
-        private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            issuedBy.ClearValue(TextBox.BorderBrushProperty);
-        }
-
+        
         #region PDF
         bool isCompleted()
         {
             if (comboBox_customer.Text == null || textBox_Customer.Text == null || textBox_Address.Text == null || textBox_Contact_Details == null || textBox_Email_Address== null
-                || !fromDate.SelectedDate.HasValue || !toDate.SelectedDate.HasValue || issuedBy.Text == null) return false;
+                || !fromDate.SelectedDate.HasValue || !toDate.SelectedDate.HasValue) return false;
             else return true;
         }
+
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
             if (!isCreated)
@@ -302,8 +314,6 @@ namespace InvoiceX.Pages.StatementPage
             string[] statementDetails = new string[4];
             statementDetails[0] = fromDate.Text;
             statementDetails[1] = toDate.Text;
-            statementDetails[2] = issuedBy.Text;
-
 
             List<StatementItem> items = statementDataGrid.Items.OfType<StatementItem>().ToList();
 
@@ -319,5 +329,7 @@ namespace InvoiceX.Pages.StatementPage
         {
             statementMain.viewItem((StatementItem)statementDataGrid.SelectedItem);
         }
+
+        
     }
 }

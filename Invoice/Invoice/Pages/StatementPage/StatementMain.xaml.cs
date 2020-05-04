@@ -37,7 +37,6 @@ namespace InvoiceX.Pages.StatementPage
             resetAllBtnStyles();
             btnCreate.Style = FindResource("ButtonStyleSelected") as Style;
             statementPage.Content = createPage;
-            createPage.load();
         }
 
         private void resetAllBtnStyles()
