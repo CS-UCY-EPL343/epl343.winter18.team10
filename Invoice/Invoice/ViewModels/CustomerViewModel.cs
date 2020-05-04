@@ -204,7 +204,7 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
                 cmd.Parameters["@month"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
-                cmd.Parameters["@year "].Direction = ParameterDirection.Input;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();

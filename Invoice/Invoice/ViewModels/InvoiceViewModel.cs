@@ -326,7 +326,7 @@ namespace InvoiceX.ViewModels
             try
             {
                 //update Invoice 
-                string query = "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, CreatedDate=@CreatedDate, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
+                string query = "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
                 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -337,7 +337,6 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@Cost", invoice.cost);
                     cmd.Parameters.AddWithValue("@Vat", invoice.VAT);
                     cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
-                    cmd.Parameters.AddWithValue("@CreatedDate", invoice.createdDate);
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     // Execute the query
