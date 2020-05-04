@@ -24,6 +24,7 @@ namespace InvoiceX.Pages.InvoicePage
         CustomerViewModel customerView;
         InvoiceMain invoiceMain;
         bool refreshDataDB = true;
+        int orderID = -1;
 
         public InvoiceCreate(InvoiceMain invoiceMain)
         {
@@ -259,11 +260,15 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {           
-            if (checkCustomerForm()&checkDetailsForm()&hasItemsSelected())
+            if (checkCustomerForm() & checkDetailsForm() & hasItemsSelected())
             {
                 Invoice inv = createInvoiceObject();
                 inv.createdDate += DateTime.Now.TimeOfDay;
                 InvoiceViewModel.insertInvoice(inv);
+                if (orderID != -1)
+                {
+                    OrderViewModel.updateOrderStatus(this.orderID, OrderStatus.Completed);
+                }
                 MessageBox.Show("Invoice with ID " + inv.idInvoice + " was created.");
                 invoiceMain.viewInvoice(inv.idInvoice);
                 Btn_clearAll_Click(null, null);                
@@ -295,6 +300,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
+            this.orderID = -1;
             comboBox_customer_border.BorderThickness = new Thickness(0);
             Btn_clearProduct_Click(null, null);
             clearCustomer();
@@ -314,6 +320,8 @@ namespace InvoiceX.Pages.InvoicePage
             Btn_clearAll_Click(null, null);
             if (order != null)
             {
+                this.orderID = order.idOrder;
+
                 // Customer details                                
                 comboBox_customer.SelectedValue = order.customer.CustomerName;
                 textBox_Customer.Text = order.customer.CustomerName;
@@ -343,5 +351,6 @@ namespace InvoiceX.Pages.InvoicePage
                 }
             }
         }
+
     }
 }
