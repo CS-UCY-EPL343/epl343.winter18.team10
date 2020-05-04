@@ -139,66 +139,80 @@ namespace InvoiceX.Pages.QuotePage
         #region PDF
         void savePdf_Click(object sender, RoutedEventArgs e)
         {
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+            if (quote == null)
+            {
+                MessageBox.Show("Quote is not loaded!");
+            }
+            else
+            {
 
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
-            // Save the PDF document...
-            string filename = "Invoice.pdf";
-            filename = "Invoice.pdf";
-            pdfRenderer.Save(filename);
-            System.Diagnostics.Process.Start(filename);
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
 
+                // Save the PDF document...
+                string filename = "Invoice.pdf";
+                filename = "Invoice.pdf";
+                pdfRenderer.Save(filename);
+                System.Diagnostics.Process.Start(filename);
+            }
         }
 
         void printPdf_click(object sender, RoutedEventArgs e)
         {
-            //Create and save the pdf
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Quote.pdf";
-            pdfRenderer.Save(filename);
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (quote == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Quote is not loaded!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                //Create and save the pdf
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
 
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Quote.pdf";
+                pdfRenderer.Save(filename);
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
@@ -207,49 +221,56 @@ namespace InvoiceX.Pages.QuotePage
             {
                 File.Delete("Quote_temp.pdf");
             }
-            MigraDoc.DocumentObjectModel.Document document = createPdf();
-            document.UseCmykColor = true;
-            // Create a renderer for PDF that uses Unicode font encoding
-            MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
-
-            // Set the MigraDoc document
-            pdfRenderer.Document = document;
-
-            // Create the PDF document
-            pdfRenderer.RenderDocument();
-
-            // Save the PDF document...
-            string filename = "Quote_temp.pdf";
-            pdfRenderer.Save(filename);
-
-            //open adobe acrobat
-            Process proc = new Process();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.Verb = "print";
-
-            //Define location of adobe reader/command line
-            //switches to launch adobe in "print" mode
-            proc.StartInfo.FileName =
-              @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-            proc.StartInfo.Arguments = String.Format(@" {0}", filename);
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.CreateNoWindow = true;
-
-            proc.Start();
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            if (proc.HasExited == false)
+            if (quote == null)
             {
-                proc.WaitForExit(10000);
+                MessageBox.Show("Quote is not loaded!");
             }
+            else
+            {
 
-            proc.EnableRaisingEvents = true;
+                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                document.UseCmykColor = true;
+                // Create a renderer for PDF that uses Unicode font encoding
+                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
-            proc.Close();
+                // Set the MigraDoc document
+                pdfRenderer.Document = document;
+
+                // Create the PDF document
+                pdfRenderer.RenderDocument();
+
+                // Save the PDF document...
+                string filename = "Quote_temp.pdf";
+                pdfRenderer.Save(filename);
+
+                //open adobe acrobat
+                Process proc = new Process();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.Verb = "print";
+
+                //Define location of adobe reader/command line
+                //switches to launch adobe in "print" mode
+                proc.StartInfo.FileName =
+                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.CreateNoWindow = true;
+
+                proc.Start();
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                if (proc.HasExited == false)
+                {
+                    proc.WaitForExit(10000);
+                }
+
+                proc.EnableRaisingEvents = true;
+
+                proc.Close();
+            }
         }
 
         private MigraDoc.DocumentObjectModel.Document createPdf()
         {
-            Quote quote = QuoteViewModel.getQuote(int.Parse(txtBox_QuoteNumber.Text));
             Customer customer = quote.customer;
             string[] customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;

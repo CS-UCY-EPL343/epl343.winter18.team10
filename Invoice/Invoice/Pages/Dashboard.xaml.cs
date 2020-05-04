@@ -29,6 +29,8 @@ namespace InvoiceX.Pages
         public Dashboard()
         {
             InitializeComponent();
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+
             createChart1();
             createChart2();
             invoicesCount.Text = ViewModels.InvoiceViewModel.get30DaysTotalInvoices();
