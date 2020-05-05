@@ -41,7 +41,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="135,18,0,0" TextWrapping="Wrap" Text="Receipt No." VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Receipt Date" VerticalAlignment="Top"/>
                 <TextBox x:Name="textBox_ReceiptNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" />
-                <DatePicker x:Name="ReceiptDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
+                <TextBox x:Name="txtbox_ReceiptDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True" />
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30" TextChanged="IssuedBy_TextChanged"/>
 

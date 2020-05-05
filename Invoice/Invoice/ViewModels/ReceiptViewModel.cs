@@ -339,7 +339,7 @@ namespace InvoiceX.ViewModels
             try
             {
                 //update receipt 
-                string query = "UPDATE Receipt SET  Amount=@Amount, IssuedBy=@IssuedBy, CreatedDate=@CreatedDate  WHERE idReceipt=@idReceipt ";
+                string query = "UPDATE Receipt SET  Amount=@Amount, IssuedBy=@IssuedBy  WHERE idReceipt=@idReceipt ";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
@@ -349,7 +349,6 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@idReceipt", receipt.idReceipt);
                     cmd.Parameters.AddWithValue("@Amount", receipt.totalAmount);
                     cmd.Parameters.AddWithValue("@IssuedBy", receipt.issuedBy);
-                    cmd.Parameters.AddWithValue("@CreatedDate", receipt.createdDate);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }

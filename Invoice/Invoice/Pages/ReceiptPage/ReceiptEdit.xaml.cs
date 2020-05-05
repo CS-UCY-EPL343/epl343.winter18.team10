@@ -19,7 +19,7 @@ namespace InvoiceX.Pages.ReceiptPage
         ReceiptMain receiptMain;
 
         bool Refresh_DB_data = true;
-        private Receipt receipt;
+        private Receipt old_receipt;
         bool receipt_loaded = false;
 
         public ReceiptEdit(ReceiptMain receiptMain)
@@ -34,7 +34,6 @@ namespace InvoiceX.Pages.ReceiptPage
             if (Refresh_DB_data)
             {                
                 customerView = new CustomerViewModel();  
-                ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
                 PaymentDate.SelectedDate = DateTime.Today;//set curent date 
 
             }
@@ -190,11 +189,10 @@ namespace InvoiceX.Pages.ReceiptPage
         {           
             Receipt myReceipt;
             myReceipt = new Receipt();
-            myReceipt.createdDate = ReceiptDate.SelectedDate.Value.Date;
-            //myReceipt.status=
+            myReceipt.createdDate = old_receipt.createdDate;
             myReceipt.idReceipt = Convert.ToInt32(textBox_ReceiptNumber.Text);
-            myReceipt.customerName = receipt.customerName;
-            myReceipt.customer = receipt.customer;
+            myReceipt.customerName = old_receipt.customerName;
+            myReceipt.customer = old_receipt.customer;
             myReceipt.issuedBy = issuedBy.Text;
             myReceipt.totalAmount = float.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
             myReceipt.payments = ReceiptDataGrid.Items.OfType<Payment>().ToList();
@@ -209,8 +207,8 @@ namespace InvoiceX.Pages.ReceiptPage
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK) 
             {
-                ReceiptViewModel.updateReceipt(createReceiptObject(), receipt);
-                receiptMain.viewReceipt(receipt.idReceipt);
+                ReceiptViewModel.updateReceipt(createReceiptObject(), old_receipt);
+                receiptMain.viewReceipt(old_receipt.idReceipt);
                 Btn_clearAll_Click(null, null);
             }
         }
@@ -271,22 +269,22 @@ namespace InvoiceX.Pages.ReceiptPage
 
         public void loadReceipt(int receiptID)
         {
-            receipt = ReceiptViewModel.getReceipt(receiptID);
-            if (receipt != null)
+            old_receipt = ReceiptViewModel.getReceipt(receiptID);
+            if (old_receipt != null)
             {
                 // Customer details
-                textBox_Customer.Text = receipt.customer.CustomerName;
-                textBox_Contact_Details.Text = receipt.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = receipt.customer.Email;
-                textBox_Address.Text = receipt.customer.Address + ", " + receipt.customer.City + ", " + receipt.customer.Country;
+                textBox_Customer.Text = old_receipt.customer.CustomerName;
+                textBox_Contact_Details.Text = old_receipt.customer.PhoneNumber.ToString();
+                textBox_Email_Address.Text = old_receipt.customer.Email;
+                textBox_Address.Text = old_receipt.customer.Address + ", " + old_receipt.customer.City + ", " + old_receipt.customer.Country;
                 // Receipt details
-                textBox_ReceiptNumber.Text = receipt.idReceipt.ToString();
-                ReceiptDate.SelectedDate = receipt.createdDate;
-                issuedBy.Text = receipt.issuedBy;
-                TotalAmount_TextBlock.Text = receipt.totalAmount.ToString("C");
+                textBox_ReceiptNumber.Text = old_receipt.idReceipt.ToString();
+                txtbox_ReceiptDate.Text = old_receipt.createdDate.ToString("d");
+                issuedBy.Text = old_receipt.issuedBy;
+                TotalAmount_TextBlock.Text = old_receipt.totalAmount.ToString("C");
 
                 // Receipt payments           
-                foreach (Payment p in receipt.payments) 
+                foreach (Payment p in old_receipt.payments) 
                 {
                     ReceiptDataGrid.Items.Add(p);
                 }

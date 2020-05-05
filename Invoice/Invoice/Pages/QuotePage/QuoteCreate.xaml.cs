@@ -98,7 +98,7 @@ namespace InvoiceX.Pages.QuotePage
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
             
-            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0))
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float productQuote) || (productQuote < 0))
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
@@ -107,6 +107,21 @@ namespace InvoiceX.Pages.QuotePage
             {
                 textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
             }
+
+            float productprice = 0;
+            float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out productprice);
+            if (productQuote > productprice)
+            {
+                all_completed = false;
+                textBox_ProductQuote.BorderBrush = Brushes.Red;
+                MessageBox.Show("Offer price is biger than normal");
+            }
+            else
+            {
+                textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
+            }
+
+
 
             return all_completed;
         }
@@ -258,41 +273,6 @@ namespace InvoiceX.Pages.QuotePage
         {
             textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
         }
-
-        /*
-        public void loadOrder(Order order)
-        {
-            Btn_clearAll_Click(null, null);
-            if (order != null)
-            {
-                // Customer details                                
-                comboBox_customer.SelectedValue = order.customer.CustomerName;
-                textBox_Customer.Text = order.customer.CustomerName;
-                textBox_Contact_Details.Text = order.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = order.customer.Email;
-                textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
-
-                // Invoice details
-                NetTotal_TextBlock.Text = order.cost.ToString("C");
-                Vat_TextBlock.Text = order.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
-
-                // Invoice products        
-                for (int i = 0; i < order.products.Count; i++)
-                {
-                    ProductDataGrid.Items.Add(new Product
-                    {
-                        idProduct = order.products[i].idProduct,
-                        ProductName = order.products[i].ProductName,
-                        ProductDescription = order.products[i].ProductDescription,
-                        Stock = order.products[i].Stock,
-                        SellPrice = order.products[i].SellPrice,
-                        Quantity = order.products[i].Quantity,
-                        Total = order.products[i].Total,
-                        Vat = order.products[i].Vat
-                    });
-                }
-            }
-        }*/
+ 
     }
 }

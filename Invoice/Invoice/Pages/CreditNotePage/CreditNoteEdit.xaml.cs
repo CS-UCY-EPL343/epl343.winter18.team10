@@ -219,7 +219,7 @@ namespace InvoiceX.Pages.CreditNotePage
             creditNote.cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
             creditNote.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
             creditNote.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
-            creditNote.createdDate = invoiceDate.SelectedDate.Value.Date;
+            creditNote.createdDate = oldCreditNote.createdDate;
             creditNote.issuedBy = issuedBy.Text;
             return creditNote;           
         }
@@ -309,7 +309,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
                 // Invoice details
                 textBox_invoiceNumber.Text = oldCreditNote.idCreditNote.ToString();
-                invoiceDate.SelectedDate = oldCreditNote.createdDate;
+                txtbox_invoiceDate.Text = oldCreditNote.createdDate.ToString("d"); ;
                 issuedBy.Text = oldCreditNote.issuedBy;
                 NetTotal_TextBlock.Text = oldCreditNote.cost.ToString("C");
                 Vat_TextBlock.Text = oldCreditNote.VAT.ToString("C");

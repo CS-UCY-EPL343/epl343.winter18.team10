@@ -28,9 +28,9 @@ namespace InvoiceX.Pages.ExpensesPage
         {
             InitializeComponent();
             //this.expensesMain = expensesMain;
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            txtBox_totalCost.Text = (0).ToString("C");
+            txtBox_VAT.Text = (0).ToString("C");
+            txtBox_cost.Text = (0).ToString("C");
         }
 
         public void load()
@@ -91,11 +91,7 @@ namespace InvoiceX.Pages.ExpensesPage
                 all_completed = false;
                 textBox_ExpenseAmount.BorderBrush = Brushes.Red;
             }
-            if (!float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float f) || (f < 0))
-            {
-                txtBox_VAT.BorderBrush = Brushes.Red;
-                all_completed = false;
-            }
+            
             return all_completed;
         }
 
@@ -106,21 +102,17 @@ namespace InvoiceX.Pages.ExpensesPage
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
                 expensesDataGrid.Items.Add(new Payment{                   
                     amount = float.Parse(textBox_ExpenseAmount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    Vat= float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
+                    //Vat= float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentMethod = paymentenum,
                     paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
                     paymentDate = PaymentDate.SelectedDate.Value.Date,
                 });
 
-                double netTotal = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+                double netTotal = Double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
                 netTotal += Convert.ToDouble(textBox_ExpenseAmount.Text);
-                txtBlock_NetTotal.Text = netTotal.ToString("C");
+                txtBox_totalCost.Text = netTotal.ToString("C");
 
-                double VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
-                VAT += (Convert.ToDouble(textBox_ExpenseAmount.Text) * float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat));
-                txtBlock_VAT.Text = (VAT).ToString("C");
-
-                txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+                
             }
         }
 
@@ -128,16 +120,12 @@ namespace InvoiceX.Pages.ExpensesPage
         {
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
 
-            double netTotal = double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+            double netTotal = double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
             netTotal -= Convert.ToDouble(CurrentCell_Product.amount);
-            txtBlock_NetTotal.Text = netTotal.ToString("C");
+            txtBox_totalCost.Text = netTotal.ToString("C");
 
-            double VAT = double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
-            VAT -= (CurrentCell_Product.amount * CurrentCell_Product.Vat);
-            txtBlock_VAT.Text = VAT.ToString("C");
-
-            txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
+
         }
 
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
@@ -246,9 +234,9 @@ namespace InvoiceX.Pages.ExpensesPage
                 issuedBy = issuedBy.Text,
                 isPaid =((bool)(checkBox_Paid.IsChecked)),
 
-                cost = float.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency),
+                cost = float.Parse(txtBox_cost.Text, NumberStyles.Currency),
                 VAT = float.Parse(txtBox_VAT.Text, NumberStyles.Currency),
-                totalCost = float.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
+                totalCost = float.Parse(txtBox_totalCost.Text, NumberStyles.Currency),
 
                 payments = expensesDataGrid.Items.OfType<Payment>().ToList(),
             };
@@ -294,9 +282,9 @@ namespace InvoiceX.Pages.ExpensesPage
         private void Clear_expenses_Grid()
         {
             expensesDataGrid.Items.Clear();
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            txtBox_cost.Text = (0).ToString("C");
+            txtBox_VAT.Text = (0).ToString("C");
+            txtBox_totalCost.Text = (0).ToString("C");
         }
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)

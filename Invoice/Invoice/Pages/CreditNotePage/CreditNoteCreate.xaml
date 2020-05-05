@@ -70,7 +70,7 @@
                 </Border>
                 <TextBlock HorizontalAlignment="Left" Margin="8,11,0,0" TextWrapping="Wrap" Text="Invoice ID"  VerticalAlignment="Top"/>
                 <Border  x:Name="comboBox_Product_border" Margin="72,32,1339,10" Width="200"  Height="30" >
-                    <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"  Height="30"  SelectionChanged="ComboBox_SelectionChanged" >
+                    <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"  Height="30"  SelectionChanged="ComboBox_Product_SelectionChanged" >
                         <ComboBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">

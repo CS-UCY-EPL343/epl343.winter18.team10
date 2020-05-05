@@ -332,7 +332,7 @@ namespace InvoiceX.ViewModels
             try
             {
                 //update Credit Note 
-                string query = "UPDATE CreditNote SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, CreatedDate=@CreatedDate, IssuedBy=@IssuedBy, PreviousBalance=@PreviousBalance WHERE idCreditNote=@idCreditNote;";
+                string query = "UPDATE CreditNote SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, IssuedBy=@IssuedBy, PreviousBalance=@PreviousBalance WHERE idCreditNote=@idCreditNote;";
 
                 using (MySqlCommand cmd = new MySqlCommand(query, conn))
                 {
@@ -343,7 +343,6 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@Cost", creditNote.cost);
                     cmd.Parameters.AddWithValue("@Vat", creditNote.VAT);
                     cmd.Parameters.AddWithValue("@TotalCost", creditNote.totalCost);
-                    cmd.Parameters.AddWithValue("@CreatedDate", creditNote.createdDate);                
                     cmd.Parameters.AddWithValue("@IssuedBy", creditNote.issuedBy);
                     cmd.Parameters.AddWithValue("@PreviousBalance", creditNote.customer.Balance);
                     // Execute the query

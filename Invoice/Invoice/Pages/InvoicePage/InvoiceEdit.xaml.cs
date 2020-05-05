@@ -200,32 +200,18 @@ namespace InvoiceX.Pages.InvoicePage
 
         private Invoice createInvoiceObject()
         {
-            Invoice myinvoice;
-            int invoiceId = 0;
-            if (int.TryParse(textBox_invoiceNumber.Text, out int n))
-            {
-                invoiceId = int.Parse(textBox_invoiceNumber.Text);
-            }
-            if (invoiceId <= InvoiceViewModel.returnLatestInvoiceID())
-            {
-                Invoice invoice = InvoiceViewModel.getInvoice(invoiceId);
-                myinvoice = new Invoice();
-                myinvoice.customer = invoice.customer;
-                myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
-                myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
-                myinvoice.cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
-                myinvoice.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
-                myinvoice.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
-                myinvoice.createdDate = invoiceDate.SelectedDate.Value.Date;
-                myinvoice.dueDate = dueDate.SelectedDate.Value.Date;
-                myinvoice.issuedBy = issuedBy.Text;
-                return myinvoice;
-            }
-            else
-            {
-                MessageBox.Show("Invoice id doesnt't exist");
-                return myinvoice = null;
-            }
+            Invoice myinvoice;    
+            myinvoice = new Invoice();
+            myinvoice.customer = oldInvoice.customer;
+            myinvoice.products = ProductDataGrid.Items.OfType<Product>().ToList();
+            myinvoice.idInvoice = Int32.Parse(textBox_invoiceNumber.Text);
+            myinvoice.cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+            myinvoice.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+            myinvoice.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
+            myinvoice.createdDate = oldInvoice.createdDate; //created date should not change
+            myinvoice.dueDate = dueDate.SelectedDate.Value.Date;
+            myinvoice.issuedBy = issuedBy.Text;
+            return myinvoice;           
         }
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
@@ -311,7 +297,7 @@ namespace InvoiceX.Pages.InvoicePage
 
                 // Invoice details
                 textBox_invoiceNumber.Text = oldInvoice.idInvoice.ToString();
-                invoiceDate.SelectedDate = oldInvoice.createdDate;
+                txtbox_invoiceDate.Text = oldInvoice.createdDate.ToString("d"); ;
                 dueDate.SelectedDate = oldInvoice.dueDate;
                 issuedBy.Text = oldInvoice.issuedBy;
                 NetTotal_TextBlock.Text = oldInvoice.cost.ToString("C");

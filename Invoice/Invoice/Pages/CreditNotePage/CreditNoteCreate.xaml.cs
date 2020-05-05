@@ -73,7 +73,7 @@ namespace InvoiceX.Pages.CreditNotePage
             }
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_Product_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (comboBox_Product.SelectedIndex > -1)
             {

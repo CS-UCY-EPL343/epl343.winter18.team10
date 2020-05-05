@@ -76,10 +76,23 @@ namespace InvoiceX.Pages.QuotePage
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
           
-            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0))
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float productQuote) || (productQuote < 0))
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
+            }
+            else
+            {
+                textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
+            }
+
+            float productprice = 0;
+            float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out productprice);
+            if (productQuote > productprice)
+            {
+                all_completed = false;
+                textBox_ProductQuote.BorderBrush = Brushes.Red;
+                MessageBox.Show("Offer price is biger than normal");
             }
             else
             {
