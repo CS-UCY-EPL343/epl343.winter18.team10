@@ -54,8 +54,8 @@
                 <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Created Date" VerticalAlignment="Top"/>
                 <TextBlock HorizontalAlignment="Left" Margin="269,73,0,0" TextWrapping="Wrap" Text="Shipping Date" VerticalAlignment="Top"/>
                 <TextBox x:Name="textBox_orderNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
-                <DatePicker x:Name="OrderDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120"  />
-                <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120"/>
+                <DatePicker x:Name="OrderDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top" Height="30" Width="120" Focusable = "False" SelectedDateChanged="orderDate_SelectedDateChanged"  />
+                <DatePicker x:Name="dueDate" HorizontalAlignment="Left" Margin="269,94,0,0" VerticalAlignment="Top" Height="30" Width="120" Focusable = "False" SelectedDateChanged="dueDate_SelectedDateChanged"  />
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
                 <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="135,150,0,0" VerticalAlignment="Top" Width="120" Height="30" TextChanged="IssuedBy_TextChanged"/>
 
@@ -127,7 +127,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
-        <Button x:Name="Btn_clearAll" Content="New" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
 
         <Grid HorizontalAlignment="Left" Height="77" Margin="1459,837,0,0" VerticalAlignment="Top" Width="163">
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,3,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81" FontSize="16"/>

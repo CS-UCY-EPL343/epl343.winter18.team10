@@ -227,12 +227,20 @@ namespace InvoiceX.Pages.OrderPage
 
         private bool Check_DetailsForm()
         {
+            bool all_ok = true;
             if (issuedBy.Text.Equals(""))
             {
                 issuedBy.BorderBrush = Brushes.Red;
-                return false;
+                all_ok = false;
             }
-            return true;
+            if (OrderDate.SelectedDate.Value > dueDate.SelectedDate.Value)
+            {
+                dueDate.BorderBrush = Brushes.Red;
+                OrderDate.BorderBrush = Brushes.Red;
+                MessageBox.Show("Due date is earlier than created date");
+                all_ok = false;
+            }
+            return all_ok;
         }
 
         private bool Has_Items_Selected()
@@ -256,7 +264,7 @@ namespace InvoiceX.Pages.OrderPage
             my_order.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
             my_order.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
             my_order.createdDate = OrderDate.SelectedDate.Value.Date;
-            my_order.shippingDate = OrderDate.SelectedDate.Value.Date;
+            my_order.shippingDate = dueDate.SelectedDate.Value.Date;
             my_order.issuedBy = issuedBy.Text;
             Enum.TryParse("Pending", out OrderStatus stautsenum);
             my_order.status = stautsenum;
@@ -294,6 +302,10 @@ namespace InvoiceX.Pages.OrderPage
         {
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            OrderDate.ClearValue(TextBox.BorderBrushProperty);
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+            OrderDate.SelectedDate = DateTime.Today;//set curent date 
+            dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
         }
 
         private void Clear_ProductGrid()
@@ -320,8 +332,16 @@ namespace InvoiceX.Pages.OrderPage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
-       
 
-       
+        private void orderDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            OrderDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void dueDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
     }
 }

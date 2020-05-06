@@ -245,6 +245,8 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            ReceiptDate.SelectedDate = DateTime.Today;//set curent date 
+            PaymentDate.SelectedDate = DateTime.Today;//set curent date 
         }
 
         private void Clear_ProductGrid()
