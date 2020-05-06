@@ -103,6 +103,7 @@ namespace InvoiceX.Pages.QuotePage
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
+                MessageBox.Show("Offer price can not be larger than actual price.");
             }
             else
             {
@@ -228,6 +229,7 @@ namespace InvoiceX.Pages.QuotePage
         {
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            invoiceDate.SelectedDate = DateTime.Today;//set curent date 
         }
 
         private void Clear_ProductGrid()

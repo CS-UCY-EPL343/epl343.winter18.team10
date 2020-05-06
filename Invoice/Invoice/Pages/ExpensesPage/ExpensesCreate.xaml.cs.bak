@@ -103,19 +103,18 @@ namespace InvoiceX.Pages.ExpensesPage
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
                 expensesDataGrid.Items.Add(new Payment{                   
                     amount = float.Parse(textBox_ExpenseAmount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    //Vat= float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
+                    Vat= float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentMethod = paymentenum,
                     paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
                     paymentDate = PaymentDate.SelectedDate.Value.Date,
-                });
-                
+                });                
             }
         }
 
         private void Button_remove_expense_from_grid(object sender, RoutedEventArgs e)
         {
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
-                       
+                        
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
         }
 
@@ -271,10 +270,7 @@ namespace InvoiceX.Pages.ExpensesPage
 
         private void Clear_expenses_Grid()
         {
-            expensesDataGrid.Items.Clear();
-            txtBox_cost.Clear();
-            txtBox_VAT.Clear();
-            txtBox_totalCost.Clear();
+            expensesDataGrid.Items.Clear();           
         }
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
@@ -347,6 +343,7 @@ namespace InvoiceX.Pages.ExpensesPage
         private void txtBox_VAT_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtBox_VAT.ClearValue(TextBox.BorderBrushProperty);
+
             if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
                float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
             {

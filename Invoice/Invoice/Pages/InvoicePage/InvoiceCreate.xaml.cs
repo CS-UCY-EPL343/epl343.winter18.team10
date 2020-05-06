@@ -38,11 +38,9 @@ namespace InvoiceX.Pages.InvoicePage
         public void load()
         {
             if (refreshDataDB)
-            {                
-                productView = new ProductViewModel();               
+            {                       
                 customerView = new CustomerViewModel();               
                 comboBox_customer.ItemsSource = customerView.customersList;
-                comboBox_Product.ItemsSource = productView.productList;
                 textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
@@ -60,6 +58,9 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Address.Text = customer.Address + ", " + customer.City + ", " + customer.Country;
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = customer.Email;
+
+                productView = new ProductViewModel(customer.idCustomer);
+                comboBox_Product.ItemsSource = productView.productList;
             }
         }
 
@@ -224,12 +225,20 @@ namespace InvoiceX.Pages.InvoicePage
 
         private bool checkDetailsForm()
         {
+            bool all_ok = true;
             if (issuedBy.Text.Equals(""))
             {
                 issuedBy.BorderBrush = Brushes.Red;
-                return false;
+                all_ok = false;
             }
-            return true;
+            if (invoiceDate.SelectedDate.Value > dueDate.SelectedDate.Value)
+            {
+                dueDate.BorderBrush = Brushes.Red;
+                invoiceDate.BorderBrush = Brushes.Red;
+                MessageBox.Show("Due date is earlier than created date");
+                all_ok = false;
+            }
+            return all_ok;
         }
 
         private bool hasItemsSelected()
@@ -253,7 +262,7 @@ namespace InvoiceX.Pages.InvoicePage
                 VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency),
                 totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
                 createdDate = invoiceDate.SelectedDate.Value,
-                dueDate = invoiceDate.SelectedDate.Value,
+                dueDate = dueDate.SelectedDate.Value,
                 issuedBy = issuedBy.Text
             };            
         }             
@@ -288,6 +297,10 @@ namespace InvoiceX.Pages.InvoicePage
         {
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            invoiceDate.ClearValue(TextBox.BorderBrushProperty);
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+            invoiceDate.SelectedDate = DateTime.Today;//set curent date 
+            dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
         }
 
         private void clearProductGrid()
@@ -313,8 +326,18 @@ namespace InvoiceX.Pages.InvoicePage
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
-        }      
-   
+        }
+
+        private void invoiceDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            invoiceDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void dueDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
         public void loadOrder(Order order)
         {
             Btn_clearAll_Click(null, null);

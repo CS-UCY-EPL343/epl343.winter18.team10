@@ -29,10 +29,7 @@ namespace InvoiceX.Pages.ExpensesPage
         public ExpensesEdit(ExpensesMain expensesMain)
         {
             InitializeComponent();
-            this.expensesMain = expensesMain;
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            this.expensesMain = expensesMain;            
             load();
         }
 
@@ -106,16 +103,6 @@ namespace InvoiceX.Pages.ExpensesPage
                     paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
                     paymentDate = PaymentDate.SelectedDate.Value.Date
                 });
-
-                double netTotal = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
-                netTotal += Convert.ToDouble(textBox_ExpenseAmount.Text);
-                txtBlock_NetTotal.Text = netTotal.ToString("C");
-
-                double VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
-                VAT += (Convert.ToDouble(textBox_ExpenseAmount.Text) * float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat));
-                txtBlock_VAT.Text = (VAT).ToString("C");
-
-                txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
             }
         }
 
@@ -123,17 +110,7 @@ namespace InvoiceX.Pages.ExpensesPage
         private void Button_remove_expense_from_grid(object sender, RoutedEventArgs e)
         {
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
-            float Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat);
-
-            double netTotal = double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
-            netTotal -= Convert.ToDouble(CurrentCell_Product.amount);
-            txtBlock_NetTotal.Text = netTotal.ToString("C");
-
-            double VAT = double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
-            VAT -= (CurrentCell_Product.amount * Vat);
-            txtBlock_VAT.Text = VAT.ToString("C");
-
-            txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+            
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
         }
 
@@ -182,9 +159,9 @@ namespace InvoiceX.Pages.ExpensesPage
                 issuedBy = issuedBy.Text,
                 isPaid = ((bool)(checkBox_Paid.IsChecked)),
 
-                cost = float.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency),
+                cost = float.Parse(txtBox_cost.Text, NumberStyles.Currency),
                 VAT = float.Parse(txtBox_VAT.Text, NumberStyles.Currency),
-                totalCost = float.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
+                totalCost = float.Parse(txtBox_totalCost.Text, NumberStyles.Currency),
 
                 payments = expensesDataGrid.Items.OfType<Payment>().ToList(),
             };
@@ -241,12 +218,7 @@ namespace InvoiceX.Pages.ExpensesPage
             {
                 issuedBy.BorderBrush = Brushes.Red;
                 all_ok = false;
-            }
-            if (!float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float f) || (f < 0))
-            {
-                txtBox_VAT.BorderBrush = Brushes.Red;
-                all_ok = false;
-            }
+            }            
            
             return all_ok;
         }
@@ -289,9 +261,9 @@ namespace InvoiceX.Pages.ExpensesPage
         private void Clear_expenses_Grid()
         {
             expensesDataGrid.Items.Clear();
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            txtBox_cost.Clear();
+            txtBox_VAT.Clear();
+            txtBox_totalCost.Clear();
         }
 
 
@@ -343,10 +315,10 @@ namespace InvoiceX.Pages.ExpensesPage
                 expenseDate.Text = oldExpense.createdDate.ToString("d");
                 issuedBy.Text = oldExpense.issuedBy;
                 checkBox_Paid.IsChecked = oldExpense.isPaid;
-                txtBlock_NetTotal.Text = oldExpense.cost.ToString("C");
+                txtBox_cost.Text = oldExpense.cost.ToString("C");
                 txtBox_VAT.Text = oldExpense.VAT.ToString();
-                txtBlock_VAT.Text= (oldExpense.VAT*oldExpense.cost).ToString("C");
-                txtBlock_TotalAmount.Text = oldExpense.totalCost.ToString("C");
+                txtBox_VAT.Text= (oldExpense.VAT*oldExpense.cost).ToString("C");
+                txtBox_totalCost.Text = oldExpense.totalCost.ToString("C");
                 txtBox_invoiceNumber.Text = (oldExpense.invoiceNo==0 ? ""  : oldExpense.invoiceNo.ToString());
 
                 // Receipt payments 
@@ -415,6 +387,11 @@ namespace InvoiceX.Pages.ExpensesPage
         private void txtBox_VAT_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtBox_VAT.ClearValue(TextBox.BorderBrushProperty);
+            if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
+               float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
+            {
+                txtBox_totalCost.Text = (price + vat).ToString("n2");
+            }
         }
 
         private void textBox_paymentNum_TextChanged(object sender, TextChangedEventArgs e)
@@ -425,6 +402,17 @@ namespace InvoiceX.Pages.ExpensesPage
         private void textBox_ExpenseAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox_ExpenseAmount.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void txtBox_cost_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtBox_cost.ClearValue(TextBox.BorderBrushProperty);
+
+            if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
+               float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
+            {
+                txtBox_totalCost.Text = (price + vat).ToString("n2");
+            }
         }
         /*clear red when txt changed END*/
     }
