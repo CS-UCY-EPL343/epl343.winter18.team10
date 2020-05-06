@@ -197,6 +197,7 @@ namespace InvoiceX.Pages.QuotePage
             issuedBy.Text = "";
             textBox_idQuote.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            invoiceDate.SelectedDate = null;
         }
 
         private void Clear_ProductGrid()

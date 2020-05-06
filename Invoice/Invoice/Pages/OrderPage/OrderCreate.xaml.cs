@@ -264,7 +264,7 @@ namespace InvoiceX.Pages.OrderPage
             my_order.VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
             my_order.totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency);
             my_order.createdDate = OrderDate.SelectedDate.Value.Date;
-            my_order.shippingDate = OrderDate.SelectedDate.Value.Date;
+            my_order.shippingDate = dueDate.SelectedDate.Value.Date;
             my_order.issuedBy = issuedBy.Text;
             Enum.TryParse("Pending", out OrderStatus stautsenum);
             my_order.status = stautsenum;

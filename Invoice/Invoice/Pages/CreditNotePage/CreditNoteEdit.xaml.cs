@@ -252,6 +252,7 @@ namespace InvoiceX.Pages.CreditNotePage
             issuedBy.Text = "";
             textBox_invoiceNumber.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            txtbox_invoiceDate.Clear();
         }
 
         private void Clear_ProductGrid()

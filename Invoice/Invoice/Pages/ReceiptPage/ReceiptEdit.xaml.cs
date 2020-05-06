@@ -227,6 +227,7 @@ namespace InvoiceX.Pages.ReceiptPage
             issuedBy.Text = "";
             textBox_ReceiptNumber.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            txtbox_ReceiptDate.Clear();
         }
 
         private void Clear_ProductGrid()

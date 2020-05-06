@@ -261,7 +261,7 @@ namespace InvoiceX.Pages.InvoicePage
                 VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency),
                 totalCost = Double.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
                 createdDate = invoiceDate.SelectedDate.Value,
-                dueDate = invoiceDate.SelectedDate.Value,
+                dueDate = dueDate.SelectedDate.Value,
                 issuedBy = issuedBy.Text
             };            
         }             

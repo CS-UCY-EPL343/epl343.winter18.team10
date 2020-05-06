@@ -198,7 +198,7 @@ namespace InvoiceX.Pages.InvoicePage
             }
             return true;
         }
-
+        
         private Invoice createInvoiceObject()
         {
             Invoice myinvoice;    
@@ -217,7 +217,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {            
-            if (Has_Items_Selected())
+            if (Has_Items_Selected() )
             {
                 if (int.TryParse(textBox_invoiceNumber.Text, out int invoiceId))
                 {
@@ -241,6 +241,11 @@ namespace InvoiceX.Pages.InvoicePage
             issuedBy.Text = "";
             textBox_invoiceNumber.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+
+            txtbox_invoiceDate.Clear();
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+            dueDate.SelectedDate = null;
+
         }
 
         private void Clear_ProductGrid()
