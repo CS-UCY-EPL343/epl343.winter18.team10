@@ -273,7 +273,7 @@ namespace InvoiceX.Pages.ExpensesPage
 
             textBox_expenseID.Clear();           
             txtBox_invoiceNumber.Clear();
-            expenseDate.SelectedDate = DateTime.Today;
+            expenseDate.SelectedDate = DateTime.Today;//
             issuedBy.Clear();
             textBox_expenseID.ClearValue(TextBox.BorderBrushProperty);
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
