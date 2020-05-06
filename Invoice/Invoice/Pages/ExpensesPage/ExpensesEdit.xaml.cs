@@ -30,9 +30,7 @@ namespace InvoiceX.Pages.ExpensesPage
         {
             InitializeComponent();
             //this.expensesMain = invoiceMain;
-            txtBox_totalCost.Text = (0).ToString("C");
-            txtBox_VAT.Text = (0).ToString("C");
-            txtBox_cost.Text = (0).ToString("C");
+           
             load();
         }
 
@@ -107,9 +105,11 @@ namespace InvoiceX.Pages.ExpensesPage
                     paymentDate = PaymentDate.SelectedDate.Value.Date
                 });
 
+                /*
                 double netTotal = Double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
                 netTotal += Convert.ToDouble(textBox_ExpenseAmount.Text);
                 txtBox_totalCost.Text = netTotal.ToString("C");
+                */
             }
         }
 
@@ -119,10 +119,10 @@ namespace InvoiceX.Pages.ExpensesPage
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
             float Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat);
 
-            
+            /*
             double netTotal = double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
             netTotal -= Convert.ToDouble(CurrentCell_Product.amount);
-            txtBox_totalCost.Text = netTotal.ToString("C");
+            txtBox_totalCost.Text = netTotal.ToString("C");*/
             
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
 
@@ -275,9 +275,9 @@ namespace InvoiceX.Pages.ExpensesPage
         private void Clear_expenses_Grid()
         {
             expensesDataGrid.Items.Clear();
-            txtBox_cost.Text = (0).ToString("C");
-            txtBox_VAT.Text = (0).ToString("C");
-            txtBox_totalCost.Text = (0).ToString("C");
+            txtBox_cost.Clear();
+            txtBox_VAT.Clear();
+            txtBox_totalCost.Clear();
         }
 
 
@@ -401,6 +401,12 @@ namespace InvoiceX.Pages.ExpensesPage
         private void txtBox_VAT_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtBox_VAT.ClearValue(TextBox.BorderBrushProperty);
+
+            if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
+               float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
+            {
+                txtBox_totalCost.Text = (price + vat).ToString("n2");
+            }
         }
 
         private void textBox_paymentNum_TextChanged(object sender, TextChangedEventArgs e)
@@ -411,6 +417,17 @@ namespace InvoiceX.Pages.ExpensesPage
         private void textBox_ExpenseAmount_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox_ExpenseAmount.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void txtBox_cost_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtBox_cost.ClearValue(TextBox.BorderBrushProperty);
+
+            if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
+               float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
+            {
+                txtBox_totalCost.Text = (price + vat).ToString("n2");
+            }
         }
         /*clear red when txt changed END*/
     }
