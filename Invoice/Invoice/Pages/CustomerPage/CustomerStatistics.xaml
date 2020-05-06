@@ -65,18 +65,18 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <Label x:Name="label1" Content="Select Customer: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="1256,41,0,0" VerticalAlignment="Top" Width="222" Height="27" FontSize="18" Click="BtnSelectProduct_Click"/>
-            <ComboBox x:Name="customerComboBox" HorizontalAlignment="Left" Margin="174,41,0,0" VerticalAlignment="Top" Width="430" Height="27"/>
-            <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="682,38,0,0" VerticalAlignment="Top" Width="253" Height="30" >
+            <Label x:Name="label1" Content="Select Customer: " HorizontalAlignment="Left" Margin="36,35,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="1170,39,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="18" Click="BtnSelectProduct_Click"/>
+            <ComboBox x:Name="customerComboBox" HorizontalAlignment="Left" Margin="184,39,0,0" VerticalAlignment="Top" Width="350" Height="30"/>
+            <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="611,39,0,0" VerticalAlignment="Top" Width="200" Height="30" >
                 <ComboBoxItem IsSelected="True" Content="Month"/>
             </ComboBox>
-            <Label x:Name="label1_Copy" Content="By: " HorizontalAlignment="Left" Margin="644,38,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="990,38,0,0" VerticalAlignment="Top" Width="253" Height="30" >
+            <Label x:Name="label1_Copy" Content="By: " HorizontalAlignment="Left" Margin="568,35,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="901,39,0,0" VerticalAlignment="Top" Width="200" Height="30" >
                 <ComboBoxItem IsSelected="True" Content="This Year"/>
 
             </ComboBox>
-            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="940,34,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="846,35,0,0" VerticalAlignment="Top" FontSize="18"/>
         </Grid>
         <Border  Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5" CornerRadius="30" Margin="289,152,236,154"  />
 

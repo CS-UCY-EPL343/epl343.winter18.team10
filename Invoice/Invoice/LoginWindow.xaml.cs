@@ -34,29 +34,37 @@ namespace InvoiceX
         }
 
         private void btn_login_Click(object sender, RoutedEventArgs e)
-        {            
-            User user = UserViewModel.getUserByUsername(txtUsername.Text);
-
-            if (user.username != null)
+        {
+            MySqlConnection conn = DBConnection.Instance.Connection;
+            if (conn.State == ConnectionState.Open)
             {
-                bool isPasswordMatched = VerifyPassword(txtPassword.Password, user.hash, user.salt);
+                User user = UserViewModel.getUserByUsername(txtUsername.Text);
 
-                if (isPasswordMatched)
+                if (user.username != null)
                 {
-                    //Login Successfull
-                    MainWindow mainWindow = new MainWindow(user);
-                    mainWindow.Show();
-                    this.Close();
+                    bool isPasswordMatched = VerifyPassword(txtPassword.Password, user.hash, user.salt);
+
+                    if (isPasswordMatched)
+                    {
+                        //Login Successfull
+                        MainWindow mainWindow = new MainWindow(user);
+                        mainWindow.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        //Login Failed
+                        MessageBox.Show("Password is invalid");
+                    }
                 }
                 else
                 {
-                    //Login Failed
-                    MessageBox.Show("Password is invalid");
+                    MessageBox.Show("Username is invalid");
                 }
             }
             else
             {
-                MessageBox.Show("Username is invalid");
+                MessageBox.Show("Could not connect to the Database. Check database status or contact administrator.");
             }
         }        
 

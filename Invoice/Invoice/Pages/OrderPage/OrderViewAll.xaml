@@ -84,7 +84,7 @@
             <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
             <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130" SelectedDateChanged="dtPickerTo_SelectedDateChanged"/>
             <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <Button x:Name="btnClearFilters" Style="{DynamicResource CommonButtonStyle}" Content="Clear Filters" HorizontalAlignment="Left" Margin="917,76,0,0" VerticalAlignment="Top" Width="141" Height="37" FontSize="18" Click="btnClearFilters_Click"/>
+            <Button x:Name="btnClearFilters" Style="{DynamicResource CommonButtonStyle}" Content="Clear Filters" HorizontalAlignment="Left" Margin="920,75,0,0" VerticalAlignment="Top" Width="145" Height="37" Click="btnClearFilters_Click"/>
             <Label x:Name="label1_Copy1" Content="By Status: " HorizontalAlignment="Left" Margin="571,34,0,0" VerticalAlignment="Top" FontSize="18" RenderTransformOrigin="0.219,0.546"/>
             <ComboBox x:Name="cmbBoxStatus" HorizontalAlignment="Left" Margin="667,37,0,0" VerticalAlignment="Top" Width="222" Height="30">
                 <ComboBoxItem IsSelected="True" Content="All"/>
@@ -94,14 +94,6 @@
             </ComboBox>
             <TextBox x:Name="txtBox_City" HorizontalAlignment="Left" Height="37" Margin="667,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="222" FontSize="18" VerticalContentAlignment="Center" TextChanged="txtBox_City_TextChanged"/>
             <Label x:Name="label1_Copy2" Content="By City: " HorizontalAlignment="Left" Margin="571,79,0,0" VerticalAlignment="Top" FontSize="18"/>
-        </Grid>
-
-        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="1317,10,0,800" VerticalAlignment="Center" Width="350">
-            <Grid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
-            </Grid.Effect>
-            <Label x:Name="label1_Copy4" Content="Search:" HorizontalAlignment="Left" Margin="37,27,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <TextBox x:Name="textBox3_Copy" HorizontalAlignment="Left" Height="37" Margin="37,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="278" VerticalContentAlignment="Center"/>
         </Grid>
         <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
                       HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">

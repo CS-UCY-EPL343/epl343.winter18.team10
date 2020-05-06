@@ -20,25 +20,18 @@ namespace InvoiceX.Pages.CreditNotePage
     /// </summary>
     public partial class CreditNoteEdit : Page
     {
-       // CreditNoteViewModel creditNoteView;
-
-
-        bool invoice_loaded = false;
+       
+        bool creditNote_loaded = false;
         CreditNote oldCreditNote;
+        CreditNoteMain creditNoteMain;
 
-        public CreditNoteEdit()
+        public CreditNoteEdit(CreditNoteMain creditNoteMain)
         {
             InitializeComponent();
-          
+            this.creditNoteMain = creditNoteMain;
             NetTotal_TextBlock.Text = (0).ToString("C");
             Vat_TextBlock.Text = (0).ToString("C");
-            TotalAmount_TextBlock.Text = (0).ToString("C");
-            load();
-        }
-
-        public void load()
-        {
-            //creditNoteView = new CreditNoteViewModel();
+            TotalAmount_TextBlock.Text = (0).ToString("C");           
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,9 +45,7 @@ namespace InvoiceX.Pages.CreditNotePage
                 textBox_ProductQuantity.Text = ((Product)comboBox_Product.SelectedItem).Quantity.ToString();
                 textBox_ProductDescription.Text = ((Product)comboBox_Product.SelectedItem).ProductDescription;
                 textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
-                textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();
-
-                
+                textBox_ProductVat.Text = (((Product)comboBox_Product.SelectedItem).Vat * 100).ToString();                
             }
         }
 
@@ -63,7 +54,7 @@ namespace InvoiceX.Pages.CreditNotePage
             if (comboBox_invoiceID.SelectedIndex > -1)
             {
                 comboBox_incoiceID_border.BorderThickness = new Thickness(0);                
-                comboBox_Product.ItemsSource = InvoiceViewModel.invoice_products_list(int.Parse(comboBox_invoiceID.SelectedItem.ToString()));
+                comboBox_Product.ItemsSource = InvoiceViewModel.getInvoice(int.Parse(comboBox_invoiceID.SelectedItem.ToString())).products;
             }
         }
 
@@ -139,7 +130,7 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_CompletedValues() && invoice_loaded)
+            if (Check_AddProduct_CompletedValues() && creditNote_loaded)
             {
                 ProductDataGrid.Items.Add(new Product
                 {
@@ -226,14 +217,12 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
-            
-            
             if (Has_Items_Selected())
             {
-                if (int.TryParse(textBox_invoiceNumber.Text, out int invoiceId))
+                if (int.TryParse(textBox_invoiceNumber.Text, out int creditNoteID))
                 {
                     CreditNoteViewModel.updateCreditNote(createCreditNoteObject(), oldCreditNote);
-                   // invoiceMain.viewInvoice(invoiceId);
+                    creditNoteMain.viewCreditNote(creditNoteID);
                     Btn_clearAll_Click(null, null);
                 }
             }
@@ -265,12 +254,13 @@ namespace InvoiceX.Pages.CreditNotePage
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
-            invoice_loaded = false;
+            creditNote_loaded = false;
+            comboBox_invoiceID.ItemsSource = null;
+            comboBox_Product.ItemsSource = null;
             Btn_clearProduct_Click(null, null);
             Clear_Customer();
             Clear_Details();
-            Clear_ProductGrid();
-            load();
+            Clear_ProductGrid();            
         }
 
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)//mono meta to refresh whritable
@@ -285,13 +275,12 @@ namespace InvoiceX.Pages.CreditNotePage
             {
                 Btn_clearAll_Click(null, null);
                 loadCreditNote(creditNoteid);
-                invoice_loaded = true;
-
+                creditNote_loaded = true;
             }
             else
             {
                 //not a number
-                MessageBox.Show("Please insert a valid value for invoice ID.");
+                MessageBox.Show("Please insert a valid value for credit note ID.");
             }
         }
 
@@ -300,7 +289,6 @@ namespace InvoiceX.Pages.CreditNotePage
             oldCreditNote = CreditNoteViewModel.getCreditNote(creditNoteId);
             if (oldCreditNote != null)
             {
-
                 // Customer details
                 textBox_Customer.Text = oldCreditNote.customer.CustomerName;
                 textBox_Contact_Details.Text = oldCreditNote.customer.PhoneNumber.ToString();
@@ -314,16 +302,14 @@ namespace InvoiceX.Pages.CreditNotePage
                 NetTotal_TextBlock.Text = oldCreditNote.cost.ToString("C");
                 Vat_TextBlock.Text = oldCreditNote.VAT.ToString("C");
                 TotalAmount_TextBlock.Text = oldCreditNote.totalCost.ToString("C");
-              
-                
+                              
                 foreach (Product p in oldCreditNote.products)
                 {
 
                     ProductDataGrid.Items.Add(p);
                 }
-
                 
-                comboBox_invoiceID.ItemsSource = InvoiceViewModel.customer_invoices_list(oldCreditNote.customer.idCustomer);
+                comboBox_invoiceID.ItemsSource = InvoiceViewModel.getCustomerInvoices(oldCreditNote.customer.idCustomer);
             }
             else
             {

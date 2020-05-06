@@ -124,9 +124,11 @@ namespace InvoiceX.Pages.InvoicePage
                 switch (result)
                 {
                     case MessageBoxResult.Yes:
-                        InvoiceViewModel.deleteInvoice(invoiceID);
-                        Btn_clearView_Click(null, null);
-                        MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
+                        if (InvoiceViewModel.deleteInvoice(invoiceID))
+                        {
+                            Btn_clearView_Click(null, null);
+                            MessageBox.Show("Deleted Invoice with ID = " + invoiceID);
+                        }
                         break;
                     case MessageBoxResult.No:
                         break;

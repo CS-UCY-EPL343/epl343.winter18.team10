@@ -30,9 +30,9 @@ namespace InvoiceX.Pages.CreditNotePage
         {
             InitializeComponent();
             this.creditNoteMain = creditNoteMain;
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
         public void load()
@@ -59,7 +59,7 @@ namespace InvoiceX.Pages.CreditNotePage
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = customer.Email;
 
-                comboBox_invoiceID.ItemsSource = InvoiceViewModel.customer_invoices_list(customer.idCustomer);
+                comboBox_invoiceID.ItemsSource = InvoiceViewModel.getCustomerInvoices(customer.idCustomer);
 
             }
         }
@@ -69,7 +69,7 @@ namespace InvoiceX.Pages.CreditNotePage
             if (comboBox_invoiceID.SelectedIndex > -1)
             {
                 comboBox_incoiceID_border.BorderThickness = new Thickness(0);
-                comboBox_Product.ItemsSource = InvoiceViewModel.invoice_products_list(int.Parse(comboBox_invoiceID.SelectedItem.ToString()));
+                comboBox_Product.ItemsSource = InvoiceViewModel.getInvoice(int.Parse(comboBox_invoiceID.SelectedItem.ToString())).products;
             }
         }
 
@@ -175,15 +175,15 @@ namespace InvoiceX.Pages.CreditNotePage
                     Vat = ((Product)comboBox_Product.SelectedItem).Vat,
                     productInvoiceID= Convert.ToInt32(comboBox_invoiceID.SelectedItem)
                 });
-                double netTotal = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+                double netTotal = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
                 netTotal += Convert.ToDouble(textBox_ProductTotal.Text);
-                txtBlock_NetTotal.Text = netTotal.ToString("C");
+                NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-                double VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
+                double VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
                 VAT += (Convert.ToDouble(textBox_ProductTotal.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
-                txtBlock_VAT.Text = (VAT).ToString("C");
+                Vat_TextBlock.Text = (VAT).ToString("C");
 
-                txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+                TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             }
         }
 
@@ -191,15 +191,15 @@ namespace InvoiceX.Pages.CreditNotePage
         {
             Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
 
-            double netTotal = double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+            double netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
             netTotal -= Convert.ToDouble(CurrentCell_Product.Total);
-            txtBlock_NetTotal.Text = netTotal.ToString("C");
+            NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-            double VAT = double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
+            double VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
             VAT -= (CurrentCell_Product.Total * CurrentCell_Product.Vat);
-            txtBlock_VAT.Text = VAT.ToString("C");
+            Vat_TextBlock.Text = VAT.ToString("C");
 
-            txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+            TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
         }
 
@@ -263,9 +263,9 @@ namespace InvoiceX.Pages.CreditNotePage
                 customer = ((Customer)comboBox_customer.SelectedItem),
                 products = ProductDataGrid.Items.OfType<Product>().ToList(),
                 idCreditNote = Int32.Parse(textBox_invoiceNumber.Text),
-                cost = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency),
-                VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency),
-                totalCost = Double.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
+                cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency),
+                VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency),
+                totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
                 createdDate = invoiceDate.SelectedDate.Value.Date,               
                 issuedBy = issuedBy.Text
             };            
@@ -303,14 +303,16 @@ namespace InvoiceX.Pages.CreditNotePage
         private void clearProductGrid()
         {
             ProductDataGrid.Items.Clear();
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
             comboBox_customer_border.BorderThickness = new Thickness(0);
+            comboBox_invoiceID.ItemsSource = null;
+            comboBox_Product.ItemsSource = null;
             Btn_clearProduct_Click(null, null);
             clearCustomer();
             clearDetails();
@@ -337,9 +339,9 @@ namespace InvoiceX.Pages.CreditNotePage
                 textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
 
                 // Invoice details
-                txtBlock_NetTotal.Text = order.cost.ToString("C");
-                txtBlock_VAT.Text = order.VAT.ToString("C");
-                txtBlock_TotalAmount.Text = order.totalCost.ToString("C");
+                NetTotal_TextBlock.Text = order.cost.ToString("C");
+                Vat_TextBlock.Text = order.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
 
                 // Invoice products        
                 for (int i = 0; i < order.products.Count; i++)

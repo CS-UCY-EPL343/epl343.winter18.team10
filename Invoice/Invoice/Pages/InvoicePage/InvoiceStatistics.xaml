@@ -65,16 +65,16 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16"/>
             </Grid.Effect>
-            <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="696,48,0,0" VerticalAlignment="Top" Width="222" Height="27" FontSize="18" Click="BtnSelectProduct_Click"/>
-            <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="84,42,0,0" VerticalAlignment="Top" Width="253" Height="30" >
+            <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit" HorizontalAlignment="Left" Margin="1172,42,0,0" VerticalAlignment="Top" Width="200" Height="30" FontSize="18" Click="BtnSelectProduct_Click"/>
+            <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="80,41,0,0" VerticalAlignment="Top" Width="200" Height="30" >
                 <ComboBoxItem IsSelected="True" Content="Month"/>
             </ComboBox>
             <Label x:Name="label1_Copy" Content="By: " HorizontalAlignment="Left" Margin="31,38,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="419,45,0,0" VerticalAlignment="Top" Width="253" Height="30" >
+            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="419,41,0,0" VerticalAlignment="Top" Width="200" Height="30" >
                 <ComboBoxItem IsSelected="True" Content="This Year"/>
 
             </ComboBox>
-            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="369,41,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="364,38,0,0" VerticalAlignment="Top" FontSize="18"/>
         </Grid>
         <Border  Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5" CornerRadius="30" Margin="289,152,236,200"  />
 

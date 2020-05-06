@@ -26,10 +26,10 @@ namespace InvoiceX.Pages.ExpensesPage
         bool invoice_loaded = false;
         Expense oldExpense;
 
-        public ExpensesEdit()
+        public ExpensesEdit(ExpensesMain expensesMain)
         {
             InitializeComponent();
-            //this.expensesMain = invoiceMain;
+            this.expensesMain = expensesMain;
             txtBlock_NetTotal.Text = (0).ToString("C");
             txtBlock_VAT.Text = (0).ToString("C");
             txtBlock_TotalAmount.Text = (0).ToString("C");
@@ -254,10 +254,10 @@ namespace InvoiceX.Pages.ExpensesPage
         {            
             if (checkCompanyForm() & checkDetailsForm()&Has_Items_Selected())
             {
-                if (int.TryParse(textBox_expenseID.Text, out int invoiceId))
+                if (int.TryParse(textBox_expenseID.Text, out int expenseID))
                 {
                     ExpensesViewModel.updateExpense(createExpensesObject(), oldExpense);
-                    //expensesMain.viewExpense(invoiceId);
+                    expensesMain.viewExpense(expenseID);
                     Btn_clearAll_Click(null, null);
                 }
             }

@@ -29,8 +29,8 @@ namespace InvoiceX.Pages.QuotePage
         {
             InitializeComponent();
             viewAllPage = new QuoteViewAll(this);
-            createpage = new QuoteCreate();
-            editpage = new QuoteEdit();
+            createpage = new QuoteCreate(this);
+            editpage = new QuoteEdit(this);
             viewPage = new QuoteView(this);
             btnViewAll_Click(null, null);
         }
@@ -80,7 +80,7 @@ namespace InvoiceX.Pages.QuotePage
 
         public void editQuote(int quoteID)
         {
-            //editpage.loadInvoice(quoteID);
+            editpage.loadQuote(quoteID);
             btnEdit_Click(null, null);
         }
     }

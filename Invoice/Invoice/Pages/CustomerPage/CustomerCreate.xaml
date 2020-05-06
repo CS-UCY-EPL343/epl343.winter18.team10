@@ -36,8 +36,8 @@
 
         </Grid>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0" TextWrapping="Wrap" Text="Create new Customer" VerticalAlignment="Top" Width="398" FontSize="40"/>
-        <Button x:Name="Btn_createProduct" Content="Create"  Margin="592,347,1023,549" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click" Height="44" Width="110"  />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="707,347,910,549" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearAll_Click" Height="44" Width="108" />
+        <Button x:Name="Btn_createProduct" Content="Create"  Margin="591,339,988,560" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_createCustomer_Click" Height="41" Width="146"  />
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="742,339,837,560" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Btn_clearAll_Click" Height="41" Width="146" />
     </Grid>
 
 

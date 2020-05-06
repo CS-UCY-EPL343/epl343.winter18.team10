@@ -36,7 +36,7 @@ namespace InvoiceX.Classes
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message + "\nCould not connect to the Database");
+                
             }
         }
 

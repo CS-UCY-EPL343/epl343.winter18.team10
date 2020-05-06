@@ -23,7 +23,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="270,18,0,0" TextWrapping="Wrap" Text="To Date" VerticalAlignment="Top"/>
                 <DatePicker x:Name="fromDate" HorizontalAlignment="Left" Margin="136,39,0,0" VerticalAlignment="Top" Height="30" Width="120" SelectedDateChanged="fromDate_SelectedDateChanged"  />
                 <DatePicker x:Name="toDate" HorizontalAlignment="Left" Margin="270,39,0,0" VerticalAlignment="Top" Height="30" Width="120" SelectedDateChanged="toDate_SelectedDateChanged"/>
-                <Button x:Name="btn_createStatement" Style="{DynamicResource CommonButtonStyle}" Content="Create Statement" HorizontalAlignment="Left" Margin="136,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_createStatement_Click"/>
+                <Button x:Name="btn_createStatement" Style="{DynamicResource CommonButtonStyle}" Content="Create Statement" HorizontalAlignment="Left" Margin="139,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_createStatement_Click"/>
                 <Button x:Name="btn_clear" Style="{DynamicResource CommonButtonStyle}" Content="Create New" HorizontalAlignment="Left" Margin="270,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_clear_Click"/>
 
 

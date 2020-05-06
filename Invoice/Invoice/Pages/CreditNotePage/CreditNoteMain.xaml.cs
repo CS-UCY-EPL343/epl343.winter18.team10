@@ -31,7 +31,7 @@ namespace InvoiceX.Pages.CreditNotePage
             viewAllPage = new CreditNoteViewAll(this);
             viewPage = new CreditNoteView(this);
             createpage = new CreditNoteCreate(this);
-            editpage = new CreditNoteEdit();
+            editpage = new CreditNoteEdit(this);
             btnViewAll_Click(null, null);
         }
 

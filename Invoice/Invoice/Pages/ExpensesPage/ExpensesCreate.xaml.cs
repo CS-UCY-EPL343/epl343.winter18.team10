@@ -24,10 +24,10 @@ namespace InvoiceX.Pages.ExpensesPage
 
         bool refreshDataDB = true;
 
-        public ExpensesCreate()
+        public ExpensesCreate(ExpensesMain expensesMain)
         {
             InitializeComponent();
-            //this.expensesMain = expensesMain;
+            this.expensesMain = expensesMain;
             txtBlock_NetTotal.Text = (0).ToString("C");
             txtBlock_VAT.Text = (0).ToString("C");
             txtBlock_TotalAmount.Text = (0).ToString("C");
@@ -259,10 +259,9 @@ namespace InvoiceX.Pages.ExpensesPage
             if (checkCompanyForm()&checkDetailsForm()&hasItemsSelected())
             {
                 Expense expense = createExpensesObject();
-               //expense.createdDate += DateTime.Now.TimeOfDay;
                 ExpensesViewModel.insertExpens(expense);
                 MessageBox.Show("Expense with ID " + expense.idExpense + " was created.");
-               // expensesMain.viewExpense(expense.idExpense);
+                expensesMain.viewExpense(expense.idExpense);
                 Btn_clearAll_Click(null, null);               
             }
         }

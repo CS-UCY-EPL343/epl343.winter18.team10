@@ -23,11 +23,12 @@ namespace InvoiceX.Pages.QuotePage
         ProductViewModel productView;        
         CustomerViewModel customerView;
         bool Refresh_DB_data = true;
+        QuoteMain quoteMain;
 
-        public QuoteCreate()
+        public QuoteCreate(QuoteMain quoteMain)
         {
             InitializeComponent();
-           
+            this.quoteMain = quoteMain;
         }
 
         public void load()
@@ -98,7 +99,7 @@ namespace InvoiceX.Pages.QuotePage
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
             
-            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0))
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0) || (f > float.Parse(textBox_ProductPrice.Text)))
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
@@ -180,7 +181,7 @@ namespace InvoiceX.Pages.QuotePage
         {
             if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
-                MessageBox.Show("You havent selectet any products");
+                MessageBox.Show("You havent selected any products");
                 return false;
             }
             return true;
@@ -204,7 +205,14 @@ namespace InvoiceX.Pages.QuotePage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) QuoteViewModel.insertQuote(make_object_Quote());
+            if (ALL_VALUES_OK)
+            {
+                Quote quote = make_object_Quote();
+                QuoteViewModel.insertQuote(quote);
+                MessageBox.Show("Quote with ID " + quote.idQuote + " was created.");
+                quoteMain.viewQuote(quote.idQuote);
+                Btn_clearAll_Click(null, null);
+            }
         }
 
         private void Clear_Customer()
@@ -257,42 +265,6 @@ namespace InvoiceX.Pages.QuotePage
         private void textBox_ProductQuote_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
-        }
-
-        /*
-        public void loadOrder(Order order)
-        {
-            Btn_clearAll_Click(null, null);
-            if (order != null)
-            {
-                // Customer details                                
-                comboBox_customer.SelectedValue = order.customer.CustomerName;
-                textBox_Customer.Text = order.customer.CustomerName;
-                textBox_Contact_Details.Text = order.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = order.customer.Email;
-                textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
-
-                // Invoice details
-                NetTotal_TextBlock.Text = order.cost.ToString("C");
-                Vat_TextBlock.Text = order.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
-
-                // Invoice products        
-                for (int i = 0; i < order.products.Count; i++)
-                {
-                    ProductDataGrid.Items.Add(new Product
-                    {
-                        idProduct = order.products[i].idProduct,
-                        ProductName = order.products[i].ProductName,
-                        ProductDescription = order.products[i].ProductDescription,
-                        Stock = order.products[i].Stock,
-                        SellPrice = order.products[i].SellPrice,
-                        Quantity = order.products[i].Quantity,
-                        Total = order.products[i].Total,
-                        Vat = order.products[i].Vat
-                    });
-                }
-            }
-        }*/
+        }                
     }
 }
