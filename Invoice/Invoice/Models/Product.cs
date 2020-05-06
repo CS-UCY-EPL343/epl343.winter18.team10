@@ -17,6 +17,8 @@ namespace InvoiceX.Models
         public double SellPrice { get; set; }
         public float Vat { get; set; }
         public string Category { get; set; }
+
+        public int customerID { get; set; }
         public bool LowStock
         {
             get

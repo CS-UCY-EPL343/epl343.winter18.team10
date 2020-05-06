@@ -37,11 +37,9 @@ namespace InvoiceX.Pages.InvoicePage
         public void load()
         {
             if (refreshDataDB)
-            {                
-                productView = new ProductViewModel();               
+            {                                      
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.customersList;
-                comboBox_Product.ItemsSource = productView.productList;
+                comboBox_customer.ItemsSource = customerView.customersList;                
                 textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
@@ -59,6 +57,9 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Address.Text = customer.Address + ", " + customer.City + ", " + customer.Country;
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = customer.Email;
+
+                productView = new ProductViewModel(customer.idCustomer);
+                comboBox_Product.ItemsSource = productView.productList;
             }
         }
 

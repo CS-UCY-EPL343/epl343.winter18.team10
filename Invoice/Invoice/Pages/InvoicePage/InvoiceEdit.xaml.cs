@@ -38,8 +38,9 @@ namespace InvoiceX.Pages.InvoicePage
 
         public void load()
         {
+            /*
             productView = new ProductViewModel();
-            comboBox_Product.ItemsSource = productView.productList;
+            comboBox_Product.ItemsSource = productView.productList;*/
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -310,6 +311,9 @@ namespace InvoiceX.Pages.InvoicePage
 
                     ProductDataGrid.Items.Add(p);
                 }
+
+                productView = new ProductViewModel(oldInvoice.customer.idCustomer);
+                comboBox_Product.ItemsSource = productView.productList;
             }
             else
             {

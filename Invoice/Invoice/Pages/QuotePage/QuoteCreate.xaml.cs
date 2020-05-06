@@ -235,6 +235,7 @@ namespace InvoiceX.Pages.QuotePage
         {
             issuedBy.Text = "";
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            invoiceDate.SelectedDate = DateTime.Today;//set curent date 
         }
 
         private void Clear_ProductGrid()

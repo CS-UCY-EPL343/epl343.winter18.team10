@@ -15,6 +15,8 @@ namespace InvoiceX.ViewModels
     public class ProductViewModel
     {
         public List<Product> productList { get; set; }
+        public List<Product> productList_quotes { get; set; }
+
         private static MySqlConnection conn = DBConnection.Instance.Connection;
 
         public ProductViewModel()
@@ -54,6 +56,86 @@ namespace InvoiceX.ViewModels
                             Quantity = 1
                         });
                 }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        public ProductViewModel(int customerID)
+        {
+            productList = new List<Product>();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Product", conn);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idProductsdb = dataRow.Field<int>("idProduct");
+                    var ProductNamedb = dataRow.Field<string>("ProductName");
+                    var ProductDescriptiondb = dataRow.Field<string>("Description");
+                    var Stockdb = dataRow.Field<int>("Stock");
+                    var MinStockdb = dataRow.Field<int>("MinStock");
+                    var Costdb = dataRow.Field<float>("Cost");
+                    var SellPricedb = dataRow.Field<float>("SellPrice");
+                    var Vatdb = dataRow.Field<float>("VAT");
+                    var Categorydb = dataRow.Field<string>("Category");
+
+                    productList.Add(
+                        new Product()
+                        {
+                            idProduct = idProductsdb,
+                            ProductName = ProductNamedb,
+                            ProductDescription = ProductDescriptiondb,
+                            Stock = Stockdb,
+                            MinStock = MinStockdb,
+                            Cost = Costdb,
+                            SellPrice = SellPricedb,
+                            Vat = Vatdb,
+                            Category = Categorydb,
+                            Quantity = 1
+                        });
+                }
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            /*quotes*/
+            productList_quotes = new List<Product>();
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand("SELECT idProduct,OfferPrice FROM viewQuote WHERE idCustomer=@idCustomer", conn);
+                cmd.Parameters.AddWithValue("@idCustomer", customerID);
+                DataTable dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idProductsdb = dataRow.Field<int>("idProduct");                   
+                    var OfferPrice = dataRow.Field<float>("OfferPrice");               
+                    
+
+                    productList_quotes.Add(
+                        new Product()
+                        {
+                            idProduct = idProductsdb,                            
+                            SellPrice = OfferPrice,                            
+                        });
+                }
+
+                foreach (Product product in productList_quotes) 
+                {        
+                    Product product_with_quote = productList.FirstOrDefault(r => r.idProduct == product.idProduct);
+                    product_with_quote.SellPrice = product.SellPrice;
+
+                }
+
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
