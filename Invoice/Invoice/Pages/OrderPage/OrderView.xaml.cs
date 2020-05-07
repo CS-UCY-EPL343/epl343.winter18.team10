@@ -168,7 +168,7 @@ namespace InvoiceX.Pages.OrderPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Order.pdf";
+                string filename = "Order" + txtBox_orderNumber.Text + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

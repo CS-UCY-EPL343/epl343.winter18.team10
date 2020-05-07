@@ -177,7 +177,7 @@ namespace InvoiceX.Pages.StatementPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Statement.pdf";
+                string filename = "Statement" + textBox_Customer + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

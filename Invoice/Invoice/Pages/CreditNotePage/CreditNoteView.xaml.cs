@@ -165,8 +165,7 @@ namespace InvoiceX.Pages.CreditNotePage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "creditNote.pdf";
-                filename = "creditNote.pdf";
+                string filename = "creditNote" + txtBox_creditNoteNumber.Text + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }
