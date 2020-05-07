@@ -119,7 +119,7 @@ namespace InvoiceX.Forms
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage("../../Images/logo-2.png");
+            Image image = section.Headers.Primary.AddImage("../../Images/companyLogo.png");
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
@@ -261,7 +261,7 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("CREDIT NOTE #");
-            paragraph.AddSpace(10);
+            paragraph.AddSpace(7);
             paragraph.AddText("DATE");
 
             paragraph = this.creditNoteDetailsFrame.AddParagraph();
@@ -300,9 +300,7 @@ namespace InvoiceX.Forms
             String customerId = this.customer_details[5];
              String balance = this.customer_details[4];
             paragraph.AddText(customerId);
-            paragraph.AddTab(); 
-            paragraph.AddTab();
-            paragraph.AddTab();
+            paragraph.AddSpace(20);
             paragraph.AddText(balance);
 
 
@@ -330,19 +328,23 @@ namespace InvoiceX.Forms
                 row1.TopPadding = 1.5;
                 row1.Cells[0].Shading.Color = TableGray;
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
+                row1.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                row1.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+
                 row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString("c"));
+
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[3].Shading.Color = TableGray;
-
-                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
-                paragraph = row1.Cells[1].AddParagraph();
-                paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
-                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString("c"));
-                row1.Cells[2].AddParagraph();
                 row1.Cells[3].AddParagraph(this.products[i].Total.ToString("c"));
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
-                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+
+                paragraph = row1.Cells[1].AddParagraph();
+                paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
 
                 this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }

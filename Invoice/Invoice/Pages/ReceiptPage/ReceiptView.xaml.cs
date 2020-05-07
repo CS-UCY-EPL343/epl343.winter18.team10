@@ -124,8 +124,10 @@ namespace InvoiceX.Pages.ReceiptPage
                 // Create the PDF document
                 pdfRenderer.RenderDocument();
 
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Receipts/");
                 // Save the PDF document...
-                string filename = "Receipt" + txtBox_receiptNumber.Text + ".pdf";
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Receipts/Receipt" + txtBox_receiptNumber.Text + ".pdf"; ;
+
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

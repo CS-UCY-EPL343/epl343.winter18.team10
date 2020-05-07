@@ -119,7 +119,7 @@ namespace InvoiceX.Forms
             Section section = this.document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage("../../Images/logo-2.png");
+            Image image = section.Headers.Primary.AddImage("../../Images/companyLogo.png");
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
@@ -340,9 +340,8 @@ namespace InvoiceX.Forms
                 row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
                 paragraph = row1.Cells[1].AddParagraph();
                 paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
-                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString());
-                row1.Cells[2].AddParagraph();
-                row1.Cells[3].AddParagraph(this.products[i].Total.ToString());
+                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString("c"));
+                row1.Cells[3].AddParagraph(this.products[i].Total.ToString("c"));
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
                 row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
 

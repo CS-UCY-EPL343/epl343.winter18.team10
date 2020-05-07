@@ -190,8 +190,10 @@ namespace InvoiceX.Pages.StatementPage
 
                 // Save the PDF document...
                 Customer customer = (Customer)comboBox_customer.SelectedItem;
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Statements/");
+                // Save the PDF document...
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Statements/Statement" + customer.idCustomer + ".pdf"; ;
 
-                string filename = "Statement" + customer.idCustomer + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

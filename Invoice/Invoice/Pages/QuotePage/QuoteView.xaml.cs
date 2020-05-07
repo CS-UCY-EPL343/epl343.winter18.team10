@@ -157,8 +157,11 @@ namespace InvoiceX.Pages.QuotePage
                 // Create the PDF document
                 pdfRenderer.RenderDocument();
 
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Quotes/");
                 // Save the PDF document...
-                string filename = "Quote" + txtBox_QuoteNumber.Text + ".pdf"; ;
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Quotes/Quote" + txtBox_QuoteNumber.Text + ".pdf"; ;
+
+                // Save the PDF document...
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }
