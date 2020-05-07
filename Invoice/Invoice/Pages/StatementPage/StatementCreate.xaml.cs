@@ -189,7 +189,9 @@ namespace InvoiceX.Pages.StatementPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Statement" + textBox_Customer + ".pdf"; ;
+                Customer customer = (Customer)comboBox_customer.SelectedItem;
+
+                string filename = "Statement" + customer.idCustomer + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }
@@ -303,7 +305,6 @@ namespace InvoiceX.Pages.StatementPage
         {
             string[] customerDetails = new string[6];
             Customer customer = (Customer)comboBox_customer.SelectedItem;
-            Console.WriteLine(customer.CustomerName);
             customerDetails[0] = textBox_Customer.Text;
             customerDetails[1] = textBox_Address.Text;
             customerDetails[2] = textBox_Contact_Details.Text;
