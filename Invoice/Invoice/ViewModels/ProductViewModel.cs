@@ -274,7 +274,14 @@ namespace InvoiceX.ViewModels
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                {
+                    MessageBox.Show("Cannot delete product with ID = " + productID + " as it is used in invoices and/or orders.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }                
             }
         }
         public static int getProductCount(int productId, int months, int year)

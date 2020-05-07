@@ -31,6 +31,10 @@ namespace InvoiceX.Pages.SettingsPage
             InitializeComponent();
             usersPage = new SettingsUsers();
             databasePage = new SettingsDatabase();
+            if (MainWindow.user.admin == false)
+            {
+                btnDatabase.IsEnabled = false;
+            }
             btnUsers_Click(null, null);
         }
 

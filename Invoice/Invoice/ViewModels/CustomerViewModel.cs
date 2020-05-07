@@ -185,7 +185,14 @@ namespace InvoiceX.ViewModels
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                {
+                    MessageBox.Show("Cannot delete customer with ID = " + customerID + " as he is referenced in other documents.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
 
         }
@@ -204,7 +211,7 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
                 cmd.Parameters["@month"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
-                cmd.Parameters["@year "].Direction = ParameterDirection.Input;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
                 String total2 = cmd.ExecuteScalar().ToString();

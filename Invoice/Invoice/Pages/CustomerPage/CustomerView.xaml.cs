@@ -129,5 +129,17 @@ namespace InvoiceX.Pages.CustomerPage
                     break;
             }
         }
+
+        private void btnOptions_ContextMenuOpening(object sender, RoutedEventArgs e)
+        {
+            if (MainWindow.user.admin == false)
+            {
+                var btn = (Button)sender;
+                var separator = (Separator)btn.ContextMenu.Items.GetItemAt(1);
+                var itemDelete = (MenuItem)btn.ContextMenu.Items.GetItemAt(2);
+                separator.Visibility = Visibility.Collapsed;
+                itemDelete.Visibility = Visibility.Collapsed;
+            }
+        }
     }
 }

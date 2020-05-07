@@ -23,7 +23,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock  Text="WELCOME TO ECO-BRIGHT" TextAlignment="left" FontFamily="Gotham"  FontSize="40" Foreground="#ff172b4d" FontWeight="Bold" FontStyle="Italic" Margin="42,0,42,64" RenderTransformOrigin="0.653,0.519" Height="54" VerticalAlignment="Bottom"  />
                 <TextBlock  Text="USERNAME" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Margin="79,200,447,0"  />
-                <TextBox x:Name="txtUsername"  Width="446" FontSize="20" TextAlignment="Left" Padding="20,20,5,5" TextWrapping="Wrap" Margin="79,220,79,232" Grid.RowSpan="2" SelectionBrush="#FFAC2525">
+                <TextBox  x:Name="txtUsername"  Width="446" FontSize="20" TextAlignment="Left" Padding="20,20,5,5" TextWrapping="Wrap" Margin="79,220,79,232" Grid.RowSpan="2" SelectionBrush="#FFAC2525">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}">
                             <Style.Triggers>

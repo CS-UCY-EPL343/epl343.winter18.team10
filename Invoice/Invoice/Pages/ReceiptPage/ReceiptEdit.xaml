@@ -98,8 +98,8 @@
         </DataGrid>
         <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"  Style="{DynamicResource CommonButtonStyle}"/>
         <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0" VerticalAlignment="Top" Width="174" Height="44"  Click="Btn_clearAll_Click"  Style="{DynamicResource CommonButtonStyle}" />
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1447,859,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1539,856,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" />
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1438,856,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="99" FontSize="16"/>
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1550,856,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16"/>
 
 
         <Grid/>

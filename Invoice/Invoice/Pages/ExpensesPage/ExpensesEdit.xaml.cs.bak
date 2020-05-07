@@ -4,45 +4,39 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Diagnostics;
+using System.IO;
+using System.Globalization;
 
 namespace InvoiceX.Pages.ExpensesPage
 {
     /// <summary>
-    /// Interaction logic for ExpensesCreate.xaml
+    /// Interaction logic for ExpensesEdit.xaml
     /// </summary>
-    public partial class ExpensesCreate : Page
+    public partial class ExpensesEdit : Page
     {
+        
         ExpensesMain expensesMain;
 
-        bool refreshDataDB = true;
+        bool invoice_loaded = false;
+        Expense oldExpense;
 
-        public ExpensesCreate(ExpensesMain expensesMain)
+        public ExpensesEdit(ExpensesMain expensesMain)
         {
             InitializeComponent();
             this.expensesMain = expensesMain;            
+            load();
         }
 
         public void load()
         {
-            if (refreshDataDB)
-            {                
-                textBox_expenseID.Text = (ExpensesViewModel.returnLatestExpenseID()+1).ToString();
-                expenseDate.SelectedDate = DateTime.Today;//set curent date 
-                PaymentDate.SelectedDate = DateTime.Today;//set curent date 
-
-            }
-            refreshDataDB = false;
+            
         }
-
-
 
         private void ComboBox_paymentmethod(object sender, SelectionChangedEventArgs e)
         {
@@ -64,7 +58,7 @@ namespace InvoiceX.Pages.ExpensesPage
             }
 
         }
-          
+
         private bool all_expenses_values_completed()
         {
             bool all_completed = true;
@@ -73,16 +67,16 @@ namespace InvoiceX.Pages.ExpensesPage
                 all_completed = false;
                 comboBox_paymentMethod_border.BorderBrush = Brushes.Red;
                 comboBox_paymentMethod_border.BorderThickness = new Thickness(1);
-            }           
+            }
             if (string.IsNullOrWhiteSpace(textBox_paymentNum.Text.ToString()))
             {
                 all_completed = false;
                 textBox_paymentNum.BorderBrush = Brushes.Red;
-            }            
+            }
             if (PaymentDate.SelectedDate == null)
             {
                 PaymentDate.SelectedDate = DateTime.Today;//set curent date 
-            }           
+            }
             if (!float.TryParse(textBox_ExpenseAmount.Text.Replace('.', ','), out float fa) || (fa < 0))
             {
                 all_completed = false;
@@ -96,27 +90,30 @@ namespace InvoiceX.Pages.ExpensesPage
             return all_completed;
         }
 
-        private void Btn_AddPyament(object sender, RoutedEventArgs e)
+        private void Btn_AddPayment(object sender, RoutedEventArgs e)
         {
             if (all_expenses_values_completed())
             {
                 Enum.TryParse(comboBox_PaymentMethod.Text, out PaymentMethod paymentenum);
-                expensesDataGrid.Items.Add(new Payment{                   
+                expensesDataGrid.Items.Add(new Payment
+                {
                     amount = float.Parse(textBox_ExpenseAmount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    //Vat= float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
+                    //Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentMethod = paymentenum,
                     paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
-                    paymentDate = PaymentDate.SelectedDate.Value.Date,
+                    paymentDate = PaymentDate.SelectedDate.Value.Date
                 });
-                
             }
         }
+
 
         private void Button_remove_expense_from_grid(object sender, RoutedEventArgs e)
         {
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
-                       
+            float Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat);
+            
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
+
         }
 
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
@@ -129,19 +126,48 @@ namespace InvoiceX.Pages.ExpensesPage
 
         public void Btn_clearPayment_Click(object sender, RoutedEventArgs e)
         {
+
             comboBox_PaymentMethod.SelectedIndex = -1;
-            textBox_paymentNum.Clear();
-            PaymentDate.SelectedDate = DateTime.Today;
-            textBox_ExpenseAmount.Clear();
+            textBox_paymentNum.Text = "";
+            textBox_ExpenseAmount.Text = "";
             comboBox_paymentMethod_border.BorderThickness = new Thickness(0);
             textBox_paymentNum.ClearValue(TextBox.BorderBrushProperty);
             textBox_ExpenseAmount.ClearValue(TextBox.BorderBrushProperty);
         }
 
+        private bool Has_Items_Selected()
+        {
+            if (expensesDataGrid.Items.Count == 0)
+            {
+                MessageBox.Show("You havent selectet any products");
+                return false;
+            }
+            return true;
+        }
+
+        private Expense createExpensesObject()
+        {
+            return new Expense
+            {
+
+                companyName = textBox_Company.Text,
+                category = textBox_Category.Text,
+                contactDetails = int.Parse(textBox_ContactDetails.Text),
+                description = textBox_Description.Text,
+
+                idExpense = int.Parse(textBox_expenseID.Text),
+                invoiceNo = (string.IsNullOrWhiteSpace(txtBox_invoiceNumber.Text) ? 0 : int.Parse(txtBox_invoiceNumber.Text)),
+                createdDate = expenseDate.SelectedDate.Value,
+                issuedBy = issuedBy.Text,
+                isPaid = ((bool)(checkBox_Paid.IsChecked)),
+
+                payments = expensesDataGrid.Items.OfType<Payment>().ToList(),
+            };
+        }
         private bool checkCompanyForm()
         {
             bool all_completed = true;
-            if (string.IsNullOrWhiteSpace(textBox_Company.Text.ToString())) 
+            if (string.IsNullOrWhiteSpace(textBox_Company.Text.ToString()))
             {
                 textBox_Company.BorderBrush = Brushes.Red;
                 all_completed = false;
@@ -169,7 +195,7 @@ namespace InvoiceX.Pages.ExpensesPage
         private bool checkDetailsForm()
         {
             bool all_ok = true;
-            if (!string.IsNullOrWhiteSpace(txtBox_invoiceNumber.Text)) 
+            if (!string.IsNullOrWhiteSpace(txtBox_invoiceNumber.Text))
             {
                 if (int.TryParse(txtBox_invoiceNumber.Text, out int id))
                 {
@@ -185,69 +211,36 @@ namespace InvoiceX.Pages.ExpensesPage
                     txtBox_invoiceNumber.BorderBrush = Brushes.Red;
                     all_ok = false;
                 }
-            }   
+            }
             if (string.IsNullOrWhiteSpace(issuedBy.Text.ToString()))
             {
                 issuedBy.BorderBrush = Brushes.Red;
-                all_ok= false;
+                all_ok = false;
             }
             if (!float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float f) || (f < 0))
-            {                
+            {
                 txtBox_VAT.BorderBrush = Brushes.Red;
-                all_ok= false;
+                all_ok = false;
             }
            
             return all_ok;
         }
-
-        private bool hasItemsSelected()
-        {
-            if (expensesDataGrid.Items.Count == 0)
-            {
-                MessageBox.Show("You havent selected any products");
-                return false;
-            }
-            return true;
-        }
-
-        private Expense createExpensesObject()
-        {        
-            return new Expense
-            {
-                companyName = textBox_Company.Text,
-                category = textBox_Category.Text,
-                contactDetails = int.Parse( textBox_ContactDetails.Text),
-                description = textBox_Description.Text,
-
-                idExpense = int.Parse(textBox_expenseID.Text),
-                invoiceNo = (string.IsNullOrWhiteSpace(txtBox_invoiceNumber.Text)?0: int.Parse(txtBox_invoiceNumber.Text)),
-                createdDate = expenseDate.SelectedDate.Value,
-                issuedBy = issuedBy.Text,
-                isPaid =((bool)(checkBox_Paid.IsChecked)),
-
-                cost = float.Parse(txtBox_cost.Text, NumberStyles.Currency),
-                VAT = float.Parse(txtBox_VAT.Text, NumberStyles.Currency),
-                totalCost = float.Parse(txtBox_totalCost.Text, NumberStyles.Currency),
-
-                payments = expensesDataGrid.Items.OfType<Payment>().ToList(),
-            };
-        }
-
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
-        {           
-            if (checkCompanyForm()&checkDetailsForm()&hasItemsSelected())
+        {            
+            if (checkCompanyForm() & checkDetailsForm()&Has_Items_Selected())
             {
-                Expense expense = createExpensesObject();
-                ExpensesViewModel.insertExpens(expense);
-                MessageBox.Show("Expense with ID " + expense.idExpense + " was created.");
-                expensesMain.viewExpense(expense.idExpense);
-                Btn_clearAll_Click(null, null);               
+                if (int.TryParse(textBox_expenseID.Text, out int expenseID))
+                {
+                    ExpensesViewModel.updateExpense(createExpensesObject(), oldExpense);
+                    expensesMain.viewExpense(expenseID);
+                    Btn_clearAll_Click(null, null);
+                }
             }
         }
 
         private void clearCompany()
         {
-            textBox_Company.Clear();           
+            textBox_Company.Clear();
             textBox_ContactDetails.Clear();
             textBox_Description.Clear();
             textBox_Category.Clear();
@@ -259,10 +252,9 @@ namespace InvoiceX.Pages.ExpensesPage
 
         private void clearDetails()
         {
-
-            textBox_expenseID.Clear();           
+            textBox_expenseID.Clear();
             txtBox_invoiceNumber.Clear();
-            expenseDate.SelectedDate = DateTime.Today;
+            expenseDate.SelectedDate = null;
             issuedBy.Clear();
             textBox_expenseID.ClearValue(TextBox.BorderBrushProperty);
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
@@ -271,26 +263,73 @@ namespace InvoiceX.Pages.ExpensesPage
 
         private void Clear_expenses_Grid()
         {
-            expensesDataGrid.Items.Clear();
-            txtBox_cost.Clear();
-            txtBox_VAT.Clear();
-            txtBox_totalCost.Clear();
+            expensesDataGrid.Items.Clear();            
         }
+
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
-            comboBox_customer_border.BorderThickness = new Thickness(0);
+            invoice_loaded = false;
             Btn_clearPayment_Click(null, null);
             clearCompany();
             clearDetails();
             Clear_expenses_Grid();
-            refreshDataDB = true;
-            load();                       
+            load();
         }
 
-        private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
+        private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)//mono meta to refresh whritable
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void Btn_Load_Expense(object sender, RoutedEventArgs e)
+        {
+            int.TryParse(textBox_expenseID.Text, out int expenseID);
+            if ((ExpensesViewModel.expenseExists(expenseID)))
+            {
+                Btn_clearAll_Click(null, null);
+                loadExpense(expenseID);
+                invoice_loaded = true;
+
+            }
+            else
+            {
+                //not a number
+                MessageBox.Show("Please insert a valid value for Expense ID.");
+            }
+        }
+
+        public void loadExpense(int expenseID)
+        {
+            oldExpense = ExpensesViewModel.getExpense(expenseID);
+            if (oldExpense != null)
+            {
+                // Supllier details
+                textBox_Company.Text = oldExpense.companyName;
+                textBox_ContactDetails.Text = oldExpense.contactDetails.ToString();
+                textBox_Description.Text = oldExpense.description;
+                textBox_Category.Text = oldExpense.category;
+
+                // Payment details
+                textBox_expenseID.Text = oldExpense.idExpense.ToString();
+                expenseDate.Text = oldExpense.createdDate.ToString("d");
+                issuedBy.Text = oldExpense.issuedBy;
+                checkBox_Paid.IsChecked = oldExpense.isPaid;                
+                txtBox_VAT.Text = oldExpense.VAT.ToString();               
+               
+                txtBox_invoiceNumber.Text = (oldExpense.invoiceNo==0 ? ""  : oldExpense.invoiceNo.ToString());
+
+                // Receipt payments 
+                foreach (Payment p in oldExpense.payments)
+                {
+                    expensesDataGrid.Items.Add(p);
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("Receipt with ID = " + expenseID + ", does not exist");
+            }
         }
 
         private void ComboBox_paymentmethod_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -312,7 +351,6 @@ namespace InvoiceX.Pages.ExpensesPage
                 textBox_paymentNum.Clear();
             }
         }
-
         /*clear red when txt changed START*/
         private void textBox_Company_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -347,11 +385,6 @@ namespace InvoiceX.Pages.ExpensesPage
         private void txtBox_VAT_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtBox_VAT.ClearValue(TextBox.BorderBrushProperty);
-            if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
-               float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
-            {
-                txtBox_totalCost.Text = (price + vat).ToString("n2");
-            }
         }
 
         private void textBox_paymentNum_TextChanged(object sender, TextChangedEventArgs e)
@@ -377,7 +410,6 @@ namespace InvoiceX.Pages.ExpensesPage
 
 
         }
-
         /*clear red when txt changed END*/
     }
 }

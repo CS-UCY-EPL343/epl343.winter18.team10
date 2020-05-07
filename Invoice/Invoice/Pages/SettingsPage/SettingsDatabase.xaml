@@ -17,7 +17,7 @@
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Export" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Export as SQL script" VerticalAlignment="Top" Width="282" FontSize="30" Background="White" Foreground="#FF5960FF"/>
                 <TextBox  x:Name="txtBlock_exportPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533" IsReadOnly="True"/>
                 <TextBlock HorizontalAlignment="Left"  Margin="69,96,0,0" TextWrapping="Wrap" Text="Export Location" VerticalAlignment="Top"/>
                 <Button x:Name="Btn_export" Content="Export"  Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="28" Width="115" Margin="401,240,68,34" Click="Btn_export_Click" />
@@ -29,7 +29,7 @@
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16"/>
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Import" />
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="316" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Import from SQL script" />
                 <TextBox  x:Name="txtBlock_importPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533" IsReadOnly="True"/>
                 <TextBlock HorizontalAlignment="Left"  Margin="69,96,0,0" TextWrapping="Wrap" Text="Import File" VerticalAlignment="Top"/>
                 <Button x:Name="Btn_import" Content="Import"  Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="28" Width="115" Margin="401,240,68,34" Click="Btn_import_Click" />

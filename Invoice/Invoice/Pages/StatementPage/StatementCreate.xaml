@@ -23,10 +23,8 @@
                 <TextBlock HorizontalAlignment="Left" Margin="270,18,0,0" TextWrapping="Wrap" Text="To Date" VerticalAlignment="Top"/>
                 <DatePicker x:Name="fromDate" HorizontalAlignment="Left" Margin="136,39,0,0" VerticalAlignment="Top" Height="30" Width="120" SelectedDateChanged="fromDate_SelectedDateChanged"  />
                 <DatePicker x:Name="toDate" HorizontalAlignment="Left" Margin="270,39,0,0" VerticalAlignment="Top" Height="30" Width="120" SelectedDateChanged="toDate_SelectedDateChanged"/>
-                <TextBlock HorizontalAlignment="Left" Margin="136,74,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                <TextBox x:Name="issuedBy" HorizontalAlignment="Left" Margin="136,95,0,0" VerticalAlignment="Top" Width="120" Height="30" TextChanged="IssuedBy_TextChanged"/>
-                <Button x:Name="btn_createStatement" Style="{DynamicResource CommonButtonStyle}" Content="Create Statement" HorizontalAlignment="Left" Margin="136,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_createStatement_Click"/>
-                <Button x:Name="btn_clear" Style="{DynamicResource CommonButtonStyle}" Content="Clear" HorizontalAlignment="Left" Margin="270,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_clear_Click"/>
+                <Button x:Name="btn_createStatement" Style="{DynamicResource CommonButtonStyle}" Content="Create Statement" HorizontalAlignment="Left" Margin="139,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_createStatement_Click"/>
+                <Button x:Name="btn_clear" Style="{DynamicResource CommonButtonStyle}" Content="Create New" HorizontalAlignment="Left" Margin="270,143,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="btn_clear_Click"/>
 
 
             </Grid>
@@ -37,7 +35,7 @@
                 </Grid.Effect>
                 <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
                 <Border  x:Name="comboBox_customer_border" Margin="178,31,35,241"  Width="371" Height="30">
-                    <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White" SelectedValuePath="CustomerName" DisplayMemberPath="CustomerName"/>
+                    <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371" Height="30"  SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White" SelectedValuePath="CustomerName" DisplayMemberPath="CustomerName" DropDownOpened="comboBox_customer_DropDownOpened"/>
                 </Border>
                 <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
                 <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
@@ -106,8 +104,6 @@
 
             </DataGrid.Columns>
         </DataGrid>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1328,851,0,0" TextWrapping="Wrap" Text="Balance" VerticalAlignment="Top" Width="81" FontSize="16"/>
-        <TextBlock x:Name="txtBlock_Balance" HorizontalAlignment="Left" Margin="1414,851,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16" />
 
 
         <Grid>

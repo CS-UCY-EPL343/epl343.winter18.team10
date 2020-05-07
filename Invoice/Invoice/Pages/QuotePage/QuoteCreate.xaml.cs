@@ -23,11 +23,12 @@ namespace InvoiceX.Pages.QuotePage
         ProductViewModel productView;        
         CustomerViewModel customerView;
         bool Refresh_DB_data = true;
+        QuoteMain quoteMain;
 
-        public QuoteCreate()
+        public QuoteCreate(QuoteMain quoteMain)
         {
             InitializeComponent();
-           
+            this.quoteMain = quoteMain;
         }
 
         public void load()
@@ -98,30 +99,16 @@ namespace InvoiceX.Pages.QuotePage
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
             
-            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float productQuote) || (productQuote < 0))
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0) || (f > float.Parse(textBox_ProductPrice.Text)))
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
+                MessageBox.Show("Offer price can not be larger than actual price.");
             }
             else
             {
                 textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
             }
-
-            float productprice = 0;
-            float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out productprice);
-            if (productQuote > productprice)
-            {
-                all_completed = false;
-                textBox_ProductQuote.BorderBrush = Brushes.Red;
-                MessageBox.Show("Offer price is biger than normal");
-            }
-            else
-            {
-                textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
-            }
-
-
 
             return all_completed;
         }
@@ -195,7 +182,7 @@ namespace InvoiceX.Pages.QuotePage
         {
             if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
-                MessageBox.Show("You havent selectet any products");
+                MessageBox.Show("You havent selected any products");
                 return false;
             }
             return true;
@@ -219,7 +206,14 @@ namespace InvoiceX.Pages.QuotePage
             if (!Check_CustomerForm()) ALL_VALUES_OK = false;
             if (!Check_DetailsForm()) ALL_VALUES_OK = false;
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
-            if (ALL_VALUES_OK) QuoteViewModel.insertQuote(make_object_Quote());
+            if (ALL_VALUES_OK)
+            {
+                Quote quote = make_object_Quote();
+                QuoteViewModel.insertQuote(quote);
+                MessageBox.Show("Quote with ID " + quote.idQuote + " was created.");
+                quoteMain.viewQuote(quote.idQuote);
+                Btn_clearAll_Click(null, null);
+            }
         }
 
         private void Clear_Customer()
@@ -273,7 +267,6 @@ namespace InvoiceX.Pages.QuotePage
         private void textBox_ProductQuote_TextChanged(object sender, TextChangedEventArgs e)
         {
             textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
-        }
- 
+        }                
     }
 }

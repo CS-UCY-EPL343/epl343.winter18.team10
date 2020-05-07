@@ -64,8 +64,8 @@
         <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF" HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="savePdf_Click"/>
         <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print" HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="printPdf_click"/>
         <Button Style="{DynamicResource CommonButtonStyle}" Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1443,856,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1529,856,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1438,856,0,0" TextWrapping="Wrap" Text="Total Amount" VerticalAlignment="Top" Width="99" FontSize="16"/>
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1550,856,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16"/>
         <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete" HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_delete_Click"/>
         <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click"/>
 

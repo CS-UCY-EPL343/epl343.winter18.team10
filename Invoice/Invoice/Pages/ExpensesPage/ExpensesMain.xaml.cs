@@ -31,8 +31,8 @@ namespace InvoiceX.Pages.ExpensesPage
             InitializeComponent();
             viewAllPage = new ExpensesViewAll(this);
             viewPage = new ExpensesView();
-            createPage = new ExpensesCreate();
-            editPage = new ExpensesEdit();
+            createPage = new ExpensesCreate(this);
+            editPage = new ExpensesEdit(this);
             //statisticsPage = new ();
             btnViewAll_Click(null, null);
         }

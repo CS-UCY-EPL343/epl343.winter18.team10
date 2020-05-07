@@ -24,22 +24,23 @@ namespace InvoiceX.Pages.InvoicePage
         CustomerViewModel customerView;
         InvoiceMain invoiceMain;
         bool refreshDataDB = true;
+        int orderID = -1;
 
         public InvoiceCreate(InvoiceMain invoiceMain)
         {
             InitializeComponent();
             this.invoiceMain = invoiceMain;
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
         public void load()
         {
             if (refreshDataDB)
-            {                                      
+            {                       
                 customerView = new CustomerViewModel();               
-                comboBox_customer.ItemsSource = customerView.customersList;                
+                comboBox_customer.ItemsSource = customerView.customersList;
                 textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID()+1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today;//set curent date 
                 dueDate.SelectedDate = DateTime.Today.AddDays(60); ;//set curent date +60
@@ -160,15 +161,15 @@ namespace InvoiceX.Pages.InvoicePage
                     Vat = ((Product)comboBox_Product.SelectedItem).Vat
                 });
 
-                double netTotal = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+                double netTotal = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
                 netTotal += Convert.ToDouble(textBox_ProductTotal.Text);
-                txtBlock_NetTotal.Text = netTotal.ToString("C");
+                NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-                double VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
+                double VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
                 VAT += (Convert.ToDouble(textBox_ProductTotal.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
-                txtBlock_VAT.Text = (VAT).ToString("C");
+                Vat_TextBlock.Text = (VAT).ToString("C");
 
-                txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+                TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             }
         }
 
@@ -176,15 +177,15 @@ namespace InvoiceX.Pages.InvoicePage
         {
             Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
 
-            double netTotal = double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency);
+            double netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
             netTotal -= Convert.ToDouble(CurrentCell_Product.Total);
-            txtBlock_NetTotal.Text = netTotal.ToString("C");
+            NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-            double VAT = double.Parse(txtBlock_VAT.Text, NumberStyles.Currency);
+            double VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
             VAT -= (CurrentCell_Product.Total * CurrentCell_Product.Vat);
-            txtBlock_VAT.Text = VAT.ToString("C");
+            Vat_TextBlock.Text = VAT.ToString("C");
 
-            txtBlock_TotalAmount.Text = (netTotal + VAT).ToString("C");
+            TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             ProductDataGrid.Items.Remove(ProductDataGrid.CurrentCell.Item);
         }
 
@@ -228,14 +229,14 @@ namespace InvoiceX.Pages.InvoicePage
             if (issuedBy.Text.Equals(""))
             {
                 issuedBy.BorderBrush = Brushes.Red;
-                all_ok= false;
+                all_ok = false;
             }
-            if (invoiceDate.SelectedDate.Value> dueDate.SelectedDate.Value)
+            if (invoiceDate.SelectedDate.Value > dueDate.SelectedDate.Value)
             {
                 dueDate.BorderBrush = Brushes.Red;
                 invoiceDate.BorderBrush = Brushes.Red;
                 MessageBox.Show("Due date is earlier than created date");
-                all_ok= false;
+                all_ok = false;
             }
             return all_ok;
         }
@@ -257,9 +258,9 @@ namespace InvoiceX.Pages.InvoicePage
                 customer = ((Customer)comboBox_customer.SelectedItem),
                 products = ProductDataGrid.Items.OfType<Product>().ToList(),
                 idInvoice = Int32.Parse(textBox_invoiceNumber.Text),
-                cost = Double.Parse(txtBlock_NetTotal.Text, NumberStyles.Currency),
-                VAT = Double.Parse(txtBlock_VAT.Text, NumberStyles.Currency),
-                totalCost = Double.Parse(txtBlock_TotalAmount.Text, NumberStyles.Currency),
+                cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency),
+                VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency),
+                totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
                 createdDate = invoiceDate.SelectedDate.Value,
                 dueDate = dueDate.SelectedDate.Value,
                 issuedBy = issuedBy.Text
@@ -268,11 +269,15 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {           
-            if (checkCustomerForm()&checkDetailsForm()&hasItemsSelected())
+            if (checkCustomerForm() & checkDetailsForm() & hasItemsSelected())
             {
                 Invoice inv = createInvoiceObject();
                 inv.createdDate += DateTime.Now.TimeOfDay;
                 InvoiceViewModel.insertInvoice(inv);
+                if (orderID != -1)
+                {
+                    OrderViewModel.updateOrderStatus(this.orderID, OrderStatus.Completed);
+                }
                 MessageBox.Show("Invoice with ID " + inv.idInvoice + " was created.");
                 invoiceMain.viewInvoice(inv.idInvoice);
                 Btn_clearAll_Click(null, null);                
@@ -301,13 +306,14 @@ namespace InvoiceX.Pages.InvoicePage
         private void clearProductGrid()
         {
             ProductDataGrid.Items.Clear();
-            txtBlock_NetTotal.Text = (0).ToString("C");
-            txtBlock_VAT.Text = (0).ToString("C");
-            txtBlock_TotalAmount.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = (0).ToString("C");
+            Vat_TextBlock.Text = (0).ToString("C");
+            TotalAmount_TextBlock.Text = (0).ToString("C");
         }
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
+            this.orderID = -1;
             comboBox_customer_border.BorderThickness = new Thickness(0);
             Btn_clearProduct_Click(null, null);
             clearCustomer();
@@ -320,13 +326,25 @@ namespace InvoiceX.Pages.InvoicePage
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
         {
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
-        }      
-   
+        }
+
+        private void invoiceDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            invoiceDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
+        private void dueDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            dueDate.ClearValue(TextBox.BorderBrushProperty);
+        }
+
         public void loadOrder(Order order)
         {
             Btn_clearAll_Click(null, null);
             if (order != null)
             {
+                this.orderID = order.idOrder;
+
                 // Customer details                                
                 comboBox_customer.SelectedValue = order.customer.CustomerName;
                 textBox_Customer.Text = order.customer.CustomerName;
@@ -335,9 +353,9 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
 
                 // Invoice details
-                txtBlock_NetTotal.Text = order.cost.ToString("C");
-                txtBlock_VAT.Text = order.VAT.ToString("C");
-                txtBlock_TotalAmount.Text = order.totalCost.ToString("C");
+                NetTotal_TextBlock.Text = order.cost.ToString("C");
+                Vat_TextBlock.Text = order.VAT.ToString("C");
+                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
 
                 // Invoice products        
                 for (int i = 0; i < order.products.Count; i++)
@@ -357,14 +375,5 @@ namespace InvoiceX.Pages.InvoicePage
             }
         }
 
-        private void invoiceDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            invoiceDate.ClearValue(TextBox.BorderBrushProperty);
-        }
-
-        private void dueDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
-        {
-            dueDate.ClearValue(TextBox.BorderBrushProperty);
-        }
     }
 }

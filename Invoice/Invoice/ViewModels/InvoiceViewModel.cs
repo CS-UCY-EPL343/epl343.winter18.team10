@@ -197,7 +197,7 @@ namespace InvoiceX.ViewModels
             return list;
         }
 
-        public static void deleteInvoice(int invoiceID)
+        public static bool deleteInvoice(int invoiceID)
         {
             try
             {
@@ -206,10 +206,19 @@ namespace InvoiceX.ViewModels
 
                 cmd = new MySqlCommand("DELETE FROM Invoice WHERE idInvoice = " + invoiceID, conn);
                 cmd.ExecuteNonQuery();
+                return true;
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                {
+                    MessageBox.Show("Cannot delete invoice with ID = " + invoiceID + " as a credit note has been issued on it.");
+                }
+                else
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                return false;
             }
         }
 
@@ -336,7 +345,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
                     cmd.Parameters.AddWithValue("@Cost", invoice.cost);
                     cmd.Parameters.AddWithValue("@Vat", invoice.VAT);
-                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);                   
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     // Execute the query
@@ -505,7 +514,7 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
-        public static List<int> customer_invoices_list(int customerID)
+        public static List<int> getCustomerInvoices(int customerID)
         {
             List<int> customer_invoices_list = new List<int>();
 
@@ -531,47 +540,6 @@ namespace InvoiceX.ViewModels
             return null;
 
         }
-
-        public static List<Product> invoice_products_list(int invoiceID)
-        {
-            List<Product>  invoice_products_list = new List<Product>();
-
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-
-                foreach (DataRow dataRow in dt.Rows)
-                {
-                    var idProductsdb = dataRow.Field<int>("idProduct");
-                    var ProductNamedb = dataRow.Field<string>("ProductName");
-                    var ProductDescriptiondb = dataRow.Field<string>("Description");
-                    var Quantitydb = dataRow.Field<int>("Quantity");
-                    var IPCostdb = dataRow.Field<float>("IPCost");
-                    var IPVATdb = dataRow.Field<float>("IPVAT");
-
-
-                    invoice_products_list.Add(
-                        new Product()
-                        {
-                            idProduct = idProductsdb,
-                            ProductName = ProductNamedb,
-                            ProductDescription = ProductDescriptiondb,
-                            Quantity = Quantitydb,
-                            SellPrice = IPCostdb,
-                            Vat = IPVATdb
-                        });
-                }
-                return invoice_products_list;
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            return null;
-        }
-
     }
 
 

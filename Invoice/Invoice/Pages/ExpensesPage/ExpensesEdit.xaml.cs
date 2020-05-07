@@ -26,11 +26,10 @@ namespace InvoiceX.Pages.ExpensesPage
         bool invoice_loaded = false;
         Expense oldExpense;
 
-        public ExpensesEdit()
+        public ExpensesEdit(ExpensesMain expensesMain)
         {
             InitializeComponent();
-            //this.expensesMain = invoiceMain;
-           
+            this.expensesMain = expensesMain;            
             load();
         }
 
@@ -99,17 +98,11 @@ namespace InvoiceX.Pages.ExpensesPage
                 expensesDataGrid.Items.Add(new Payment
                 {
                     amount = float.Parse(textBox_ExpenseAmount.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
-                    //Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
+                    Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat),
                     paymentMethod = paymentenum,
                     paymentNumber = (comboBox_PaymentMethod.SelectedIndex == 0 ? "" : textBox_paymentNum.Text),
                     paymentDate = PaymentDate.SelectedDate.Value.Date
                 });
-
-                /*
-                double netTotal = Double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
-                netTotal += Convert.ToDouble(textBox_ExpenseAmount.Text);
-                txtBox_totalCost.Text = netTotal.ToString("C");
-                */
             }
         }
 
@@ -117,15 +110,8 @@ namespace InvoiceX.Pages.ExpensesPage
         private void Button_remove_expense_from_grid(object sender, RoutedEventArgs e)
         {
             Payment CurrentCell_Product = (Payment)(expensesDataGrid.CurrentCell.Item);
-            float Vat = float.Parse(txtBox_VAT.Text.Replace(',', '.'), CultureInfo.InvariantCulture.NumberFormat);
-
-            /*
-            double netTotal = double.Parse(txtBox_totalCost.Text, NumberStyles.Currency);
-            netTotal -= Convert.ToDouble(CurrentCell_Product.amount);
-            txtBox_totalCost.Text = netTotal.ToString("C");*/
             
             expensesDataGrid.Items.Remove(expensesDataGrid.CurrentCell.Item);
-
         }
 
         /*remove txt from txtbox when clicked (Put GotFocus="TextBox_GotFocus" in txtBox)*/
@@ -232,18 +218,18 @@ namespace InvoiceX.Pages.ExpensesPage
             {
                 issuedBy.BorderBrush = Brushes.Red;
                 all_ok = false;
-            }
-            
+            }            
+           
             return all_ok;
         }
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {            
             if (checkCompanyForm() & checkDetailsForm()&Has_Items_Selected())
             {
-                if (int.TryParse(textBox_expenseID.Text, out int invoiceId))
+                if (int.TryParse(textBox_expenseID.Text, out int expenseID))
                 {
                     ExpensesViewModel.updateExpense(createExpensesObject(), oldExpense);
-                    //expensesMain.viewExpense(invoiceId);
+                    expensesMain.viewExpense(expenseID);
                     Btn_clearAll_Click(null, null);
                 }
             }
@@ -401,7 +387,6 @@ namespace InvoiceX.Pages.ExpensesPage
         private void txtBox_VAT_TextChanged(object sender, TextChangedEventArgs e)
         {
             txtBox_VAT.ClearValue(TextBox.BorderBrushProperty);
-
             if (float.TryParse(txtBox_VAT.Text.Replace('.', ','), out float vat) &&
                float.TryParse(txtBox_cost.Text.Replace('.', ','), out float price))
             {

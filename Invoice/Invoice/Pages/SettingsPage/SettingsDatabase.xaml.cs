@@ -23,12 +23,7 @@ namespace InvoiceX.Pages.SettingsPage
     {
         public SettingsDatabase()
         {
-            InitializeComponent();
-            if (MainWindow.user.admin == false)
-            {
-                Btn_import.IsEnabled = false;
-                Btn_import.Background = Brushes.Gray;
-            }
+            InitializeComponent();           
         }              
 
         private void Btn_export_Click(object sender, RoutedEventArgs e)

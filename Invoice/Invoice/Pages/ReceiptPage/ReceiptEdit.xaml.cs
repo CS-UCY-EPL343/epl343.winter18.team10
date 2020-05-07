@@ -179,7 +179,7 @@ namespace InvoiceX.Pages.ReceiptPage
         {
             if (ReceiptDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
-                MessageBox.Show("You havent selectet any products");
+                MessageBox.Show("You havent selected any payments");
                 return false;
             }
             return true;

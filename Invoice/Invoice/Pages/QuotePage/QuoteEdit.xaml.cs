@@ -21,12 +21,14 @@ namespace InvoiceX.Pages.QuotePage
     public partial class QuoteEdit : Page
     {
         ProductViewModel productView;
-        bool invoice_loaded = false;
+        bool quote_loaded = false;
         Quote oldQuote;
+        QuoteMain quoteMain;
 
-        public QuoteEdit()
+        public QuoteEdit(QuoteMain quoteMain)
         {
-            InitializeComponent();           
+            InitializeComponent();
+            this.quoteMain = quoteMain;
             load();
         }
 
@@ -47,10 +49,6 @@ namespace InvoiceX.Pages.QuotePage
                 textBox_ProductPrice.Text = ((Product)comboBox_Product.SelectedItem).SellPrice.ToString("n2");
             }
         }
-
-       
-
-      
 
         bool product_already_selected()
         {
@@ -76,23 +74,11 @@ namespace InvoiceX.Pages.QuotePage
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
           
-            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float productQuote) || (productQuote < 0))
+            if (!float.TryParse(textBox_ProductQuote.Text.Replace('.', ','), out float f) || (f < 0) || (f > float.Parse(textBox_ProductPrice.Text)))
             {
                 all_completed = false;
                 textBox_ProductQuote.BorderBrush = Brushes.Red;
-            }
-            else
-            {
-                textBox_ProductQuote.ClearValue(TextBox.BorderBrushProperty);
-            }
-
-            float productprice = 0;
-            float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out productprice);
-            if (productQuote > productprice)
-            {
-                all_completed = false;
-                textBox_ProductQuote.BorderBrush = Brushes.Red;
-                MessageBox.Show("Offer price is biger than normal");
+                MessageBox.Show("Offer price can not be larger than actual price.");
             }
             else
             {
@@ -104,7 +90,7 @@ namespace InvoiceX.Pages.QuotePage
 
         private void Btn_AddProduct(object sender, RoutedEventArgs e)
         {
-            if (Check_AddProduct_CompletedValues() && invoice_loaded)
+            if (Check_AddProduct_CompletedValues() && quote_loaded)
             {
                 ProductDataGrid.Items.Add(new Product
                 {
@@ -149,7 +135,7 @@ namespace InvoiceX.Pages.QuotePage
         {
             if (ProductDataGrid.Items.Count == 0)//vale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxovale enenxo
             {
-                MessageBox.Show("You havent selectet any products");
+                MessageBox.Show("You havent selected any products");
                 return false;
             }
             return true;
@@ -162,7 +148,7 @@ namespace InvoiceX.Pages.QuotePage
             myquote.customer = oldQuote.customer;
             myquote.products = ProductDataGrid.Items.OfType<Product>().ToList();
             myquote.idQuote = Int32.Parse(textBox_idQuote.Text);
-            myquote.createdDate = invoiceDate.SelectedDate.Value.Date;
+            myquote.createdDate = quoteDate.SelectedDate.Value.Date;
             myquote.issuedBy = issuedBy.Text;
             return myquote;
         }
@@ -175,11 +161,11 @@ namespace InvoiceX.Pages.QuotePage
             if (!Has_Items_Selected()) ALL_VALUES_OK = false;
             if (ALL_VALUES_OK)
             {
-                int invoiceId = -1;
-                if (int.TryParse(textBox_idQuote.Text, out int n))
+                if (int.TryParse(textBox_idQuote.Text, out int quoteID))
                 {
-                    invoiceId = int.Parse(textBox_idQuote.Text);
                     QuoteViewModel.updateQuote(make_object_Quote(), oldQuote);
+                    quoteMain.viewQuote(quoteID);
+                    Btn_clearAll_Click(null, null);
                 }
             }
         }
@@ -197,19 +183,17 @@ namespace InvoiceX.Pages.QuotePage
             issuedBy.Text = "";
             textBox_idQuote.Clear();
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
-            invoiceDate.SelectedDate = null;
+            quoteDate.SelectedDate = null;
         }
 
         private void Clear_ProductGrid()
         {
-            ProductDataGrid.Items.Clear();
-            
+            ProductDataGrid.Items.Clear();            
         }
-
 
         private void Btn_clearAll_Click(object sender, RoutedEventArgs e)
         {
-            invoice_loaded = false;
+            quote_loaded = false;
             Btn_clearProduct_Click(null, null);
             Clear_Customer();
             Clear_Details();
@@ -222,15 +206,14 @@ namespace InvoiceX.Pages.QuotePage
             issuedBy.ClearValue(TextBox.BorderBrushProperty);
         }
 
-        private void Btn_Load_Invoice(object sender, RoutedEventArgs e)
+        private void Btn_Load_Quote(object sender, RoutedEventArgs e)
         {
-            int.TryParse(textBox_idQuote.Text, out int invoiceID);
-            if ((QuoteViewModel.quoteExists(invoiceID)))
+            int.TryParse(textBox_idQuote.Text, out int quoteID);
+            if ((QuoteViewModel.quoteExists(quoteID)))
             {
                 Btn_clearAll_Click(null, null);
-                loadInvoice(invoiceID);
-                invoice_loaded = true;
-
+                loadQuote(quoteID);
+                quote_loaded = true;
             }
             else
             {
@@ -239,35 +222,30 @@ namespace InvoiceX.Pages.QuotePage
             }
         }
 
-        public void loadInvoice(int invoiceId)
+        public void loadQuote(int quoteID)
         {
-            oldQuote = QuoteViewModel.getQuote(invoiceId);
+            oldQuote = QuoteViewModel.getQuote(quoteID);
             if (oldQuote != null)
             {
-
                 // Customer details
                 textBox_Customer.Text = oldQuote.customer.CustomerName;
                 textBox_Contact_Details.Text = oldQuote.customer.PhoneNumber.ToString();
                 textBox_Email_Address.Text = oldQuote.customer.Email;
                 textBox_Address.Text = oldQuote.customer.Address + ", " + oldQuote.customer.City + ", " + oldQuote.customer.Country;
 
-                // Invoice details
+                // Quote details
                 textBox_idQuote.Text = oldQuote.idQuote.ToString();
-                invoiceDate.SelectedDate = oldQuote.createdDate;               
-                issuedBy.Text = oldQuote.issuedBy;
-             
-
-                                         
+                quoteDate.SelectedDate = oldQuote.createdDate;               
+                issuedBy.Text = oldQuote.issuedBy;           
+                                                        
                 foreach (Product p in oldQuote.products)
                 {
-
                     ProductDataGrid.Items.Add(p);
                 }
-
             }
             else
             {
-                MessageBox.Show("Invoice id doesnt't exist");
+                MessageBox.Show("Quote id doesnt't exist");
             }
         }
 
