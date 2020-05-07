@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceX", "Invoice\Invoice
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTestProject", "UnitTestProject\UnitTestProject.csproj", "{B14DDCD5-5574-433B-A71B-20209CD618BE}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{7B9E233A-100E-4B63-93B3-69DFD4F4F7FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{B14DDCD5-5574-433B-A71B-20209CD618BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B14DDCD5-5574-433B-A71B-20209CD618BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B14DDCD5-5574-433B-A71B-20209CD618BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9E233A-100E-4B63-93B3-69DFD4F4F7FC}.Debug|Any CPU.ActiveCfg = Debug
+		{7B9E233A-100E-4B63-93B3-69DFD4F4F7FC}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
