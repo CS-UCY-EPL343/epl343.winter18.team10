@@ -158,8 +158,7 @@ namespace InvoiceX.Pages.QuotePage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Invoice.pdf";
-                filename = "Invoice.pdf";
+                string filename = "Quote" + txtBox_QuoteNumber.Text + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

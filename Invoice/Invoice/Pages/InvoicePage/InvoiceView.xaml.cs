@@ -169,8 +169,7 @@ namespace InvoiceX.Pages.InvoicePage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Invoice.pdf";
-                filename = "Invoice.pdf";
+                string filename = "Invoice" + txtBox_invoiceNumber.Text + ".pdf"; ;
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }
