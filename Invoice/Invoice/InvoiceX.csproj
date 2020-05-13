@@ -603,9 +603,6 @@
     <Resource Include="Forms\Order.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image1.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Forms\Receipt.xml" />
   </ItemGroup>
   <ItemGroup>

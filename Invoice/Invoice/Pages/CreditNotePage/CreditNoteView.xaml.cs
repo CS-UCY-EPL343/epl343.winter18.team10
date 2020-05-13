@@ -1,4 +1,29 @@
-﻿using InvoiceX.Models;
+﻿/*****************************************************************************
+ * MIT License
+ *
+ * Copyright (c) 2020 InvoiceX
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ *****************************************************************************/
+
+using InvoiceX.Models;
 using InvoiceX.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -26,6 +51,7 @@ namespace InvoiceX.Pages.CreditNotePage
     {
         private CreditNote creditNote;
         CreditNoteMain mainPage;
+
         public CreditNoteView(CreditNoteMain creditNoteMain)
         {
             this.mainPage = creditNoteMain;
@@ -37,6 +63,11 @@ namespace InvoiceX.Pages.CreditNotePage
             txtBox_creditNoteNumber.Focus();
         }      
        
+        /// <summary>
+        /// After validating the credit note ID calls loadCreditNote
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_LoadCreditNote_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_creditNoteNumber.Text, out int creditNoteID);
@@ -51,6 +82,10 @@ namespace InvoiceX.Pages.CreditNotePage
             }
         }
 
+        /// <summary>
+        /// Loads the credit note information on the page
+        /// </summary>
+        /// <param name="creditNoteID"></param>
         public void loadCreditNote(int creditNoteID)
         {
             creditNote = CreditNoteViewModel.getCreditNote(creditNoteID);
@@ -80,6 +115,12 @@ namespace InvoiceX.Pages.CreditNotePage
             }
         }
 
+        /// <summary>
+        /// Method that handles the event Key Down on the textbox creditNoteNumber.
+        /// If the key pressed is Enter then it loads the credit note.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtBox_creditNoteNumber_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return)
@@ -88,6 +129,11 @@ namespace InvoiceX.Pages.CreditNotePage
             }
         }
 
+        /// <summary>
+        /// Clear all information from the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_clearView_Click(object sender, RoutedEventArgs e)
         {
             this.creditNote = null;
@@ -109,6 +155,11 @@ namespace InvoiceX.Pages.CreditNotePage
             txtBox_creditNoteNumber.Focus();
         }
 
+        /// <summary>
+        /// Opens the delete dialog prompting the user to confirm deletion or cancel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Btn_delete_Click(object sender, RoutedEventArgs e)
         {
             int.TryParse(txtBox_creditNoteNumber.Text, out int creditNoteID);
@@ -136,6 +187,11 @@ namespace InvoiceX.Pages.CreditNotePage
             }
         }
 
+        /// <summary>
+        /// Switches to edit Credit Note page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_edit_Click(object sender, RoutedEventArgs e)
         {
             if (creditNote != null)
