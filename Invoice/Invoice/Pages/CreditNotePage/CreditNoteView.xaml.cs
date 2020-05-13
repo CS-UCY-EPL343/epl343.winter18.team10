@@ -163,9 +163,12 @@ namespace InvoiceX.Pages.CreditNotePage
 
                 // Create the PDF document
                 pdfRenderer.RenderDocument();
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/CreditNotes/");
 
                 // Save the PDF document...
-                string filename = "creditNote" + txtBox_creditNoteNumber.Text + ".pdf"; ;
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/CreditNotes/CreditNote" + txtBox_creditNoteNumber.Text + ".pdf"; ;
+
+                // Save the PDF document...
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

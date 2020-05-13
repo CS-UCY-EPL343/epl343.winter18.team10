@@ -166,9 +166,11 @@ namespace InvoiceX.Pages.OrderPage
 
                 // Create the PDF document
                 pdfRenderer.RenderDocument();
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Orders/");
 
                 // Save the PDF document...
-                string filename = "Order" + txtBox_orderNumber.Text + ".pdf"; ;
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Orders/Order" + txtBox_orderNumber.Text + ".pdf"; ;
+
                 pdfRenderer.Save(filename);
                 System.Diagnostics.Process.Start(filename);
             }

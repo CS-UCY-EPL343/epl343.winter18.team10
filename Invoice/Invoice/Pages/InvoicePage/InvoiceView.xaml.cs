@@ -157,8 +157,11 @@ namespace InvoiceX.Pages.InvoicePage
             }
             else
             {
+
                 MigraDoc.DocumentObjectModel.Document document = createPdf();
+
                 document.UseCmykColor = true;
+
                 // Create a renderer for PDF that uses Unicode font encoding
                 MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
 
@@ -167,11 +170,22 @@ namespace InvoiceX.Pages.InvoicePage
 
                 // Create the PDF document
                 pdfRenderer.RenderDocument();
+                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Invoices/");
 
                 // Save the PDF document...
-                string filename = "Invoice" + txtBox_invoiceNumber.Text + ".pdf"; ;
-                pdfRenderer.Save(filename);
-                System.Diagnostics.Process.Start(filename);
+                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Invoices/Invoice" + txtBox_invoiceNumber.Text + ".pdf"; ;
+                try
+                {
+                    pdfRenderer.Save(filename);
+                    System.Diagnostics.Process.Start(filename);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+
+                }
+
             }
         }
 
@@ -301,10 +315,19 @@ namespace InvoiceX.Pages.InvoicePage
 
             List<Product> products = invoiceProductsGrid.Items.OfType<Product>().ToList();
 
+            try
+            {
 
-            Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
-            MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
-            return document;
+                Forms.InvoiceForm invoice2 = new Forms.InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
+                MigraDoc.DocumentObjectModel.Document document = invoice2.CreateDocument();
+                return document;
+
+            }
+            catch  (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return null;
         }
         #endregion
     }
