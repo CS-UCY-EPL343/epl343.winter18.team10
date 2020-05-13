@@ -13,10 +13,12 @@ namespace UnitTestProject
     [TestClass]
     public class UnitTests
     {
+        string executable = @"C:\Users\CHRISIS-PC\Desktop\8th Semester\EPL449\epl343.winter18.team10\Invoice\Invoice\bin\Debug\InvoiceX.exe";
+
         [TestMethod]
         public void CreateInvoiceTest()
         {
-            var app = FlaUI.Core.Application.Launch(@"C:\Users\CHRISIS-PC\Desktop\8th Semester\EPL449\epl343.winter18.team10\Invoice\Invoice\bin\Debug\InvoiceX.exe");
+            var app = FlaUI.Core.Application.Launch(executable);
 
             using (var automation = new UIA3Automation())
             {
@@ -56,7 +58,7 @@ namespace UnitTestProject
         [TestMethod]
         public void CreateCustomerTest()
         {
-            var app = FlaUI.Core.Application.Launch(@"C:\Users\CHRISIS-PC\Desktop\8th Semester\EPL449\epl343.winter18.team10\Invoice\Invoice\bin\Debug\InvoiceX.exe");
+            var app = FlaUI.Core.Application.Launch(executable);
 
             using (var automation = new UIA3Automation())
             {
