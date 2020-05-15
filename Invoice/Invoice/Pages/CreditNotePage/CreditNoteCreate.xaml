@@ -62,7 +62,7 @@
                            Text="Details" />
                 <TextBlock HorizontalAlignment="Left" Margin="135,18,0,0" TextWrapping="Wrap" Text="Credit Note No."
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Invoice Date"
+                <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Credit Note Date"
                            VerticalAlignment="Top" />
                 <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
