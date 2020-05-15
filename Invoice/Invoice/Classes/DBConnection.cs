@@ -36,7 +36,7 @@ namespace InvoiceX.Classes
         private static DBConnection instance;
 
         private readonly string myConnectionString = "server=dione.in.cs.ucy.ac.cy;uid=invoice;" +
-                                                     "pwd=CCfHC5PWLjsSJi8G;database=invoice";
+                                                     "pwd=CCfHC5PWLjsSJi8G;database=invoice;charset=utf8";
 
         public MySqlConnection Connection;
 
