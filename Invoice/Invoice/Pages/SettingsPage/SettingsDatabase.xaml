@@ -1,50 +1,74 @@
 ﻿<Page x:Class="InvoiceX.Pages.SettingsPage.SettingsDatabase"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:InvoiceX.Pages.SettingsPage"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="SettingsDatabase">
 
     <Grid>
-        <Grid x:Name="UperGrid" Background="#FFECECEC"  HorizontalAlignment="Left" Height="940" VerticalAlignment="Top" Width="1725">
+        <Grid x:Name="UperGrid" Background="#FFECECEC" HorizontalAlignment="Left" Height="940" VerticalAlignment="Top"
+              Width="1725">
             <Grid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
+                <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="256,24,0,0" VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="256,24,0,0"
+                  VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Export as SQL script" VerticalAlignment="Top" Width="282" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox  x:Name="txtBlock_exportPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="69,96,0,0" TextWrapping="Wrap" Text="Export Location" VerticalAlignment="Top"/>
-                <Button x:Name="Btn_export" Content="Export"  Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="28" Width="115" Margin="401,240,68,34" Click="Btn_export_Click" />
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap"
+                           Text="Export as SQL script" VerticalAlignment="Top" Width="282" FontSize="30"
+                           Background="White" Foreground="#FF5960FF" />
+                <TextBox x:Name="txtBlock_exportPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533"
+                         IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="69,96,0,0" TextWrapping="Wrap" Text="Export Location"
+                           VerticalAlignment="Top" />
+                <Button x:Name="Btn_export" Content="Export" Style="{DynamicResource CommonButtonStyle}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="115"
+                        Margin="401,240,68,34" Click="Btn_export_Click" />
 
 
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="876,24,0,0" VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="876,24,0,0"
+                  VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="316" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Import from SQL script" />
-                <TextBox  x:Name="txtBlock_importPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="69,96,0,0" TextWrapping="Wrap" Text="Import File" VerticalAlignment="Top"/>
-                <Button x:Name="Btn_import" Content="Import"  Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="28" Width="115" Margin="401,240,68,34" Click="Btn_import_Click" />
-
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap"
+                           VerticalAlignment="Top" Width="316" FontSize="30" Background="White" Foreground="#FF5960FF"
+                           Text="Import from SQL script" />
+                <TextBox x:Name="txtBlock_importPath" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533"
+                         IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="69,96,0,0" TextWrapping="Wrap" Text="Import File"
+                           VerticalAlignment="Top" />
+                <Button x:Name="Btn_import" Content="Import" Style="{DynamicResource CommonButtonStyle}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="115"
+                        Margin="401,240,68,34" Click="Btn_import_Click" />
 
 
             </Grid>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="256,339,0,0" VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="256,339,0,0"
+                  VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Export as CSV" VerticalAlignment="Top" Width="196" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox  x:Name="txtBlock_exportPathCSV" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left"  Margin="69,96,0,0" TextWrapping="Wrap" Text="Export Location" VerticalAlignment="Top"/>
-                <Button x:Name="Btn_exportCSV" Content="Export"  Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"  Height="28" Width="115" Margin="401,240,68,34" Click="Btn_exportCSV_Click" />
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap"
+                           Text="Export as CSV" VerticalAlignment="Top" Width="196" FontSize="30" Background="White"
+                           Foreground="#FF5960FF" />
+                <TextBox x:Name="txtBlock_exportPathCSV" HorizontalAlignment="Left" Height="30" Margin="181,91,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="335" RenderTransformOrigin="0.533,-0.533"
+                         IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="69,96,0,0" TextWrapping="Wrap" Text="Export Location"
+                           VerticalAlignment="Top" />
+                <Button x:Name="Btn_exportCSV" Content="Export" Style="{DynamicResource CommonButtonStyle}"
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Height="28" Width="115"
+                        Margin="401,240,68,34" Click="Btn_exportCSV_Click" />
 
 
             </Grid>

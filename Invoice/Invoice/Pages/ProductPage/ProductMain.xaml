@@ -1,22 +1,28 @@
 ﻿<Page x:Class="InvoiceX.Pages.ProductPage.ProductMain"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:InvoiceX.Pages.ProductPage"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="ProductMain">
 
     <Grid Background="LightGray">
-        <Grid Background="Transparent" HorizontalAlignment="Left" Height="70" Margin="0,-85,0,0" VerticalAlignment="Top" Width="612" Panel.ZIndex="1">
-            <Button x:Name="btnView" Content="View" Margin="0,10,0,0" Style="{StaticResource ButtonStyle}" Click="btnView_Click" Width="124"/>
-            <Button x:Name="btnCreate" Content="Create" Margin="260,10,0,0" Style="{StaticResource ButtonStyle}" Click="btnCreate_Click" Width="124"/>
-            <Button x:Name="btnEdit" Content="Edit" Margin="130,10,0,0" Style="{StaticResource ButtonStyle}" Width="124" Click="btnEdit_Click" />
-            <Button x:Name="btnStatistics" Content="Statistics" Margin="390,10,0,0" Style="{StaticResource ButtonStyle}" Click="btnStatistics_Click" Width="124"/>
+        <Grid Background="Transparent" HorizontalAlignment="Left" Height="70" Margin="0,-85,0,0"
+              VerticalAlignment="Top" Width="612" Panel.ZIndex="1">
+            <Button x:Name="btnView" Content="View" Margin="0,10,0,0" Style="{StaticResource ButtonStyle}"
+                    Click="btnView_Click" Width="124" />
+            <Button x:Name="btnCreate" Content="Create" Margin="260,10,0,0" Style="{StaticResource ButtonStyle}"
+                    Click="btnCreate_Click" Width="124" />
+            <Button x:Name="btnEdit" Content="Edit" Margin="130,10,0,0" Style="{StaticResource ButtonStyle}"
+                    Width="124" Click="btnEdit_Click" />
+            <Button x:Name="btnStatistics" Content="Statistics" Margin="390,10,0,0"
+                    Style="{StaticResource ButtonStyle}" Click="btnStatistics_Click" Width="124" />
         </Grid>
 
-        <Frame x:Name="productPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950" VerticalAlignment="Top" Width="1725" RenderTransformOrigin="0.465,0.404"/>
+        <Frame x:Name="productPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950"
+               VerticalAlignment="Top" Width="1725" RenderTransformOrigin="0.465,0.404" />
 
     </Grid>
 </Page>

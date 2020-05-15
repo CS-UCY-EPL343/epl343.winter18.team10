@@ -1,42 +1,69 @@
-﻿using InvoiceX.Classes;
-using InvoiceX.Models;
-using MySql.Data.MySqlClient;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
+using System.Globalization;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using InvoiceX.Classes;
+using InvoiceX.Models;
+using MySql.Data.MySqlClient;
 
 namespace InvoiceX.ViewModels
 {
     public class ReceiptViewModel
     {
-        public List<Receipt> receiptList { get; set; }
-        private static MySqlConnection conn = DBConnection.Instance.Connection;
+        private static readonly MySqlConnection conn = DBConnection.Instance.Connection;
 
+        /// <summary>
+        ///     Constructor that fills the list with all the receipts
+        /// </summary>
         public ReceiptViewModel()
         {
             receiptList = new List<Receipt>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT `Receipt`.*, `Customer`.`CustomerName` FROM `Receipt`" +
-                    " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT `Receipt`.*, `Customer`.`CustomerName` FROM `Receipt`" +
+                                           " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer`; ",
+                    conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                Receipt rec = new Receipt();
+                var rec = new Receipt();
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customer = dataRow.Field<string>("CustomerName");
-                    var idReceipt = dataRow.Field<Int32>("idReceipt");
+                    var idReceipt = dataRow.Field<int>("idReceipt");
                     var amount = dataRow.Field<float>("Amount");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    rec = new Receipt()
+                    rec = new Receipt
                     {
                         idReceipt = idReceipt,
                         totalAmount = amount,
@@ -48,26 +75,33 @@ namespace InvoiceX.ViewModels
                     receiptList.Add(rec);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        public List<Receipt> receiptList { get; set; }
+
+        /// <summary>
+        ///     Given the receipt ID retrieves the receipt and returns it
+        /// </summary>
+        /// <param name="receiptID"></param>
+        /// <returns></returns>
         public static Receipt getReceipt(int receiptID)
         {
-            Receipt rec = new Receipt();
+            var rec = new Receipt();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewReceipt WHERE ReceiptID = " + receiptID, conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM viewReceipt WHERE ReceiptID = " + receiptID, conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 if (dt.Rows.Count == 0)
                     rec = null;
 
-                int count = 0;
+                var count = 0;
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customerName = dataRow.Field<string>("CustomerName");
@@ -79,21 +113,22 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idReceipt = dataRow.Field<Int32>("ReceiptID");
+                    var idReceipt = dataRow.Field<int>("ReceiptID");
                     var totalAmount = dataRow.Field<float>("TotalAmount");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    var paymentID = dataRow.Field<Int32>("idPayment");
+                    var paymentID = dataRow.Field<int>("idPayment");
                     var amount = dataRow.Field<float>("Amount");
-                    var method = (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod"));
+                    var method =
+                        (PaymentMethod) Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod"));
                     var paymentDate = dataRow.Field<DateTime>("PaymentDate");
                     var paymentNumber = dataRow.Field<string>("PaymentNumber");
 
                     if (count == 0)
                     {
                         count++;
-                        rec = new Receipt()
+                        rec = new Receipt
                         {
                             idReceipt = idReceipt,
                             customerName = customerName,
@@ -101,7 +136,7 @@ namespace InvoiceX.ViewModels
                             createdDate = createdDate,
                             issuedBy = issuedBy,
                             payments = new List<Payment>(),
-                            customer = new Customer()
+                            customer = new Customer
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
@@ -115,7 +150,7 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    rec.payments.Add(new Payment()
+                    rec.payments.Add(new Payment
                     {
                         idPayment = paymentID,
                         amount = amount,
@@ -125,7 +160,7 @@ namespace InvoiceX.ViewModels
                     });
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -133,17 +168,24 @@ namespace InvoiceX.ViewModels
             return rec;
         }
 
+        /// <summary>
+        ///     Retrieves and returns the receipts as statement items matching the parameters given
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public static List<StatementItem> getReceiptsForStatement(int customerID, DateTime from, DateTime to)
         {
-            List<StatementItem> list = new List<StatementItem>();
+            var list = new List<StatementItem>();
 
             try
             {
-                string query = "SELECT `Receipt`.* FROM `Receipt`" +
-                    " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
-                    "`Receipt`.`CreatedDate` >= @from AND `Receipt`.`CreatedDate` <= @to; ";
-                DataTable dt = new DataTable();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = "SELECT `Receipt`.* FROM `Receipt`" +
+                            " LEFT JOIN `Customer` ON `Receipt`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
+                            "`Receipt`.`CreatedDate` >= @from AND `Receipt`.`CreatedDate` <= @to; ";
+                var dt = new DataTable();
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@customerID", customerID);
                     cmd.Parameters.AddWithValue("@from", from);
@@ -152,15 +194,15 @@ namespace InvoiceX.ViewModels
                     dt.Load(cmd.ExecuteReader());
                 }
 
-                StatementItem inv = new StatementItem();
+                var inv = new StatementItem();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var idReceipt = dataRow.Field<Int32>("idReceipt");
+                    var idReceipt = dataRow.Field<int>("idReceipt");
                     var amount = dataRow.Field<float>("Amount");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var balance = dataRow.Field<float>("PreviousBalance");
 
-                    inv = new StatementItem()
+                    inv = new StatementItem
                     {
                         idItem = idReceipt,
                         credits = amount,
@@ -172,7 +214,7 @@ namespace InvoiceX.ViewModels
                     list.Add(inv);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -180,44 +222,51 @@ namespace InvoiceX.ViewModels
             return list;
         }
 
+        /// <summary>
+        ///     Given the receipt ID deletes the receipt from the Database
+        /// </summary>
+        /// <param name="receiptID"></param>
         public static void deleteReceipt(int receiptID)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM Payment WHERE idReceipt = " + receiptID, conn);
+                var cmd = new MySqlCommand("DELETE FROM Payment WHERE idReceipt = " + receiptID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Receipt WHERE idReceipt = " + receiptID, conn);
                 cmd.ExecuteNonQuery();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Returns total receipt sales for specific months and year
+        /// </summary>
+        /// <param name="months"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public static float getTotalReceiptsMonthYear(int months, int year)
         {
             float total = 0;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getReceiptsByMonthYear", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("getReceiptsByMonthYear", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
                 cmd.Parameters["@month"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
-                String total2 = cmd.ExecuteScalar().ToString();
+                var total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
-                if (float.TryParse(total2, out total3))
-                {
-                    total = total3;
-                }
+                if (float.TryParse(total2, out total3)) total = total3;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -225,12 +274,17 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
+        /// <summary>
+        ///     Given the id checks if a receipt exists with that id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static bool receiptExists(int id)
         {
             try
             {
                 int idOrder;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idReceipt FROM Receipt where idReceipt=" + id.ToString(), conn);
+                var cmd = new MySqlCommand("SELECT idReceipt FROM Receipt where idReceipt=" + id, conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -238,9 +292,9 @@ namespace InvoiceX.ViewModels
                 else
                     idOrder = 0;
 
-                return ((idOrder == 0) ? false : true);
+                return idOrder == 0 ? false : true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -248,12 +302,16 @@ namespace InvoiceX.ViewModels
             return false;
         }
 
+        /// <summary>
+        ///     Returns the latest receipt ID from the database
+        /// </summary>
+        /// <returns></returns>
         public static int returnLatestReceiptID()
         {
             try
             {
                 int idReceipt;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idReceipt FROM Receipt ORDER BY idReceipt DESC LIMIT 1", conn);
+                var cmd = new MySqlCommand("SELECT idReceipt FROM Receipt ORDER BY idReceipt DESC LIMIT 1", conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -263,7 +321,7 @@ namespace InvoiceX.ViewModels
 
                 return idReceipt;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -271,15 +329,20 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
+        /// <summary>
+        ///     Given the receipt object inserts it in to the database
+        /// </summary>
+        /// <param name="receipt"></param>
         public static void insertReceipt(Receipt receipt)
         {
             try
             {
                 //insert receipt 
-                string query = "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, PreviousBalance, CreatedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @PreviousBalance, @CreatedDate)";
+                var query =
+                    "INSERT INTO Receipt (idReceipt, idCustomer, Amount, IssuedBy, PreviousBalance, CreatedDate ) Values (@idReceipt, @idCustomer, @Amount, @IssuedBy, @PreviousBalance, @CreatedDate)";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -295,54 +358,61 @@ namespace InvoiceX.ViewModels
                 }
 
                 //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder(
+                        "INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
+                var Rows = new List<string>();
 
-                foreach (Payment p in receipt.payments)
-                {
+                foreach (var p in receipt.payments)
                     Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
                         MySqlHelper.EscapeString(receipt.idReceipt.ToString()),
                         MySqlHelper.EscapeString(p.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
-                        MySqlHelper.EscapeString(p.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
-                       ));
-                }
+                        MySqlHelper.EscapeString(p.paymentNumber),
+                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss",
+                            CultureInfo.InvariantCulture))
+                    ));
 
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
 
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
 
                 //update customer total  
-                string query_update_customer_balance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
+                var query_update_customer_balance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(query_update_customer_balance, conn))
+                using (var cmd3 = new MySqlCommand(query_update_customer_balance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", receipt.totalAmount);
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Given the old and updated receipt update the receipt
+        /// </summary>
+        /// <param name="receipt"></param>
+        /// <param name="oldreceipt"></param>
         public static void updateReceipt(Receipt receipt, Receipt oldreceipt)
         {
             try
             {
                 //update receipt 
-                string query = "UPDATE Receipt SET  Amount=@Amount, IssuedBy=@IssuedBy  WHERE idReceipt=@idReceipt ";
+                var query = "UPDATE Receipt SET  Amount=@Amount, IssuedBy=@IssuedBy  WHERE idReceipt=@idReceipt ";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -354,49 +424,51 @@ namespace InvoiceX.ViewModels
                 }
 
                 //delete old payments
-                string queryDelete = "DELETE from Payment WHERE idReceipt=@idReceipt; ";
-                
-                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
+                var queryDelete = "DELETE from Payment WHERE idReceipt=@idReceipt; ";
+
+                using (var cmd = new MySqlCommand(queryDelete, conn))
                 {
                     cmd.Parameters.AddWithValue("@idReceipt", oldreceipt.idReceipt);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
 
-                StringBuilder sCommand = new StringBuilder("INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder(
+                        "INSERT INTO Payment (idReceipt, PaymentMethod, Amount, PaymentNumber, PaymentDate) VALUES ");
+                var Rows = new List<string>();
 
-                foreach (Payment p in receipt.payments)
-                {
+                foreach (var p in receipt.payments)
                     Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
                         MySqlHelper.EscapeString(receipt.idReceipt.ToString()),
                         MySqlHelper.EscapeString(p.paymentMethod.ToString()),
                         MySqlHelper.EscapeString(p.amount.ToString().Replace(",", ".")),
-                        MySqlHelper.EscapeString(p.paymentNumber.ToString()),
-                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss", System.Globalization.CultureInfo.InvariantCulture))
-                       ));
-                }
+                        MySqlHelper.EscapeString(p.paymentNumber),
+                        MySqlHelper.EscapeString(p.paymentDate.ToString("yyyy-MM-dd HH':'mm':'ss",
+                            CultureInfo.InvariantCulture))
+                    ));
 
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
 
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
 
                 //update customer total  
-                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                var queryBalance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
+                using (var cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", oldreceipt.totalAmount - receipt.totalAmount);
                     cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }

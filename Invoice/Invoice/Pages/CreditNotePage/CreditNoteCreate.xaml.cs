@@ -1,79 +1,77 @@
-﻿/*****************************************************************************
- * MIT License
- *
- * Copyright (c) 2020 InvoiceX
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * 
- *****************************************************************************/
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
 
-using InvoiceX.Models;
-using InvoiceX.ViewModels;
-using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using InvoiceX.Models;
+using InvoiceX.ViewModels;
 
 namespace InvoiceX.Pages.CreditNotePage
 {
     /// <summary>
-    /// Interaction logic for InvoiceCreate.xaml
+    ///     Interaction logic for InvoiceCreate.xaml
     /// </summary>
     public partial class CreditNoteCreate : Page
     {
-        CustomerViewModel customerView;                
-        CreditNoteMain creditNoteMain;
-        bool refreshDataDB = true;
+        private readonly CreditNoteMain creditNoteMain;
+        private CustomerViewModel customerView;
+        private bool refreshDataDB = true;
 
         public CreditNoteCreate(CreditNoteMain creditNoteMain)
         {
             InitializeComponent();
             this.creditNoteMain = creditNoteMain;
-            NetTotal_TextBlock.Text = (0).ToString("C");
-            Vat_TextBlock.Text = (0).ToString("C");
-            TotalAmount_TextBlock.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = 0.ToString("C");
+            Vat_TextBlock.Text = 0.ToString("C");
+            TotalAmount_TextBlock.Text = 0.ToString("C");
         }
 
+        /// <summary>
+        ///     Loads the customers in the combobox as well as the new credit note ID
+        /// </summary>
         public void load()
         {
             if (refreshDataDB)
-            {                
-                customerView = new CustomerViewModel();                
-                comboBox_customer.ItemsSource = customerView.customersList;                
-                textBox_invoiceNumber.Text = (CreditNoteViewModel.returnLatestCreditNoteID()+1).ToString();
-                invoiceDate.SelectedDate = DateTime.Today;//set curent date 
+            {
+                customerView = new CustomerViewModel();
+                comboBox_customer.ItemsSource = customerView.customersList;
+                textBox_invoiceNumber.Text = (CreditNoteViewModel.returnLatestCreditNoteID() + 1).ToString();
+                invoiceDate.SelectedDate = DateTime.Today; //set curent date 
             }
+
             refreshDataDB = false;
-        }        
+        }
 
         /// <summary>
-        /// The method that handles the event Selection Changed on the combobox containing the customers.
-        /// Loads the customer's information in the appropriate text boxes, as well as their invoice IDs 
-        /// in the combobox_invoiceID.
+        ///     The method that handles the event Selection Changed on the combobox containing the customers.
+        ///     Loads the customer's information in the appropriate text boxes, as well as their invoice IDs
+        ///     in the combobox_invoiceID.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -82,7 +80,7 @@ namespace InvoiceX.Pages.CreditNotePage
             comboBox_customer_border.BorderThickness = new Thickness(0);
             if (comboBox_customer.SelectedIndex > -1)
             {
-                Customer customer = ((Customer)comboBox_customer.SelectedItem);
+                var customer = (Customer) comboBox_customer.SelectedItem;
                 textBox_Customer.Text = customer.CustomerName;
                 textBox_Address.Text = customer.Address + ", " + customer.City + ", " + customer.Country;
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
@@ -93,8 +91,8 @@ namespace InvoiceX.Pages.CreditNotePage
         }
 
         /// <summary>
-        /// The method that handles the event Selection Changed on the combobox containing the Invoice IDs.
-        /// Loads the invoice's products in the combobox_Product.
+        ///     The method that handles the event Selection Changed on the combobox containing the Invoice IDs.
+        ///     Loads the invoice's products in the combobox_Product.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -103,13 +101,14 @@ namespace InvoiceX.Pages.CreditNotePage
             if (comboBox_invoiceID.SelectedIndex > -1)
             {
                 comboBox_incoiceID_border.BorderThickness = new Thickness(0);
-                comboBox_Product.ItemsSource = InvoiceViewModel.getInvoice(int.Parse(comboBox_invoiceID.SelectedItem.ToString())).products;
+                comboBox_Product.ItemsSource = InvoiceViewModel
+                    .getInvoice(int.Parse(comboBox_invoiceID.SelectedItem.ToString())).products;
             }
         }
 
         /// <summary>
-        /// The method that handles the event Selection Changed on the combobox containing the Products.
-        /// Loads the product's information in their appropriate text boxes.
+        ///     The method that handles the event Selection Changed on the combobox containing the Products.
+        ///     Loads the product's information in their appropriate text boxes.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -117,110 +116,110 @@ namespace InvoiceX.Pages.CreditNotePage
         {
             if (comboBox_Product.SelectedIndex > -1)
             {
-                Product product = ((Product)comboBox_Product.SelectedItem);
+                var product = (Product) comboBox_Product.SelectedItem;
                 comboBox_Product_border.BorderThickness = new Thickness(0);
-                textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
-                textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+                textBox_ProductPrice.ClearValue(Control.BorderBrushProperty);
+                textBox_ProductQuantity.ClearValue(Control.BorderBrushProperty);
                 textBox_Product.Text = product.ProductName;
                 textBox_ProductQuantity.Text = product.Quantity.ToString();
                 textBox_ProductDescription.Text = product.ProductDescription;
                 textBox_ProductPrice.Text = product.SellPrice.ToString("n2");
-                textBox_ProductVat.Text = (product.Vat * 100).ToString();               
+                textBox_ProductVat.Text = (product.Vat * 100).ToString();
             }
         }
 
         /// <summary>
-        /// The method that handles the event Text Changed on the textbox containing the Product quantity.
-        /// If the quantity is valid the product Total textbox is updated.
+        ///     The method that handles the event Text Changed on the textbox containing the Product quantity.
+        ///     If the quantity is valid the product Total textbox is updated.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TextBox_ProductQuantity_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) && 
-                float.TryParse(textBox_ProductPrice.Text.Replace('.',','), out float price) && (comboBox_Product.SelectedIndex > -1))
-            {
+            if (int.TryParse(textBox_ProductQuantity.Text, out var quantity) &&
+                float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out var price) &&
+                comboBox_Product.SelectedIndex > -1)
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
-            }
         }
 
         /// <summary>
-        /// The method that handles the event Text Changed on the textbox containing the Product price.
-        /// If the price is valid the product Total textbox is updated.
+        ///     The method that handles the event Text Changed on the textbox containing the Product price.
+        ///     If the price is valid the product Total textbox is updated.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void TextBox_ProductPrice_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (int.TryParse(textBox_ProductQuantity.Text, out int quantity) &&
-                float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out float price) && (comboBox_Product.SelectedIndex > -1))
-            {
+            if (int.TryParse(textBox_ProductQuantity.Text, out var quantity) &&
+                float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out var price) &&
+                comboBox_Product.SelectedIndex > -1)
                 textBox_ProductTotal.Text = (price * quantity).ToString("n2");
-            }
         }
 
         /// <summary>
-        /// Checks if the product selected in the combobox already exists in the product grid.
+        ///     Checks if the product selected in the combobox already exists in the product grid.
         /// </summary>
         /// <returns></returns>
-        private bool productAlreadySelected() 
+        private bool productAlreadySelected()
         {
-            List<Product> gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
-            foreach (Product p in gridProducts)
-            {               
-                if (p.idProduct == ((Product)comboBox_Product.SelectedItem).idProduct)
+            var gridProducts = ProductDataGrid.Items.OfType<Product>().ToList();
+            foreach (var p in gridProducts)
+                if (p.idProduct == ((Product) comboBox_Product.SelectedItem).idProduct)
                 {
                     MessageBox.Show("Product '" + p.ProductName + "' already selected");
                     return true;
                 }
-            }
+
             return false;
         }
 
         /// <summary>
-        /// Checks if the product details are all completed and valid before its added to the grid.
+        ///     Checks if the product details are all completed and valid before its added to the grid.
         /// </summary>
         /// <returns></returns>
         private bool checkAddProductCompletedValues()
         {
-            bool all_completed = true;
-            int n;     
-            if ((comboBox_Product.SelectedIndex <= -1) || productAlreadySelected())
+            var all_completed = true;
+            int n;
+            if (comboBox_Product.SelectedIndex <= -1 || productAlreadySelected())
             {
                 all_completed = false;
                 comboBox_Product_border.BorderBrush = Brushes.Red;
                 comboBox_Product_border.BorderThickness = new Thickness(1);
             }
-            if ((comboBox_invoiceID.SelectedIndex <= -1))
+
+            if (comboBox_invoiceID.SelectedIndex <= -1)
             {
                 all_completed = false;
                 comboBox_incoiceID_border.BorderBrush = Brushes.Red;
                 comboBox_incoiceID_border.BorderThickness = new Thickness(1);
             }
-            if (!int.TryParse(textBox_ProductQuantity.Text, out n) || (n<0) )
+
+            if (!int.TryParse(textBox_ProductQuantity.Text, out n) || n < 0)
             {
                 all_completed = false;
                 textBox_ProductQuantity.BorderBrush = Brushes.Red;
             }
             else
             {
-                textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+                textBox_ProductQuantity.ClearValue(Control.BorderBrushProperty);
             }
-            if (!float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out float f) || (f < 0))
+
+            if (!float.TryParse(textBox_ProductPrice.Text.Replace('.', ','), out var f) || f < 0)
             {
                 all_completed = false;
                 textBox_ProductPrice.BorderBrush = Brushes.Red;
             }
             else
             {
-                textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
+                textBox_ProductPrice.ClearValue(Control.BorderBrushProperty);
             }
 
             return all_completed;
         }
 
         /// <summary>
-        /// Adds the product selected to the product grid and updates the total and Vat.
+        ///     Adds the product selected to the product grid and updates the total and Vat.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -230,42 +229,42 @@ namespace InvoiceX.Pages.CreditNotePage
             {
                 ProductDataGrid.Items.Add(new Product
                 {
-                    idProduct = ((Product)comboBox_Product.SelectedItem).idProduct,
+                    idProduct = ((Product) comboBox_Product.SelectedItem).idProduct,
                     ProductName = textBox_Product.Text,
                     ProductDescription = textBox_ProductDescription.Text,
                     SellPrice = Convert.ToDouble(textBox_ProductPrice.Text.Replace('.', ',')),
                     Quantity = Convert.ToInt32(textBox_ProductQuantity.Text),
                     Total = Convert.ToDouble(textBox_ProductTotal.Text),
-                    Vat = ((Product)comboBox_Product.SelectedItem).Vat,
-                    productInvoiceID= Convert.ToInt32(comboBox_invoiceID.SelectedItem)
+                    Vat = ((Product) comboBox_Product.SelectedItem).Vat,
+                    productInvoiceID = Convert.ToInt32(comboBox_invoiceID.SelectedItem)
                 });
-                double netTotal = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+                var netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
                 netTotal += Convert.ToDouble(textBox_ProductTotal.Text);
                 NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-                double VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
-                VAT += (Convert.ToDouble(textBox_ProductTotal.Text) * ((Product)comboBox_Product.SelectedItem).Vat);
-                Vat_TextBlock.Text = (VAT).ToString("C");
+                var VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+                VAT += Convert.ToDouble(textBox_ProductTotal.Text) * ((Product) comboBox_Product.SelectedItem).Vat;
+                Vat_TextBlock.Text = VAT.ToString("C");
 
                 TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             }
         }
 
         /// <summary>
-        /// Removes a product from the product grid
+        ///     Removes a product from the product grid
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Button_Click_CreateInvoice_REMOVE(object sender, RoutedEventArgs e)
         {
-            Product CurrentCell_Product = (Product)(ProductDataGrid.CurrentCell.Item);
+            var CurrentCell_Product = (Product) ProductDataGrid.CurrentCell.Item;
 
-            double netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
+            var netTotal = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency);
             netTotal -= Convert.ToDouble(CurrentCell_Product.Total);
             NetTotal_TextBlock.Text = netTotal.ToString("C");
 
-            double VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
-            VAT -= (CurrentCell_Product.Total * CurrentCell_Product.Vat);
+            var VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency);
+            VAT -= CurrentCell_Product.Total * CurrentCell_Product.Vat;
             Vat_TextBlock.Text = VAT.ToString("C");
 
             TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
@@ -273,19 +272,19 @@ namespace InvoiceX.Pages.CreditNotePage
         }
 
         /// <summary>
-        /// Clears text when textbox gets focus
+        ///     Clears text when textbox gets focus
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox tb = (TextBox)sender;
+            var tb = (TextBox) sender;
             tb.Text = string.Empty;
             tb.GotFocus -= TextBox_GotFocus;
         }
 
         /// <summary>
-        /// Clears the product's information from all the textboxes
+        ///     Clears the product's information from all the textboxes
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -299,12 +298,12 @@ namespace InvoiceX.Pages.CreditNotePage
             textBox_ProductVat.Text = "";
             textBox_ProductTotal.Text = "";
             comboBox_Product_border.BorderThickness = new Thickness(0);
-            textBox_ProductPrice.ClearValue(TextBox.BorderBrushProperty);
-            textBox_ProductQuantity.ClearValue(TextBox.BorderBrushProperty);
+            textBox_ProductPrice.ClearValue(Control.BorderBrushProperty);
+            textBox_ProductQuantity.ClearValue(Control.BorderBrushProperty);
         }
 
         /// <summary>
-        /// Checks if a customer is selected
+        ///     Checks if a customer is selected
         /// </summary>
         /// <returns>True if a customer is selected, False otherwise</returns>
         private bool checkCustomerForm()
@@ -315,11 +314,12 @@ namespace InvoiceX.Pages.CreditNotePage
                 comboBox_customer_border.BorderThickness = new Thickness(1);
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// Checks if the textbox IssuedBy is completed
+        ///     Checks if the textbox IssuedBy is completed
         /// </summary>
         /// <returns>True if it is completed, False otherwise</returns>
         private bool checkDetailsForm()
@@ -329,11 +329,12 @@ namespace InvoiceX.Pages.CreditNotePage
                 issuedBy.BorderBrush = Brushes.Red;
                 return false;
             }
+
             return true;
         }
 
         /// <summary>
-        /// Checks if the grid has products in it
+        ///     Checks if the grid has products in it
         /// </summary>
         /// <returns>True if it is not empty, False otherwise</returns>
         private bool hasItemsSelected()
@@ -343,48 +344,49 @@ namespace InvoiceX.Pages.CreditNotePage
                 MessageBox.Show("You havent selected any products");
                 return false;
             }
+
             return true;
         }
-        
+
         /// <summary>
-        /// Creates and returns the Credit Note based on the information on the page
+        ///     Creates and returns the Credit Note based on the information on the page
         /// </summary>
         /// <returns>The Credit Note created</returns>
         private CreditNote createCreditNoteObject()
         {
             return new CreditNote
             {
-                customer = ((Customer)comboBox_customer.SelectedItem),
+                customer = (Customer) comboBox_customer.SelectedItem,
                 products = ProductDataGrid.Items.OfType<Product>().ToList(),
-                idCreditNote = Int32.Parse(textBox_invoiceNumber.Text),
-                cost = Double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency),
-                VAT = Double.Parse(Vat_TextBlock.Text, NumberStyles.Currency),
-                totalCost = Double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
-                createdDate = invoiceDate.SelectedDate.Value.Date,               
+                idCreditNote = int.Parse(textBox_invoiceNumber.Text),
+                cost = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency),
+                VAT = double.Parse(Vat_TextBlock.Text, NumberStyles.Currency),
+                totalCost = double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
+                createdDate = invoiceDate.SelectedDate.Value.Date,
                 issuedBy = issuedBy.Text
-            };            
-        }             
+            };
+        }
 
         /// <summary>
-        /// After validating creates the credit note and switches to viewing it
+        ///     After validating creates the credit note and switches to viewing it
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             if (checkCustomerForm() && checkDetailsForm() && hasItemsSelected())
             {
-                CreditNote creditNote = createCreditNoteObject();
+                var creditNote = createCreditNoteObject();
                 creditNote.createdDate += DateTime.Now.TimeOfDay;
                 CreditNoteViewModel.insertCreditNote(creditNote);
                 MessageBox.Show("Credit Note with ID " + creditNote.idCreditNote + " was created.");
                 creditNoteMain.viewCreditNote(creditNote.idCreditNote);
-                Btn_clearAll_Click(null, null);                
+                Btn_clearAll_Click(null, null);
             }
         }
 
         /// <summary>
-        /// Clears all the customer's information
+        ///     Clears all the customer's information
         /// </summary>
         private void clearCustomer()
         {
@@ -396,27 +398,27 @@ namespace InvoiceX.Pages.CreditNotePage
         }
 
         /// <summary>
-        /// Clears the issuedBy textbox
+        ///     Clears the issuedBy textbox
         /// </summary>
         private void clearDetails()
         {
             issuedBy.Text = "";
-            issuedBy.ClearValue(TextBox.BorderBrushProperty);
+            issuedBy.ClearValue(Control.BorderBrushProperty);
         }
 
         /// <summary>
-        /// Clears all products from the product grid
+        ///     Clears all products from the product grid
         /// </summary>
         private void clearProductGrid()
         {
             ProductDataGrid.Items.Clear();
-            NetTotal_TextBlock.Text = (0).ToString("C");
-            Vat_TextBlock.Text = (0).ToString("C");
-            TotalAmount_TextBlock.Text = (0).ToString("C");
+            NetTotal_TextBlock.Text = 0.ToString("C");
+            Vat_TextBlock.Text = 0.ToString("C");
+            TotalAmount_TextBlock.Text = 0.ToString("C");
         }
 
         /// <summary>
-        /// Clear all inputs from the page
+        ///     Clears all inputs from the page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -430,60 +432,18 @@ namespace InvoiceX.Pages.CreditNotePage
             clearDetails();
             clearProductGrid();
             refreshDataDB = true;
-            load();                       
+            load();
         }
 
-
         /// <summary>
-        /// The method that handles the event Text Changed on the textbox IssuedBy.
-        /// Clears the red border.
+        ///     The method that handles the event Text Changed on the textbox IssuedBy.
+        ///     Clears the red border.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void IssuedBy_TextChanged(object sender, TextChangedEventArgs e)
         {
-            issuedBy.ClearValue(TextBox.BorderBrushProperty);
-        }       
-
-        /// <summary>
-        /// Loads the order information to the appropriate input to be issued as an Invoice
-        /// </summary>
-        /// <param name="order"></param>
-        public void loadOrder(Order order)
-        {
-            Btn_clearAll_Click(null, null);
-            if (order != null)
-            {
-                // Customer details                                
-                comboBox_customer.SelectedValue = order.customer.CustomerName;
-                textBox_Customer.Text = order.customer.CustomerName;
-                textBox_Contact_Details.Text = order.customer.PhoneNumber.ToString();
-                textBox_Email_Address.Text = order.customer.Email;
-                textBox_Address.Text = order.customer.Address + ", " + order.customer.City + ", " + order.customer.Country;
-
-                // Invoice details
-                NetTotal_TextBlock.Text = order.cost.ToString("C");
-                Vat_TextBlock.Text = order.VAT.ToString("C");
-                TotalAmount_TextBlock.Text = order.totalCost.ToString("C");
-
-                // Invoice products        
-                for (int i = 0; i < order.products.Count; i++)
-                {
-                    ProductDataGrid.Items.Add(new Product
-                    {
-                        idProduct = order.products[i].idProduct,
-                        ProductName = order.products[i].ProductName,
-                        ProductDescription = order.products[i].ProductDescription,
-                        Stock = order.products[i].Stock,
-                        SellPrice = order.products[i].SellPrice,
-                        Quantity = order.products[i].Quantity,
-                        Total = order.products[i].Total,
-                        Vat = order.products[i].Vat
-                    });
-                }
-            }
+            issuedBy.ClearValue(Control.BorderBrushProperty);
         }
-
-       
     }
 }

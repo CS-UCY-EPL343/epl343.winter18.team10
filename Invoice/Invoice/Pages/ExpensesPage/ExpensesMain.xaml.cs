@@ -1,54 +1,43 @@
-﻿/*****************************************************************************
- * MIT License
- *
- * Copyright (c) 2020 InvoiceX
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- * 
- *****************************************************************************/
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace InvoiceX.Pages.ExpensesPage
 {
     /// <summary>
-    /// Interaction logic for ExpensesMain.xaml
+    ///     Interaction logic for ExpensesMain.xaml
     /// </summary>
     public partial class ExpensesMain : Page
     {
-        ExpensesViewAll viewAllPage;
-        ExpensesView viewPage;
-        ExpensesCreate createPage;
-        ExpensesEdit editPage;
+        private readonly ExpensesCreate createPage;
+        private readonly ExpensesEdit editPage;
+        private readonly ExpensesViewAll viewAllPage;
+
+        private readonly ExpensesView viewPage;
         // statisticsPage;
 
         public ExpensesMain()
@@ -63,7 +52,7 @@ namespace InvoiceX.Pages.ExpensesPage
         }
 
         /// <summary>
-        /// Switches to Expenses View All page
+        ///     Switches to Expenses View All page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -76,7 +65,7 @@ namespace InvoiceX.Pages.ExpensesPage
         }
 
         /// <summary>
-        /// Switches to Expenses Create page
+        ///     Switches to Expenses Create page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -89,7 +78,7 @@ namespace InvoiceX.Pages.ExpensesPage
         }
 
         /// <summary>
-        /// Switches to Expenses Statistics page
+        ///     Switches to Expenses Statistics page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -101,7 +90,7 @@ namespace InvoiceX.Pages.ExpensesPage
         }
 
         /// <summary>
-        /// Switches to Expenses View page
+        ///     Switches to Expenses View page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -113,7 +102,7 @@ namespace InvoiceX.Pages.ExpensesPage
         }
 
         /// <summary>
-        /// Switches to Expenses Edit page
+        ///     Switches to Expenses Edit page
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -122,20 +111,19 @@ namespace InvoiceX.Pages.ExpensesPage
             resetAllBtnStyles();
             btnEdit.Style = FindResource("ButtonStyleSelected") as Style;
             expensesPage.Content = editPage;
-            editPage.load();
         }
 
         /// <summary>
-        /// Resets all the button styles
+        ///     Resets all the button styles
         /// </summary>
         private void resetAllBtnStyles()
         {
             btnEdit.Style = btnView.Style = btnCreate.Style = btnStatistics.Style =
-            btnViewAll.Style = FindResource("ButtonStyle") as Style;
+                btnViewAll.Style = FindResource("ButtonStyle") as Style;
         }
 
         /// <summary>
-        /// Passes the expense ID to the expense view page and switches to it
+        ///     Passes the expense ID to the expense view page and switches to it
         /// </summary>
         /// <param name="expID"></param>
         public void viewExpense(int expID)

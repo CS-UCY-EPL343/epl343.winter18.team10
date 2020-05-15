@@ -1,9 +1,31 @@
-﻿using System;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using InvoiceX.Classes;
 using InvoiceX.Models;
@@ -13,17 +35,19 @@ namespace InvoiceX.ViewModels
 {
     public class CustomerViewModel
     {
-        public List<Customer> customersList { get; set; }
-        private static MySqlConnection conn = DBConnection.Instance.Connection;
+        private static readonly MySqlConnection conn = DBConnection.Instance.Connection;
 
+        /// <summary>
+        ///     Constructor that fills the list with all the customers
+        /// </summary>
         public CustomerViewModel()
         {
             customersList = new List<Customer>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Customer", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM Customer", conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 foreach (DataRow dataRow in dt.Rows)
@@ -38,7 +62,7 @@ namespace InvoiceX.ViewModels
                     var BalanceDB = dataRow.Field<float>("Balance");
 
                     customersList.Add(
-                        new Customer()
+                        new Customer
                         {
                             idCustomer = idCustomerDB,
                             CustomerName = CustomerNameDB,
@@ -48,26 +72,31 @@ namespace InvoiceX.ViewModels
                             City = CityDB,
                             Address = AddressDB,
                             Balance = BalanceDB
-
                         });
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        public List<Customer> customersList { get; set; }
 
+        /// <summary>
+        ///     Given the customer object inserts it in to the database
+        /// </summary>
+        /// <param name="customer"></param>
         public static void insertCustomer(Customer customer)
         {
             try
             {
                 //insert Invoice 
-                string query = "INSERT INTO Customer (CustomerName,PhoneNumber,Email,Country,City,Address,Balance) Values (@CustomerName,@PhoneNumber,@Email,@Country,@City,@Address,@Balance)";
+                var query =
+                    "INSERT INTO Customer (CustomerName,PhoneNumber,Email,Country,City,Address,Balance) Values (@CustomerName,@PhoneNumber,@Email,@Country,@City,@Address,@Balance)";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -82,21 +111,26 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Given the customer updates the customer
+        /// </summary>
+        /// <param name="customer"></param>
         public static void updateCustomer(Customer customer)
         {
             try
             {
                 //insert Invoice 
-                string query = "UPDATE Customer SET CustomerName=@CustomerName,PhoneNumber=@PhoneNumber,Email=@Email,Country=@Country,City=@City,Address=@Address,Balance=@Balance  WHERE idCustomer=@idCustomer";
+                var query =
+                    "UPDATE Customer SET CustomerName=@CustomerName,PhoneNumber=@PhoneNumber,Email=@Email,Country=@Country,City=@City,Address=@Address,Balance=@Balance  WHERE idCustomer=@idCustomer";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -112,21 +146,25 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Returns the latest customer ID from the database
+        /// </summary>
+        /// <returns></returns>
         public static int returnLatestCustomerID()
         {
             try
             {
                 string idCustomer;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idCustomer FROM Customer ORDER BY idCustomer DESC LIMIT 1", conn);
+                var cmd = new MySqlCommand("SELECT idCustomer FROM Customer ORDER BY idCustomer DESC LIMIT 1", conn);
 
-                int id_return = cmd.ExecuteNonQuery();
-                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                var id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar(); //Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
                     idCustomer = Convert.ToString(queryResult);
@@ -136,7 +174,7 @@ namespace InvoiceX.ViewModels
 
                 return Convert.ToInt32(idCustomer);
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -144,18 +182,23 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
+        /// <summary>
+        ///     Given the customer ID retrieves the customer and returns it
+        /// </summary>
+        /// <param name="customerid"></param>
+        /// <returns></returns>
         public static Customer getCustomer(int customerid)
         {
-            Customer customer = new Customer();
+            var customer = new Customer();
             try
             {
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Customer WHERE idCustomer=" + customerid, conn);
+                var cmd = new MySqlCommand("SELECT * FROM Customer WHERE idCustomer=" + customerid, conn);
                 var queryResult = cmd.ExecuteReader();
 
                 // Now check if any rows returned.
                 if (queryResult.HasRows)
                 {
-                    queryResult.Read();// Get first record.                     
+                    queryResult.Read(); // Get first record.                     
                     customer.idCustomer = customerid; //get  values of first row
                     customer.CustomerName = queryResult.GetString(1);
                     customer.PhoneNumber = queryResult.GetInt32(2);
@@ -164,11 +207,11 @@ namespace InvoiceX.ViewModels
                     customer.City = queryResult.GetString(5);
                     customer.Address = queryResult.GetString(6);
                     customer.Balance = queryResult.GetFloat(7);
-
                 }
+
                 queryResult.Close();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -176,35 +219,42 @@ namespace InvoiceX.ViewModels
             return customer;
         }
 
+        /// <summary>
+        ///     Given the customer ID deletes the customer from the Database
+        /// </summary>
+        /// <param name="customerID"></param>
         public static void deleteCustomer(int customerID)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM Customer WHERE idCustomer = " + customerID, conn);
+                var cmd = new MySqlCommand("DELETE FROM Customer WHERE idCustomer = " + customerID, conn);
                 cmd.ExecuteNonQuery();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 if (ex.Number == 1451)
-                {
-                    MessageBox.Show("Cannot delete customer with ID = " + customerID + " as he is referenced in other documents.");
-                }
+                    MessageBox.Show("Cannot delete customer with ID = " + customerID +
+                                    " as he is referenced in other documents.");
                 else
-                {
                     MessageBox.Show(ex.Message);
-                }
             }
-
         }
 
+        /// <summary>
+        ///     Returns total customer sales for specific months and year
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="months"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public static float getTotalSalesMonthYear(int id, int months, int year)
         {
             float total = 0;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getCustomerSalesByMonthYear", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("getCustomerSalesByMonthYear", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@customerId", SqlDbType.Int).Value = id;
                 cmd.Parameters["@customerId"].Direction = ParameterDirection.Input;
 
@@ -214,24 +264,17 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
-                String total2 = cmd.ExecuteScalar().ToString();
+                var total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
 
-                if (float.TryParse(total2, out total3))
-                {
-                    total = total3;
-                }
+                if (float.TryParse(total2, out total3)) total = total3;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
             return total;
         }
-
-
     }
-
 }
-

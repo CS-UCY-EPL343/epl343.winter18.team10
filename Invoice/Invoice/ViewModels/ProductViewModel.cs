@@ -1,10 +1,32 @@
-﻿using System;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.DataVisualization.Charting;
 using System.Windows;
 using InvoiceX.Classes;
 using InvoiceX.Models;
@@ -14,19 +36,19 @@ namespace InvoiceX.ViewModels
 {
     public class ProductViewModel
     {
-        public List<Product> productList { get; set; }
-        public List<Product> productList_quotes { get; set; }
+        private static readonly MySqlConnection conn = DBConnection.Instance.Connection;
 
-        private static MySqlConnection conn = DBConnection.Instance.Connection;
-
+        /// <summary>
+        ///     Constructor that fills the list with all the products
+        /// </summary>
         public ProductViewModel()
         {
             productList = new List<Product>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Product", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM Product", conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 foreach (DataRow dataRow in dt.Rows)
@@ -42,7 +64,7 @@ namespace InvoiceX.ViewModels
                     var Categorydb = dataRow.Field<string>("Category");
 
                     productList.Add(
-                        new Product()
+                        new Product
                         {
                             idProduct = idProductsdb,
                             ProductName = ProductNamedb,
@@ -57,20 +79,24 @@ namespace InvoiceX.ViewModels
                         });
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Constructor that given customer ID loads the quotes and products of that customer
+        /// </summary>
+        /// <param name="customerID"></param>
         public ProductViewModel(int customerID)
         {
             productList = new List<Product>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Product", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM Product", conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 foreach (DataRow dataRow in dt.Rows)
@@ -86,7 +112,7 @@ namespace InvoiceX.ViewModels
                     var Categorydb = dataRow.Field<string>("Category");
 
                     productList.Add(
-                        new Product()
+                        new Product
                         {
                             idProduct = idProductsdb,
                             ProductName = ProductNamedb,
@@ -101,57 +127,65 @@ namespace InvoiceX.ViewModels
                         });
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             /*quotes*/
             productList_quotes = new List<Product>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT idProduct,OfferPrice FROM viewQuote WHERE idCustomer=@idCustomer", conn);
+                var cmd = new MySqlCommand("SELECT idProduct,OfferPrice FROM viewQuote WHERE idCustomer=@idCustomer",
+                    conn);
                 cmd.Parameters.AddWithValue("@idCustomer", customerID);
-                DataTable dt = new DataTable();
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var idProductsdb = dataRow.Field<int>("idProduct");                   
-                    var OfferPrice = dataRow.Field<float>("OfferPrice");               
-                    
+                    var idProductsdb = dataRow.Field<int>("idProduct");
+                    var OfferPrice = dataRow.Field<float>("OfferPrice");
+
 
                     productList_quotes.Add(
-                        new Product()
+                        new Product
                         {
-                            idProduct = idProductsdb,                            
-                            SellPrice = OfferPrice,                            
+                            idProduct = idProductsdb,
+                            SellPrice = OfferPrice
                         });
                 }
 
-                foreach (Product product in productList_quotes) 
-                {        
-                    Product product_with_quote = productList.FirstOrDefault(r => r.idProduct == product.idProduct);
+                foreach (var product in productList_quotes)
+                {
+                    var product_with_quote = productList.FirstOrDefault(r => r.idProduct == product.idProduct);
                     product_with_quote.SellPrice = product.SellPrice;
-
                 }
-
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        public List<Product> productList { get; set; }
+        public List<Product> productList_quotes { get; set; }
+
+        /// <summary>
+        ///     Given the product object inserts it in to the database
+        /// </summary>
+        /// <param name="product"></param>
         public static void insertProduct(Product product)
         {
             try
             {
                 //insert Invoice 
-                string query = "INSERT INTO Product (ProductName, Description, Stock, MinStock, Cost, SellPrice, VAT,Category) Values (@ProductName, @Description, @Stock, @MinStock, @Cost, @SellPrice, @VAT,@Category)";
+                var query =
+                    "INSERT INTO Product (ProductName, Description, Stock, MinStock, Cost, SellPrice, VAT,Category) Values (@ProductName, @Description, @Stock, @MinStock, @Cost, @SellPrice, @VAT,@Category)";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -167,21 +201,26 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Given the old and updated product updates the product
+        /// </summary>
+        /// <param name="product"></param>
         public static void updateProduct(Product product)
         {
             try
             {
                 //insert Invoice 
-                string query = "UPDATE Product SET ProductName=@ProductName, Description=@Description, Stock=@Stock, MinStock=@MinStock, Cost=@Cost, SellPrice=@SellPrice, VAT=@VAT,Category=@Category  WHERE idProduct=@idProduct";
+                var query =
+                    "UPDATE Product SET ProductName=@ProductName, Description=@Description, Stock=@Stock, MinStock=@MinStock, Cost=@Cost, SellPrice=@SellPrice, VAT=@VAT,Category=@Category  WHERE idProduct=@idProduct";
                 // Yet again, we are creating a new object that implements the IDisposable
                 // interface. So we create a new using statement.
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -198,21 +237,25 @@ namespace InvoiceX.ViewModels
                     cmd.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Returns the latest product ID from the database
+        /// </summary>
+        /// <returns></returns>
         public static int returnLatestProductID()
         {
             try
             {
                 string idProduct;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idProduct FROM Product ORDER BY idProduct DESC LIMIT 1", conn);
+                var cmd = new MySqlCommand("SELECT idProduct FROM Product ORDER BY idProduct DESC LIMIT 1", conn);
 
-                int id_return = cmd.ExecuteNonQuery();
-                var queryResult = cmd.ExecuteScalar();//Return an object so first check for null
+                var id_return = cmd.ExecuteNonQuery();
+                var queryResult = cmd.ExecuteScalar(); //Return an object so first check for null
                 if (queryResult != null)
                     // If we have result, then convert it from object to string.
                     idProduct = Convert.ToString(queryResult);
@@ -222,7 +265,7 @@ namespace InvoiceX.ViewModels
 
                 return Convert.ToInt32(idProduct);
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -230,20 +273,24 @@ namespace InvoiceX.ViewModels
             return 0;
         }
 
-
+        /// <summary>
+        ///     Given the product ID retrieves the product and returns it
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <returns></returns>
         public static Product getProduct(int productid)
         {
-            Product product = new Product();
+            var product = new Product();
 
             try
             {
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT * FROM Product WHERE idProduct=" + productid, conn);
+                var cmd = new MySqlCommand("SELECT * FROM Product WHERE idProduct=" + productid, conn);
                 var produc = cmd.ExecuteReader();
 
                 // Now check if any rows returned.
                 if (produc.HasRows)
                 {
-                    produc.Read();// Get first record.                     
+                    produc.Read(); // Get first record.                     
                     product.idProduct = productid; //get  values of first row
                     product.ProductName = produc.GetString(1);
                     product.ProductDescription = produc.GetString(2);
@@ -255,9 +302,9 @@ namespace InvoiceX.ViewModels
                     product.Category = produc.GetString(8);
                 }
 
-                produc.Close();// Close reader.  
+                produc.Close(); // Close reader.  
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -265,33 +312,42 @@ namespace InvoiceX.ViewModels
             return product;
         }
 
+        /// <summary>
+        ///     Given the product ID deletes the product from the Database
+        /// </summary>
+        /// <param name="productID"></param>
         public static void deleteProduct(int productID)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM Product WHERE idProduct = " + productID, conn);
+                var cmd = new MySqlCommand("DELETE FROM Product WHERE idProduct = " + productID, conn);
                 cmd.ExecuteNonQuery();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 if (ex.Number == 1451)
-                {
-                    MessageBox.Show("Cannot delete product with ID = " + productID + " as it is used in invoices and/or orders.");
-                }
+                    MessageBox.Show("Cannot delete product with ID = " + productID +
+                                    " as it is used in invoices and/or orders.");
                 else
-                {
                     MessageBox.Show(ex.Message);
-                }                
             }
         }
+
+        /// <summary>
+        ///     Gets the product count in a year to be used for statistics
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="months"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public static int getProductCount(int productId, int months, int year)
         {
-            int total = 0;
+            var total = 0;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getTotalProducts", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("getTotalProducts", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
                 cmd.Parameters["@productId"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@months", SqlDbType.Int).Value = months;
@@ -300,29 +356,34 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
-                String total2 = cmd.ExecuteScalar().ToString();
-                int total3 = 0;
+                var total2 = cmd.ExecuteScalar().ToString();
+                var total3 = 0;
 
-                if (int.TryParse(total2, out total3))
-                {
-                    total = total3;
-                }
+                if (int.TryParse(total2, out total3)) total = total3;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
             return total;
         }
+
+        /// <summary>
+        ///     Gets the product sales in a year to be used for statistics
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="months"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public static float getProductSales(int productId, int months, int year)
         {
             float total = 0;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getTotalProductSales", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("getTotalProductSales", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@productId", SqlDbType.Int).Value = productId;
                 cmd.Parameters["@productId"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@months", SqlDbType.Int).Value = months;
@@ -331,25 +392,17 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
-                String total2 = cmd.ExecuteScalar().ToString();
+                var total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
 
-                if (float.TryParse(total2, out total3))
-                {
-                    total = total3;
-                }
+                if (float.TryParse(total2, out total3)) total = total3;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
 
             return total;
         }
-
     }
 }
-
-
-
-

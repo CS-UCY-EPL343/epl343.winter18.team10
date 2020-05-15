@@ -1,49 +1,80 @@
-﻿using InvoiceX.Models;
-using InvoiceX.ViewModels;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using InvoiceX.Forms;
+using InvoiceX.Models;
+using InvoiceX.ViewModels;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc.Rendering;
 
 namespace InvoiceX.Pages.StatementPage
 {
     /// <summary>
-    /// Interaction logic for StatementCreate.xaml
+    ///     Interaction logic for StatementCreate.xaml
     /// </summary>
     public partial class StatementCreate : Page
     {
-        CustomerViewModel customerView;
-        StatementMain statementMain;
-        private bool isCreated = false;
+        private CustomerViewModel customerView;
+        private bool isCreated;
+        private readonly StatementMain statementMain;
 
         public StatementCreate(StatementMain statementMain)
         {
             InitializeComponent();
             this.statementMain = statementMain;
         }
-        
+
+        /// <summary>
+        ///     The method that handles the event Drop Down Opened on the combobox containing the customers.
+        ///     Loads the customers in the combobox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox_customer_DropDownOpened(object sender, EventArgs e)
         {
             customerView = new CustomerViewModel();
             comboBox_customer.ItemsSource = customerView.customersList;
         }
 
+        /// <summary>
+        ///     After validating loads the statement items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_createStatement_Click(object sender, RoutedEventArgs e)
         {
-            if (checkCustomerForm() && dateRangeSelected())            
+            if (checkCustomerForm() && dateRangeSelected())
             {
                 if (loadStatementItems())
                 {
@@ -64,15 +95,19 @@ namespace InvoiceX.Pages.StatementPage
             }
         }
 
+        /// <summary>
+        ///     Loads the statement items on the grid based on the filters given
+        /// </summary>
+        /// <returns></returns>
         private bool loadStatementItems()
         {
-            int customerID = ((Customer)comboBox_customer.SelectedItem).idCustomer;
-            DateTime from = fromDate.SelectedDate.Value.Date;
-            from += new TimeSpan(0, 0, 0);  // start from 00:00:00 of from date
-            DateTime to = toDate.SelectedDate.Value.Date;
+            var customerID = ((Customer) comboBox_customer.SelectedItem).idCustomer;
+            var from = fromDate.SelectedDate.Value.Date;
+            from += new TimeSpan(0, 0, 0); // start from 00:00:00 of from date
+            var to = toDate.SelectedDate.Value.Date;
             to += new TimeSpan(23, 59, 59); // end on 23:59:59 of to date
 
-            List<StatementItem> statement = new List<StatementItem>();
+            var statement = new List<StatementItem>();
             statement.AddRange(InvoiceViewModel.getInvoicesForStatement(customerID, from, to));
             statement.AddRange(CreditNoteViewModel.getCreditNotesForStatement(customerID, from, to));
             statement.AddRange(ReceiptViewModel.getReceiptsForStatement(customerID, from, to));
@@ -82,31 +117,40 @@ namespace InvoiceX.Pages.StatementPage
                 statementDataGrid.ItemsSource = statement;
                 var firstCol = statementDataGrid.Columns.First();
                 firstCol.SortDirection = ListSortDirection.Ascending;
-                statementDataGrid.Items.SortDescriptions.Add(new SortDescription(firstCol.SortMemberPath, ListSortDirection.Ascending));
+                statementDataGrid.Items.SortDescriptions.Add(new SortDescription(firstCol.SortMemberPath,
+                    ListSortDirection.Ascending));
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
+        /// <summary>
+        ///     Checks if the dates given are valid
+        /// </summary>
+        /// <returns></returns>
         private bool dateRangeSelected()
         {
-            bool response = true;
+            var response = true;
             if (fromDate.SelectedDate == null)
             {
                 fromDate.BorderBrush = Brushes.Red;
-                response =  false;
+                response = false;
             }
+
             if (toDate.SelectedDate == null)
             {
                 toDate.BorderBrush = Brushes.Red;
                 response = false;
             }
+
             return response;
         }
 
+        /// <summary>
+        ///     Checks that customer details are completed
+        /// </summary>
+        /// <returns></returns>
         private bool checkCustomerForm()
         {
             if (comboBox_customer.SelectedIndex <= -1)
@@ -115,35 +159,45 @@ namespace InvoiceX.Pages.StatementPage
                 comboBox_customer_border.BorderThickness = new Thickness(1);
                 return false;
             }
+
             return true;
         }
 
+        /// <summary>
+        ///     Clears all inputs on the page
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_clear_Click(object sender, RoutedEventArgs e)
         {
             isCreated = false;
             comboBox_customer_border.BorderThickness = new Thickness(0);
             foreach (var ctrl in grid_Customer.Children)
-            {
                 if (ctrl.GetType() == typeof(TextBox))
-                    ((TextBox)ctrl).Clear();
-            }
+                    ((TextBox) ctrl).Clear();
             fromDate.SelectedDate = null;
             toDate.SelectedDate = null;
             comboBox_customer.SelectedIndex = -1;
-            fromDate.ClearValue(DatePicker.BorderBrushProperty);
-            toDate.ClearValue(DatePicker.BorderBrushProperty);
+            fromDate.ClearValue(Control.BorderBrushProperty);
+            toDate.ClearValue(Control.BorderBrushProperty);
             statementDataGrid.ItemsSource = null;
             fromDate.IsHitTestVisible = true;
             toDate.IsHitTestVisible = true;
             comboBox_customer.IsHitTestVisible = true;
         }
 
+        /// <summary>
+        ///     The method that handles the event Selection Changed on the combobox containing the customers.
+        ///     Loads the customer's information in the appropriate text boxes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void comboBox_customer_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             comboBox_customer_border.BorderThickness = new Thickness(0);
             if (comboBox_customer.SelectedIndex > -1)
             {
-                Customer customer = ((Customer)comboBox_customer.SelectedItem);
+                var customer = (Customer) comboBox_customer.SelectedItem;
                 textBox_Customer.Text = customer.CustomerName;
                 textBox_Address.Text = customer.Address + ", " + customer.City + ", " + customer.Country;
                 textBox_Contact_Details.Text = customer.PhoneNumber.ToString();
@@ -151,25 +205,49 @@ namespace InvoiceX.Pages.StatementPage
             }
         }
 
+        /// <summary>
+        ///     The method that handles the event Selected Date Changed on the datePicker containing the From Date.
+        ///     Clears the red border
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void fromDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            fromDate.ClearValue(DatePicker.BorderBrushProperty);
+            fromDate.ClearValue(Control.BorderBrushProperty);
         }
 
+        /// <summary>
+        ///     The method that handles the event Selected Date Changed on the datePicker containing the To Date.
+        ///     Clears the red border
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void toDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            toDate.ClearValue(DatePicker.BorderBrushProperty);
-        }
-        
-        #region PDF
-        bool isCompleted()
-        {
-            if (comboBox_customer.Text == null || textBox_Customer.Text == null || textBox_Address.Text == null || textBox_Contact_Details == null || textBox_Email_Address== null
-                || !fromDate.SelectedDate.HasValue || !toDate.SelectedDate.HasValue) return false;
-            else return true;
+            toDate.ClearValue(Control.BorderBrushProperty);
         }
 
-        void savePdf_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        ///     Calls the viewItem method of statement main class
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ViewItem_Click(object sender, RoutedEventArgs e)
+        {
+            statementMain.viewItem((StatementItem) statementDataGrid.SelectedItem);
+        }
+
+        #region PDF
+
+        private bool isCompleted()
+        {
+            if (comboBox_customer.Text == null || textBox_Customer.Text == null || textBox_Address.Text == null ||
+                textBox_Contact_Details == null || textBox_Email_Address == null
+                || !fromDate.SelectedDate.HasValue || !toDate.SelectedDate.HasValue) return false;
+            return true;
+        }
+
+        private void savePdf_Click(object sender, RoutedEventArgs e)
         {
             if (!isCreated)
             {
@@ -177,10 +255,10 @@ namespace InvoiceX.Pages.StatementPage
             }
             else
             {
-                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                var document = createPdf();
                 document.UseCmykColor = true;
                 // Create a renderer for PDF that uses Unicode font encoding
-                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+                var pdfRenderer = new PdfDocumentRenderer(true);
 
                 // Set the MigraDoc document
                 pdfRenderer.Document = document;
@@ -189,17 +267,20 @@ namespace InvoiceX.Pages.StatementPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                Customer customer = (Customer)comboBox_customer.SelectedItem;
-                System.IO.Directory.CreateDirectory(System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Statements/");
+                var customer = (Customer) comboBox_customer.SelectedItem;
+                Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") +
+                                          "/Documents/InvoiceX/Statements/");
                 // Save the PDF document...
-                string filename = System.Environment.GetEnvironmentVariable("USERPROFILE") + "/Documents/InvoiceX/Statements/Statement" + customer.idCustomer + ".pdf"; ;
+                var filename = Environment.GetEnvironmentVariable("USERPROFILE") +
+                               "/Documents/InvoiceX/Statements/Statement" + customer.idCustomer + ".pdf";
+                ;
 
                 pdfRenderer.Save(filename);
-                System.Diagnostics.Process.Start(filename);
+                Process.Start(filename);
             }
         }
 
-        void printPdf_click(object sender, RoutedEventArgs e)
+        private void printPdf_click(object sender, RoutedEventArgs e)
         {
             if (!isCreated)
             {
@@ -207,12 +288,11 @@ namespace InvoiceX.Pages.StatementPage
             }
             else
             {
-
                 //Create and save the pdf
-                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                var document = createPdf();
                 document.UseCmykColor = true;
                 // Create a renderer for PDF that uses Unicode font encoding
-                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+                var pdfRenderer = new PdfDocumentRenderer(true);
 
                 // Set the MigraDoc document
                 pdfRenderer.Document = document;
@@ -221,27 +301,24 @@ namespace InvoiceX.Pages.StatementPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Statement.pdf";
+                var filename = "Statement.pdf";
                 pdfRenderer.Save(filename);
                 //open adobe acrobat
-                Process proc = new Process();
+                var proc = new Process();
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.StartInfo.Verb = "print";
 
                 //Define location of adobe reader/command line
                 //switches to launch adobe in "print" mode
                 proc.StartInfo.FileName =
-                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-                proc.StartInfo.Arguments = String.Format(@"/p {0}", filename);
+                    @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = string.Format(@"/p {0}", filename);
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.CreateNoWindow = true;
 
                 proc.Start();
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                if (proc.HasExited == false)
-                {
-                    proc.WaitForExit(10000);
-                }
+                if (proc.HasExited == false) proc.WaitForExit(10000);
 
                 proc.EnableRaisingEvents = true;
 
@@ -251,21 +328,17 @@ namespace InvoiceX.Pages.StatementPage
 
         private void previewPdf_click(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("Statement_temp.pdf"))
-            {
-                File.Delete("Statement_temp.pdf");
-            }
+            if (File.Exists("Statement_temp.pdf")) File.Delete("Statement_temp.pdf");
             if (!isCreated)
             {
                 MessageBox.Show("Statement is not completed!");
             }
             else
             {
-
-                MigraDoc.DocumentObjectModel.Document document = createPdf();
+                var document = createPdf();
                 document.UseCmykColor = true;
                 // Create a renderer for PDF that uses Unicode font encoding
-                MigraDoc.Rendering.PdfDocumentRenderer pdfRenderer = new MigraDoc.Rendering.PdfDocumentRenderer(true);
+                var pdfRenderer = new PdfDocumentRenderer(true);
 
                 // Set the MigraDoc document
                 pdfRenderer.Document = document;
@@ -274,28 +347,25 @@ namespace InvoiceX.Pages.StatementPage
                 pdfRenderer.RenderDocument();
 
                 // Save the PDF document...
-                string filename = "Statement_temp.pdf";
+                var filename = "Statement_temp.pdf";
                 pdfRenderer.Save(filename);
 
                 //open adobe acrobat
-                Process proc = new Process();
+                var proc = new Process();
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.StartInfo.Verb = "print";
 
                 //Define location of adobe reader/command line
                 //switches to launch adobe in "print" mode
                 proc.StartInfo.FileName =
-                  @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
-                proc.StartInfo.Arguments = String.Format(@" {0}", filename);
+                    @"C:\Program Files (x86)\Adobe\Acrobat Reader DC\Reader\AcroRd32.exe";
+                proc.StartInfo.Arguments = string.Format(@" {0}", filename);
                 proc.StartInfo.UseShellExecute = false;
                 proc.StartInfo.CreateNoWindow = true;
 
                 proc.Start();
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                if (proc.HasExited == false)
-                {
-                    proc.WaitForExit(10000);
-                }
+                if (proc.HasExited == false) proc.WaitForExit(10000);
 
                 proc.EnableRaisingEvents = true;
 
@@ -303,10 +373,10 @@ namespace InvoiceX.Pages.StatementPage
             }
         }
 
-        private MigraDoc.DocumentObjectModel.Document createPdf()
+        private Document createPdf()
         {
-            string[] customerDetails = new string[6];
-            Customer customer = (Customer)comboBox_customer.SelectedItem;
+            var customerDetails = new string[6];
+            var customer = (Customer) comboBox_customer.SelectedItem;
             customerDetails[0] = textBox_Customer.Text;
             customerDetails[1] = textBox_Address.Text;
             customerDetails[2] = textBox_Contact_Details.Text;
@@ -314,25 +384,18 @@ namespace InvoiceX.Pages.StatementPage
             customerDetails[4] = customer.idCustomer.ToString();
             customerDetails[5] = customer.Balance.ToString();
 
-            string[] statementDetails = new string[4];
+            var statementDetails = new string[4];
             statementDetails[0] = fromDate.Text;
             statementDetails[1] = toDate.Text;
 
-            List<StatementItem> items = statementDataGrid.Items.OfType<StatementItem>().ToList();
+            var items = statementDataGrid.Items.OfType<StatementItem>().ToList();
 
 
-            Forms.StatementForm statement2 = new Forms.StatementForm("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
-            MigraDoc.DocumentObjectModel.Document document = statement2.CreateDocument();
+            var statement2 = new StatementForm("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
+            var document = statement2.CreateDocument();
             return document;
         }
 
         #endregion
-
-        private void ViewItem_Click(object sender, RoutedEventArgs e)
-        {
-            statementMain.viewItem((StatementItem)statementDataGrid.SelectedItem);
-        }
-
-        
     }
 }

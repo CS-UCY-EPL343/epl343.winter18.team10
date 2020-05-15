@@ -1,9 +1,9 @@
 ﻿<Page x:Class="InvoiceX.Pages.InvoicePage.InvoiceViewAll"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      mc:Ignorable="d" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d"
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="InvoiceViewAll">
 
@@ -14,54 +14,68 @@
     <Grid x:Name="viewAllTab" Visibility="Visible" Background="White">
         <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="165" VerticalAlignment="Top" Width="1725">
             <Border.Effect>
-                <DropShadowEffect Opacity="0.16"/>
+                <DropShadowEffect Opacity="0.16" />
             </Border.Effect>
-            <Label x:Name="label" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,35,0,0" Height="66" Width="134" FontSize="36"/>
+            <Label x:Name="label" Content="Filter" HorizontalAlignment="Left" VerticalAlignment="Top"
+                   Margin="50,35,0,0" Height="66" Width="134" FontSize="36" />
         </Border>
 
-        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top" Width="1099">
+        <Grid Background="White" HorizontalAlignment="Left" Height="140" Margin="200,10,0,0" VerticalAlignment="Top"
+              Width="1099">
             <Grid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
+                <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352" TextChanged="txtBoxCustomer_TextChanged"/>
-            <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top" Height="30" Width="130"  SelectedDateChanged="dtPickerFrom_SelectedDateChanged"/>
-            <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top" Height="30" Width="130"  SelectedDateChanged="dtPickerTo_SelectedDateChanged"/>
-            <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0" VerticalAlignment="Top" FontSize="18"/>
-            <Button x:Name="btnClearFilters" Content="Clear Filters" Style="{DynamicResource CommonButtonStyle}"  HorizontalAlignment="Left" Margin="920,75,0,0" VerticalAlignment="Top" Width="145" Height="37" Click="btnClearFilters_Click"/>
+            <TextBox x:Name="txtBoxCustomer" HorizontalAlignment="Left" Height="37" Margin="157,76,0,0"
+                     TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="352"
+                     TextChanged="txtBoxCustomer_TextChanged" />
+            <Label x:Name="label1" Content="By Date: " HorizontalAlignment="Left" Margin="36,34,0,0"
+                   VerticalAlignment="Top" FontSize="18" />
+            <DatePicker x:Name="dtPickerFrom" HorizontalAlignment="Left" Margin="212,37,0,0" VerticalAlignment="Top"
+                        Height="30" Width="130" SelectedDateChanged="dtPickerFrom_SelectedDateChanged" />
+            <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="157,34,0,0"
+                   VerticalAlignment="Top" FontSize="18" />
+            <Label x:Name="label2_Copy" Content="To:" HorizontalAlignment="Left" Margin="347,34,0,0"
+                   VerticalAlignment="Top" FontSize="18" />
+            <DatePicker x:Name="dtPickerTo" HorizontalAlignment="Left" Margin="379,37,0,0" VerticalAlignment="Top"
+                        Height="30" Width="130" SelectedDateChanged="dtPickerTo_SelectedDateChanged" />
+            <Label x:Name="label1_Copy" Content="By Customer: " HorizontalAlignment="Left" Margin="36,76,0,0"
+                   VerticalAlignment="Top" FontSize="18" />
+            <Button x:Name="btnClearFilters" Content="Clear Filters" Style="{DynamicResource CommonButtonStyle}"
+                    HorizontalAlignment="Left" Margin="920,75,0,0" VerticalAlignment="Top" Width="145" Height="37"
+                    Click="btnClearFilters_Click" />
         </Grid>
-        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
-                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+        <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0"
+                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
-            </DataGrid.Effect>            
+                <DropShadowEffect Opacity="0.16" />
+            </DataGrid.Effect>
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "Created At" Binding = "{Binding createdDate, StringFormat=d}" />
-                <DataGridTextColumn Header = "Invoice ID" Binding = "{Binding idInvoice}" />
-                <DataGridTextColumn Header = "Customer" Binding = "{Binding customerName}" />
-                <DataGridTextColumn Header = "Cost" Binding = "{Binding cost, StringFormat=C}"/>
-                <DataGridTextColumn Header = "VAT" Binding = "{Binding VAT, StringFormat=C}" />
-                <DataGridTextColumn Header = "Total Cost" Binding = "{Binding totalCost, StringFormat=C}" />
-                <DataGridTemplateColumn Header = "Options">
+                <DataGridTextColumn Header="Created At" Binding="{Binding createdDate, StringFormat=d}" />
+                <DataGridTextColumn Header="Invoice ID" Binding="{Binding idInvoice}" />
+                <DataGridTextColumn Header="Customer" Binding="{Binding customerName}" />
+                <DataGridTextColumn Header="Cost" Binding="{Binding cost, StringFormat=C}" />
+                <DataGridTextColumn Header="VAT" Binding="{Binding VAT, StringFormat=C}" />
+                <DataGridTextColumn Header="Total Cost" Binding="{Binding totalCost, StringFormat=C}" />
+                <DataGridTemplateColumn Header="Options">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="btnOptions" Width="40" Height="40">
                                 <Button.Template>
                                     <ControlTemplate TargetType="Button">
                                         <Grid>
-                                            <Ellipse Fill="#FFE4E0E0"/>
-                                            <TextBlock Text="⋮" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center" FontWeight="Bold" FontSize="25"/>
+                                            <Ellipse Fill="#FFE4E0E0" />
+                                            <TextBlock Text="⋮" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                       TextAlignment="Center" FontWeight="Bold" FontSize="25" />
                                         </Grid>
                                     </ControlTemplate>
                                 </Button.Template>
                                 <Button.ContextMenu>
                                     <ContextMenu>
-                                        <MenuItem Header="View Invoice" Click="ViewInvoice_Click"/>
-                                        <MenuItem Header="Edit Invoice" Click="EditInvoice_Click"/>
+                                        <MenuItem Header="View Invoice" Click="ViewInvoice_Click" />
+                                        <MenuItem Header="Edit Invoice" Click="EditInvoice_Click" />
                                         <Separator />
-                                        <MenuItem Header="Delete Invoice" Click="DeleteInvoice_Click"/>
+                                        <MenuItem Header="Delete Invoice" Click="DeleteInvoice_Click" />
                                     </ContextMenu>
                                 </Button.ContextMenu>
                                 <Button.Style>
@@ -71,8 +85,9 @@
                                                 <EventTrigger.Actions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
-                                                            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True"/>
+                                                            <BooleanAnimationUsingKeyFrames
+                                                                Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
                                                             </BooleanAnimationUsingKeyFrames>
                                                         </Storyboard>
                                                     </BeginStoryboard>
