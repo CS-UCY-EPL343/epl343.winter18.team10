@@ -1,37 +1,63 @@
-﻿using InvoiceX.Classes;
-using InvoiceX.Models;
-using MySql.Data.MySqlClient;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using InvoiceX.Classes;
+using InvoiceX.Models;
+using MySql.Data.MySqlClient;
 
 namespace InvoiceX.ViewModels
 {
     public class InvoiceViewModel
     {
-        public List<Invoice> invoiceList { get; set; }
-        private static MySqlConnection conn = DBConnection.Instance.Connection;
+        private static readonly MySqlConnection conn = DBConnection.Instance.Connection;
 
+        /// <summary>
+        ///     Constructor that fills the list with all the invoices
+        /// </summary>
         public InvoiceViewModel()
         {
             invoiceList = new List<Invoice>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT `Invoice`.*, `Customer`.`CustomerName` FROM `Invoice`" +
-                    " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT `Invoice`.*, `Customer`.`CustomerName` FROM `Invoice`" +
+                                           " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer`; ",
+                    conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                Invoice inv = new Invoice();
+                var inv = new Invoice();
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customer = dataRow.Field<string>("CustomerName");
-                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    var idInvoice = dataRow.Field<int>("idInvoice");
                     var cost = dataRow.Field<float>("Cost");
                     var VAT = dataRow.Field<float>("VAT");
                     var invTotalCost = dataRow.Field<float>("TotalCost");
@@ -39,7 +65,7 @@ namespace InvoiceX.ViewModels
                     var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    inv = new Invoice()
+                    inv = new Invoice
                     {
                         idInvoice = idInvoice,
                         customerName = customer,
@@ -54,25 +80,32 @@ namespace InvoiceX.ViewModels
                     invoiceList.Add(inv);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        public List<Invoice> invoiceList { get; set; }
+
+        /// <summary>
+        ///     Given the invoice ID retrieves the invoice and returns it
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
         public static Invoice getInvoice(int invoiceID)
         {
-            Invoice inv = new Invoice();
+            var inv = new Invoice();
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 if (dt.Rows.Count == 0)
                     inv = null;
 
-                int count = 0;
+                var count = 0;
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customerName = dataRow.Field<string>("CustomerName");
@@ -84,7 +117,7 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idInvoice = dataRow.Field<Int32>("InvoiceID");
+                    var idInvoice = dataRow.Field<int>("InvoiceID");
                     var cost = dataRow.Field<float>("InvoiceCost");
                     var VAT = dataRow.Field<float>("InvoiceVAT");
                     var invTotalCost = dataRow.Field<float>("InvoiceTotalCost");
@@ -92,18 +125,18 @@ namespace InvoiceX.ViewModels
                     var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    var productID = dataRow.Field<Int32>("idProduct");
+                    var productID = dataRow.Field<int>("idProduct");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
                     var proTotalCost = dataRow.Field<float>("IPCost");
                     var proVat = dataRow.Field<float>("IPVAT");
-                    var quantity = dataRow.Field<Int32>("Quantity");
+                    var quantity = dataRow.Field<int>("Quantity");
 
                     if (count == 0)
                     {
                         count++;
-                        inv = new Invoice()
+                        inv = new Invoice
                         {
                             idInvoice = idInvoice,
                             customerName = customerName,
@@ -114,7 +147,7 @@ namespace InvoiceX.ViewModels
                             dueDate = dueDate,
                             issuedBy = issuedBy,
                             products = new List<Product>(),
-                            customer = new Customer()
+                            customer = new Customer
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
@@ -128,7 +161,7 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    inv.products.Add(new Product()
+                    inv.products.Add(new Product
                     {
                         idProduct = productID,
                         ProductName = product,
@@ -140,9 +173,8 @@ namespace InvoiceX.ViewModels
                         Vat = proVat
                     });
                 }
-
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -150,36 +182,43 @@ namespace InvoiceX.ViewModels
             return inv;
         }
 
+        /// <summary>
+        ///     Retrieves and returns the invoices as statement items matching the parameters given
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public static List<StatementItem> getInvoicesForStatement(int customerID, DateTime from, DateTime to)
         {
-            List<StatementItem> list = new List<StatementItem>();            
+            var list = new List<StatementItem>();
 
             try
             {
-                string query = "SELECT `Invoice`.* FROM `Invoice`" +
-                    " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
-                    "`Invoice`.`CreatedDate` >= @from AND `Invoice`.`CreatedDate` <= @to; ";
-                DataTable dt = new DataTable();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = "SELECT `Invoice`.* FROM `Invoice`" +
+                            " LEFT JOIN `Customer` ON `Invoice`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
+                            "`Invoice`.`CreatedDate` >= @from AND `Invoice`.`CreatedDate` <= @to; ";
+                var dt = new DataTable();
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@customerID", customerID);
                     cmd.Parameters.AddWithValue("@from", from);
                     cmd.Parameters.AddWithValue("@to", to);
 
                     dt.Load(cmd.ExecuteReader());
-                }           
+                }
 
-                StatementItem inv = new StatementItem();
+                var inv = new StatementItem();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    var idInvoice = dataRow.Field<int>("idInvoice");
                     var invTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var balance = dataRow.Field<float>("PreviousBalance");
 
-                    inv = new StatementItem()
+                    inv = new StatementItem
                     {
-                        idItem = idInvoice,                        
+                        idItem = idInvoice,
                         charges = invTotalCost,
                         createdDate = createdDate,
                         itemType = ItemType.Invoice,
@@ -189,7 +228,7 @@ namespace InvoiceX.ViewModels
                     list.Add(inv);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -197,28 +236,44 @@ namespace InvoiceX.ViewModels
             return list;
         }
 
-        public static void deleteInvoice(int invoiceID)
+        /// <summary>
+        ///     Given the invoice ID deletes the invoice from the Database
+        /// </summary>
+        /// <param name="invoiceID"></param>
+        /// <returns></returns>
+        public static bool deleteInvoice(int invoiceID)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM InvoiceProduct WHERE idInvoice = " + invoiceID, conn);
+                var cmd = new MySqlCommand("DELETE FROM InvoiceProduct WHERE idInvoice = " + invoiceID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM Invoice WHERE idInvoice = " + invoiceID, conn);
                 cmd.ExecuteNonQuery();
+                return true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
-                MessageBox.Show(ex.Message);
+                if (ex.Number == 1451)
+                    MessageBox.Show("Cannot delete invoice with ID = " + invoiceID +
+                                    " as a credit note has been issued on it.");
+                else
+                    MessageBox.Show(ex.Message);
+                return false;
             }
         }
 
+        /// <summary>
+        ///     Given the id checks if an invoice exists with that id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static bool invoiceExists(int id)
         {
             try
             {
                 int idInvoice;
-                MySqlCommand cmd = new MySqlCommand("SELECT idInvoice FROM Invoice where idInvoice=" + id.ToString(), conn);
+                var cmd = new MySqlCommand("SELECT idInvoice FROM Invoice where idInvoice=" + id, conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -226,21 +281,26 @@ namespace InvoiceX.ViewModels
                 else
                     idInvoice = 0;
 
-                return ((idInvoice == 0) ? false : true);
+                return idInvoice == 0 ? false : true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             return false;
         }
 
+        /// <summary>
+        ///     Returns the latest invoice ID from the database
+        /// </summary>
+        /// <returns></returns>
         public static int returnLatestInvoiceID()
         {
             try
             {
                 int idInvoice;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
+                var cmd = new MySqlCommand("SELECT idInvoice FROM Invoice ORDER BY idInvoice DESC LIMIT 1", conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -250,21 +310,27 @@ namespace InvoiceX.ViewModels
 
                 return idInvoice;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
+        /// <summary>
+        ///     Given the invoice object inserts it in to the database
+        /// </summary>
+        /// <param name="invoice"></param>
         public static void insertInvoice(Invoice invoice)
         {
             try
             {
                 //insert invoice 
-                string query = "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, PreviousBalance, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @PreviousBalance, @IssuedBy)";
-                
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query =
+                    "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, PreviousBalance, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @PreviousBalance, @IssuedBy)";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idInvoice", invoice.idInvoice);
@@ -281,54 +347,65 @@ namespace InvoiceX.ViewModels
                 }
 
                 //insert product
-                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
+                var Rows = new List<string>();
 
                 // List<Product> list = invoiceDataGrid2.Items.OfType<Product>().ToList();
 
-                foreach (Product p in invoice.products)
+                foreach (var p in invoice.products)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
-                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                        MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
+                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
 
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    using (var cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
+                                                       p.Quantity + ") WHERE idProduct=" + p.idProduct + ";", conn))
                     {
                         cmd3.ExecuteNonQuery();
                     }
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
 
                 //update customer total  
-                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                var queryBalance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
+                using (var cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", invoice.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Given the old and updated invoice update the invoice
+        /// </summary>
+        /// <param name="invoice"></param>
+        /// <param name="old_invoice"></param>
         public static void updateInvoice(Invoice invoice, Invoice old_invoice)
         {
             try
             {
                 //update Invoice 
-                string query = "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
-                
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query =
+                    "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
+
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -336,7 +413,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
                     cmd.Parameters.AddWithValue("@Cost", invoice.cost);
                     cmd.Parameters.AddWithValue("@Vat", invoice.VAT);
-                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);                   
+                    cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     // Execute the query
@@ -344,20 +421,20 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update old stock  
-                string queryStock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
-                for (int i = 0; i < old_invoice.products.Count; i++)
-                {
-                    using (MySqlCommand cmd3 = new MySqlCommand(queryStock, conn))
+                var queryStock =
+                    "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+@Quantity) WHERE  idProduct=@idProduct;";
+                for (var i = 0; i < old_invoice.products.Count; i++)
+                    using (var cmd3 = new MySqlCommand(queryStock, conn))
                     {
                         cmd3.Parameters.AddWithValue("@Quantity", old_invoice.products[i].Quantity);
                         cmd3.Parameters.AddWithValue("@idProduct", old_invoice.products[i].idProduct);
                         cmd3.ExecuteNonQuery();
                     }
-                }
+
                 //delete old invoice products
-                string queryDelete = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
-                
-                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
+                var queryDelete = "DELETE from InvoiceProduct WHERE idInvoice=@idInvoice; ";
+
+                using (var cmd = new MySqlCommand(queryDelete, conn))
                 {
                     // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idInvoice", old_invoice.idInvoice);
@@ -367,70 +444,75 @@ namespace InvoiceX.ViewModels
 
 
                 //insert products
-                StringBuilder sCommand = new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder("INSERT INTO InvoiceProduct (idInvoice, idProduct, Quantity, Cost, VAT) VALUES ");
+                var Rows = new List<string>();
 
-                foreach (Product p in invoice.products)
+                foreach (var p in invoice.products)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')", MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
-                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")), MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}','{4}')",
+                        MySqlHelper.EscapeString(invoice.idInvoice.ToString()),
+                        p.idProduct, p.Quantity, MySqlHelper.EscapeString(p.Total.ToString().Replace(",", ".")),
+                        MySqlHelper.EscapeString(p.Vat.ToString().Replace(",", "."))));
                     //update stock  
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    using (var cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-" +
+                                                       p.Quantity + ") WHERE idProduct=" + p.idProduct + ";", conn))
                     {
                         cmd3.ExecuteNonQuery();
                     }
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
 
                 //update customer total  
-                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                var queryBalance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
+                using (var cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", invoice.totalCost - old_invoice.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Returns total invoice sales by month for statistics
+        /// </summary>
+        /// <returns></returns>
         public static double[] getTotalAmountByMonth()
         {
-            double[] total = new double[12];
+            var total = new double[12];
 
             try
             {
-                for (int i = 1; i <= 12; i++)
+                for (var i = 1; i <= 12; i++)
                 {
-                    MySqlCommand cmd = new MySqlCommand("getTotalAmountMonth_Invoices", conn);
-                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    var cmd = new MySqlCommand("getTotalAmountMonth_Invoices", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = i;
                     cmd.Parameters["@month"].Direction = ParameterDirection.Input;
 
                     cmd.ExecuteNonQuery();
-                    String sum = cmd.ExecuteScalar().ToString();
+                    var sum = cmd.ExecuteScalar().ToString();
                     if (sum == null || sum == "")
-                    {
                         total[i - 1] = 0;
-                    }
                     else
-                    {
                         total[i - 1] = double.Parse(sum);
-                    }
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -438,18 +520,22 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
-        public static String get30DaysTotalInvoices()
+        /// <summary>
+        ///     Returns total invoice count for the last 30 days for statistics
+        /// </summary>
+        /// <returns></returns>
+        public static string get30DaysTotalInvoices()
         {
-            String total = "";
+            var total = "";
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("get30DaysTotalInvoices", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("get30DaysTotalInvoices", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
                 total = cmd.ExecuteScalar().ToString();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -457,18 +543,22 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
-        public static String get30DaysTotalSales()
+        /// <summary>
+        ///     Returns total invoice sales for the last 30 days for statistics
+        /// </summary>
+        /// <returns></returns>
+        public static string get30DaysTotalSales()
         {
-            String total = "";
+            var total = "";
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("get30DaysTotalSales", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("get30DaysTotalSales", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.ExecuteNonQuery();
                 total = cmd.ExecuteScalar().ToString();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -476,28 +566,31 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
+        /// <summary>
+        ///     Returns total invoice sales for specific months and year
+        /// </summary>
+        /// <param name="months"></param>
+        /// <param name="year"></param>
+        /// <returns></returns>
         public static float getTotalSalesMonthYear(int months, int year)
         {
             float total = 0;
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("getSalesByMonthYear", conn);
-                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                var cmd = new MySqlCommand("getSalesByMonthYear", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
                 cmd.Parameters["@month"].Direction = ParameterDirection.Input;
                 cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
                 cmd.ExecuteNonQuery();
-                String total2 = cmd.ExecuteScalar().ToString();
+                var total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;
-                if (float.TryParse(total2, out total3))
-                {
-                    total = total3;
-                }
+                if (float.TryParse(total2, out total3)) total = total3;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -505,75 +598,35 @@ namespace InvoiceX.ViewModels
             return total;
         }
 
-        public static List<int> customer_invoices_list(int customerID)
+        /// <summary>
+        ///     Given customer ID returns a list of invoices for the specific customer
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        public static List<int> getCustomerInvoices(int customerID)
         {
-            List<int> customer_invoices_list = new List<int>();
+            var customer_invoices_list = new List<int>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT idInvoice FROM Invoice WHERE idCustomer = " + customerID, conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT idInvoice FROM Invoice WHERE idCustomer = " + customerID, conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
-
 
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var idInvoice = dataRow.Field<Int32>("idInvoice");
+                    var idInvoice = dataRow.Field<int>("idInvoice");
                     customer_invoices_list.Add(idInvoice);
                 }
+
                 return customer_invoices_list;
-
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            return null;
 
-        }
-
-        public static List<Product> invoice_products_list(int invoiceID)
-        {
-            List<Product>  invoice_products_list = new List<Product>();
-
-            try
-            {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewInvoice WHERE InvoiceID = " + invoiceID, conn);
-                DataTable dt = new DataTable();
-                dt.Load(cmd.ExecuteReader());
-
-                foreach (DataRow dataRow in dt.Rows)
-                {
-                    var idProductsdb = dataRow.Field<int>("idProduct");
-                    var ProductNamedb = dataRow.Field<string>("ProductName");
-                    var ProductDescriptiondb = dataRow.Field<string>("Description");
-                    var Quantitydb = dataRow.Field<int>("Quantity");
-                    var IPCostdb = dataRow.Field<float>("IPCost");
-                    var IPVATdb = dataRow.Field<float>("IPVAT");
-
-
-                    invoice_products_list.Add(
-                        new Product()
-                        {
-                            idProduct = idProductsdb,
-                            ProductName = ProductNamedb,
-                            ProductDescription = ProductDescriptiondb,
-                            Quantity = Quantitydb,
-                            SellPrice = IPCostdb,
-                            Vat = IPVATdb
-                        });
-                }
-                return invoice_products_list;
-            }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
             return null;
         }
-
     }
-
-
 }
-

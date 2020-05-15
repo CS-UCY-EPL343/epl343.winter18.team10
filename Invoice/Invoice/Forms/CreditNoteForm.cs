@@ -1,73 +1,101 @@
-﻿using System;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Xml;
 using System.Xml.XPath;
+using InvoiceX.Models;
 using MigraDoc.DocumentObjectModel;
-using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.DocumentObjectModel.Shapes;
-using MigraDoc.Rendering;
-using System.Diagnostics;
-using System.Collections.Generic;
+using MigraDoc.DocumentObjectModel.Tables;
 
 namespace InvoiceX.Forms
 {
     /// <summary>
-    /// Creates the credit note form.
+    ///     Creates the credit note form.
     /// </summary>
     public class CreditNoteForm
     {
         /// <summary>
-        /// The MigraDoc document that represents the credit note.
+        ///     The MigraDoc document that represents the credit note.
         /// </summary>
-        Document document;
+        private Document document;
 
         /// <summary>
-        /// An XML credit note based on a sample created with Microsoft InfoPath.
+        ///     An XML credit note based on a sample created with Microsoft InfoPath.
         /// </summary>
-        readonly XmlDocument creditNote;
+        private readonly XmlDocument creditNote;
 
         /// <summary>
-        /// The root navigator for the XML document.
+        ///     The root navigator for the XML document.
         /// </summary>
-        readonly XPathNavigator navigator;
+        private readonly XPathNavigator navigator;
 
         /// <summary>
-        /// The text frame of the MigraDoc document that contains the address.
+        ///     The text frame of the MigraDoc document that contains the address.
         /// </summary>
-        TextFrame addressFrame;
-        TextFrame creditNoteDetailsFrame;
-        TextFrame customerDetails;
-        /// <summary>
-        /// The table of the MigraDoc document that contains the credit note items.
-        /// </summary>
-        Table table;
+        private TextFrame addressFrame;
+
+        private TextFrame creditNoteDetailsFrame;
+        private TextFrame customerDetails;
 
         /// <summary>
-        /// Initializes a new instance of the class BillFrom and opens the specified XML document.
+        ///     The table of the MigraDoc document that contains the credit note items.
         /// </summary>
-        string[] customer_details = new string[6];
-        string[] creditNote_details = new string[6];
-        List<Models.Product> products = new List<Models.Product>();
+        private Table table;
 
-        public CreditNoteForm(string filename, string[] cd, string[] id, List<Models.Product> p)
+        /// <summary>
+        ///     Initializes a new instance of the class BillFrom and opens the specified XML document.
+        /// </summary>
+        private readonly string[] customer_details = new string[6];
+
+        private readonly string[] creditNote_details = new string[6];
+        private readonly List<Product> products = new List<Product>();
+
+        public CreditNoteForm(string filename, string[] cd, string[] id, List<Product> p)
         {
-            this.creditNote = new XmlDocument();
-            this.creditNote.Load(filename);
-            this.navigator = this.creditNote.CreateNavigator();
-            this.customer_details = cd;
-            this.creditNote_details = id;
-            this.products = p;
+            creditNote = new XmlDocument();
+            creditNote.Load(filename);
+            navigator = creditNote.CreateNavigator();
+            customer_details = cd;
+            creditNote_details = id;
+            products = p;
         }
 
         /// <summary>
-        /// Creates the credit note document.
+        ///     Creates the credit note document.
         /// </summary>
         public Document CreateDocument()
         {
             // Create a new MigraDoc document
-            this.document = new Document();
-            this.document.Info.Title = "Credit Note";
-            this.document.Info.Author = "Eco-Bright";
+            document = new Document();
+            document.Info.Title = "Credit Note";
+            document.Info.Author = "Eco-Bright";
 
             DefineStyles();
 
@@ -75,51 +103,50 @@ namespace InvoiceX.Forms
 
             FillContent();
 
-            return this.document;
+            return document;
         }
 
         /// <summary>
-        /// Defines the styles used to format the MigraDoc document.
+        ///     Defines the styles used to format the MigraDoc document.
         /// </summary>
-    
-        void DefineStyles()
+        private void DefineStyles()
         {
             // Get the predefined style Normal.
-            Style style = this.document.Styles["Normal"];
+            var style = document.Styles["Normal"];
             // Because all styles are derived from Normal, the next line changes the 
             // font of the whole document. Or, more exactly, it changes the font of
             // all styles and paragraphs that do not redefine the font.
             style.Font.Name = "Verdana";
 
-            style = this.document.Styles[StyleNames.Header];
+            style = document.Styles[StyleNames.Header];
             style.ParagraphFormat.AddTabStop("6cm", TabAlignment.Right);
 
-            style = this.document.Styles[StyleNames.Footer];
+            style = document.Styles[StyleNames.Footer];
             style.ParagraphFormat.AddTabStop("8cm", TabAlignment.Center);
 
             // Create a new style called Table based on style Normal
-            style = this.document.Styles.AddStyle("Table", "Normal");
+            style = document.Styles.AddStyle("Table", "Normal");
             style.Font.Name = "Verdana";
             style.Font.Name = "Times New Roman";
             style.Font.Size = 9;
 
             // Create a new style called Reference based on style Normal
-            style = this.document.Styles.AddStyle("Reference", "Normal");
+            style = document.Styles.AddStyle("Reference", "Normal");
             style.ParagraphFormat.SpaceBefore = "5mm";
             style.ParagraphFormat.SpaceAfter = "5mm";
             style.ParagraphFormat.TabStops.AddTabStop("16cm", TabAlignment.Right);
         }
 
         /// <summary>
-        /// Creates the static parts of the credit note.
+        ///     Creates the static parts of the credit note.
         /// </summary>
-        void CreatePage()
+        private void CreatePage()
         {
             // Each MigraDoc document needs at least one section.
-            Section section = this.document.AddSection();
+            var section = document.AddSection();
 
             // Put a logo in the header
-            Image image = section.Headers.Primary.AddImage("../../Images/logo-2.png");
+            var image = section.Headers.Primary.AddImage("../../Images/companyLogo.png");
             image.Height = "1.5cm";
             image.LockAspectRatio = true;
             image.RelativeVertical = RelativeVertical.Line;
@@ -129,7 +156,7 @@ namespace InvoiceX.Forms
             image.WrapFormat.Style = WrapStyle.Through;
 
 
-            Paragraph par = section.Headers.Primary.AddParagraph();
+            var par = section.Headers.Primary.AddParagraph();
             par.Format.Alignment = ParagraphAlignment.Right;
             par.Format.Font.Size = 24;
             par.Format.Font.Color = LogoBlue;
@@ -137,39 +164,39 @@ namespace InvoiceX.Forms
             par.AddFormattedText("CREDIT NOTE", TextFormat.Bold);
 
             // Create footer
-            Paragraph paragraph = section.Footers.Primary.AddParagraph();
+            var paragraph = section.Footers.Primary.AddParagraph();
             paragraph.AddText("PowerBooks Inc · Sample Street 42 · 56789 Cologne · Germany");
             paragraph.Format.Font.Size = 9;
             paragraph.Format.Alignment = ParagraphAlignment.Center;
 
             // Create the text frame for the address
-            this.addressFrame = section.AddTextFrame();
-            this.addressFrame.Height = "3.0cm";
-            this.addressFrame.Width = "7.0cm";
-            this.addressFrame.Left = ShapePosition.Left;
-            this.addressFrame.RelativeHorizontal = RelativeHorizontal.Margin;
-            this.addressFrame.Top = "3cm";
-            this.addressFrame.RelativeVertical = RelativeVertical.Page;
+            addressFrame = section.AddTextFrame();
+            addressFrame.Height = "3.0cm";
+            addressFrame.Width = "7.0cm";
+            addressFrame.Left = ShapePosition.Left;
+            addressFrame.RelativeHorizontal = RelativeHorizontal.Margin;
+            addressFrame.Top = "3cm";
+            addressFrame.RelativeVertical = RelativeVertical.Page;
 
             //create the credit note detail frame
 
-            this.creditNoteDetailsFrame = section.AddTextFrame();
-            this.creditNoteDetailsFrame.Height = "3.0cm";
-            this.creditNoteDetailsFrame.Width = "7.0cm";
-            this.creditNoteDetailsFrame.Left = ShapePosition.Right;
-            this.creditNoteDetailsFrame.RelativeHorizontal = RelativeHorizontal.Margin;
-            this.creditNoteDetailsFrame.Top = "3cm";
-            this.creditNoteDetailsFrame.RelativeVertical = RelativeVertical.Page;
-            
+            creditNoteDetailsFrame = section.AddTextFrame();
+            creditNoteDetailsFrame.Height = "3.0cm";
+            creditNoteDetailsFrame.Width = "7.0cm";
+            creditNoteDetailsFrame.Left = ShapePosition.Right;
+            creditNoteDetailsFrame.RelativeHorizontal = RelativeHorizontal.Margin;
+            creditNoteDetailsFrame.Top = "3cm";
+            creditNoteDetailsFrame.RelativeVertical = RelativeVertical.Page;
+
             //create the customer detail frame
 
-            this.customerDetails = section.AddTextFrame();
-            this.customerDetails.Height = "3.0cm";
-            this.customerDetails.Width = "7.0cm";
-            this.customerDetails.Left = ShapePosition.Left;
-            this.customerDetails.RelativeHorizontal = RelativeHorizontal.Margin;
-            this.customerDetails.Top = "3cm";
-            this.customerDetails.RelativeVertical = RelativeVertical.Page;
+            customerDetails = section.AddTextFrame();
+            customerDetails.Height = "3.0cm";
+            customerDetails.Width = "7.0cm";
+            customerDetails.Left = ShapePosition.Left;
+            customerDetails.RelativeHorizontal = RelativeHorizontal.Margin;
+            customerDetails.Top = "3cm";
+            customerDetails.RelativeVertical = RelativeVertical.Page;
 
 
             // Add the print date field
@@ -179,33 +206,31 @@ namespace InvoiceX.Forms
             paragraph.AddFormattedText("CREDIT NOTE", TextFormat.Bold);
 
             // Create the item table
-            this.table = section.AddTable();
-            this.table.Style = "Table";
-            this.table.Borders.Color = TableBorder;
-            this.table.Borders.Width = 0.25;
-            this.table.Borders.Left.Width = 0.5;
-            this.table.Borders.Right.Width = 0.5;
-            this.table.Rows.LeftIndent = 0;
-
+            table = section.AddTable();
+            table.Style = "Table";
+            table.Borders.Color = TableBorder;
+            table.Borders.Width = 0.25;
+            table.Borders.Left.Width = 0.5;
+            table.Borders.Right.Width = 0.5;
+            table.Rows.LeftIndent = 0;
 
 
             // Before you can add a row, you must define the columns
-            Column column = this.table.AddColumn("1.5cm");
+            var column = table.AddColumn("1.5cm");
             column.Format.Alignment = ParagraphAlignment.Center;
 
-            column = this.table.AddColumn("8.5cm");
+            column = table.AddColumn("8.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            column = this.table.AddColumn("3cm");
+            column = table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            column = this.table.AddColumn("3cm");
+            column = table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
-
 
 
             // Create the header of the table
-            Row row = table.AddRow();
+            var row = table.AddRow();
             row.HeadingFormat = true;
             row.Format.Alignment = ParagraphAlignment.Center;
             row.Format.Font.Bold = true;
@@ -229,53 +254,51 @@ namespace InvoiceX.Forms
             row.Cells[3].AddParagraph("AMOUNT");
             row.Cells[3].Format.Alignment = ParagraphAlignment.Center;
 
-            this.table.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
-
-
-
+            table.SetEdge(0, 0, 3, 1, Edge.Box, BorderStyle.Single, 0.75, Color.Empty);
         }
 
         /// <summary>
-        /// Creates the dynamic parts of the credit note.
+        ///     Creates the dynamic parts of the credit note.
         /// </summary>
-        void FillContent()
+        private void FillContent()
         {
             // Fill address in address text frame
-            XPathNavigator item = SelectItem("/creditNote/to");
-            Paragraph paragraph = this.addressFrame.AddParagraph();
+            var item = SelectItem("/creditNote/to");
+            var paragraph = addressFrame.AddParagraph();
             paragraph.AddText(GetValue(item, "name/singleName"));
             paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "address/line1")+" "+ (GetValue(item, "address/postalCode") + " " + GetValue(item, "address/city")));
+            paragraph.AddText(GetValue(item, "address/line1") + " " + GetValue(item, "address/postalCode") + " " +
+                              GetValue(item, "address/city"));
             paragraph.AddLineBreak();
-            paragraph.AddText(GetValue(item, "telephoneNumberHome") +", "+ GetValue(item, "telephoneNumberCell"));
+            paragraph.AddText(GetValue(item, "telephoneNumberHome") + ", " + GetValue(item, "telephoneNumberCell"));
             paragraph.AddLineBreak();
             paragraph.AddText(GetValue(item, "emailAddressPrimary"));
             paragraph.AddLineBreak();
             paragraph.AddText(GetValue(item, "webSite"));
 
-            paragraph = this.creditNoteDetailsFrame.AddParagraph();
+            paragraph = creditNoteDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Format.SpaceBefore = 48;
             paragraph.Format.Shading.Color = LogoBlue;
-            paragraph.Format.Font.Color=new Color(255, 255, 255);
+            paragraph.Format.Font.Color = new Color(255, 255, 255);
             paragraph.Format.Font.Bold = true;
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("CREDIT NOTE #");
-            paragraph.AddSpace(10);
+            paragraph.AddSpace(7);
             paragraph.AddText("DATE");
 
-            paragraph = this.creditNoteDetailsFrame.AddParagraph();
+            paragraph = creditNoteDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Right;
-            String creditNoteNumber = this.creditNote_details[0];
-            String date = this.creditNote_details[1];
+            var creditNoteNumber = creditNote_details[0];
+            var date = creditNote_details[1];
             paragraph.AddText(creditNoteNumber);
             paragraph.AddSpace(24);
             paragraph.AddText(date);
 
-            paragraph = this.addressFrame.AddParagraph();
+            paragraph = addressFrame.AddParagraph();
             paragraph.AddLineBreak();
 
-            paragraph = this.customerDetails.AddParagraph();
+            paragraph = customerDetails.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Left;
             paragraph.Format.SpaceBefore = 80;
             paragraph.Format.Shading.Color = LogoBlue;
@@ -284,7 +307,7 @@ namespace InvoiceX.Forms
             paragraph.Format.Font.Size = 11;
             paragraph.AddText("BILL TO");
 
-            paragraph = this.creditNoteDetailsFrame.AddParagraph();
+            paragraph = creditNoteDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
             paragraph.Format.SpaceBefore = 7;
             paragraph.Format.Shading.Color = LogoBlue;
@@ -295,142 +318,144 @@ namespace InvoiceX.Forms
             paragraph.AddTab();
             paragraph.AddText("BALANCE");
 
-            paragraph = this.creditNoteDetailsFrame.AddParagraph();
+            paragraph = creditNoteDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Center;
-            String customerId = this.customer_details[5];
-             String balance = this.customer_details[4];
+            var customerId = customer_details[5];
+            var balance = customer_details[4];
             paragraph.AddText(customerId);
-            paragraph.AddTab(); 
-            paragraph.AddTab();
-            paragraph.AddTab();
+            paragraph.AddSpace(20);
             paragraph.AddText(balance);
 
 
-            paragraph = this.addressFrame.AddParagraph();
+            paragraph = addressFrame.AddParagraph();
             paragraph.Format.SpaceBefore = 20;
-            paragraph.AddText(this.customer_details[0]);
+            paragraph.AddText(customer_details[0]);
             paragraph.AddLineBreak();
-            paragraph.AddText(this.customer_details[1]);
+            paragraph.AddText(customer_details[1]);
             paragraph.AddLineBreak();
-            paragraph.AddText(this.customer_details[2]);
+            paragraph.AddText(customer_details[2]);
             paragraph.AddLineBreak();
-            paragraph.AddText(this.customer_details[3]);
+            paragraph.AddText(customer_details[3]);
 
             // Iterate the credit note items
 
-            for (int i=0; i<products.Count;i++)
+            for (var i = 0; i < products.Count; i++)
             {
-                double quantity = this.products[i].Quantity;
-                double price = GetValueAsDouble(item, "price");
-                double discount = GetValueAsDouble(item, "discount");
+                double quantity = products[i].Quantity;
+                var price = GetValueAsDouble(item, "price");
+                var discount = GetValueAsDouble(item, "discount");
 
                 // Each item fills two rows
-                Row row1 = this.table.AddRow();
+                var row1 = table.AddRow();
                 row1.VerticalAlignment = VerticalAlignment.Center;
                 row1.TopPadding = 1.5;
                 row1.Cells[0].Shading.Color = TableGray;
                 row1.Cells[0].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[0].AddParagraph(products[i].Quantity.ToString());
+                row1.Cells[0].Format.Alignment = ParagraphAlignment.Center;
+
                 row1.Cells[1].Format.Alignment = ParagraphAlignment.Left;
+                row1.Cells[1].VerticalAlignment = VerticalAlignment.Center;
+
                 row1.Cells[2].Format.Alignment = ParagraphAlignment.Center;
+                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
+                row1.Cells[2].AddParagraph(products[i].SellPrice.ToString("c"));
+
                 row1.Cells[3].Format.Alignment = ParagraphAlignment.Center;
                 row1.Cells[3].Shading.Color = TableGray;
-
-                row1.Cells[0].AddParagraph(this.products[i].Quantity.ToString());
-                paragraph = row1.Cells[1].AddParagraph();
-                paragraph.AddFormattedText(this.products[i].ProductName, TextFormat.Bold);
-                row1.Cells[2].AddParagraph(this.products[i].SellPrice.ToString("c"));
-                row1.Cells[2].AddParagraph();
-                row1.Cells[3].AddParagraph(this.products[i].Total.ToString("c"));
+                row1.Cells[3].AddParagraph(products[i].Total.ToString("c"));
                 row1.Cells[3].VerticalAlignment = VerticalAlignment.Center;
-                row1.Cells[2].VerticalAlignment = VerticalAlignment.Center;
 
-                this.table.SetEdge(0, this.table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
+                paragraph = row1.Cells[1].AddParagraph();
+                paragraph.AddFormattedText(products[i].ProductName, TextFormat.Bold);
+
+                table.SetEdge(0, table.Rows.Count - 2, 4, 2, Edge.Box, BorderStyle.Single, 0.75);
             }
 
             // Add an invisible row as a space line to the table
-            Row row = this.table.AddRow();
+            var row = table.AddRow();
             row.Borders.Visible = false;
 
             // Add the total price row
-            row = this.table.AddRow();
+            row = table.AddRow();
             row.Cells[0].Borders.Visible = false;
             row.Cells[0].AddParagraph("Total Price");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            row.Cells[3].AddParagraph(this.creditNote_details[3]);
+            row.Cells[3].AddParagraph(creditNote_details[3]);
 
             // Add the VAT row
-            row = this.table.AddRow();
+            row = table.AddRow();
             row.Cells[0].Borders.Visible = false;
             row.Cells[0].AddParagraph("VAT (19%)");
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            row.Cells[3].AddParagraph(this.creditNote_details[4]);
+            row.Cells[3].AddParagraph(creditNote_details[4]);
 
 
             // Add the total due row
-            row = this.table.AddRow();
+            row = table.AddRow();
             row.Cells[0].AddParagraph("Total Due");
             row.Cells[0].Borders.Visible = false;
             row.Cells[0].Format.Font.Bold = true;
             row.Cells[0].Format.Alignment = ParagraphAlignment.Right;
             row.Cells[0].MergeRight = 2;
-            row.Cells[3].AddParagraph(this.creditNote_details[5]);
+            row.Cells[3].AddParagraph(creditNote_details[5]);
 
             // Set the borders of the specified cell range
-            this.table.SetEdge(3, this.table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
-
+            table.SetEdge(3, table.Rows.Count - 4, 1, 4, Edge.Box, BorderStyle.Single, 0.75);
         }
 
         /// <summary>
-        /// Selects a subtree in the XML data.
+        ///     Selects a subtree in the XML data.
         /// </summary>
-        XPathNavigator SelectItem(string path)
+        private XPathNavigator SelectItem(string path)
         {
-            XPathNodeIterator iter = this.navigator.Select(path);
+            var iter = navigator.Select(path);
             iter.MoveNext();
             return iter.Current;
         }
 
         /// <summary>
-        /// Gets an element value from the XML data.
+        ///     Gets an element value from the XML data.
         /// </summary>
-        static string GetValue(XPathNavigator nav, string name)
+        private static string GetValue(XPathNavigator nav, string name)
         {
             //nav = nav.Clone();
-            XPathNodeIterator iter = nav.Select(name);
+            var iter = nav.Select(name);
             iter.MoveNext();
             return iter.Current.Value;
         }
 
         /// <summary>
-        /// Gets an element value as double from the XML data.
+        ///     Gets an element value as double from the XML data.
         /// </summary>
-        static double GetValueAsDouble(XPathNavigator nav, string name)
+        private static double GetValueAsDouble(XPathNavigator nav, string name)
         {
             try
             {
-                string value = GetValue(nav, name);
+                var value = GetValue(nav, name);
                 if (value.Length == 0)
                     return 0;
-                return Double.Parse(value, CultureInfo.InvariantCulture);
+                return double.Parse(value, CultureInfo.InvariantCulture);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
+
             return 0;
         }
 
         // Some pre-defined colors
 #if true
         // RGB colors
-        readonly static Color TableBorder = new Color(81, 125, 192);
-        readonly static Color TableBlue = new Color(235, 240, 249);
-        readonly static Color TableGray = new Color(242, 242, 242);
-        readonly static Color LogoBlue = new Color(38,34,98);
+        private static readonly Color TableBorder = new Color(81, 125, 192);
+        private static readonly Color TableBlue = new Color(235, 240, 249);
+        private static readonly Color TableGray = new Color(242, 242, 242);
+        private static readonly Color LogoBlue = new Color(38, 34, 98);
 #else
     // CMYK colors
     readonly static Color tableBorder = Color.FromCmyk(100, 50, 0, 30);

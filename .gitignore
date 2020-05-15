@@ -12,3 +12,7 @@
 /Invoice.rar
 /Invoice/Invoice/Invoice.csproj.user
 /Invoice/Invoice/InvoiceX.csproj.user
+/Invoice/UnitTestProject/bin/Debug
+/Invoice/UnitTestProject/obj/Debug
+/Invoice/Setup/Debug
+/Invoice/Invoice/bin/Release

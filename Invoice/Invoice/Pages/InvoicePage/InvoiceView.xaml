@@ -1,82 +1,126 @@
 ﻿<Page x:Class="InvoiceX.Pages.InvoicePage.InvoiceView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:InvoiceX.Pages.InvoicePage"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       d:DesignHeight="950" d:DesignWidth="1725"
       Title="InvoiceView">
 
     <Grid Background="White" Visibility="Visible">
-        <Grid Background="#FFECECEC"  HorizontalAlignment="Left" Height="358" VerticalAlignment="Top" Width="1725">
+        <Grid Background="#FFECECEC" HorizontalAlignment="Left" Height="358" VerticalAlignment="Top" Width="1725">
             <Grid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
+                <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0"
+                  VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"/>
-                <TextBox x:Name="textBox_Customer" Text="{Binding CustomerName}" HorizontalAlignment="Left" Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" IsReadOnly="True" />
-                <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True"/>
-                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,163,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True"/>
-                <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,219,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,30,0,0" TextWrapping="Wrap" Text="Customer" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,86,0,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,142,0,0" TextWrapping="Wrap" Text="Contact Details" VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="178,198,0,0" TextWrapping="Wrap" Text="Email Address" VerticalAlignment="Top"/>
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap"
+                           Text="Customer " VerticalAlignment="Top" Width="141" FontSize="30" Background="White"
+                           Foreground="#FF5960FF" />
+                <TextBox x:Name="textBox_Customer" Text="{Binding CustomerName}" HorizontalAlignment="Left"
+                         Margin="176,51,0,0" VerticalAlignment="Top" Width="371" Height="30" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Address" HorizontalAlignment="Left" Height="30" Margin="176,107,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Contact_Details" HorizontalAlignment="Left" Height="30" Margin="176,163,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="371" IsReadOnly="True" />
+                <TextBox x:Name="textBox_Email_Address" HorizontalAlignment="Left" Height="30" Margin="176,219,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="178,30,0,0" TextWrapping="Wrap" Text="Customer"
+                           VerticalAlignment="Top" />
+                <TextBlock HorizontalAlignment="Left" Margin="178,86,0,0" TextWrapping="Wrap" Text="Address"
+                           VerticalAlignment="Top" />
+                <TextBlock HorizontalAlignment="Left" Margin="178,142,0,0" TextWrapping="Wrap" Text="Contact Details"
+                           VerticalAlignment="Top" />
+                <TextBlock HorizontalAlignment="Left" Margin="178,198,0,0" TextWrapping="Wrap" Text="Email Address"
+                           VerticalAlignment="Top" />
             </Grid>
 
-            <Grid x:Name="grid_Invoice" Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0" VerticalAlignment="Top" Width="584">
+            <Grid x:Name="grid_Invoice" Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0"
+                  VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
-                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF" Text="Details" />
-                <TextBlock HorizontalAlignment="Left" Margin="139,28,0,0" TextWrapping="Wrap" Text="Invoice No." VerticalAlignment="Top"/>
-                <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="txtBox_invoiceNumber_KeyDown"/>
-                <TextBox x:Name="txtBox_invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
-                <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtBox_issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0" VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True"/>
-                <Button x:Name="btn_loadInvoice" Style="{DynamicResource CommonButtonStyle}" Content="Load Invoice" HorizontalAlignment="Left" Margin="139,210,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="Btn_LoadInvoice_Click"/>
-                <TextBlock HorizontalAlignment="Left" Margin="277,83,0,0" TextWrapping="Wrap" Text="Due Date" VerticalAlignment="Top"/>
-                <TextBox x:Name="txtBox_dueDate" HorizontalAlignment="Left" Margin="277,104,0,0" VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True"/>
-                <Button x:Name="btn_clearView" Style="{DynamicResource CommonButtonStyle}" Content="Clear" HorizontalAlignment="Left" Margin="277,210,0,0" VerticalAlignment="Top" Width="120" Height="35" Click="Btn_clearView_Click"/>
+                <TextBlock HorizontalAlignment="Left" Height="53" Margin="10,10,0,0" TextWrapping="Wrap"
+                           VerticalAlignment="Top" Width="141" FontSize="30" Background="White" Foreground="#FF5960FF"
+                           Text="Details" />
+                <TextBlock HorizontalAlignment="Left" Margin="139,28,0,0" TextWrapping="Wrap" Text="Invoice No."
+                           VerticalAlignment="Top" />
+                <TextBlock HorizontalAlignment="Left" Margin="139,83,0,0" TextWrapping="Wrap" Text="Invoice Date"
+                           VerticalAlignment="Top" />
+                <TextBox x:Name="txtBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="139,49,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" KeyDown="txtBox_invoiceNumber_KeyDown" />
+                <TextBox x:Name="txtBox_invoiceDate" HorizontalAlignment="Left" Margin="139,104,0,0"
+                         VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True" />
+                <TextBlock HorizontalAlignment="Left" Margin="139,139,0,0" TextWrapping="Wrap" Text="Issued By"
+                           VerticalAlignment="Top" />
+                <TextBox x:Name="txtBox_issuedBy" HorizontalAlignment="Left" Margin="139,160,0,0"
+                         VerticalAlignment="Top" Width="120" Height="30" IsReadOnly="True" />
+                <Button x:Name="btn_loadInvoice" Style="{DynamicResource CommonButtonStyle}" Content="Load Invoice"
+                        HorizontalAlignment="Left" Margin="139,210,0,0" VerticalAlignment="Top" Width="120" Height="35"
+                        Click="Btn_LoadInvoice_Click" />
+                <TextBlock HorizontalAlignment="Left" Margin="277,83,0,0" TextWrapping="Wrap" Text="Due Date"
+                           VerticalAlignment="Top" />
+                <TextBox x:Name="txtBox_dueDate" HorizontalAlignment="Left" Margin="277,104,0,0"
+                         VerticalAlignment="Top" Height="30" Width="120" IsReadOnly="True" />
+                <Button x:Name="btn_clearView" Style="{DynamicResource CommonButtonStyle}" Content="Clear"
+                        HorizontalAlignment="Left" Margin="277,210,0,0" VerticalAlignment="Top" Width="120" Height="35"
+                        Click="Btn_clearView_Click" />
 
 
             </Grid>
-            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0" TextWrapping="Wrap" Text="View Invoice" VerticalAlignment="Top" Width="364" FontSize="40"/>
+            <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="11,88,0,0"
+                       TextWrapping="Wrap" Text="View Invoice" VerticalAlignment="Top" Width="364" FontSize="40" />
         </Grid>
 
-        <DataGrid x:Name="invoiceProductsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0" VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
-                      HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
+        <DataGrid x:Name="invoiceProductsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0"
+                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
-                <DropShadowEffect Opacity="0.16"/>
+                <DropShadowEffect Opacity="0.16" />
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header = "ITEMS " Binding="{Binding ProductName}" />
-                <DataGridTextColumn Header = "DESCRIPTION" Binding="{Binding ProductDescription}" />
-                <DataGridTextColumn Header = "QUANTITY" Binding="{Binding Quantity}" />
-                <DataGridTextColumn Header = "PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
-                <DataGridTextColumn Header = "VAT" Binding="{Binding Vat, StringFormat=P}" />
-                <DataGridTextColumn Header = "TOTAL"  Binding="{Binding Total, StringFormat=C}" />
+                <DataGridTextColumn Header="ITEMS " Binding="{Binding ProductName}" />
+                <DataGridTextColumn Header="DESCRIPTION" Binding="{Binding ProductDescription}" />
+                <DataGridTextColumn Header="QUANTITY" Binding="{Binding Quantity}" />
+                <DataGridTextColumn Header="PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
+                <DataGridTextColumn Header="VAT" Binding="{Binding Vat, StringFormat=P}" />
+                <DataGridTextColumn Header="TOTAL" Binding="{Binding Total, StringFormat=C}" />
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF" HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="savePdf_Click"/>
-        <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print" HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="printPdf_click"/>
-        <Button Style="{DynamicResource CommonButtonStyle}" Content="Preview" HorizontalAlignment="Left" VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,854,0,0" TextWrapping="Wrap" Text="Net Total" VerticalAlignment="Top" Width="81"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,881,0,0" TextWrapping="Wrap" Text="Vat" VerticalAlignment="Top" Width="81"/>
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1456,906,0,0" TextWrapping="Wrap" Text="Total Cost" VerticalAlignment="Top" Width="81"/>
-        <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="1548,853,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"/>
-        <TextBlock x:Name="Vat_TextBlock"  HorizontalAlignment="Left" Margin="1548,878,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00"  />
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1548,903,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108" Height="20" Text="0.00" />
-        <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left" Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click"/>
-        <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete" HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="Btn_delete_Click"/>
+        <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF"
+                HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                Click="savePdf_Click" />
+        <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print"
+                HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                Click="printPdf_click" />
+        <Button Style="{DynamicResource CommonButtonStyle}" Content="Preview" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click" />
+        <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left"
+                Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click" />
+        <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete"
+                HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                Click="Btn_delete_Click" />
 
+        <Grid HorizontalAlignment="Left" Height="77" Margin="1459,837,0,0" VerticalAlignment="Top" Width="163">
+            <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,3,0,0" TextWrapping="Wrap" Text="Net Total"
+                       VerticalAlignment="Top" Width="81" FontSize="16" />
+            <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,30,0,0" TextWrapping="Wrap" Text="Vat"
+                       VerticalAlignment="Top" Width="81" FontSize="16" />
+            <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,55,0,0" TextWrapping="Wrap" Text="Total Cost"
+                       VerticalAlignment="Top" Width="81" FontSize="16" />
+            <TextBlock x:Name="NetTotal_TextBlock" HorizontalAlignment="Left" Margin="93,2,0,0" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Width="108" Height="20" Text="0.00" FontSize="16" />
+            <TextBlock x:Name="Vat_TextBlock" HorizontalAlignment="Left" Margin="93,27,0,0" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Width="108" Height="20" Text="0.00" FontSize="16" />
+            <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="93,55,0,0" TextWrapping="Wrap"
+                       VerticalAlignment="Top" Width="108" Height="20" Text="0.00" FontSize="16" />
+        </Grid>
 
     </Grid>
 </Page>

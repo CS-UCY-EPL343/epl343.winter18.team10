@@ -1,82 +1,95 @@
-﻿using System;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using InvoiceX.Forms;
 using InvoiceX.Models;
 using InvoiceX.ViewModels;
 using LiveCharts;
 using LiveCharts.Wpf;
-using MigraDoc.DocumentObjectModel;
-using MigraDoc.Rendering;
 
 namespace InvoiceX.Pages
 {
     /// <summary>
-    /// Interaction logic for Dashboard.xaml
+    ///     Interaction logic for Dashboard.xaml
     /// </summary>
     public partial class Dashboard : Page
     {
         public Dashboard()
         {
             InitializeComponent();
-            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"};
+            Labels = new[] {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
             createChart1();
             createChart2();
-            invoicesCount.Text = ViewModels.InvoiceViewModel.get30DaysTotalInvoices();
-            totalSales.Text = "€"+ ViewModels.InvoiceViewModel.get30DaysTotalSales();
+            invoicesCount.Text = InvoiceViewModel.get30DaysTotalInvoices();
+            totalSales.Text = "€" + InvoiceViewModel.get30DaysTotalSales();
             loadOrderTable();
-
         }
 
-        public void loadOrderTable() {
-            OrderViewModel orderViewModel = new OrderViewModel();
+        public SeriesCollection SeriesCollection { get; set; }
+        public SeriesCollection SeriesCollection2 { get; set; }
+
+        public string[] Labels { get; set; }
+        public string[] Labels2 { get; set; }
+
+        public Func<double, string> YFormatter { get; set; }
+        public Func<double, string> Formatter { get; set; }
+
+        public void loadOrderTable()
+        {
+            var orderViewModel = new OrderViewModel();
             //find the pending orders
-            List<Order> list = orderViewModel.orderList;
-            List<Order> list2 = new List<Order>();
+            var list = orderViewModel.orderList;
+            var list2 = new List<Order>();
 
-            for (int i=0; i < list.Count; i++)
-            {
-                if ((int)(list.ElementAt(i).status)==2)
-                {
+            for (var i = 0; i < list.Count; i++)
+                if ((int) list.ElementAt(i).status == 2)
                     list2.Add(list.ElementAt(i));
-                }
-            }
 
-            var _itemSourceList = new CollectionViewSource() { Source = list2 };
-            System.ComponentModel.ICollectionView Itemlist = _itemSourceList.View;
+            var _itemSourceList = new CollectionViewSource {Source = list2};
+            var Itemlist = _itemSourceList.View;
 
             orderDataGrid.ItemsSource = Itemlist;
-
         }
 
-        void createChart1()
+        private void createChart1()
         {
-            double[] receipts = new double[12];
-            for (int i=0; i<12; i++)
-            {
-                receipts[i] = ViewModels.ReceiptViewModel.getTotalReceiptsMonthYear(i, DateTime.Now.Year);
-            }
-            ChartValues<double> totalReceipt = new ChartValues<double>();
+            var receipts = new double[12];
+            for (var i = 0; i < 12; i++) receipts[i] = ReceiptViewModel.getTotalReceiptsMonthYear(i, DateTime.Now.Year);
+            var totalReceipt = new ChartValues<double>();
             totalReceipt.AddRange(receipts);
 
-            double[] invoices = new double[12];
-            for (int i = 0; i < 12; i++)
-            {
-                invoices[i] = ViewModels.InvoiceViewModel.getTotalSalesMonthYear(i, DateTime.Now.Year);
-            }
+            var invoices = new double[12];
+            for (var i = 0; i < 12; i++) invoices[i] = InvoiceViewModel.getTotalSalesMonthYear(i, DateTime.Now.Year);
 
-            ChartValues<double> total = new ChartValues<double>();
+            var total = new ChartValues<double>();
             total.AddRange(invoices);
             SeriesCollection = new SeriesCollection
 
@@ -91,40 +104,41 @@ namespace InvoiceX.Pages
                     Title = "Receipts",
                     Values = totalReceipt,
                     PointGeometry = null
-                },
+                }
             };
 
             YFormatter = value => value.ToString("C");
             DataContext = this;
-
         }
-        void createChart2()
+
+        private void createChart2()
         {
             var today = DateTime.Today;
             var month = new DateTime(today.Year, today.Month, 1);
             var lastMonth = month.AddMonths(-4);
-            double[] invoices = new double[4];
-            double[] receipts = new double[4];
-            double[] expenses = new double[4];
+            var invoices = new double[4];
+            var receipts = new double[4];
+            var expenses = new double[4];
 
             Labels2 = new string[4];
 
-            for (int i = 0; i < 4; i++)
+            for (var i = 0; i < 4; i++)
             {
-                receipts[i] = ViewModels.ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year);
-                invoices[i] = ViewModels.InvoiceViewModel.getTotalSalesMonthYear(lastMonth.Month, lastMonth.Year);
-                expenses[i] = ViewModels.ExpensesViewModel.getTotalExpensesMonthYear(lastMonth.Month, lastMonth.Year);
+                receipts[i] = ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year);
+                invoices[i] = InvoiceViewModel.getTotalSalesMonthYear(lastMonth.Month, lastMonth.Year);
+                expenses[i] = ExpensesViewModel.getTotalExpensesMonthYear(lastMonth.Month, lastMonth.Year);
                 Console.WriteLine(expenses[i]);
                 Labels2[i] = lastMonth.Month.ToString();
                 lastMonth = lastMonth.AddMonths(1);
             }
-            ChartValues<double> totalReceipt = new ChartValues<double>();
+
+            var totalReceipt = new ChartValues<double>();
             totalReceipt.AddRange(receipts);
 
-            ChartValues<double> total = new ChartValues<double>();
+            var total = new ChartValues<double>();
             total.AddRange(invoices);
 
-            ChartValues<double> totalExpenses = new ChartValues<double>();
+            var totalExpenses = new ChartValues<double>();
             totalExpenses.AddRange(expenses);
 
             SeriesCollection2 = new SeriesCollection
@@ -143,27 +157,16 @@ namespace InvoiceX.Pages
                 {
                     Title = "Expenses",
                     Values = totalExpenses
-                },
-
+                }
             };
 
             Formatter = value => value.ToString("N");
 
             DataContext = this;
         }
-        public SeriesCollection SeriesCollection { get; set; }
-        public SeriesCollection SeriesCollection2 { get; set; }
-
-        public string[] Labels { get; set; }
-        public string[] Labels2 { get; set; }
-
-        public Func<double, string> YFormatter { get; set; }
-        public Func<double, string> Formatter { get; set; }
 
         public void CartesianChart_Loaded(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }
-

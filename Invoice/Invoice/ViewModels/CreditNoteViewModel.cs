@@ -1,48 +1,73 @@
-﻿using InvoiceX.Classes;
-using InvoiceX.Models;
-using MySql.Data.MySqlClient;
+﻿// /*****************************************************************************
+//  * MIT License
+//  *
+//  * Copyright (c) 2020 InvoiceX
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in all
+//  * copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  * SOFTWARE.
+//  *
+//  *****************************************************************************/
+
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
+using InvoiceX.Classes;
+using InvoiceX.Models;
+using MySql.Data.MySqlClient;
 
 namespace InvoiceX.ViewModels
 {
-
+    /// <summary>
+    ///     The class that communicates with the database in relation with Credit Notes
+    /// </summary>
     public class CreditNoteViewModel
     {
-        public List<CreditNote> creditNoteList { get; set; }
-        public List<int> customer_invoices_list { get; set; }
-        public List<Product> invoice_products_list { get; set; }
+        private static readonly MySqlConnection conn = DBConnection.Instance.Connection;
 
-        private static MySqlConnection conn = DBConnection.Instance.Connection;
-
+        /// <summary>
+        ///     Constructor that fills the list with all the credit notes
+        /// </summary>
         public CreditNoteViewModel()
         {
             creditNoteList = new List<CreditNote>();
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT `CreditNote`.*, `Customer`.`CustomerName` FROM `CreditNote`" +
-                    " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer`; ", conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT `CreditNote`.*, `Customer`.`CustomerName` FROM `CreditNote`" +
+                                           " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer`; ",
+                    conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
-                CreditNote cred = new CreditNote();
+                var cred = new CreditNote();
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customer = dataRow.Field<string>("CustomerName");
-                    var idCreditNote = dataRow.Field<Int32>("idCreditNote");
+                    var idCreditNote = dataRow.Field<int>("idCreditNote");
                     var cost = dataRow.Field<float>("Cost");
                     var VAT = dataRow.Field<float>("VAT");
                     var credTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    cred = new CreditNote()
+                    cred = new CreditNote
                     {
                         idCreditNote = idCreditNote,
                         customerName = customer,
@@ -56,27 +81,32 @@ namespace InvoiceX.ViewModels
                     creditNoteList.Add(cred);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-           
         }
 
+        public List<CreditNote> creditNoteList { get; set; }
+
+        /// <summary>
+        ///     Given the credit note ID retrieves the credit note and returns it
+        /// </summary>
+        /// <param name="creditNoteID"></param>
+        /// <returns></returns>
         public static CreditNote getCreditNote(int creditNoteID)
         {
-            CreditNote cred = new CreditNote();
+            var cred = new CreditNote();
             try
             {
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM viewCreditNote WHERE CreditNoteID = " + creditNoteID, conn);
-                DataTable dt = new DataTable();
+                var cmd = new MySqlCommand("SELECT * FROM viewCreditNote WHERE CreditNoteID = " + creditNoteID, conn);
+                var dt = new DataTable();
                 dt.Load(cmd.ExecuteReader());
 
                 if (dt.Rows.Count == 0)
                     cred = null;
 
-                int count = 0;
+                var count = 0;
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var customerName = dataRow.Field<string>("CustomerName");
@@ -88,26 +118,26 @@ namespace InvoiceX.ViewModels
                     var customerId = dataRow.Field<int>("idCustomer");
                     var customerBalance = dataRow.Field<float>("Balance");
 
-                    var idCreditNote = dataRow.Field<Int32>("CreditNoteID");
+                    var idCreditNote = dataRow.Field<int>("CreditNoteID");
                     var cost = dataRow.Field<float>("CreditNoteCost");
                     var VAT = dataRow.Field<float>("CreditNoteVAT");
                     var credTotalCost = dataRow.Field<float>("CreditNoteTotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
 
-                    var productID = dataRow.Field<Int32>("idProduct");
-                    var invoiceID = dataRow.Field<Int32>("idInvoice");
+                    var productID = dataRow.Field<int>("idProduct");
+                    var invoiceID = dataRow.Field<int>("idInvoice");
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
                     var proTotalCost = dataRow.Field<float>("IPCost");
                     var proVat = dataRow.Field<float>("IPVAT");
-                    var quantity = dataRow.Field<Int32>("Quantity");
+                    var quantity = dataRow.Field<int>("Quantity");
 
                     if (count == 0)
                     {
                         count++;
-                        cred = new CreditNote()
+                        cred = new CreditNote
                         {
                             idCreditNote = idCreditNote,
                             customerName = customerName,
@@ -117,7 +147,7 @@ namespace InvoiceX.ViewModels
                             createdDate = createdDate,
                             issuedBy = issuedBy,
                             products = new List<Product>(),
-                            customer = new Customer()
+                            customer = new Customer
                             {
                                 CustomerName = customerName,
                                 PhoneNumber = phoneNumber,
@@ -131,21 +161,21 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    cred.products.Add(new Product()
+                    cred.products.Add(new Product
                     {
                         idProduct = productID,
                         productInvoiceID = invoiceID,
                         ProductName = product,
                         ProductDescription = prodDescription,
                         Stock = stock,
-                        Total = proTotalCost* quantity,//@chrisi ekana alagi edo * quantity
+                        Total = proTotalCost * quantity, //@chrisi ekana alagi edo * quantity
                         Quantity = quantity,
                         SellPrice = proTotalCost / quantity,
                         Vat = proVat
                     });
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -153,17 +183,24 @@ namespace InvoiceX.ViewModels
             return cred;
         }
 
+        /// <summary>
+        ///     Retrieves and returns the credit notes as statement items matching the parameters given
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public static List<StatementItem> getCreditNotesForStatement(int customerID, DateTime from, DateTime to)
         {
-            List<StatementItem> list = new List<StatementItem>();
+            var list = new List<StatementItem>();
 
             try
             {
-                string query = "SELECT `CreditNote`.* FROM `CreditNote`" +
-                    " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
-                    "`CreditNote`.`CreatedDate` >= @from AND `CreditNote`.`CreatedDate` <= @to; ";
-                DataTable dt = new DataTable();
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                var query = "SELECT `CreditNote`.* FROM `CreditNote`" +
+                            " LEFT JOIN `Customer` ON `CreditNote`.`idCustomer` = `Customer`.`idCustomer` WHERE `Customer`.`idCustomer` = @customerID AND " +
+                            "`CreditNote`.`CreatedDate` >= @from AND `CreditNote`.`CreatedDate` <= @to; ";
+                var dt = new DataTable();
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@customerID", customerID);
                     cmd.Parameters.AddWithValue("@from", from);
@@ -172,15 +209,15 @@ namespace InvoiceX.ViewModels
                     dt.Load(cmd.ExecuteReader());
                 }
 
-                StatementItem inv = new StatementItem();
+                var inv = new StatementItem();
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    var idCreditNote = dataRow.Field<Int32>("idCreditNote");
+                    var idCreditNote = dataRow.Field<int>("idCreditNote");
                     var credTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var balance = dataRow.Field<float>("PreviousBalance");
 
-                    inv = new StatementItem()
+                    inv = new StatementItem
                     {
                         idItem = idCreditNote,
                         credits = credTotalCost,
@@ -192,7 +229,7 @@ namespace InvoiceX.ViewModels
                     list.Add(inv);
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
@@ -200,32 +237,37 @@ namespace InvoiceX.ViewModels
             return list;
         }
 
+        /// <summary>
+        ///     Given the credit note ID deletes the credit note from the Database
+        /// </summary>
+        /// <param name="creditNoteID"></param>
         public static void deleteCreditNote(int creditNoteID)
         {
             try
             {
-                MySqlCommand cmd = new MySqlCommand("DELETE FROM CreditNoteProduct WHERE idCreditNote = " + creditNoteID, conn);
+                var cmd = new MySqlCommand("DELETE FROM CreditNoteProduct WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
 
                 cmd = new MySqlCommand("DELETE FROM CreditNote WHERE idCreditNote = " + creditNoteID, conn);
                 cmd.ExecuteNonQuery();
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
-       
-
-      
-
+        /// <summary>
+        ///     Returns the latest credit note ID from the database
+        /// </summary>
+        /// <returns></returns>
         public static int returnLatestCreditNoteID()
         {
             try
             {
                 int idInvoice;
-                MySqlCommand cmd = new MySql.Data.MySqlClient.MySqlCommand("SELECT idCreditNote FROM CreditNote ORDER BY idCreditNote DESC LIMIT 1", conn);
+                var cmd = new MySqlCommand("SELECT idCreditNote FROM CreditNote ORDER BY idCreditNote DESC LIMIT 1",
+                    conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -235,21 +277,27 @@ namespace InvoiceX.ViewModels
 
                 return idInvoice;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             return 0;
         }
 
+        /// <summary>
+        ///     Given the credit note object inserts it in to the database
+        /// </summary>
+        /// <param name="creditNote"></param>
         public static void insertCreditNote(CreditNote creditNote)
         {
             try
             {
                 //insert invoice 
-                string query = "INSERT INTO CreditNote (idCreditNote, idCustomer, Cost, Vat, TotalCost, CreatedDate, PreviousBalance, IssuedBy) Values (@idCreditNote, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @PreviousBalance, @IssuedBy)";
+                var query =
+                    "INSERT INTO CreditNote (idCreditNote, idCustomer, Cost, Vat, TotalCost, CreatedDate, PreviousBalance, IssuedBy) Values (@idCreditNote, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @PreviousBalance, @IssuedBy)";
 
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idCreditNote", creditNote.idCreditNote);
@@ -265,24 +313,28 @@ namespace InvoiceX.ViewModels
                 }
 
                 //insert product
-                StringBuilder sCommand = new StringBuilder("INSERT INTO CreditNoteProduct (idCreditNote, idProduct, idInvoice, Quantity) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder(
+                        "INSERT INTO CreditNoteProduct (idCreditNote, idProduct, idInvoice, Quantity) VALUES ");
+                var Rows = new List<string>();
 
 
-                foreach (Product p in creditNote.products)
+                foreach (var p in creditNote.products)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}')", MySqlHelper.EscapeString(creditNote.idCreditNote.ToString()),
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}')",
+                        MySqlHelper.EscapeString(creditNote.idCreditNote.ToString()),
                         p.idProduct, MySqlHelper.EscapeString(p.productInvoiceID.ToString()), p.Quantity));
 
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    using (var cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+" +
+                                                       p.Quantity + ") WHERE idProduct=" + p.idProduct + ";", conn))
                     {
                         cmd3.ExecuteNonQuery();
                     }
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
@@ -290,27 +342,33 @@ namespace InvoiceX.ViewModels
 
 
                 //update customer total  
-                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
+                var queryBalance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
+                using (var cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", creditNote.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", creditNote.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
 
+        /// <summary>
+        ///     Given the id checks if a credit note exists with that id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public static bool CreditNoteExists(int id)
         {
             try
             {
                 int idInvoice;
-                MySqlCommand cmd = new MySqlCommand("SELECT idCreditNote FROM CreditNote where idCreditNote=" + id.ToString(), conn);
+                var cmd = new MySqlCommand("SELECT idCreditNote FROM CreditNote where idCreditNote=" + id, conn);
 
                 var queryResult = cmd.ExecuteScalar();
                 if (queryResult != null)
@@ -318,23 +376,30 @@ namespace InvoiceX.ViewModels
                 else
                     idInvoice = 0;
 
-                return ((idInvoice == 0) ? false : true);
+                return idInvoice == 0 ? false : true;
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
             return false;
         }
 
+        /// <summary>
+        ///     Given the old and updated credit note update the credit note
+        /// </summary>
+        /// <param name="creditNote"></param>
+        /// <param name="old_creditNote"></param>
         public static void updateCreditNote(CreditNote creditNote, CreditNote old_creditNote)
         {
             try
             {
                 //update Credit Note 
-                string query = "UPDATE CreditNote SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, IssuedBy=@IssuedBy, PreviousBalance=@PreviousBalance WHERE idCreditNote=@idCreditNote;";
+                var query =
+                    "UPDATE CreditNote SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, IssuedBy=@IssuedBy, PreviousBalance=@PreviousBalance WHERE idCreditNote=@idCreditNote;";
 
-                using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                using (var cmd = new MySqlCommand(query, conn))
                 {
                     // Now we can start using the passed values in our parameters:
 
@@ -348,22 +413,22 @@ namespace InvoiceX.ViewModels
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
+
                 //update old stock  
-                string queryStock = "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-@Quantity) WHERE  idProduct=@idProduct;";
-                for (int i = 0; i < old_creditNote.products.Count; i++)
-                {
-                    using (MySqlCommand cmd3 = new MySqlCommand(queryStock, conn))
+                var queryStock =
+                    "UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock-@Quantity) WHERE  idProduct=@idProduct;";
+                for (var i = 0; i < old_creditNote.products.Count; i++)
+                    using (var cmd3 = new MySqlCommand(queryStock, conn))
                     {
                         cmd3.Parameters.AddWithValue("@Quantity", old_creditNote.products[i].Quantity);
                         cmd3.Parameters.AddWithValue("@idProduct", old_creditNote.products[i].idProduct);
                         cmd3.ExecuteNonQuery();
                     }
-                }
 
                 //delete old Credit Note products
-                string queryDelete = "DELETE from CreditNoteProduct WHERE idCreditNote=@idCreditNote; ";
+                var queryDelete = "DELETE from CreditNoteProduct WHERE idCreditNote=@idCreditNote; ";
 
-                using (MySqlCommand cmd = new MySqlCommand(queryDelete, conn))
+                using (var cmd = new MySqlCommand(queryDelete, conn))
                 {
                     // Now we can start using the passed values in our parameters:
                     cmd.Parameters.AddWithValue("@idCreditNote", old_creditNote.idCreditNote);
@@ -373,40 +438,45 @@ namespace InvoiceX.ViewModels
 
 
                 //insert product
-                StringBuilder sCommand = new StringBuilder("INSERT INTO CreditNoteProduct (idCreditNote, idProduct, idInvoice, Quantity) VALUES ");
-                List<string> Rows = new List<string>();
+                var sCommand =
+                    new StringBuilder(
+                        "INSERT INTO CreditNoteProduct (idCreditNote, idProduct, idInvoice, Quantity) VALUES ");
+                var Rows = new List<string>();
 
 
-                foreach (Product p in creditNote.products)
+                foreach (var p in creditNote.products)
                 {
-                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}')", MySqlHelper.EscapeString(creditNote.idCreditNote.ToString()),
+                    Rows.Add(string.Format("('{0}','{1}','{2}','{3}')",
+                        MySqlHelper.EscapeString(creditNote.idCreditNote.ToString()),
                         p.idProduct, MySqlHelper.EscapeString(p.productInvoiceID.ToString()), p.Quantity));
 
-                    using (MySqlCommand cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+" +
-                        p.Quantity.ToString() + ") WHERE idProduct=" + p.idProduct.ToString() + ";", conn))
+                    using (var cmd3 = new MySqlCommand("UPDATE Product SET Stock = REPLACE(Stock,Stock,Stock+" +
+                                                       p.Quantity + ") WHERE idProduct=" + p.idProduct + ";", conn))
                     {
                         cmd3.ExecuteNonQuery();
                     }
                 }
+
                 sCommand.Append(string.Join(",", Rows));
                 sCommand.Append(";");
-                using (MySqlCommand myCmd = new MySqlCommand(sCommand.ToString(), conn))
+                using (var myCmd = new MySqlCommand(sCommand.ToString(), conn))
                 {
                     myCmd.CommandType = CommandType.Text;
                     myCmd.ExecuteNonQuery();
                 }
 
                 //update customer total  
-                string queryBalance = "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
+                var queryBalance =
+                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (MySqlCommand cmd3 = new MySqlCommand(queryBalance, conn))
+                using (var cmd3 = new MySqlCommand(queryBalance, conn))
                 {
                     cmd3.Parameters.AddWithValue("@amount", creditNote.totalCost - old_creditNote.totalCost);
                     cmd3.Parameters.AddWithValue("@idCustomer", creditNote.customer.idCustomer);
                     cmd3.ExecuteNonQuery();
                 }
             }
-            catch (MySql.Data.MySqlClient.MySqlException ex)
+            catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }

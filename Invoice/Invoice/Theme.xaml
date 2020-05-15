@@ -3,151 +3,152 @@
                     xmlns:local="clr-namespace:InvoiceX">
     <!-- DataGrid style -->
     <Style x:Key="viewDataGridStyle" TargetType="{x:Type DataGrid}">
-        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}"/>
-        <Setter Property="RowStyle" Value="{DynamicResource RowStyle}"/>
-        <Setter Property="CellStyle" Value="{DynamicResource CellStyle}"/>
-        <Setter Property="CanUserAddRows" Value="False"/>
-        <Setter Property="CanUserResizeColumns" Value="False"/>
-        <Setter Property="CanUserResizeRows" Value="False"/>
-        <Setter Property="CanUserReorderColumns" Value="False"/>
-        <Setter Property="AutoGenerateColumns" Value="False"/>
-        <Setter Property="AlternatingRowBackground" Value="AliceBlue"/>
-        <Setter Property="IsReadOnly" Value="True"/>        
-        <Setter Property="ColumnWidth" Value="*"/>
+        <Setter Property="ColumnHeaderStyle" Value="{DynamicResource ColumnHeaderStyle}" />
+        <Setter Property="RowStyle" Value="{DynamicResource RowStyle}" />
+        <Setter Property="CellStyle" Value="{DynamicResource CellStyle}" />
+        <Setter Property="CanUserAddRows" Value="False" />
+        <Setter Property="CanUserResizeColumns" Value="False" />
+        <Setter Property="CanUserResizeRows" Value="False" />
+        <Setter Property="CanUserReorderColumns" Value="False" />
+        <Setter Property="AutoGenerateColumns" Value="False" />
+        <Setter Property="AlternatingRowBackground" Value="AliceBlue" />
+        <Setter Property="IsReadOnly" Value="True" />
+        <Setter Property="ColumnWidth" Value="*" />
     </Style>
     <!-- DataGridColumnHeader style -->
     <Style x:Key="ColumnHeaderStyle" TargetType="{x:Type DataGridColumnHeader}">
-        <Setter Property="Background" Value="#FFCFE6EE"/>
-        <Setter Property="Foreground" Value="#FF6A6A6A"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="#FFCFE6EE" />
+        <Setter Property="Foreground" Value="#FF6A6A6A" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="Height" Value="50"/>
+        <Setter Property="Height" Value="50" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="ToolTip" Value="Click to Sort"/>
-                <Setter Property="Background" Value="#FFB8E0EE"/>
+                <Setter Property="ToolTip" Value="Click to Sort" />
+                <Setter Property="Background" Value="#FFB8E0EE" />
             </Trigger>
         </Style.Triggers>
     </Style>
     <!-- DataGridRow style -->
     <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
-        <Setter Property="Height" Value="50"/>
-        <Setter Property="TextBlock.TextAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Height" Value="50" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Focusable" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FFCFE4EC"/>
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="#FFCFE4EC" />
+                <Setter Property="Foreground" Value="Black" />
             </Trigger>
         </Style.Triggers>
     </Style>
     <!-- DataGridCell style -->
     <Style x:Key="CellStyle" TargetType="{x:Type DataGridCell}">
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="FontSize" Value="18"/>
-        <Setter Property="Height" Value="auto"/>
-        <Setter Property="Width" Value="auto"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Height" Value="auto" />
+        <Setter Property="Width" Value="auto" />
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="Padding" Value="20"/>
-        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Padding" Value="20" />
+        <Setter Property="Focusable" Value="False" />
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
-                <Setter Property="Background" Value="{x:Null}"/>
-                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="{x:Null}" />
+                <Setter Property="Foreground" Value="Black" />
             </Trigger>
         </Style.Triggers>
     </Style>
     <!-- Top Button Style -->
     <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FontSize" Value="16" />
     </Style>
     <!-- Top Button Selected Style -->
     <Style x:Key="ButtonStyleSelected" TargetType="{x:Type Button}">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0,0,0,5"/>
-        <Setter Property="BorderBrush" Value="#FFEE1515"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="#FFEE1515"/> 
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0,0,0,5" />
+        <Setter Property="BorderBrush" Value="#FFEE1515" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="#FFEE1515" />
     </Style>
     <!--  Button diafanes apo mesa blue -->
     <Style x:Key="ButtonStyle_Complete" TargetType="Button">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1,1,1,1"/>
-        <Setter Property="BorderBrush" Value="#FF5960FF"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="#FF5960FF"/>
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1,1,1,1" />
+        <Setter Property="BorderBrush" Value="#FF5960FF" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="#FF5960FF" />
     </Style>
     <!--  Button diafanes apo mesa blue -->
     <Style x:Key="ButtonStyle_X" TargetType="Button">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1,1,1,1"/>
-        <Setter Property="BorderBrush" Value="#FF5960FF"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="Red"/>
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="1,1,1,1" />
+        <Setter Property="BorderBrush" Value="#FF5960FF" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="Red" />
     </Style>
     <Style x:Key="ButtonStyle_Create" TargetType="Button">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="#FF0078D6"/>
-        <Setter Property="BorderBrush" Value="#FF5960FF"/>
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="Foreground" Value="White"/>        
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="#FF0078D6" />
+        <Setter Property="BorderBrush" Value="#FF5960FF" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Foreground" Value="White" />
     </Style>
     <Style x:Key="ButtonStyle_Cancel" TargetType="Button">
-        <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="Height" Value="60"/>
-        <Setter Property="Width" Value="125"/>
-        <Setter Property="Background" Value="#FF949494"/>
-        <Setter Property="BorderBrush" Value="#FF5960FF"/>
-        <Setter Property="FontSize" Value="30"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Height" Value="60" />
+        <Setter Property="Width" Value="125" />
+        <Setter Property="Background" Value="#FF949494" />
+        <Setter Property="BorderBrush" Value="#FF5960FF" />
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="Foreground" Value="White" />
     </Style>
     <!--  Common button style -->
-    <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">  
+    <Style x:Key="CommonButtonStyle" TargetType="{x:Type Button}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Background" Value="#FF172B4D"/>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="Background" Value="#FF172B4D" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="Foreground" Value="White" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="border" BorderThickness="0" BorderBrush="Black" Background="{TemplateBinding Background}">
+                    <Border Name="border" BorderThickness="0" BorderBrush="Black"
+                            Background="{TemplateBinding Background}">
                         <Border.Style>
                             <Style TargetType="Border">
-                                <Setter Property="CornerRadius" Value="5"/>
+                                <Setter Property="CornerRadius" Value="5" />
                             </Style>
                         </Border.Style>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#FF0078D7"/>
+                            <Setter Property="Background" Value="#FF0078D7" />
                             <Setter Property="Opacity" Value="0.8" />
                         </Trigger>
                     </ControlTemplate.Triggers>

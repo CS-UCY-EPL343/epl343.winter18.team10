@@ -5,185 +5,246 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvoiceX"
         mc:Ignorable="d"
-        WindowState = "Maximized"
-        WindowStyle ="ThreeDBorderWindow"
+        WindowState="Maximized"
+        WindowStyle="ThreeDBorderWindow"
         Title="Eco-Bright" Height="1080" Width="1920" Closing="Window_Closing">
 
     <Window.Resources>
         <Style x:Key="sideMenuBtnStyle" TargetType="Button">
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="Width" Value="170"/>
-            <Setter Property="Height" Value="55"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Canvas.Left" Value="0"/>
+            <Setter Property="Background" Value="White" />
+            <Setter Property="Width" Value="170" />
+            <Setter Property="Height" Value="55" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Canvas.Left" Value="0" />
         </Style>
 
         <Style x:Key="sideMenuBtnStyle_selected" TargetType="Button">
-            <Setter Property="Background" Value="#FFCCDBDC"/>
-            <Setter Property="Width" Value="170"/>
-            <Setter Property="Height" Value="55"/>
-            <Setter Property="BorderThickness" Value="0"/>
-            <Setter Property="Canvas.Left" Value="0"/>
-            <Setter Property="Panel.ZIndex" Value="1"/>
+            <Setter Property="Background" Value="#FFCCDBDC" />
+            <Setter Property="Width" Value="170" />
+            <Setter Property="Height" Value="55" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Canvas.Left" Value="0" />
+            <Setter Property="Panel.ZIndex" Value="1" />
             <Setter Property="Effect">
                 <Setter.Value>
-                    <DropShadowEffect Direction="270" Opacity="0.16"/>
+                    <DropShadowEffect Direction="270" Opacity="0.16" />
                 </Setter.Value>
             </Setter>
         </Style>
 
     </Window.Resources>
 
-    <Grid Uid="Dashboard"  Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True" >
+    <Grid Uid="Dashboard" Width="1920" Height="1080" Background="#ffffffff" ClipToBounds="True">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="11*" />
+            <ColumnDefinition Width="13*" />
         </Grid.ColumnDefinitions>
-        <Border  Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0,0,-3,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="1" >
+        <Border Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0,0,-3,0" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="1">
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">
-                    <GradientStop Color="#FF30455D" Offset="1"/>
-                    <GradientStop Color="White"/>
-                    <GradientStop Color="White" Offset="0.263"/>
+                    <GradientStop Color="#FF30455D" Offset="1" />
+                    <GradientStop Color="White" />
+                    <GradientStop Color="White" Offset="0.263" />
                 </LinearGradientBrush>
             </Border.Background>
             <Border.Effect>
-                <DropShadowEffect Direction="270" ShadowDepth="5" Opacity="0.16" BlurRadius="7"/>
+                <DropShadowEffect Direction="270" ShadowDepth="5" Opacity="0.16" BlurRadius="7" />
             </Border.Effect>
-            <Grid HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="266"/>
+            <Grid HorizontalAlignment="Left" Height="60" Margin="10,10,0,0" VerticalAlignment="Top" Width="266" />
         </Border>
-        <TextBlock x:Name="userName" Text="Username" TextAlignment="Right" FontFamily="Avenir"  FontSize="26" Foreground="#ff1f2026" Margin="760,0,25,1045" Height="25" VerticalAlignment="Bottom" Grid.Column="1"  />
-        <TextBlock x:Name="userPermissions" Text="UserPermissions" TextAlignment="Right" FontFamily="Avenir"  FontSize="24" Foreground="#ff8f9198" Margin="725,40,25,1015" Grid.Column="1"  />
+        <TextBlock x:Name="userName" Text="Username" TextAlignment="Right" FontFamily="Avenir" FontSize="26"
+                   Foreground="#ff1f2026" Margin="760,0,25,1045" Height="25" VerticalAlignment="Bottom" Grid.Column="1" />
+        <TextBlock x:Name="userPermissions" Text="UserPermissions" TextAlignment="Right" FontFamily="Avenir"
+                   FontSize="24" Foreground="#ff8f9198" Margin="725,40,25,1015" Grid.Column="1" />
 
 
-        <Canvas  Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            <Border  Width="170" Height="965" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="7"  >
+        <Canvas Width="170" Height="1004" Margin="0,76,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="170" Height="965" Background="#ffffffff" BorderBrush="#ff707070" Canvas.Left="0"
+                    Canvas.Top="7">
                 <Border.Effect>
-                    <DropShadowEffect Opacity="0.16"/>
+                    <DropShadowEffect Opacity="0.16" />
                 </Border.Effect>
             </Border>
 
-            <TextBlock  x:Name="pageTitle" Width="170" Height="33" Text="Dashboard" TextAlignment="Center" FontFamily="Gotham"  FontSize="25" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="30"  />
+            <TextBlock x:Name="pageTitle" Width="170" Height="33" Text="Dashboard" TextAlignment="Center"
+                       FontFamily="Gotham" FontSize="25" Foreground="#ff172b4d" Canvas.Left="0" Canvas.Top="30" />
 
-            <Button x:Name="btnDashboard" Style = "{DynamicResource sideMenuBtnStyle}" Canvas.Top="80" Click="BtnDashboard_Click">
+            <Button x:Name="btnDashboard" Style="{DynamicResource sideMenuBtnStyle}" Canvas.Top="80"
+                    Click="BtnDashboard_Click">
                 <Canvas Width="170" Height="55" Canvas.Left="2" Canvas.Top="80">
-                    <TextBlock  Text="Dashboard" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="18" Height="20" Stretch="uniform" Data="M 3 9 L 12 2 L 21 9 L 21 20 C 21 21.10457038879395 20.10456848144531 22 19 22 L 5 22 C 3.895430564880371 22 3 21.10456848144531 3 20 L 3 9 Z" Stroke="#ff7764e4" Canvas.Left="1" Canvas.Top="1"  />
-                        <Path  Width="6" Height="10" Stretch="uniform" Data="M 9 22 L 9 12 L 15 12 L 15 22" Stroke="#ff7764e4" Canvas.Left="7" Canvas.Top="11"  />
+                    <TextBlock Text="Dashboard" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="20" Height="22" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="18" Height="20" Stretch="uniform"
+                              Data="M 3 9 L 12 2 L 21 9 L 21 20 C 21 21.10457038879395 20.10456848144531 22 19 22 L 5 22 C 3.895430564880371 22 3 21.10456848144531 3 20 L 3 9 Z"
+                              Stroke="#ff7764e4" Canvas.Left="1" Canvas.Top="1" />
+                        <Path Width="6" Height="10" Stretch="uniform" Data="M 9 22 L 9 12 L 15 12 L 15 22"
+                              Stroke="#ff7764e4" Canvas.Left="7" Canvas.Top="11" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnInvoice" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="135" Click="BtnInvoice_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="135" >
-                    <TextBlock  Text="Invoice" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="22" Height="18" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="20" Height="16" Stretch="uniform" Data="M 4 4 L 20 4 C 21.10000038146973 4 22 4.900000095367432 22 6 L 22 18 C 22 19.10000038146973 21.10000038146973 20 20 20 L 4 20 C 2.900000095367432 20 2 19.10000038146973 2 18 L 2 6 C 2 4.900000095367432 2.900000095367432 4 4 4 Z" Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="1"  />
-                        <Path  Width="20" Height="7" Stretch="uniform" Data="M 22 6 L 12 13 L 2 6" Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="3"  />
+            <Button x:Name="btnInvoice" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="135"
+                    Click="BtnInvoice_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="135">
+                    <TextBlock Text="Invoice" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="22" Height="18" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="20" Height="16" Stretch="uniform"
+                              Data="M 4 4 L 20 4 C 21.10000038146973 4 22 4.900000095367432 22 6 L 22 18 C 22 19.10000038146973 21.10000038146973 20 20 20 L 4 20 C 2.900000095367432 20 2 19.10000038146973 2 18 L 2 6 C 2 4.900000095367432 2.900000095367432 4 4 4 Z"
+                              Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="1" />
+                        <Path Width="20" Height="7" Stretch="uniform" Data="M 22 6 L 12 13 L 2 6" Stroke="#fff53c56"
+                              Canvas.Left="1" Canvas.Top="3" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnReceipt" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="190" Click="BtnReceipt_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="190" >
-                    <TextBlock  Text="Receipt" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
-                        <Line  X1="9" Y1="5" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="5.5" Canvas.Top="3.239593505859375"  />
-                        <Path  Width="18" Height="19" Stretch="uniform" Data="M 21 16 L 21 8 C 20.99926948547363 7.286201477050781 20.61816787719727 6.626898288726807 20 6.269999504089355 L 13 2.269999980926514 C 12.38119792938232 1.912734508514404 11.61880207061768 1.912734508514404 11 2.269999980926514 L 4 6.269999980926514 C 3.381832122802734 6.626898765563965 3.000732421875 7.286201000213623 3 7.999999523162842 L 3 16 C 3.000732421875 16.71379852294922 3.381832122802734 17.37310028076172 4.000000476837158 17.72999954223633 L 11 21.72999954223633 C 11.61880207061768 22.08726692199707 12.38119888305664 22.08726692199707 13.00000095367432 21.72999954223633 L 20 17.72999954223633 C 20.61816787719727 17.37310028076172 20.999267578125 16.71379852294922 21 16 Z" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="1.031646728515625"  />
-                        <Path  Width="17" Height="5" Stretch="uniform" Data="M 3.269999980926514 6.960000038146973 L 12 12.01000022888184 L 20.72999954223633 6.960000038146973" Stroke="#ff11cdef" Canvas.Left="1.2700004577636719" Canvas.Top="5.989593505859375"  />
-                        <Line  X1="0" Y1="10" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="10" Canvas.Top="11.02960205078125"  />
+            <Button x:Name="btnReceipt" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="190"
+                    Click="BtnReceipt_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="190">
+                    <TextBlock Text="Receipt" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="20" Height="22" Canvas.Left="35" Canvas.Top="17">
+                        <Line X1="9" Y1="5" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="5.5"
+                              Canvas.Top="3.239593505859375" />
+                        <Path Width="18" Height="19" Stretch="uniform"
+                              Data="M 21 16 L 21 8 C 20.99926948547363 7.286201477050781 20.61816787719727 6.626898288726807 20 6.269999504089355 L 13 2.269999980926514 C 12.38119792938232 1.912734508514404 11.61880207061768 1.912734508514404 11 2.269999980926514 L 4 6.269999980926514 C 3.381832122802734 6.626898765563965 3.000732421875 7.286201000213623 3 7.999999523162842 L 3 16 C 3.000732421875 16.71379852294922 3.381832122802734 17.37310028076172 4.000000476837158 17.72999954223633 L 11 21.72999954223633 C 11.61880207061768 22.08726692199707 12.38119888305664 22.08726692199707 13.00000095367432 21.72999954223633 L 20 17.72999954223633 C 20.61816787719727 17.37310028076172 20.999267578125 16.71379852294922 21 16 Z"
+                              Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="1.031646728515625" />
+                        <Path Width="17" Height="5" Stretch="uniform"
+                              Data="M 3.269999980926514 6.960000038146973 L 12 12.01000022888184 L 20.72999954223633 6.960000038146973"
+                              Stroke="#ff11cdef" Canvas.Left="1.2700004577636719" Canvas.Top="5.989593505859375" />
+                        <Line X1="0" Y1="10" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="10"
+                              Canvas.Top="11.02960205078125" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnCreditNote" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="245" Click="BtnCreditNote_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="245" >
-                    <TextBlock  Text="Credit Note" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="18" Height="22" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="16" Height="20" Stretch="uniform" Data="M 14 2 L 6 2 C 4.895430564880371 2 3.999999761581421 2.89543080329895 4 4.000000476837158 L 4 20 C 4 21.10457038879395 4.895430564880371 22 6 22 L 18 22 C 19.10457038879395 22 20 21.10456848144531 20 20 L 20 8 L 14 2 Z" Stroke="#fffb6340" Canvas.Left="1" Canvas.Top="1"  />
-                        <Path  Width="6" Height="6" Stretch="uniform" Data="M 14 2 L 14 8 L 20 8" Stroke="#fffb6340" Canvas.Left="11" Canvas.Top="1"  />
-                        <Line  X1="8" Y1="0" X2="0" Y2="0" Stroke="#fffb6340" Canvas.Left="5" Canvas.Top="12"  />
-                        <Line  X1="8" Y1="0" X2="0" Y2="0" Stroke="#fffb6340" Canvas.Left="5" Canvas.Top="16"  />
-                        <Path  Width="2" Height="0" Stretch="uniform" Data="M 10 9 L 9 9 L 8 9" Stroke="#fffb6340" Canvas.Left="5" Canvas.Top="8"  />
+            <Button x:Name="btnCreditNote" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="245"
+                    Click="BtnCreditNote_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="245">
+                    <TextBlock Text="Credit Note" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="18" Height="22" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="16" Height="20" Stretch="uniform"
+                              Data="M 14 2 L 6 2 C 4.895430564880371 2 3.999999761581421 2.89543080329895 4 4.000000476837158 L 4 20 C 4 21.10457038879395 4.895430564880371 22 6 22 L 18 22 C 19.10457038879395 22 20 21.10456848144531 20 20 L 20 8 L 14 2 Z"
+                              Stroke="#fffb6340" Canvas.Left="1" Canvas.Top="1" />
+                        <Path Width="6" Height="6" Stretch="uniform" Data="M 14 2 L 14 8 L 20 8" Stroke="#fffb6340"
+                              Canvas.Left="11" Canvas.Top="1" />
+                        <Line X1="8" Y1="0" X2="0" Y2="0" Stroke="#fffb6340" Canvas.Left="5" Canvas.Top="12" />
+                        <Line X1="8" Y1="0" X2="0" Y2="0" Stroke="#fffb6340" Canvas.Left="5" Canvas.Top="16" />
+                        <Path Width="2" Height="0" Stretch="uniform" Data="M 10 9 L 9 9 L 8 9" Stroke="#fffb6340"
+                              Canvas.Left="5" Canvas.Top="8" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnStatement" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="300" Click="BtnStatement_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="300" >
-                    <TextBlock  Text="Statement" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="20" Height="20" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="18" Height="18" Stretch="uniform" Data="M 21 15 C 21 16.10457038879395 20.10456848144531 17 19 17 L 7 17 L 3 21 L 3 5 C 3 3.895430564880371 3.89543080329895 2.999999761581421 5.000000476837158 3 L 19 3 C 20.10457038879395 3 21 3.895430564880371 21 5 L 21 15 Z" Stroke="#fffeb969" Canvas.Left="1" Canvas.Top="1"  />
+            <Button x:Name="btnStatement" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="300"
+                    Click="BtnStatement_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="300">
+                    <TextBlock Text="Statement" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="20" Height="20" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="18" Height="18" Stretch="uniform"
+                              Data="M 21 15 C 21 16.10457038879395 20.10456848144531 17 19 17 L 7 17 L 3 21 L 3 5 C 3 3.895430564880371 3.89543080329895 2.999999761581421 5.000000476837158 3 L 19 3 C 20.10457038879395 3 21 3.895430564880371 21 5 L 21 15 Z"
+                              Stroke="#fffeb969" Canvas.Left="1" Canvas.Top="1" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnProduct" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="355" Click="BtnProduct_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="355" >
-                    <TextBlock  Text="Product" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
-                        <Border  Width="18" Height="18" BorderBrush="#fff53c56" Canvas.Left="1" Canvas.Top="3"  />
-                        <Line  X1="0" Y1="0" X2="0" Y2="4" Stroke="#fff53c56" Canvas.Left="14" Canvas.Top="1"  />
-                        <Line  X1="0" Y1="0" X2="0" Y2="4" Stroke="#fff53c56" Canvas.Left="6" Canvas.Top="1"  />
-                        <Line  X1="0" Y1="0" X2="18" Y2="0" Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="9"  />
+            <Button x:Name="btnProduct" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="355"
+                    Click="BtnProduct_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="355">
+                    <TextBlock Text="Product" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="20" Height="22" Canvas.Left="35" Canvas.Top="17">
+                        <Border Width="18" Height="18" BorderBrush="#fff53c56" Canvas.Left="1" Canvas.Top="3" />
+                        <Line X1="0" Y1="0" X2="0" Y2="4" Stroke="#fff53c56" Canvas.Left="14" Canvas.Top="1" />
+                        <Line X1="0" Y1="0" X2="0" Y2="4" Stroke="#fff53c56" Canvas.Left="6" Canvas.Top="1" />
+                        <Line X1="0" Y1="0" X2="18" Y2="0" Stroke="#fff53c56" Canvas.Left="1" Canvas.Top="9" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnCustomers" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="410" Click="BtnCustomers_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="410" >
-                    <TextBlock  Text="Customers" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="16" Height="6" Stretch="uniform" Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13"  />
-                        <Ellipse  Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1"  />
+            <Button x:Name="btnCustomers" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="410"
+                    Click="BtnCustomers_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="410">
+                    <TextBlock Text="Customers" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="18" Height="20" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="16" Height="6" Stretch="uniform"
+                              Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21"
+                              Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13" />
+                        <Ellipse Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button  x:Name="btnOrder" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="465" Click="BtnOrder_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="520">
-                    <TextBlock  Text="Order" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="20" Height="22" Canvas.Left="35" Canvas.Top="17" >
-                        <Line  X1="9" Y1="5" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="5.5" Canvas.Top="3.2396240234375"  />
-                        <Path  Width="18" Height="19" Stretch="uniform" Data="M 21 16 L 21 8 C 20.99926948547363 7.286201477050781 20.61816787719727 6.626898288726807 20 6.269999504089355 L 13 2.269999980926514 C 12.38119792938232 1.912734508514404 11.61880207061768 1.912734508514404 11 2.269999980926514 L 4 6.269999980926514 C 3.381832122802734 6.626898765563965 3.000732421875 7.286201000213623 3 7.999999523162842 L 3 16 C 3.000732421875 16.71379852294922 3.381832122802734 17.37310028076172 4.000000476837158 17.72999954223633 L 11 21.72999954223633 C 11.61880207061768 22.08726692199707 12.38119888305664 22.08726692199707 13.00000095367432 21.72999954223633 L 20 17.72999954223633 C 20.61816787719727 17.37310028076172 20.999267578125 16.71379852294922 21 16 Z" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="1.03167724609375"  />
-                        <Path  Width="17" Height="5" Stretch="uniform" Data="M 3.269999980926514 6.960000038146973 L 12 12.01000022888184 L 20.72999954223633 6.960000038146973" Stroke="#ff11cdef" Canvas.Left="1.2700004577636719" Canvas.Top="5.9896240234375"  />
-                        <Line  X1="0" Y1="10" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="10" Canvas.Top="11.02960205078125"  />
+            <Button x:Name="btnOrder" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="465" Click="BtnOrder_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="520">
+                    <TextBlock Text="Order" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="20" Height="22" Canvas.Left="35" Canvas.Top="17">
+                        <Line X1="9" Y1="5" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="5.5"
+                              Canvas.Top="3.2396240234375" />
+                        <Path Width="18" Height="19" Stretch="uniform"
+                              Data="M 21 16 L 21 8 C 20.99926948547363 7.286201477050781 20.61816787719727 6.626898288726807 20 6.269999504089355 L 13 2.269999980926514 C 12.38119792938232 1.912734508514404 11.61880207061768 1.912734508514404 11 2.269999980926514 L 4 6.269999980926514 C 3.381832122802734 6.626898765563965 3.000732421875 7.286201000213623 3 7.999999523162842 L 3 16 C 3.000732421875 16.71379852294922 3.381832122802734 17.37310028076172 4.000000476837158 17.72999954223633 L 11 21.72999954223633 C 11.61880207061768 22.08726692199707 12.38119888305664 22.08726692199707 13.00000095367432 21.72999954223633 L 20 17.72999954223633 C 20.61816787719727 17.37310028076172 20.999267578125 16.71379852294922 21 16 Z"
+                              Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="1.03167724609375" />
+                        <Path Width="17" Height="5" Stretch="uniform"
+                              Data="M 3.269999980926514 6.960000038146973 L 12 12.01000022888184 L 20.72999954223633 6.960000038146973"
+                              Stroke="#ff11cdef" Canvas.Left="1.2700004577636719" Canvas.Top="5.9896240234375" />
+                        <Line X1="0" Y1="10" X2="0" Y2="0" Stroke="#ff11cdef" Canvas.Left="10"
+                              Canvas.Top="11.02960205078125" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnQuote" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="520" Click="BtnQuote_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="575">
-                    <TextBlock  Text="Quote" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="16" Height="6" Stretch="uniform" Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13"  />
-                        <Ellipse  Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1"  />
+            <Button x:Name="btnQuote" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="520" Click="BtnQuote_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="575">
+                    <TextBlock Text="Quote" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="18" Height="20" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="16" Height="6" Stretch="uniform"
+                              Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21"
+                              Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13" />
+                        <Ellipse Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnExpenses" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="575" Click="BtnExpenses_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="630">
-                    <TextBlock  Text="Expenses" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="18" Height="20" Canvas.Left="35" Canvas.Top="17" >
-                        <Path  Width="16" Height="6" Stretch="uniform" Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21" Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13"  />
-                        <Ellipse  Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1"  />
+            <Button x:Name="btnExpenses" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="575"
+                    Click="BtnExpenses_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="630">
+                    <TextBlock Text="Expenses" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="18" Height="20" Canvas.Left="35" Canvas.Top="17">
+                        <Path Width="16" Height="6" Stretch="uniform"
+                              Data="M 20 21 L 20 19 C 20 16.79086112976074 18.20913887023926 15 16 15 L 8 15 C 5.790861129760742 15 3.999999523162842 16.79086112976074 4 19 L 4 21"
+                              Stroke="#ff11cdef" Canvas.Left="1" Canvas.Top="13" />
+                        <Ellipse Width="8" Height="8" Stroke="#ff11cdef" Canvas.Left="5" Canvas.Top="1" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnSettings" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="630" Click="BtnSettings_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="465" >
-                    <TextBlock  Text="Settings" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Canvas  Width="24" Height="24" Canvas.Left="35" Canvas.Top="17" >
-                        <Ellipse  Width="6" Height="6" Stroke="#fffb6340" Canvas.Left="9" Canvas.Top="9"  />
-                        <Path  Width="22" Height="22" Stretch="uniform" Data="M 19.39999961853027 15 C 19.12765312194824 15.61708927154541 19.25833511352539 16.33781242370605 19.72999954223633 16.81999778747559 L 19.78999900817871 16.8799991607666 C 20.16555213928223 17.25513648986816 20.37657165527344 17.76418113708496 20.37657165527344 18.29499816894531 C 20.37657165527344 18.8258171081543 20.16555213928223 19.33486175537109 19.78999900817871 19.70999717712402 C 19.41486358642578 20.08555221557617 18.90581893920898 20.29657173156738 18.375 20.29657173156738 C 17.84418106079102 20.29657173156738 17.33513641357422 20.08555221557617 16.95999908447266 19.70999908447266 L 16.89999961853027 19.64999961853027 C 16.41781234741211 19.1783332824707 15.69708919525146 19.04765319824219 15.07999897003174 19.31999969482422 C 14.47552967071533 19.57906913757324 14.0826244354248 20.1723575592041 14.08000087738037 20.82999992370605 L 14.07999992370605 21 C 14.07999992370605 22.10457038879395 13.18456935882568 23 12.07999992370605 23 C 10.97543048858643 23 10.07999992370605 22.10456848144531 10.07999992370605 21 L 10.07999992370605 20.90999984741211 C 10.0641565322876 20.2326717376709 9.635871887207031 19.63386535644531 9 19.40000152587891 C 8.38291072845459 19.12765502929688 7.662188053131104 19.25833511352539 7.180000782012939 19.72999954223633 L 7.119999885559082 19.78999900817871 C 6.744863033294678 20.16555213928223 6.235818386077881 20.37657165527344 5.704999923706055 20.37657165527344 C 5.174181461334229 20.37657165527344 4.665136814117432 20.16555213928223 4.289999961853027 19.78999900817871 C 3.914445638656616 19.41486358642578 3.703426599502563 18.90581703186035 3.703426837921143 18.375 C 3.703426837921143 17.84418106079102 3.914445877075195 17.33513641357422 4.289999961853027 16.96000099182129 L 4.349999904632568 16.89999961853027 C 4.82166576385498 16.41781234741211 4.952346324920654 15.69708919525146 4.680000305175781 15.07999897003174 C 4.420931339263916 14.47552967071533 3.827642679214478 14.08262348175049 3.169999837875366 14.08000087738037 L 3 14.07999992370605 C 1.895430445671082 14.07999992370605 1 13.18456935882568 1 12.07999992370605 C 1 10.97543048858643 1.89543080329895 10.07999992370605 3.000000238418579 10.07999992370605 L 3.089999914169312 10.07999992370605 C 3.767328977584839 10.0641565322876 4.366134643554688 9.635871887207031 4.59999942779541 9 C 4.872345924377441 8.38291072845459 4.741665840148926 7.662187099456787 4.269999980926514 7.180000305175781 L 4.210000038146973 7.119999885559082 C 3.834446430206299 6.744863510131836 3.623426914215088 6.235818862915039 3.623426914215088 5.705000400543213 C 3.623426914215088 5.174181461334229 3.83444619178772 4.665136337280273 4.210000038146973 4.289999961853027 C 4.585136890411377 3.914445877075195 5.094182014465332 3.703426837921143 5.625000476837158 3.703426837921143 C 6.155818462371826 3.703426837921143 6.664863586425781 3.914445877075195 7.039999961853027 4.289999961853027 L 7.099999904632568 4.349999904632568 C 7.582186698913574 4.82166576385498 8.302909851074219 4.952346324920654 8.920000076293945 4.680000305175781 L 9 4.679999828338623 C 9.604470252990723 4.420931339263916 9.997376441955566 3.827642440795898 10 3.169999599456787 L 10 3 C 10 1.895430445671082 10.89543056488037 0.9999997615814209 12 1 C 13.10456943511963 1 14 1.895430564880371 14 3 L 14 3.089999914169312 C 14.00262451171875 3.747642993927002 14.39553070068359 4.340930938720703 15 4.599999904632568 C 15.61708927154541 4.8723464012146 16.33781242370605 4.741665840148926 16.81999969482422 4.269999504089355 L 16.8799991607666 4.210000038146973 C 17.25513648986816 3.834445476531982 17.76418113708496 3.62342643737793 18.29500007629395 3.623426914215088 C 18.8258171081543 3.623426914215088 19.33486175537109 3.834445953369141 19.70999717712402 4.210000038146973 C 20.08555221557617 4.585136413574219 20.29657173156738 5.094181060791016 20.29657173156738 5.624999523162842 C 20.29657173156738 6.155819416046143 20.08555221557617 6.664864540100098 19.70999908447266 7.040000915527344 L 19.64999961853027 7.099999904632568 C 19.1783332824707 7.582186698913574 19.04765319824219 8.302909851074219 19.31999969482422 8.920000076293945 L 19.31999969482422 9 C 19.57906723022461 9.604470252990723 20.1723575592041 9.997376441955566 20.82999992370605 10 L 21 10 C 22.10457038879395 10 23 10.89543056488037 23 12 C 23 13.10456943511963 22.10456848144531 14 21 14 L 20.90999984741211 14 C 20.25235748291016 14.00262451171875 19.6590690612793 14.39552974700928 19.39999961853027 15 Z" Stroke="#fffb6340" Canvas.Left="1" Canvas.Top="1"  />
+            <Button x:Name="btnSettings" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="630"
+                    Click="BtnSettings_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="465">
+                    <TextBlock Text="Settings" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Canvas Width="24" Height="24" Canvas.Left="35" Canvas.Top="17">
+                        <Ellipse Width="6" Height="6" Stroke="#fffb6340" Canvas.Left="9" Canvas.Top="9" />
+                        <Path Width="22" Height="22" Stretch="uniform"
+                              Data="M 19.39999961853027 15 C 19.12765312194824 15.61708927154541 19.25833511352539 16.33781242370605 19.72999954223633 16.81999778747559 L 19.78999900817871 16.8799991607666 C 20.16555213928223 17.25513648986816 20.37657165527344 17.76418113708496 20.37657165527344 18.29499816894531 C 20.37657165527344 18.8258171081543 20.16555213928223 19.33486175537109 19.78999900817871 19.70999717712402 C 19.41486358642578 20.08555221557617 18.90581893920898 20.29657173156738 18.375 20.29657173156738 C 17.84418106079102 20.29657173156738 17.33513641357422 20.08555221557617 16.95999908447266 19.70999908447266 L 16.89999961853027 19.64999961853027 C 16.41781234741211 19.1783332824707 15.69708919525146 19.04765319824219 15.07999897003174 19.31999969482422 C 14.47552967071533 19.57906913757324 14.0826244354248 20.1723575592041 14.08000087738037 20.82999992370605 L 14.07999992370605 21 C 14.07999992370605 22.10457038879395 13.18456935882568 23 12.07999992370605 23 C 10.97543048858643 23 10.07999992370605 22.10456848144531 10.07999992370605 21 L 10.07999992370605 20.90999984741211 C 10.0641565322876 20.2326717376709 9.635871887207031 19.63386535644531 9 19.40000152587891 C 8.38291072845459 19.12765502929688 7.662188053131104 19.25833511352539 7.180000782012939 19.72999954223633 L 7.119999885559082 19.78999900817871 C 6.744863033294678 20.16555213928223 6.235818386077881 20.37657165527344 5.704999923706055 20.37657165527344 C 5.174181461334229 20.37657165527344 4.665136814117432 20.16555213928223 4.289999961853027 19.78999900817871 C 3.914445638656616 19.41486358642578 3.703426599502563 18.90581703186035 3.703426837921143 18.375 C 3.703426837921143 17.84418106079102 3.914445877075195 17.33513641357422 4.289999961853027 16.96000099182129 L 4.349999904632568 16.89999961853027 C 4.82166576385498 16.41781234741211 4.952346324920654 15.69708919525146 4.680000305175781 15.07999897003174 C 4.420931339263916 14.47552967071533 3.827642679214478 14.08262348175049 3.169999837875366 14.08000087738037 L 3 14.07999992370605 C 1.895430445671082 14.07999992370605 1 13.18456935882568 1 12.07999992370605 C 1 10.97543048858643 1.89543080329895 10.07999992370605 3.000000238418579 10.07999992370605 L 3.089999914169312 10.07999992370605 C 3.767328977584839 10.0641565322876 4.366134643554688 9.635871887207031 4.59999942779541 9 C 4.872345924377441 8.38291072845459 4.741665840148926 7.662187099456787 4.269999980926514 7.180000305175781 L 4.210000038146973 7.119999885559082 C 3.834446430206299 6.744863510131836 3.623426914215088 6.235818862915039 3.623426914215088 5.705000400543213 C 3.623426914215088 5.174181461334229 3.83444619178772 4.665136337280273 4.210000038146973 4.289999961853027 C 4.585136890411377 3.914445877075195 5.094182014465332 3.703426837921143 5.625000476837158 3.703426837921143 C 6.155818462371826 3.703426837921143 6.664863586425781 3.914445877075195 7.039999961853027 4.289999961853027 L 7.099999904632568 4.349999904632568 C 7.582186698913574 4.82166576385498 8.302909851074219 4.952346324920654 8.920000076293945 4.680000305175781 L 9 4.679999828338623 C 9.604470252990723 4.420931339263916 9.997376441955566 3.827642440795898 10 3.169999599456787 L 10 3 C 10 1.895430445671082 10.89543056488037 0.9999997615814209 12 1 C 13.10456943511963 1 14 1.895430564880371 14 3 L 14 3.089999914169312 C 14.00262451171875 3.747642993927002 14.39553070068359 4.340930938720703 15 4.599999904632568 C 15.61708927154541 4.8723464012146 16.33781242370605 4.741665840148926 16.81999969482422 4.269999504089355 L 16.8799991607666 4.210000038146973 C 17.25513648986816 3.834445476531982 17.76418113708496 3.62342643737793 18.29500007629395 3.623426914215088 C 18.8258171081543 3.623426914215088 19.33486175537109 3.834445953369141 19.70999717712402 4.210000038146973 C 20.08555221557617 4.585136413574219 20.29657173156738 5.094181060791016 20.29657173156738 5.624999523162842 C 20.29657173156738 6.155819416046143 20.08555221557617 6.664864540100098 19.70999908447266 7.040000915527344 L 19.64999961853027 7.099999904632568 C 19.1783332824707 7.582186698913574 19.04765319824219 8.302909851074219 19.31999969482422 8.920000076293945 L 19.31999969482422 9 C 19.57906723022461 9.604470252990723 20.1723575592041 9.997376441955566 20.82999992370605 10 L 21 10 C 22.10457038879395 10 23 10.89543056488037 23 12 C 23 13.10456943511963 22.10456848144531 14 21 14 L 20.90999984741211 14 C 20.25235748291016 14.00262451171875 19.6590690612793 14.39552974700928 19.39999961853027 15 Z"
+                              Stroke="#fffb6340" Canvas.Left="1" Canvas.Top="1" />
                     </Canvas>
                 </Canvas>
             </Button>
-            <Button x:Name="btnLogout" Style = "{StaticResource sideMenuBtnStyle}" Canvas.Top="685" Click="btnLogout_Click">
-                <Canvas  Width="170" Height="55" Canvas.Left="0" Canvas.Top="465" >
-                    <TextBlock  Text="Logout" TextAlignment="left" FontFamily="Gotham"  FontSize="13" Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20"  />
-                    <Image Source="Images/logout.png" Width="20" Height="20" Canvas.Left="38" Canvas.Top="16" Opacity="0.5" VerticalAlignment="Bottom"/>
+            <Button x:Name="btnLogout" Style="{StaticResource sideMenuBtnStyle}" Canvas.Top="685"
+                    Click="btnLogout_Click">
+                <Canvas Width="170" Height="55" Canvas.Left="0" Canvas.Top="465">
+                    <TextBlock Text="Logout" TextAlignment="left" FontFamily="Gotham" FontSize="13"
+                               Foreground="#ff172b4d" Canvas.Left="65" Canvas.Top="20" />
+                    <Image Source="Images/logout.png" Width="20" Height="20" Canvas.Left="38" Canvas.Top="16"
+                           Opacity="0.5" VerticalAlignment="Bottom" />
                 </Canvas>
             </Button>
         </Canvas>
 
-        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950" Margin="180,90,0,0" VerticalAlignment="Top" Width="1725" Grid.ColumnSpan="2"/>
-        <Border BorderBrush="Black" HorizontalAlignment="Left" Height="30" Margin="6,914,0,136"  Width="158">
+        <Frame x:Name="MainPage" NavigationUIVisibility="Hidden" Content="" HorizontalAlignment="Left" Height="950"
+               Margin="180,90,0,0" VerticalAlignment="Top" Width="1725" Grid.ColumnSpan="2" />
+        <Border BorderBrush="Black" HorizontalAlignment="Left" Height="30" Margin="6,914,0,136" Width="158">
             <Border.Background>
-                <ImageBrush ImageSource="Images/logo-2.png"/>
+                <ImageBrush ImageSource="Images/logo-2.png" />
             </Border.Background>
         </Border>
     </Grid>

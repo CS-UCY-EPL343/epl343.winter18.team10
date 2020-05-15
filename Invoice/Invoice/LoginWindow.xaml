@@ -5,59 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InvoiceX"
         xmlns:Controls="clr-namespace:System.Windows.Controls;assembly=PresentationFramework"
-        mc:Ignorable="d"        
+        mc:Ignorable="d"
         Title="LoginWindow" Height="870" Width="1720"
         MinHeight="870" MinWidth="1720"
-        WindowStartupLocation ="CenterScreen">
+        WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        
-    </Window.Resources>    
+
+    </Window.Resources>
 
     <Grid x:Name="login_page" Background="#ffffffff">
-        <Border  Width="860" Height="870" Background="#ff30455d" Margin="855,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" >
-            <Grid Margin="140,164,0,178" RenderTransformOrigin="0.289,0.647" HorizontalAlignment="Left" Width="604" Background="White">
+        <Border Width="860" Height="870" Background="#ff30455d" Margin="855,0,0,0" HorizontalAlignment="Left"
+                VerticalAlignment="Top">
+            <Grid Margin="140,164,0,178" RenderTransformOrigin="0.289,0.647" HorizontalAlignment="Left" Width="604"
+                  Background="White">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="224*"/>
-                    <RowDefinition Height="295*"/>
+                    <RowDefinition Height="224*" />
+                    <RowDefinition Height="295*" />
                 </Grid.RowDefinitions>
-                <TextBlock  Text="WELCOME TO ECO-BRIGHT" TextAlignment="left" FontFamily="Gotham"  FontSize="40" Foreground="#ff172b4d" FontWeight="Bold" FontStyle="Italic" Margin="42,0,42,64" RenderTransformOrigin="0.653,0.519" Height="54" VerticalAlignment="Bottom"  />
-                <TextBlock  Text="USERNAME" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Margin="79,200,447,0"  />
-                <TextBox x:Name="txtUsername"  Width="446" FontSize="20" TextAlignment="Left" Padding="20,20,5,5" TextWrapping="Wrap" Margin="79,220,79,232" Grid.RowSpan="2" SelectionBrush="#FFAC2525">
+                <TextBlock Text="WELCOME TO ECO-BRIGHT" TextAlignment="left" FontFamily="Gotham" FontSize="40"
+                           Foreground="#ff172b4d" FontWeight="Bold" FontStyle="Italic" Margin="42,0,42,64"
+                           RenderTransformOrigin="0.653,0.519" Height="54" VerticalAlignment="Bottom" />
+                <TextBlock Text="USERNAME" TextAlignment="left" FontFamily="Avenir" FontSize="14"
+                           Foreground="#ff707070" Margin="79,200,447,0" />
+                <TextBox x:Name="txtUsername" Width="446" FontSize="20" TextAlignment="Left" Padding="20,20,5,5"
+                         TextWrapping="Wrap" Margin="79,220,79,232" Grid.RowSpan="2" SelectionBrush="#FFAC2525">
                     <TextBox.Style>
                         <Style TargetType="{x:Type TextBox}">
                             <Style.Triggers>
                                 <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="BorderThickness" Value="6,1,1,1"/>
-                                    <Setter Property="BorderBrush" Value="#FFAC2525"/>
+                                    <Setter Property="BorderThickness" Value="6,1,1,1" />
+                                    <Setter Property="BorderBrush" Value="#FFAC2525" />
                                 </Trigger>
                             </Style.Triggers>
-                        </Style>                        
-                    </TextBox.Style>                    
-                </TextBox>                
-                <TextBlock  Text="PASSWORD" TextAlignment="left" FontFamily="Avenir"  FontSize="14" Foreground="#ff707070" Margin="79,94,447,173" Grid.Row="1" RenderTransformOrigin="0.782,0.575" />
-                <PasswordBox x:Name="txtPassword"  Width="446" FontSize="20" Padding="20,20,5,5" RenderTransformOrigin="0.333,3.361" Margin="79,114,79,110" Grid.Row="1" KeyDown="txtPassword_KeyDown"  SelectionBrush="#FFAC2525">
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <TextBlock Text="PASSWORD" TextAlignment="left" FontFamily="Avenir" FontSize="14"
+                           Foreground="#ff707070" Margin="79,94,447,173" Grid.Row="1"
+                           RenderTransformOrigin="0.782,0.575" />
+                <PasswordBox x:Name="txtPassword" Width="446" FontSize="20" Padding="20,20,5,5"
+                             RenderTransformOrigin="0.333,3.361" Margin="79,114,79,110" Grid.Row="1"
+                             KeyDown="txtPassword_KeyDown" SelectionBrush="#FFAC2525">
                     <PasswordBox.Style>
                         <Style TargetType="{x:Type PasswordBox}">
                             <Style.Triggers>
                                 <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="BorderThickness" Value="6,1,1,1"/>
-                                    <Setter Property="BorderBrush" Value="#FFAC2525"/>
+                                    <Setter Property="BorderThickness" Value="6,1,1,1" />
+                                    <Setter Property="BorderBrush" Value="#FFAC2525" />
                                 </Trigger>
                             </Style.Triggers>
-                        </Style>                        
-                    </PasswordBox.Style>   
+                        </Style>
+                    </PasswordBox.Style>
                 </PasswordBox>
-                <Button x:Name="btn_login" FontFamily="Avenir" Padding="-5,4,5,5" FontSize="20" Foreground="#ff707070" Background="#33FFFFFF" Margin="426,195,79,74" Grid.Row="1" Click="btn_login_Click">
+                <Button x:Name="btn_login" FontFamily="Avenir" Padding="-5,4,5,5" FontSize="20" Foreground="#ff707070"
+                        Background="#33FFFFFF" Margin="426,195,79,74" Grid.Row="1" Click="btn_login_Click">
                     <Button.Content>
                         <Grid Height="29" RenderTransformOrigin="0.551,-0.207">
                             <TextBlock Text="LOGIN" Margin="9,0,27,4" />
-                            <Image Source="Images/login-button.png" Margin="70,0,4,9" Opacity="0.5" Height="18" VerticalAlignment="Bottom"/>
+                            <Image Source="Images/login-button.png" Margin="70,0,4,9" Opacity="0.5" Height="18"
+                                   VerticalAlignment="Bottom" />
                         </Grid>
                     </Button.Content>
                 </Button>
             </Grid>
         </Border>
-        <Image x:Name="image" Source="Images/Untitled-1.jpg" Margin="0,0,857,0" Stretch="UniformToFill" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Image x:Name="image" Source="Images/Untitled-1.jpg" Margin="0,0,857,0" Stretch="UniformToFill"
+               RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Center" />
     </Grid>
 </Window>
