@@ -81,7 +81,7 @@ namespace InvoiceX.Pages.ExpensesPage
                 txtBox_expenseDate.Text = expense.createdDate.ToString("d");
                 txtBox_issuedBy.Text = expense.issuedBy;
                 txtBox_cost.Text = expense.cost.ToString("C");
-                txtBox_vat.Text = expense.VAT.ToString("P");
+                txtBox_vat.Text = expense.VAT.ToString("C");
                 txtBox_totalCost.Text = expense.totalCost.ToString("C");
                 txtBox_invoiceNumber.Text = expense.invoiceNo.ToString();
 

@@ -91,8 +91,8 @@ namespace InvoiceX.Pages.OrderPage
                 // Invoice details
                 txtBox_orderNumber.Text = order.idOrder.ToString();
                 txtBox_orderNumber.IsReadOnly = true;
-                txtBox_orderDate.Text = order.createdDate.ToString("dd/mm/yyyy");
-                txtBox_shippingDate.Text = order.shippingDate.ToString("dd/mm/yyyy");
+                txtBox_orderDate.Text = order.createdDate.ToString("d");
+                txtBox_shippingDate.Text = order.shippingDate.ToString("d");
                 txtBox_issuedBy.Text = order.issuedBy;
                 txtBox_status.Text = order.status.ToString();
                 NetTotal_TextBlock.Text = order.cost.ToString("C");
