@@ -29,6 +29,7 @@ using System.Data;
 using System.Windows;
 using InvoiceX.Classes;
 using InvoiceX.Models;
+using LiveCharts;
 using MySql.Data.MySqlClient;
 
 namespace InvoiceX.ViewModels
@@ -263,6 +264,128 @@ namespace InvoiceX.ViewModels
                 cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
                 cmd.Parameters["@year"].Direction = ParameterDirection.Input;
 
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
+        public static float calculateCustomerBalance(int customerId)
+        {
+            float ret = getCustomerBalance(customerId);
+            List<int> invoices=InvoiceViewModel.getCustomerInvoices(customerId);
+            for (int i=0; i < invoices.Count; i++)
+            {
+                if (InvoiceViewModel.isInvoicePaid(invoices[i])==false)
+                {
+                    ret += InvoiceViewModel.getInvoiceCost(invoices[i]);
+                }
+            }
+            List<int> receipts = ReceiptViewModel.getCustomerReceipts(customerId);
+            for (int i = 0; i < receipts.Count; i++)
+            {
+                ret -= ReceiptViewModel.getReceiptAmount(receipts[i]);
+            }
+            List<int> creditNotes = CreditNoteViewModel.getCustomerCreditNotes(customerId);
+            for (int i = 0; i < creditNotes.Count; i++)
+            {
+                ret -= CreditNoteViewModel.getCreditNoteCost(creditNotes[i]);
+
+            }
+
+            return ret;
+        }
+        public static float getCustomerBalance(int cid)
+        {
+            float ret;
+            try
+            {
+                var cmd = new MySqlCommand("SELECT Balance FROM customer WHERE idCustomer = " + cid, conn);
+                ret = float.Parse((cmd.ExecuteScalar()).ToString());
+                return ret;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return 0;
+        }
+        public static string calculateCustomerBalanceDates(int customerId, DateTime from, DateTime to)
+        {
+            float ret = getCustomerBalance(customerId);
+            List<StatementItem> invoices = InvoiceViewModel.getInvoicesForStatement(customerId,from,to);
+            for (int i = 0; i < invoices.Count; i++)
+            {
+                if (InvoiceViewModel.isInvoicePaid(invoices[i].idItem) == false)
+                {
+                    ret += invoices[i].charges;
+                }
+            }
+            List<StatementItem> receipts = ReceiptViewModel.getReceiptsForStatement(customerId, from, to);
+            for (int i = 0; i < receipts.Count; i++)
+            {
+                ret -= receipts[i].credits;
+
+            }
+            List<StatementItem> creditNotes = CreditNoteViewModel.getCreditNotesForStatement(customerId, from, to);
+            for (int i = 0; i < creditNotes.Count; i++)
+            {
+                ret -= creditNotes[i].charges;
+            }
+
+            return ret.ToString();
+        }
+
+        public static string[,] getTotalSalesByCategory(int year)
+        {
+            ChartValues<float> sum = new ChartValues<float>();
+            string[,] amountCategory = new string[5,2];
+            try
+            {
+                var cmd = new MySqlCommand("getTotalSalesPerCategory", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int i = 0;
+                while (reader.Read())
+                {
+                    amountCategory[i,0]= (reader["SUM(Invoice.Cost)"].ToString());
+                    amountCategory[i,1] = (reader["Category"].ToString());
+                    i++;
+                }
+
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return amountCategory;
+        }
+        public static float getTotalSalesByCategoryAndMonth(int year,int month,string category)
+        {
+
+            float total = 0;
+            try
+            {
+                var cmd = new MySqlCommand("getTotalSalesPerCategoryMonth", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = month;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@category", category);
+                cmd.Parameters["@category"].Direction = ParameterDirection.Input;
+                
                 cmd.ExecuteNonQuery();
                 var total2 = cmd.ExecuteScalar().ToString();
                 float total3 = 0;

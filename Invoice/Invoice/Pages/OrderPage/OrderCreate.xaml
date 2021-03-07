@@ -29,15 +29,8 @@
                            Foreground="#FF5960FF" />
                 <Border x:Name="comboBox_customer_border" Margin="178,31,35,241" Width="371" Height="30">
                     <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371"
-                              Height="30" SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding CustomerName }" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              Height="30" SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White"
+                              SelectedValuePath="CustomerName" DisplayMemberPath="CustomerName" />
                 </Border>
                 <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
@@ -98,15 +91,9 @@
                            VerticalAlignment="Top" />
                 <Border x:Name="comboBox_Product_border" Margin="10,31,1434,11" Width="200" Height="30">
                     <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"
-                              Height="30" SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding ProductName }" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              Height="30" SelectionChanged="ComboBox_SelectionChanged"
+                        SelectedValuePath="ProductName" DisplayMemberPath="ProductName"/>
+
                 </Border>
                 <TextBox x:Name="textBox_Product" HorizontalAlignment="Left" Height="30" Margin="218,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="200" IsReadOnly="True" />

@@ -91,6 +91,8 @@ namespace InvoiceX.Pages.OrderPage
                                        ((Customer) comboBox_customer.SelectedItem).Country;
                 textBox_Contact_Details.Text = ((Customer) comboBox_customer.SelectedItem).PhoneNumber.ToString();
                 textBox_Email_Address.Text = ((Customer) comboBox_customer.SelectedItem).Email;
+                comboBox_Product.ItemsSource = productView.productList.OrderBy(Product => Product.ProductName);
+
             }
         }
 

@@ -27,6 +27,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -35,6 +36,9 @@ using InvoiceX.Models;
 using InvoiceX.ViewModels;
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.Rendering;
+using PdfSharp;
+using PdfSharp.Pdf;
+using TheArtOfDev.HtmlRenderer.PdfSharp;
 
 namespace InvoiceX.Pages.InvoicePage
 {
@@ -97,7 +101,10 @@ namespace InvoiceX.Pages.InvoicePage
                 NetTotal_TextBlock.Text = invoice.cost.ToString("C");
                 Vat_TextBlock.Text = invoice.VAT.ToString("C");
                 TotalAmount_TextBlock.Text = invoice.totalCost.ToString("C");
-
+                if (invoice.isPaid == true)
+                {
+                    isPaidButton.IsChecked = true;
+                }
                 // Invoice products           
                 invoiceProductsGrid.ItemsSource = invoice.products;
             }
@@ -138,6 +145,8 @@ namespace InvoiceX.Pages.InvoicePage
             TotalAmount_TextBlock.Text = 0.ToString("C");
             txtBox_invoiceNumber.IsReadOnly = false;
             txtBox_invoiceNumber.Focus();
+            isPaidButton.IsChecked = false;
+
         }
 
         /// <summary>
@@ -258,10 +267,13 @@ namespace InvoiceX.Pages.InvoicePage
 
                 // Save the PDF document...
                 var filename = "Invoice.pdf";
+
                 pdfRenderer.Save(filename);
+
                 //open adobe acrobat
                 var proc = new Process();
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+
                 proc.StartInfo.Verb = "print";
 
                 //Define location of adobe reader/command line
@@ -279,6 +291,7 @@ namespace InvoiceX.Pages.InvoicePage
                 proc.EnableRaisingEvents = true;
 
                 proc.Close();
+
             }
         }
 
@@ -297,6 +310,8 @@ namespace InvoiceX.Pages.InvoicePage
             else
             {
                 var document = createPdf();
+
+
                 document.UseCmykColor = true;
                 // Create a renderer for PDF that uses Unicode font encoding
                 var pdfRenderer = new PdfDocumentRenderer(true);
@@ -340,6 +355,7 @@ namespace InvoiceX.Pages.InvoicePage
         /// <returns></returns>
         private Document createPdf()
         {
+
             var customer = invoice.customer;
             var customerDetails = new string[6];
             customerDetails[0] = customer.CustomerName;
@@ -347,7 +363,7 @@ namespace InvoiceX.Pages.InvoicePage
                                  customer.City + ", " + customer.Country;
             customerDetails[2] = customer.PhoneNumber.ToString();
             customerDetails[3] = customer.Email;
-            customerDetails[4] = customer.Balance.ToString();
+            customerDetails[4] = (CustomerViewModel.calculateCustomerBalance(customer.idCustomer)).ToString("c");
             customerDetails[5] = customer.idCustomer.ToString();
 
             var invoiceDetails = new string[6];
@@ -362,7 +378,7 @@ namespace InvoiceX.Pages.InvoicePage
 
             try
             {
-                var invoice2 = new InvoiceForm("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
+                var invoice2 = new InvoiceFormNew("../../Forms/Invoice.xml", customerDetails, invoiceDetails, products);
                 var document = invoice2.CreateDocument();
                 return document;
             }
@@ -376,4 +392,5 @@ namespace InvoiceX.Pages.InvoicePage
 
         #endregion
     }
+
 }

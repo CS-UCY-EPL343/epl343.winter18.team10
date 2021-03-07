@@ -77,17 +77,18 @@
                    VerticalAlignment="Top" FontSize="18" />
             <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="419,42,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
-                <ComboBoxItem IsSelected="True" Content="This Year" />
+                <ComboBoxItem IsSelected="True" Content="Numbers" />
+                <ComboBoxItem IsSelected="False" Content="Percentage" />
 
             </ComboBox>
-            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="364,39,0,0"
+            <Label x:Name="label1_Copy1" Content="As: " HorizontalAlignment="Left" Margin="364,39,0,0"
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
-        <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="289,152,236,200" />
+        <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
+                CornerRadius="30" Margin="29,152,900,404" />
 
         <Grid>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="320,169,279,215"
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="60,169,933,428"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -97,5 +98,35 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Grid>
+        <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
+                CornerRadius="30" Margin="879,152,18,404" />
+
+        <Grid Margin="738,-428,-738,428">
+            <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="170,601,775,6"
+                                Loaded="CartesianChart_Loaded">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Month" Labels="{Binding Labels}" />
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" />
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Grid>
+
+        <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
+                CornerRadius="30" Margin="29,556,26,10" />
+
+        <Grid Margin="738,-428,-738,428">
+            <lvc:CartesianChart Series="{Binding SeriesCollection3}" LegendLocation="Bottom" Margin="-662,1009,815,-402"
+                                Loaded="CartesianChart_Loaded">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:Axis Title="Month" Labels="{Binding Labels}" />
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" />
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </Grid>
+
     </Grid>
 </Page>

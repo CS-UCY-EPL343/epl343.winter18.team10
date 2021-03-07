@@ -67,7 +67,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="269,73,0,0" TextWrapping="Wrap" Text="Due Date"
                            VerticalAlignment="Top" />
                 <TextBox x:Name="textBox_invoiceNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="false" />
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top"
                             Height="30" Width="120" SelectedDateChanged="invoiceDate_SelectedDateChanged"
                             Focusable="False" />
@@ -91,15 +91,8 @@
                            VerticalAlignment="Top" />
                 <Border x:Name="comboBox_Product_border" Margin="10,31,1434,11" Width="200" Height="30">
                     <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"
-                              Height="30" SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding ProductName }" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              Height="30" SelectionChanged="ComboBox_SelectionChanged"
+                        SelectedValuePath="ProductName" DisplayMemberPath="ProductName" />
                 </Border>
                 <TextBox x:Name="textBox_Product" HorizontalAlignment="Left" Height="30" Margin="218,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="200" IsReadOnly="True" />
@@ -156,8 +149,8 @@
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ITEMS " Binding="{Binding ProductName}" />
-                <DataGridTextColumn Header="DESCRIPTION" Binding="{Binding ProductDescription}" />
+                <DataGridTextColumn Header="ITEMS " Binding="{Binding ProductName}" Width="400"/>
+                <DataGridTextColumn Header="DESCRIPTION" Binding="{Binding ProductDescription}" Width="400"/>
                 <DataGridTextColumn Header="STOCK" Binding="{Binding Stock}" />
                 <DataGridTextColumn Header="QUANTITY" Binding="{Binding Quantity}" />
                 <DataGridTextColumn Header="PRICE" Binding="{Binding SellPrice, StringFormat=C}" />
@@ -195,8 +188,10 @@
             <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="93,55,0,0" TextWrapping="Wrap"
                        VerticalAlignment="Top" Width="108" Height="20" Text="0.00" FontSize="16" />
         </Grid>
+        <CheckBox  x:Name="isPaidButton" Content="Mark As Paid" HorizontalAlignment="Left" Height="44" Margin="833,856,0,0" VerticalAlignment="Top" Width="164" FontSize="20" Background="{x:Null}"/>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="44" Margin="833,856,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#FF6C73FD" CornerRadius="5"/>
 
-        <Grid />
+
 
 
     </Grid>

@@ -383,15 +383,7 @@ namespace InvoiceX.ViewModels
                 }
 
                 //update customer total  
-                var query_update_customer_balance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
 
-                using (var cmd3 = new MySqlCommand(query_update_customer_balance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", receipt.totalAmount);
-                    cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
             }
             catch (MySqlException ex)
             {
@@ -457,21 +449,53 @@ namespace InvoiceX.ViewModels
                     myCmd.ExecuteNonQuery();
                 }
 
-                //update customer total  
-                var queryBalance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
-
-                using (var cmd3 = new MySqlCommand(queryBalance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", oldreceipt.totalAmount - receipt.totalAmount);
-                    cmd3.Parameters.AddWithValue("@idCustomer", receipt.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
         }
+        public static List<int> getCustomerReceipts(int customerID)
+        {
+            var customer_receipts_list = new List<int>();
+
+            try
+            {
+                var cmd = new MySqlCommand("SELECT idReceipt FROM Receipt WHERE idCustomer = " + customerID, conn);
+                var dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idReceipt = dataRow.Field<int>("idReceipt");
+                    customer_receipts_list.Add(idReceipt);
+                }
+
+                return customer_receipts_list;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
+        }
+        public static float getReceiptAmount(int receiptID)
+        {
+            float ret = 0;
+            try
+            {
+                var cmd = new MySqlCommand("SELECT Amount FROM receipt WHERE idReceipt = " + receiptID, conn);
+                ret = float.Parse((cmd.ExecuteScalar()).ToString());
+                return ret;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return 0;
+        }
+
     }
 }

@@ -39,9 +39,14 @@ namespace InvoiceX.Pages.CustomerPage
     public partial class CustomerStatistics : Page
     {
         private CustomerViewModel custViewModel;
+        ChartValues<float> totalSales = new ChartValues<float>();
+
+        ChartValues<float> totalSalesLastYear = new ChartValues<float>();
 
         public CustomerStatistics()
         {
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
             InitializeComponent();
             load();
         }
@@ -63,21 +68,18 @@ namespace InvoiceX.Pages.CustomerPage
 
         private void BtnSelectProduct_Click(object sender, RoutedEventArgs e)
         {
-            var totalSales = new ChartValues<float>();
-
-            var totalSalesLastYear = new ChartValues<float>();
-
+            float totalSalesCounter = 0;
             var selectedCustomer = (Customer) customerComboBox.SelectedItem;
             var moment = DateTime.Now;
-
-
+            totalSales.Clear();
+            totalSalesLastYear.Clear();
             for (var i = 1; i <= 12; i++)
             {
                 totalSales.Add(CustomerViewModel.getTotalSalesMonthYear(selectedCustomer.idCustomer, i, moment.Year));
+                totalSalesCounter += CustomerViewModel.getTotalSalesMonthYear(selectedCustomer.idCustomer, i, moment.Year);
                 totalSalesLastYear.Add(
-                    CustomerViewModel.getTotalSalesMonthYear(selectedCustomer.idCustomer, i, moment.Year - 1));
+                CustomerViewModel.getTotalSalesMonthYear(selectedCustomer.idCustomer, i, moment.Year - 1));
             }
-
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
@@ -91,10 +93,90 @@ namespace InvoiceX.Pages.CustomerPage
                     Values = totalSalesLastYear
                 }
             };
-
-
+            salesCount.Text = totalSalesCounter.ToString();
             YFormatter = value => value.ToString("C");
             DataContext = this;
+
+        }
+
+
+        private void BtnSelectCategory_Click(object sender, RoutedEventArgs e)
+        {
+            float totalSalesCounter = 0;
+            float totalSalesCounterLastYear = 0;
+
+            string selectedCategory = categoryComboBox.Text;
+            int comparisonYear = int.Parse(categorycmbBoxLast.Text);
+            string categoryBy = categorycmbBoxBy.Text;
+
+            var moment = DateTime.Now;
+            totalSales.Clear();
+            totalSalesLastYear.Clear();
+
+            if (categoryBy == "Total")
+            {
+                string[,] tempAmount = CustomerViewModel.getTotalSalesByCategory(moment.Year);
+                string[,] tempAmountLastYear = CustomerViewModel.getTotalSalesByCategory(comparisonYear);
+
+                Labels = new string[tempAmount.GetLength(0)];
+                for (int i = 0; i < tempAmount.GetLength(0); i++)
+                {
+                    totalSales.Add(float.Parse(tempAmount[i, 0]));
+                    totalSalesLastYear.Add(float.Parse(tempAmountLastYear[i, 0]));
+
+                    Labels[i] = (tempAmount[i, 1]);
+                }
+
+                SeriesCollection = new SeriesCollection
+            {
+               new ColumnSeries
+                {
+                    Title = "Sales",
+                    Values = totalSales
+                },
+                 new ColumnSeries
+                {
+                    Title = "Sales Last Year",
+                    Values = totalSalesLastYear
+                }
+            };
+                salesCount.Text = totalSalesCounter.ToString();
+                YFormatter = value => value.ToString("C");
+                DataContext = this;
+            }
+            else if(categoryBy == "Month")
+            {
+                for (int j = 1; j <= 12; j++)
+                {
+
+                    float salesYearTemp = CustomerViewModel.getTotalSalesByCategoryAndMonth(moment.Year, j, selectedCategory);
+                    float salesLastYearTemp = CustomerViewModel.getTotalSalesByCategoryAndMonth(comparisonYear, j, selectedCategory);
+                    totalSales.Add(salesYearTemp);
+                    totalSalesLastYear.Add(salesLastYearTemp);
+                    totalSalesCounter += salesYearTemp;
+                    totalSalesCounterLastYear += salesLastYearTemp;
+                    SeriesCollection = new SeriesCollection
+            {
+               new ColumnSeries
+                {
+                    Title = "Sales",
+                    Values = totalSales
+                },
+                 new ColumnSeries
+                {
+                    Title = "Sales Last Year",
+                    Values = totalSalesLastYear
+                }
+            };
+                }
+                salesCount.Text = totalSalesCounter.ToString();
+                salesCountLastYear.Text = totalSalesCounterLastYear.ToString();
+
+                
+                YFormatter = value => value.ToString("C");
+                DataContext = this;
+            }
+
         }
 
         public void CartesianChart_Loaded(object sender, RoutedEventArgs e)
@@ -105,4 +187,4 @@ namespace InvoiceX.Pages.CustomerPage
         {
         }
     }
-}
+    }

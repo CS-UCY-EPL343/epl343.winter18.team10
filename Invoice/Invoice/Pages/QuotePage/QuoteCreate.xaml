@@ -65,7 +65,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Quote Date"
                            VerticalAlignment="Top" />
                 <TextBox x:Name="textBox_idQuote" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="False" />
                 <DatePicker x:Name="invoiceDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top"
                             Height="30" Width="120" Focusable="False" />
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By"
@@ -86,15 +86,8 @@
                            VerticalAlignment="Top" />
                 <Border x:Name="comboBox_Product_border" Margin="10,31,1217,11" Width="200" Height="30">
                     <ComboBox x:Name="comboBox_Product" HorizontalAlignment="Left" VerticalAlignment="Top" Width="200"
-                              Height="30" SelectionChanged="ComboBox_SelectionChanged">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding ProductName }" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              Height="30" SelectionChanged="ComboBox_SelectionChanged"
+                        SelectedValuePath="ProductName" DisplayMemberPath="ProductName"/>
                 </Border>
                 <TextBox x:Name="textBox_Product" HorizontalAlignment="Left" Height="30" Margin="218,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="200" IsReadOnly="True"
@@ -125,6 +118,22 @@
             <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="81,154,0,0"
                     VerticalAlignment="Top" Width="174" Height="55" Click="Btn_clearAll_Click"
                     Style="{DynamicResource CommonButtonStyle}" />
+            <Label x:Name="label1_Copy2" Content="Select Category: " HorizontalAlignment="Left" Margin="30,297,0,0"
+                VerticalAlignment="Top" FontSize="12" Width="107" />
+            <ComboBox x:Name="categoryComboBox" HorizontalAlignment="Left" Margin="137,297,0,0" VerticalAlignment="Top"
+                Width="151" Height="30">
+                <ComboBoxItem IsSelected="True" Content="Καθαριστήρια" />
+                <ComboBoxItem IsSelected="False" Content="Μεταπωλητές" />
+                <ComboBoxItem IsSelected="False" Content="Υπεραγορές" />
+                <ComboBoxItem IsSelected="False" Content="Τελικοί Πελάτες" />
+                <ComboBoxItem IsSelected="False" Content="Ξενοδοχεία" />
+
+            </ComboBox>
+            <Label x:Name="label1_Copy" Content="Load All Products Of Category" HorizontalAlignment="Left" Margin="77,258,0,0"
+                VerticalAlignment="Top" FontSize="18" Width="305" />
+            <Button x:Name="Refresh_Copy" Content="Load" HorizontalAlignment="Left" Margin="293,297,0,0"
+                VerticalAlignment="Top" Width="102" Height="30" Click="Btn_LoadAllCategoryProducts"
+                Style="{DynamicResource CommonButtonStyle}" />
 
         </Grid>
 

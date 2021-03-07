@@ -46,14 +46,14 @@
         </Grid>
         <DataGrid x:Name="invoiceDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0"
                   VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
-                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" >
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </DataGrid.Effect>
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Created At" Binding="{Binding createdDate, StringFormat=d}" />
-                <DataGridTextColumn Header="Invoice ID" Binding="{Binding idInvoice}" />
-                <DataGridTextColumn Header="Customer" Binding="{Binding customerName}" />
+                <DataGridTextColumn Header="Created At" Binding="{Binding createdDate, StringFormat=d}" Width="Auto"/>
+                <DataGridTextColumn Header="Invoice ID" Binding="{Binding idInvoice}" Width="Auto"/>
+                <DataGridTextColumn Header="Customer" Binding="{Binding customerName}" Width="Auto"/>
                 <DataGridTextColumn Header="Cost" Binding="{Binding cost, StringFormat=C}" />
                 <DataGridTextColumn Header="VAT" Binding="{Binding VAT, StringFormat=C}" />
                 <DataGridTextColumn Header="Total Cost" Binding="{Binding totalCost, StringFormat=C}" />

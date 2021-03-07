@@ -52,16 +52,16 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
             </Canvas>
             <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
                 <Canvas Width="89" Height="59" Canvas.Left="0" Canvas.Top="0">
-                    <TextBlock x:Name="invoicesCount" Text="200" TextAlignment="left" FontFamily="Avenir" FontSize="30"
-                               Foreground="#ffcce8ff" Canvas.Left="23" Canvas.Top="0" />
-                    <TextBlock Text="NEW INVOICES" TextAlignment="left" FontFamily="Avenir" FontSize="13"
-                               Foreground="#ffcce8ff" Canvas.Top="41" Canvas.Left="1" />
+                    <TextBlock x:Name="invoicesCount" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                               Foreground="#ffcce8ff" Canvas.Left="-31" Canvas.Top="0" Width="158" />
+                    <TextBlock Text="NEW INVOICES" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                               Foreground="#ffcce8ff" Canvas.Top="41" Canvas.Left="-31" Width="158" />
                 </Canvas>
-                <TextBlock Text="Last 30 days" TextAlignment="left" FontFamily="Avenir" FontSize="9"
-                           Foreground="#ffcce8ff" Canvas.Left="22" Canvas.Top="64" />
+                <TextBlock Text="Last 30 days" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                           Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="157" />
             </Canvas>
         </Canvas>
-        <Canvas Width="158" Height="317" Margin="1389,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="1000,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border x:Name="salesCount" Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583"
                     Canvas.Left="0" Canvas.Top="0" CornerRadius="20" />
             <Canvas Width="55" Height="55" Canvas.Left="57" Canvas.Top="20">
@@ -81,21 +81,21 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
             </Canvas>
             <Canvas Width="75" Height="76" Canvas.Left="39" Canvas.Top="197">
                 <Canvas Width="75" Height="59" Canvas.Left="0" Canvas.Top="0">
-                    <TextBlock x:Name="totalSales" Text="$1.3k" TextAlignment="left" FontFamily="Avenir" FontSize="30"
-                               Foreground="#ffcce8ff" Canvas.Left="3" Canvas.Top="0" />
-                    <TextBlock Text="NEW SALES" TextAlignment="left" FontFamily="Avenir" FontSize="13"
-                               Foreground="#ffcce8ff" Canvas.Left="4" Canvas.Top="41" />
+                    <TextBlock x:Name="totalSales" Text="$1.3k" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                               Foreground="#ffcce8ff" Canvas.Top="0" Canvas.Left="-39" Width="158" />
+                    <TextBlock Text="NEW SALES" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                               Foreground="#ffcce8ff" Canvas.Left="-39" Canvas.Top="41" Width="158" />
                 </Canvas>
-                <TextBlock Text="Last 30 days" TextAlignment="left" FontFamily="Avenir" FontSize="9"
-                           Foreground="#ffcce8ff" Canvas.Left="19" Canvas.Top="64" />
+                <TextBlock Text="Last 30 days" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                           Foreground="#ffcce8ff" Canvas.Left="-38" Canvas.Top="64" Width="156" />
             </Canvas>
-            <Border Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169"
-                    Canvas.Top="5" CornerRadius="30" />
+            <Border Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-983" CornerRadius="30" />
         </Canvas>
-        <TextBlock Text="OUTSTANDING ORDERS(TOTAL:)" TextAlignment="left" FontFamily="Avenir" FontSize="14"
-                   Foreground="#ff484848" Margin="214,398,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
 
-        <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="363" Margin="214,433,0,0"
+        <TextBlock Text="OUTSTANDING ORDERS(TOTAL:)" TextAlignment="left" FontFamily="Avenir" FontSize="14"
+                   Foreground="#ff484848" Margin="30,409,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+
+        <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="363" Margin="30,431,0,0"
                   VerticalAlignment="Top" Width="714" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
@@ -109,23 +109,80 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
                 <DataGridTextColumn Header="Shipping Date" Binding="{Binding shippingDate, StringFormat=d}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Canvas Width="158" Height="317" Margin="1400,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
+                    Canvas.Top="0" CornerRadius="20" />
 
+            <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
+                <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
+                        CornerRadius="15" />
+                <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
+                    <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
+                        <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
+                        <Path Width="19" Height="13" Stretch="uniform"
+                                Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
+                                Canvas.Top="18" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
+                                Canvas.Top="18" />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
+                <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
+                    <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="salesCountYearly" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                            Foreground="#ffcce8ff" Canvas.Top="0" />
+                    <TextBlock Text="Total Sales" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                            Foreground="#ffcce8ff" Canvas.Top="41" Width="158" />
+                </Canvas>
+                <TextBlock Text="This Year" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                        Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
+            </Canvas>
+        </Canvas>
+        <Canvas Width="158" Height="317" Margin="1590,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
+                    Canvas.Top="0" CornerRadius="20" />
+
+            <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
+                <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
+                        CornerRadius="15" />
+                <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
+                    <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
+                        <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
+                        <Path Width="19" Height="13" Stretch="uniform"
+                                Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
+                                Canvas.Top="18" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
+                                Canvas.Top="18" />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
+                <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
+                    <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="receiptsCountYearly" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                            Foreground="#ffcce8ff" Canvas.Top="0" />
+                    <TextBlock Text="Total Receipts" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                            Foreground="#ffcce8ff" Canvas.Top="41" Width="158" />
+                </Canvas>
+                <TextBlock Text="This Year" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                        Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
+            </Canvas>
+        </Canvas>
         <Canvas Width="16" Height="345" Margin="912,431,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Canvas Width="16" Height="16" Canvas.Left="0" Canvas.Top="0">
                 <Border Width="16" Height="16" BorderBrush="#ff979797" Canvas.Left="0" Canvas.Top="0" />
             </Canvas>
             <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Width="920" Height="300"
-                                AutomationProperties.IsRequiredForForm="True" Canvas.Left="-683" Canvas.Top="-373">
+                                AutomationProperties.IsRequiredForForm="True" Canvas.Left="-885" Canvas.Top="-365">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" />
                 </lvc:CartesianChart.AxisY>
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" Foreground="#FF9E9E9E" />
-                    <lvc:Axis>
-                        <lvc:Axis.Separator>
-                            <lvc:Separator Step="1" />
-                        </lvc:Axis.Separator>
-                    </lvc:Axis>
+
                 </lvc:CartesianChart.AxisX>
             </lvc:CartesianChart>
 

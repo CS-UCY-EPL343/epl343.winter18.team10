@@ -38,7 +38,7 @@ namespace InvoiceX.Pages.ExpensesPage
         private readonly ExpensesViewAll viewAllPage;
 
         private readonly ExpensesView viewPage;
-        // statisticsPage;
+        private readonly ExpensesStatistics statisticsPage;
 
         public ExpensesMain()
         {
@@ -47,7 +47,7 @@ namespace InvoiceX.Pages.ExpensesPage
             viewPage = new ExpensesView();
             createPage = new ExpensesCreate(this);
             editPage = new ExpensesEdit(this);
-            //statisticsPage = new ();
+            statisticsPage = new ExpensesStatistics();
             btnViewAll_Click(null, null);
         }
 
@@ -86,7 +86,8 @@ namespace InvoiceX.Pages.ExpensesPage
         {
             resetAllBtnStyles();
             btnStatistics.Style = FindResource("ButtonStyleSelected") as Style;
-            //expensesPage.Content = statisticsPage;            
+            expensesPage.Content = statisticsPage;
+            statisticsPage.load();
         }
 
         /// <summary>

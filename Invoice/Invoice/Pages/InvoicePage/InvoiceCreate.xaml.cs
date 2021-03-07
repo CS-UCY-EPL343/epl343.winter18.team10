@@ -65,7 +65,8 @@ namespace InvoiceX.Pages.InvoicePage
                 comboBox_customer.ItemsSource = customerView.customersList;
                 textBox_invoiceNumber.Text = (InvoiceViewModel.returnLatestInvoiceID() + 1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today; //set current date 
-                dueDate.SelectedDate = DateTime.Today.AddDays(60); //set current date +60
+                dueDate.SelectedDate = DateTime.Today.AddDays(30); //set current date +60
+
             }
 
             refreshDataDB = false;
@@ -90,7 +91,7 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_Email_Address.Text = customer.Email;
 
                 productView = new ProductViewModel(customer.idCustomer);
-                comboBox_Product.ItemsSource = productView.productList;
+                comboBox_Product.ItemsSource = productView.productList.OrderBy(Product => Product.ProductName);
             }
         }
 
@@ -114,6 +115,7 @@ namespace InvoiceX.Pages.InvoicePage
                 textBox_ProductStock.Text = product.Stock.ToString();
                 textBox_ProductPrice.Text = product.SellPrice.ToString("n2");
                 textBox_ProductVat.Text = (product.Vat * 100).ToString();
+                
             }
         }
 
@@ -349,7 +351,7 @@ namespace InvoiceX.Pages.InvoicePage
         {
             return new Invoice
             {
-                customer = (Customer) comboBox_customer.SelectedItem,
+                customer = (Customer)comboBox_customer.SelectedItem,
                 products = ProductDataGrid.Items.OfType<Product>().ToList(),
                 idInvoice = int.Parse(textBox_invoiceNumber.Text),
                 cost = double.Parse(NetTotal_TextBlock.Text, NumberStyles.Currency),
@@ -357,7 +359,8 @@ namespace InvoiceX.Pages.InvoicePage
                 totalCost = double.Parse(TotalAmount_TextBlock.Text, NumberStyles.Currency),
                 createdDate = invoiceDate.SelectedDate.Value,
                 dueDate = dueDate.SelectedDate.Value,
-                issuedBy = issuedBy.Text
+                issuedBy = issuedBy.Text,
+                isPaid = (bool)isPaidButton.IsChecked
             };
         }
 
@@ -402,6 +405,7 @@ namespace InvoiceX.Pages.InvoicePage
             invoiceDate.ClearValue(Control.BorderBrushProperty);
             dueDate.ClearValue(Control.BorderBrushProperty);
             invoiceDate.SelectedDate = DateTime.Today; //set curent date 
+
             dueDate.SelectedDate = DateTime.Today.AddDays(60); //set current date +60
         }
 

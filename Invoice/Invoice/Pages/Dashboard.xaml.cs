@@ -81,14 +81,24 @@ namespace InvoiceX.Pages
 
         private void createChart1()
         {
+            float totalYearlySales = 0;
+            double totalYearlyReceipts = 0;
+
             var receipts = new double[12];
-            for (var i = 0; i < 12; i++) receipts[i] = ReceiptViewModel.getTotalReceiptsMonthYear(i, DateTime.Now.Year);
+            for (var i = 0; i < 12; i++) {
+                double temp1 = ReceiptViewModel.getTotalReceiptsMonthYear(i + 1, DateTime.Now.Year) + InvoiceViewModel.getPaidInvoicesbyMonthYear(i + 1, DateTime.Now.Year);
+                receipts[i] = temp1;
+                totalYearlyReceipts += temp1;
+            }
             var totalReceipt = new ChartValues<double>();
             totalReceipt.AddRange(receipts);
 
             var invoices = new double[12];
-            for (var i = 0; i < 12; i++) invoices[i] = InvoiceViewModel.getTotalSalesMonthYear(i, DateTime.Now.Year);
-
+            for (var i = 0; i < 12; i++)
+            {
+                invoices[i] = InvoiceViewModel.getTotalSalesMonthYear(i + 1, DateTime.Now.Year);
+                totalYearlySales+= InvoiceViewModel.getTotalSalesMonthYear(i + 1, DateTime.Now.Year);
+            }
             var total = new ChartValues<double>();
             total.AddRange(invoices);
             SeriesCollection = new SeriesCollection
@@ -106,7 +116,8 @@ namespace InvoiceX.Pages
                     PointGeometry = null
                 }
             };
-
+            salesCountYearly.Text = totalYearlySales.ToString();
+            receiptsCountYearly.Text = totalYearlyReceipts.ToString("C");
             YFormatter = value => value.ToString("C");
             DataContext = this;
         }
@@ -124,10 +135,9 @@ namespace InvoiceX.Pages
 
             for (var i = 0; i < 4; i++)
             {
-                receipts[i] = ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year);
+                receipts[i] = ReceiptViewModel.getTotalReceiptsMonthYear(lastMonth.Month, lastMonth.Year) + InvoiceViewModel.getPaidInvoicesbyMonthYear(lastMonth.Month, lastMonth.Year); ;
                 invoices[i] = InvoiceViewModel.getTotalSalesMonthYear(lastMonth.Month, lastMonth.Year);
                 expenses[i] = ExpensesViewModel.getTotalExpensesMonthYear(lastMonth.Month, lastMonth.Year);
-                Console.WriteLine(expenses[i]);
                 Labels2[i] = lastMonth.Month.ToString();
                 lastMonth = lastMonth.AddMonths(1);
             }

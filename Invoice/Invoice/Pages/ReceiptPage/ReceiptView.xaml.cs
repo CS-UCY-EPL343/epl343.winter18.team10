@@ -341,7 +341,7 @@ namespace InvoiceX.Pages.ReceiptPage
             var payments = receiptPaymentsGrid.Items.OfType<Payment>().ToList();
 
 
-            var receipt2 = new ReceiptForm("../../Forms/Receipt.xml", customerDetails, receiptDetails, payments);
+            var receipt2 = new ReceiptFormNew("../../Forms/Receipt.xml", customerDetails, receiptDetails, payments);
             var document = receipt2.CreateDocument();
             return document;
         }

@@ -72,22 +72,25 @@
             <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="80,41,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
                 <ComboBoxItem IsSelected="True" Content="Month" />
+                <ComboBoxItem IsSelected="False" Content="Week" />
+
             </ComboBox>
             <Label x:Name="label1_Copy" Content="By: " HorizontalAlignment="Left" Margin="31,38,0,0"
                    VerticalAlignment="Top" FontSize="18" />
-            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="419,41,0,0" VerticalAlignment="Top"
+            <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="503,41,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
-                <ComboBoxItem IsSelected="True" Content="This Year" />
+                <ComboBoxItem IsSelected="True" Content="2020" />
+                <ComboBoxItem IsSelected="False" Content="2019" />
 
             </ComboBox>
-            <Label x:Name="label1_Copy1" Content="Last: " HorizontalAlignment="Left" Margin="364,38,0,0"
+            <Label x:Name="label1_Copy1" Content="Compare With: " HorizontalAlignment="Left" Margin="364,38,0,0"
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
         <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="289,152,236,200" />
+                CornerRadius="30" Margin="88,154,437,198" />
 
         <Grid>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="320,169,279,215"
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="126,176,473,208"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -97,5 +100,67 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Grid>
+        <Canvas Width="158" Height="317" Margin="1446,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
+                    Canvas.Top="0" CornerRadius="20" />
+
+            <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
+                <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
+                        CornerRadius="15" />
+                <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
+                    <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
+                        <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
+                        <Path Width="19" Height="13" Stretch="uniform"
+                                Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
+                                Canvas.Top="18" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
+                                Canvas.Top="18" />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
+                <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
+                    <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="salesCount" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                            Foreground="#ffcce8ff" Canvas.Top="0" />
+                    <TextBlock Text="Total Sales" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                            Foreground="#ffcce8ff" Canvas.Top="41" Width="158" />
+                </Canvas>
+                <TextBlock Text="This Year" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                        Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
+            </Canvas>
+        </Canvas>
+        <Canvas Width="158" Height="317" Margin="1446,500,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="158" Height="317" Background="#8E1600" BorderBrush="#ff4b6583" Canvas.Left="0"
+                    Canvas.Top="0" CornerRadius="20" />
+
+            <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
+                <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
+                        CornerRadius="15" />
+                <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
+                    <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
+                        <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
+                        <Path Width="19" Height="13" Stretch="uniform"
+                                Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
+                                Canvas.Top="18" />
+                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
+                                Canvas.Top="18" />
+                    </Canvas>
+                </Canvas>
+            </Canvas>
+            <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
+                <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
+                    <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="productSalesCount" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
+                            Foreground="#ffcce8ff" Canvas.Top="0" />
+                    <TextBlock Text="Total Sales" TextAlignment="center" FontFamily="Avenir" FontSize="13"
+                            Foreground="#ffcce8ff" Canvas.Top="41" Width="158" />
+                </Canvas>
+                <TextBlock Text="This Year" x:Name="comparisonYearText" TextAlignment="center" FontFamily="Avenir" FontSize="9"
+                        Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
+            </Canvas>
+        </Canvas>
     </Grid>
 </Page>

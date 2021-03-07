@@ -98,9 +98,9 @@
             </DataGrid.Effect>
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Product ID" Binding="{Binding idProduct}" />
-                <DataGridTextColumn Header="Product" Binding="{Binding ProductName}" />
-                <DataGridTextColumn Header="Description" Binding="{Binding ProductDescription}" />
+                <DataGridTextColumn Header="Product ID" Binding="{Binding idProduct}" Width="Auto"/>
+                <DataGridTextColumn Header="Product" Binding="{Binding ProductName}" Width="Auto"/>
+                <DataGridTextColumn Header="Description" Binding="{Binding ProductDescription}" Width="Auto"/>
                 <DataGridTextColumn Header="Cost" Binding="{Binding Cost, StringFormat=C}" />
                 <DataGridTextColumn Header="Sell Price" Binding="{Binding SellPrice, StringFormat=C}" />
                 <DataGridTextColumn Header="VAT" Binding="{Binding Vat, StringFormat=P}" />

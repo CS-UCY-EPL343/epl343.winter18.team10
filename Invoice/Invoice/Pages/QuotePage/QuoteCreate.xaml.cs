@@ -59,7 +59,8 @@ namespace InvoiceX.Pages.QuotePage
                 productView = new ProductViewModel();
                 customerView = new CustomerViewModel();
                 comboBox_customer.ItemsSource = customerView.customersList;
-                comboBox_Product.ItemsSource = productView.productList;
+                comboBox_Product.ItemsSource = productView.productList.OrderBy(Product => Product.ProductName);
+
                 textBox_idQuote.Text = (QuoteViewModel.returnLatestQuoteID() + 1).ToString();
                 invoiceDate.SelectedDate = DateTime.Today; //set current date 
             }
@@ -84,6 +85,8 @@ namespace InvoiceX.Pages.QuotePage
                                        ((Customer) comboBox_customer.SelectedItem).Country;
                 textBox_Contact_Details.Text = ((Customer) comboBox_customer.SelectedItem).PhoneNumber.ToString();
                 textBox_Email_Address.Text = ((Customer) comboBox_customer.SelectedItem).Email;
+                comboBox_Product.ItemsSource = productView.productList.OrderBy(Product => Product.ProductName);
+
             }
         }
 
@@ -361,6 +364,29 @@ namespace InvoiceX.Pages.QuotePage
 
         private void textBox_Product_TextChanged(object sender, TextChangedEventArgs e)
         {
+        }
+
+        //load all products of category
+        private void Btn_LoadAllCategoryProducts(object sender, RoutedEventArgs e)
+        {
+            string selectedCategory = categoryComboBox.Text;
+
+            if (selectedCategory == "Καθαριστήρια")
+            {
+                int[] productsId = { 8, 52, 53, 54, 2, 3, 155, 36, 94, 9, 10, 16, 17, 32, 33, 25, 26, 14, 89 };
+
+                for (int i = 0; i < productsId.Length;i++) {
+                    Product temp = ProductViewModel.getProduct(productsId[i]);
+                    ProductDataGrid.Items.Add(new Product
+                    {
+                        idProduct = temp.idProduct,
+                        ProductName = temp.ProductName,
+                        ProductDescription = temp.ProductDescription,
+                        SellPrice = temp.SellPrice,
+                        OfferPrice = temp.SellPrice,
+                    }) ;
+                }
+            }
         }
     }
 }

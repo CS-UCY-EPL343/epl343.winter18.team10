@@ -124,6 +124,7 @@ namespace InvoiceX.ViewModels
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var dueDate = dataRow.Field<DateTime>("DueDate");
                     var issuedBy = dataRow.Field<string>("IssuedBy");
+                    var isPaid = dataRow.Field<bool>("isPaid");
 
                     var productID = dataRow.Field<int>("idProduct");
                     var product = dataRow.Field<string>("ProductName");
@@ -132,7 +133,7 @@ namespace InvoiceX.ViewModels
                     var proTotalCost = dataRow.Field<float>("IPCost");
                     var proVat = dataRow.Field<float>("IPVAT");
                     var quantity = dataRow.Field<int>("Quantity");
-
+                    
                     if (count == 0)
                     {
                         count++;
@@ -146,6 +147,7 @@ namespace InvoiceX.ViewModels
                             createdDate = createdDate,
                             dueDate = dueDate,
                             issuedBy = issuedBy,
+                            isPaid = isPaid,
                             products = new List<Product>(),
                             customer = new Customer
                             {
@@ -204,7 +206,6 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@customerID", customerID);
                     cmd.Parameters.AddWithValue("@from", from);
                     cmd.Parameters.AddWithValue("@to", to);
-
                     dt.Load(cmd.ExecuteReader());
                 }
 
@@ -212,17 +213,24 @@ namespace InvoiceX.ViewModels
                 foreach (DataRow dataRow in dt.Rows)
                 {
                     var idInvoice = dataRow.Field<int>("idInvoice");
+                    Invoice temp = InvoiceViewModel.getInvoice(idInvoice);
+                    float credits1 = 0;
                     var invTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var balance = dataRow.Field<float>("PreviousBalance");
-
-                    inv = new StatementItem
+                    if (temp.isPaid == true)
                     {
-                        idItem = idInvoice,
-                        charges = invTotalCost,
-                        createdDate = createdDate,
-                        itemType = ItemType.Invoice,
-                        balance = balance
+                        credits1 = invTotalCost;
+                        balance = balance - credits1;
+                    }
+                        inv = new StatementItem
+                        {
+                            idItem = idInvoice,
+                            charges = invTotalCost,
+                            createdDate = createdDate,
+                            itemType = ItemType.Invoice,
+                            balance = balance,
+                            credits = credits1
                     };
 
                     list.Add(inv);
@@ -328,7 +336,7 @@ namespace InvoiceX.ViewModels
             {
                 //insert invoice 
                 var query =
-                    "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, PreviousBalance, IssuedBy) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @PreviousBalance, @IssuedBy)";
+                    "INSERT INTO Invoice (idInvoice, idCustomer, Cost, Vat, TotalCost, CreatedDate, DueDate, PreviousBalance, IssuedBy,isPaid) Values (@idInvoice, @idCustomer, @Cost, @Vat, @TotalCost, @CreatedDate, @DueDate, @PreviousBalance, @IssuedBy,@isPaid)";
 
                 using (var cmd = new MySqlCommand(query, conn))
                 {
@@ -342,6 +350,8 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
                     cmd.Parameters.AddWithValue("@PreviousBalance", invoice.customer.Balance);
+                    cmd.Parameters.AddWithValue("@isPaid", invoice.isPaid);
+
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
@@ -375,16 +385,7 @@ namespace InvoiceX.ViewModels
                     myCmd.ExecuteNonQuery();
                 }
 
-                //update customer total  
-                var queryBalance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
-
-                using (var cmd3 = new MySqlCommand(queryBalance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", invoice.totalCost);
-                    cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
+                
             }
             catch (MySqlException ex)
             {
@@ -403,7 +404,7 @@ namespace InvoiceX.ViewModels
             {
                 //update Invoice 
                 var query =
-                    "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, DueDate=@DueDate, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
+                    "UPDATE Invoice SET  Cost=@Cost, Vat=@Vat, TotalCost=@TotalCost, DueDate=@DueDate,isPaid=@isPaid, IssuedBy=@IssuedBy WHERE idInvoice=@idInvoice ";
 
                 using (var cmd = new MySqlCommand(query, conn))
                 {
@@ -416,6 +417,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@TotalCost", invoice.totalCost);
                     cmd.Parameters.AddWithValue("@DueDate", invoice.dueDate);
                     cmd.Parameters.AddWithValue("@IssuedBy", invoice.issuedBy);
+                    cmd.Parameters.AddWithValue("@isPaid", invoice.isPaid);
                     // Execute the query
                     cmd.ExecuteNonQuery();
                 }
@@ -470,16 +472,8 @@ namespace InvoiceX.ViewModels
                     myCmd.ExecuteNonQuery();
                 }
 
-                //update customer total  
-                var queryBalance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance+@amount) WHERE  idCustomer=@idCustomer;";
+                
 
-                using (var cmd3 = new MySqlCommand(queryBalance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", invoice.totalCost - old_invoice.totalCost);
-                    cmd3.Parameters.AddWithValue("@idCustomer", invoice.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
             }
             catch (MySqlException ex)
             {
@@ -597,7 +591,56 @@ namespace InvoiceX.ViewModels
 
             return total;
         }
+        public static float getTotalSalesWeekYear(int week, int year)
+        {
+            float total = 0;
 
+            try
+            {
+                var cmd = new MySqlCommand("getSalesByWeekYear", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@week", SqlDbType.Int).Value = week;
+                cmd.Parameters["@week"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
+        public static float getPaidInvoicesbyMonthYear(int months, int year)
+        {
+            float total = 0;
+
+            try
+            {
+                var cmd = new MySqlCommand("getPaidInvoicesbyMonthYear", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
         /// <summary>
         ///     Given customer ID returns a list of invoices for the specific customer
         /// </summary>
@@ -627,6 +670,40 @@ namespace InvoiceX.ViewModels
             }
 
             return null;
+        }
+        public static float getInvoiceCost(int invoiceID)
+        {
+            float ret = 0;
+            try
+            {
+                var cmd = new MySqlCommand("SELECT TotalCost FROM invoice WHERE idInvoice = " + invoiceID, conn);
+                ret = float.Parse((cmd.ExecuteScalar()).ToString());
+                return ret;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return 0;
+        }
+        public static bool isInvoicePaid(int invoiceID)
+        {
+            bool ret = false;
+            try
+            {
+                var cmd = new MySqlCommand("SELECT isPaid FROM invoice WHERE idInvoice = " + invoiceID, conn);
+                ret= (bool)cmd.ExecuteScalar();
+
+                return ret;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return ret;
+
         }
     }
 }

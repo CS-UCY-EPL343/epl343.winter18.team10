@@ -351,7 +351,7 @@ namespace InvoiceX.Pages.CreditNotePage
             var products = creditNoteProductsGrid.Items.OfType<Product>().ToList();
 
 
-            var creditnote2 = new CreditNoteForm("../../Forms/creditNote.xml", customerDetails, creditNoteDetails,
+            var creditnote2 = new CreditNoteFormNew("../../Forms/creditNote.xml", customerDetails, creditNoteDetails,
                 products);
             var document = creditnote2.CreateDocument();
             return document;

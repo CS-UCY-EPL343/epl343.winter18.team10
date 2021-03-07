@@ -186,6 +186,8 @@
         </Grid>
 
         <Grid />
+        <CheckBox  x:Name="isPaidButton" Content="Mark As Paid" HorizontalAlignment="Left" Height="44" Margin="841,865,0,0" VerticalAlignment="Top" Width="221" FontSize="20" Background="{x:Null}"/>
+        <Border BorderThickness="1" HorizontalAlignment="Left" Height="44" Margin="833,856,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#FF6C73FD" CornerRadius="5"/>
 
 
     </Grid>

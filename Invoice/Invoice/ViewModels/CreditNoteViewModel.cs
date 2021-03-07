@@ -341,16 +341,6 @@ namespace InvoiceX.ViewModels
                 }
 
 
-                //update customer total  
-                var queryBalance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
-
-                using (var cmd3 = new MySqlCommand(queryBalance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", creditNote.totalCost);
-                    cmd3.Parameters.AddWithValue("@idCustomer", creditNote.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
             }
             catch (MySqlException ex)
             {
@@ -465,21 +455,53 @@ namespace InvoiceX.ViewModels
                     myCmd.ExecuteNonQuery();
                 }
 
-                //update customer total  
-                var queryBalance =
-                    "UPDATE Customer SET Balance = REPLACE(Balance,Balance,Balance-@amount) WHERE  idCustomer=@idCustomer;";
-
-                using (var cmd3 = new MySqlCommand(queryBalance, conn))
-                {
-                    cmd3.Parameters.AddWithValue("@amount", creditNote.totalCost - old_creditNote.totalCost);
-                    cmd3.Parameters.AddWithValue("@idCustomer", creditNote.customer.idCustomer);
-                    cmd3.ExecuteNonQuery();
-                }
+                
             }
             catch (MySqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        public static List<int> getCustomerCreditNotes(int customerID)
+        {
+            var customer_creditNotes_list = new List<int>();
+
+            try
+            {
+                var cmd = new MySqlCommand("SELECT idCreditNote FROM creditnote WHERE idCustomer = " + customerID, conn);
+                var dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    var idCreditNote = dataRow.Field<int>("idCreditNote");
+                    customer_creditNotes_list.Add(idCreditNote);
+                }
+
+                return customer_creditNotes_list;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return null;
+        }
+        public static float getCreditNoteCost(int creditNoteId)
+        {
+            float ret = 0;
+            try
+            {
+                var cmd = new MySqlCommand("SELECT TotalCost FROM creditnote WHERE idCreditNote = " + creditNoteId, conn);
+                ret = float.Parse((cmd.ExecuteScalar()).ToString());
+                return ret;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return 0;
         }
     }
 }

@@ -45,6 +45,8 @@ namespace InvoiceX.ViewModels
         public ExpensesViewModel()
         {
             expensesList = new List<Expense>();
+            expensesCompaniesList = new HashSet<string>();
+            expensesCategoriesList = new HashSet<string>();
 
             try
             {
@@ -61,18 +63,21 @@ namespace InvoiceX.ViewModels
                     var totalCost = dataRow.Field<float>("TotalCost");
                     var isPaid = dataRow.Field<bool>("IsPaid");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
-
-                    exp = new Expense
-                    {
-                        idExpense = idExpense,
-                        companyName = company,
-                        category = category,
-                        totalCost = totalCost,
-                        isPaid = isPaid,
-                        createdDate = createdDate
-                    };
-
+                    
+                        exp = new Expense
+                        {
+                            idExpense = idExpense,
+                            companyName = company,
+                            category = category,
+                            totalCost = totalCost,
+                            isPaid = isPaid,
+                            createdDate = createdDate
+                        };
+                    
+                
                     expensesList.Add(exp);
+                    expensesCompaniesList.Add(company);
+                    expensesCategoriesList.Add(category);
                 }
             }
             catch (MySqlException ex)
@@ -82,6 +87,8 @@ namespace InvoiceX.ViewModels
         }
 
         public List<Expense> expensesList { get; set; }
+        public HashSet<string> expensesCompaniesList { get; set; }
+        public HashSet<string> expensesCategoriesList { get; set; }
 
         /// <summary>
         ///     Given the expense ID deletes the expense from the Database
@@ -136,16 +143,8 @@ namespace InvoiceX.ViewModels
                     var cost = dataRow.Field<float>("Cost");
                     var vat = dataRow.Field<float>("VAT");
                     var totalCost = dataRow.Field<float>("TotalCost");
-                    var isPaid = dataRow.Field<bool>("IsPaid");
+                    bool isPaid = dataRow.Field<bool>("IsPaid");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
-
-                    var paymentID = dataRow.Field<int>("idPayment");
-                    var amount = dataRow.Field<float>("Amount");
-                    var method =
-                        (PaymentMethod) Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod"));
-                    var paymentDate = dataRow.Field<DateTime>("PaymentDate");
-                    var paymentNumber = dataRow.Field<string>("PaymentNumber");
-
                     if (count == 0)
                     {
                         count++;
@@ -167,14 +166,29 @@ namespace InvoiceX.ViewModels
                         };
                     }
 
-                    exp.payments.Add(new Payment
+                    if (isPaid==true)
+
                     {
-                        idPayment = paymentID,
-                        amount = amount,
-                        paymentMethod = method,
-                        paymentNumber = paymentNumber,
-                        paymentDate = paymentDate
-                    });
+                        var paymentID = dataRow.Field<int>("idPayment");
+                         var amount = dataRow.Field<float>("Amount");
+                         var method =
+                            (PaymentMethod)Enum.Parse(typeof(PaymentMethod), dataRow.Field<string>("PaymentMethod"));
+                        var paymentDate = dataRow.Field<DateTime>("PaymentDate");
+                        var paymentNumber = dataRow.Field<string>("PaymentNumber");
+                        exp.payments.Add(new Payment
+                        {
+                            idPayment = paymentID,
+                            amount = amount,
+                            paymentMethod = method,
+                            paymentNumber = paymentNumber,
+                            paymentDate = paymentDate
+                        });
+                    }
+                        
+
+
+                        
+                    
                 }
             }
             catch (MySqlException ex)
@@ -216,6 +230,60 @@ namespace InvoiceX.ViewModels
 
             return total;
         }
+        public static float getExpensesMonthYearbyCompany(String company, int months, int year)
+        {
+            float total = 0;
+            Console.WriteLine("/"+company+"/");
+            try
+            {
+                var cmd = new MySqlCommand("getExpensesByMonthYearCompany", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@name",company);
+                cmd.Parameters["@name"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
+        public static float getExpensesMonthYearbyCategory(String Category, int months, int year)
+        {
+            float total = 0;
+            try
+            {
+                var cmd = new MySqlCommand("getExpensesByMonthYearCategory", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@category", Category);
+                cmd.Parameters["@category"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = months;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
+
 
         /// <summary>
         ///     Given the expense object inserts it in to the database
@@ -358,7 +426,7 @@ namespace InvoiceX.ViewModels
                     cmd.Parameters.AddWithValue("@Cost", expense.cost);
                     cmd.Parameters.AddWithValue("@VAT", expense.VAT);
                     cmd.Parameters.AddWithValue("@TotalCost", expense.totalCost);
-                    cmd.Parameters.AddWithValue("@IsPaid", expense.issuedBy);
+                    cmd.Parameters.AddWithValue("@IsPaid", expense.isPaid);
                     cmd.Parameters.AddWithValue("@IssuedBy", expense.issuedBy);
                     // Execute the query
                     cmd.ExecuteNonQuery();

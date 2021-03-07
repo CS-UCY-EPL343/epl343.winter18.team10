@@ -31,23 +31,22 @@ using InvoiceX.ViewModels;
 using LiveCharts;
 using LiveCharts.Wpf;
 
-namespace InvoiceX.Pages.ProductPage
+namespace InvoiceX.Pages.ExpensesPage
 {
     /// <summary>
     ///     Interaction logic for ProductView.xaml
     /// </summary>
-    
-    public partial class ProductStatistics : Page
+    public partial class ExpensesStatistics : Page
     {
-        private ProductViewModel prodViewModel;
-        ChartValues<int> total = new ChartValues<int>();
+        private ExpensesViewModel expViewModel;
         ChartValues<float> totalSales = new ChartValues<float>();
 
-        new ChartValues<int> totalLastYear = new ChartValues<int>();
-        new ChartValues<float> totalSalesLastYear = new ChartValues<float>();
+        ChartValues<float> totalSalesLastYear = new ChartValues<float>();
 
-        public ProductStatistics()
+        public ExpensesStatistics()
         {
+            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
             InitializeComponent();
             load();
         }
@@ -61,67 +60,60 @@ namespace InvoiceX.Pages.ProductPage
 
         public void load()
         {
-            prodViewModel = new ProductViewModel();
-            productComboBox.ItemsSource = prodViewModel.productList;
-            productComboBox.DisplayMemberPath = "ProductName";
-            productComboBox.SelectedValuePath = "ProductName";
-        }
+            expViewModel = new ExpensesViewModel();
+            companyComboBox.ItemsSource = expViewModel.expensesCompaniesList;
 
+            categoryComboBox.ItemsSource = expViewModel.expensesCategoriesList;
+
+
+        }
 
         private void BtnSelectProduct_Click(object sender, RoutedEventArgs e)
         {
-            int totalUnitSales = 0;
-            float totalProductSales = 0;
-            Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+            float totalSalesCounter = 0;
+            float totalCompanyExpenses = 0;
 
-            var selectedProduct = (Product) productComboBox.SelectedItem;
             var moment = DateTime.Now;
-            total.Clear();
             totalSales.Clear();
-            totalLastYear.Clear();
             totalSalesLastYear.Clear();
-
-            for (var i = 1; i <= 12; i++)
+            if (!(companyComboBox.SelectedIndex==-1))
             {
-                total.Add(ProductViewModel.getProductCount(selectedProduct.idProduct, i, moment.Year));
-                totalSales.Add(ProductViewModel.getProductSales(selectedProduct.idProduct, i, moment.Year));
-                totalLastYear.Add(ProductViewModel.getProductCount(selectedProduct.idProduct, i, moment.Year - 1));
-                totalSalesLastYear.Add(ProductViewModel.getProductSales(selectedProduct.idProduct, i, moment.Year - 1));
-                totalUnitSales += ProductViewModel.getProductCount(selectedProduct.idProduct, i, moment.Year);
-                totalProductSales += ProductViewModel.getProductSales(selectedProduct.idProduct, i, moment.Year);
 
+                for (var i = 1; i <= 12; i++)
+                {
+                    float temp = ExpensesViewModel.getExpensesMonthYearbyCompany(companyComboBox.Text, i, moment.Year);
+                    totalSales.Add(temp);
+                    totalSalesLastYear.Add(ExpensesViewModel.getExpensesMonthYearbyCompany(companyComboBox.Text, i, moment.Year - 1));
+                    totalSalesCounter += ExpensesViewModel.getTotalExpensesMonthYear(i, moment.Year);
+                    totalCompanyExpenses += temp;
+                }
             }
+            else if (!(categoryComboBox.SelectedIndex == -1))
+            {
+                for (var i = 1; i <= 12; i++)
+                {
+                    totalSales.Add(ExpensesViewModel.getExpensesMonthYearbyCategory(categoryComboBox.Text, i, moment.Year));
+                    totalSalesLastYear.Add(ExpensesViewModel.getExpensesMonthYearbyCategory(categoryComboBox.Text, i, moment.Year - 1));
+                    totalSalesCounter += ExpensesViewModel.getTotalExpensesMonthYear(i, moment.Year);
+                }
+            }
+
             SeriesCollection = new SeriesCollection
             {
-                new ColumnSeries 
+                new LineSeries
                 {
                     Title = "Total Sales",
                     Values = totalSales
                 },
-                new ColumnSeries
+                new LineSeries
                 {
                     Title = "Last Year Sales",
                     Values = totalSalesLastYear
                 }
             };
-            SeriesCollection2 = new SeriesCollection
-            {
-                new ColumnSeries
-                {
-                    Title = "Total Products",
-                    Values = total
-                },
-                new ColumnSeries
-                {
-                    Title = "Last Year Total Products",
-                    Values = totalLastYear
-                }
-            };
+            ExpensesCount.Text = totalSalesCounter.ToString();
+            ExpensesCount2.Text = totalCompanyExpenses.ToString();
             YFormatter = value => value.ToString("C");
-            YFormatter2 = value => value.ToString();
-            salesCount.Text = totalProductSales.ToString();
-            productSalesCount.Text= totalUnitSales.ToString();
-
             DataContext = this;
 
         }
@@ -132,7 +124,6 @@ namespace InvoiceX.Pages.ProductPage
 
         private void cmbBoxBy_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
     }
-}
+    }

@@ -29,15 +29,8 @@
                            Foreground="#FF5960FF" />
                 <Border x:Name="comboBox_customer_border" Margin="178,31,35,241" Width="371" Height="30">
                     <ComboBox x:Name="comboBox_customer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="371"
-                              Height="30" SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding CustomerName }" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
+                              Height="30" SelectionChanged="comboBox_customer_SelectionChanged" BorderBrush="White"
+                              SelectedValuePath="CustomerName" DisplayMemberPath="CustomerName" />
                 </Border>
                 <TextBox x:Name="textBox_Customer" HorizontalAlignment="Left" Height="30" Margin="176,87,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="373" IsReadOnly="True" />
@@ -72,7 +65,7 @@
                 <TextBlock HorizontalAlignment="Left" Margin="135,73,0,0" TextWrapping="Wrap" Text="Receipt Date"
                            VerticalAlignment="Top" />
                 <TextBox x:Name="textBox_ReceiptNumber" HorizontalAlignment="Left" Height="30" Margin="135,39,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="True" />
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="120" IsReadOnly="False" />
                 <DatePicker x:Name="ReceiptDate" HorizontalAlignment="Left" Margin="135,94,0,0" VerticalAlignment="Top"
                             Height="30" Width="120" Focusable="False" />
                 <TextBlock HorizontalAlignment="Left" Margin="135,129,0,0" TextWrapping="Wrap" Text="Issued By"

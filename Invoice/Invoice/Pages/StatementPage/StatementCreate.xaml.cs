@@ -375,14 +375,15 @@ namespace InvoiceX.Pages.StatementPage
 
         private Document createPdf()
         {
-            var customerDetails = new string[6];
+            var customerDetails = new string[7];
             var customer = (Customer) comboBox_customer.SelectedItem;
             customerDetails[0] = textBox_Customer.Text;
             customerDetails[1] = textBox_Address.Text;
             customerDetails[2] = textBox_Contact_Details.Text;
             customerDetails[3] = textBox_Email_Address.Text;
             customerDetails[4] = customer.idCustomer.ToString();
-            customerDetails[5] = customer.Balance.ToString();
+            customerDetails[5] = CustomerViewModel.calculateCustomerBalanceDates(customer.idCustomer, new DateTime(2019, 02, 01), fromDate.SelectedDate.Value.AddDays(-1));
+            customerDetails[6] = (CustomerViewModel.calculateCustomerBalance(customer.idCustomer)).ToString("c");
 
             var statementDetails = new string[4];
             statementDetails[0] = fromDate.Text;
@@ -391,7 +392,7 @@ namespace InvoiceX.Pages.StatementPage
             var items = statementDataGrid.Items.OfType<StatementItem>().ToList();
 
 
-            var statement2 = new StatementForm("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
+            var statement2 = new StatementFormNew("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
             var document = statement2.CreateDocument();
             return document;
         }

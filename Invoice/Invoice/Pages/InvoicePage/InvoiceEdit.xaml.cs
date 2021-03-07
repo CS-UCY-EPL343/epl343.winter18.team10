@@ -276,6 +276,8 @@ namespace InvoiceX.Pages.InvoicePage
             myinvoice.createdDate = oldInvoice.createdDate; //created date should not change
             myinvoice.dueDate = dueDate.SelectedDate.Value.Date;
             myinvoice.issuedBy = issuedBy.Text;
+            myinvoice.isPaid = (bool)isPaidButton.IsChecked;
+
             return myinvoice;
         }
 
@@ -409,6 +411,13 @@ namespace InvoiceX.Pages.InvoicePage
 
                 productView = new ProductViewModel(oldInvoice.customer.idCustomer);
                 comboBox_Product.ItemsSource = productView.productList;
+                Console.WriteLine("1");
+                Console.WriteLine(oldInvoice.isPaid);
+
+                if (oldInvoice.isPaid == true)
+                {
+                    isPaidButton.IsChecked = true;
+                }
             }
             else
             {

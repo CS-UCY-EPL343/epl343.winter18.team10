@@ -29,7 +29,6 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using InvoiceX.Models;
 using InvoiceX.ViewModels;
-
 namespace InvoiceX.Pages.InvoicePage
 {
     /// <summary>
@@ -42,6 +41,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public InvoiceViewAll(InvoiceMain mainPage)
         {
+
             InitializeComponent();
             this.mainPage = mainPage;
         }

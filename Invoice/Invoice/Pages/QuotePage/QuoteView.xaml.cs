@@ -340,7 +340,7 @@ namespace InvoiceX.Pages.QuotePage
             var products = quoteProductsGrid.Items.OfType<Product>().ToList();
 
 
-            var quote2 = new QuoteForm("../../Forms/Quote.xml", customerDetails, quoteDetails, products);
+            var quote2 = new QuoteFormNew("../../Forms/Quote.xml", customerDetails, quoteDetails, products);
             var document = quote2.CreateDocument();
             return document;
         }

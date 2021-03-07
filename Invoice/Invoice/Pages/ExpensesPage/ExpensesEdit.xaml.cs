@@ -237,12 +237,7 @@ namespace InvoiceX.Pages.ExpensesPage
             {
                 if (int.TryParse(txtBox_invoiceNumber.Text, out var id))
                 {
-                    if (!InvoiceViewModel.invoiceExists(id))
-                    {
-                        txtBox_invoiceNumber.BorderBrush = Brushes.Red;
-                        MessageBox.Show("Invoice ID doesn't exist");
-                        all_ok = false;
-                    }
+                  
                 }
                 else
                 {
@@ -267,7 +262,7 @@ namespace InvoiceX.Pages.ExpensesPage
         /// <param name="e"></param>
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
-            if (checkCompanyForm() & checkDetailsForm() & Has_Items_Selected())
+            if (checkCompanyForm() & checkDetailsForm())
                 if (int.TryParse(textBox_expenseID.Text, out var expenseID))
                 {
                     ExpensesViewModel.updateExpense(createExpensesObject(), oldExpense);
@@ -373,12 +368,14 @@ namespace InvoiceX.Pages.ExpensesPage
                 checkBox_Paid.IsChecked = oldExpense.isPaid;
                 txtBox_cost.Text = oldExpense.cost.ToString("C");
                 txtBox_VAT.Text = oldExpense.VAT.ToString();
-                txtBox_VAT.Text = (oldExpense.VAT * oldExpense.cost).ToString("C");
                 txtBox_totalCost.Text = oldExpense.totalCost.ToString("C");
                 txtBox_invoiceNumber.Text = oldExpense.invoiceNo == 0 ? "" : oldExpense.invoiceNo.ToString();
 
                 // Receipt payments 
-                foreach (var p in oldExpense.payments) expensesDataGrid.Items.Add(p);
+                if (oldExpense.isPaid==true)
+                {
+                    foreach (var p in oldExpense.payments) expensesDataGrid.Items.Add(p);
+                }
             }
             else
             {

@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
@@ -47,6 +50,12 @@
     </Reference>
     <Reference Include="Google.Protobuf, Version=3.11.4.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.11.4\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer, Version=1.5.0.5, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.Core.1.5.0.5\lib\net45\HtmlRenderer.dll</HintPath>
+    </Reference>
+    <Reference Include="HtmlRenderer.PdfSharp, Version=1.5.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlRenderer.PdfSharp.1.5.0.6\lib\net45\HtmlRenderer.PdfSharp.dll</HintPath>
     </Reference>
     <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
       <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
@@ -72,8 +81,11 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PdfSharp-wpf, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\PDFsharp-MigraDoc-wpf.1.50.5147\lib\net30\PdfSharp-wpf.dll</HintPath>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
     </Reference>
     <Reference Include="PdfSharp.Charting-wpf, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\packages\PDFsharp-MigraDoc-wpf.1.50.5147\lib\net30\PdfSharp.Charting-wpf.dll</HintPath>
@@ -109,6 +121,7 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.DataVisualization" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
@@ -139,6 +152,11 @@
     </ApplicationDefinition>
     <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\CreditNoteForm.cs" />
+    <Compile Include="Forms\CreditNoteFormNew.cs" />
+    <Compile Include="Forms\QuoteFormNew.cs" />
+    <Compile Include="Forms\StatementFormNew.cs" />
+    <Compile Include="Forms\ReceiptFormNew.cs" />
+    <Compile Include="Forms\InvoiceFormNew.cs" />
     <Compile Include="Forms\StatementForm.cs" />
     <Compile Include="Forms\ReceiptForm.cs" />
     <Compile Include="Forms\OrderForm.cs" />
@@ -186,6 +204,9 @@
     </Compile>
     <Compile Include="Pages\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ExpensesPage\ExpensesStatistics.xaml.cs">
+      <DependentUpon>ExpensesStatistics.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\ExpensesPage\ExpensesMain.xaml.cs">
       <DependentUpon>ExpensesMain.xaml</DependentUpon>
@@ -334,6 +355,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\CustomerPage\CustomerStatistics.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\ExpensesPage\ExpensesStatistics.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -544,6 +569,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -560,7 +586,7 @@
     <Resource Include="Images\login-button.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Forms\Invoice.xml" />
+    <EmbeddedResource Include="Forms\Invoice.xml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="AcrobatAccessLib">
@@ -597,16 +623,28 @@
     <Resource Include="Images\logout.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Forms\Quote.xml" />
+    <EmbeddedResource Include="Forms\Quote.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Forms\Order.xml" />
+    <EmbeddedResource Include="Forms\Order.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Forms\Receipt.xml" />
+    <EmbeddedResource Include="Forms\Receipt.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Forms\CreditNote.xml" />
+    <EmbeddedResource Include="Forms\CreditNote.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\companyLogo.png" />
+    <Resource Include="Images\quoteDesign-02.png" />
+    <Resource Include="Images\CreditNoteDesign.png" />
+    <Resource Include="Images\quoteDesign.png" />
+    <Resource Include="Images\receiptDesign.png" />
+    <Resource Include="Images\statementDesign.png" />
+    <Resource Include="Images\invoiceDesign.png" />
+    <Resource Include="Images\statementDesign-02.png" />
+    <Resource Include="Images\receiptDesign-02.png" />
+    <Resource Include="Images\invoiceDesign2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

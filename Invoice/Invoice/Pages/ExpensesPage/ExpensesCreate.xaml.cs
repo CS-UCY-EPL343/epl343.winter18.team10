@@ -208,12 +208,7 @@ namespace InvoiceX.Pages.ExpensesPage
             {
                 if (int.TryParse(txtBox_invoiceNumber.Text, out var id))
                 {
-                    if (!InvoiceViewModel.invoiceExists(id))
-                    {
-                        txtBox_invoiceNumber.BorderBrush = Brushes.Red;
-                        MessageBox.Show("Invoice ID doesn't exist");
-                        all_ok = false;
-                    }
+                    
                 }
                 else
                 {
@@ -288,7 +283,7 @@ namespace InvoiceX.Pages.ExpensesPage
         /// <param name="e"></param>
         private void Btn_Complete_Click(object sender, RoutedEventArgs e)
         {
-            if (checkCompanyForm() & checkDetailsForm() & hasItemsSelected())
+            if (checkCompanyForm() & checkDetailsForm())
             {
                 var expense = createExpensesObject();
                 ExpensesViewModel.insertExpens(expense);

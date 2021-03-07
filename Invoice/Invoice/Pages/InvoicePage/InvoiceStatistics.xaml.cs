@@ -24,6 +24,7 @@
 //  *****************************************************************************/
 
 using System;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using InvoiceX.ViewModels;
@@ -38,9 +39,12 @@ namespace InvoiceX.Pages.InvoicePage
     public partial class InvoiceStatistics : Page
     {
         private ProductViewModel prodViewModel;
+        ChartValues<float> totalSales = new ChartValues<float>();
+        ChartValues<float> totalSalesLastYear = new ChartValues<float>();
 
         public InvoiceStatistics()
         {
+
             InitializeComponent();
             load();
         }
@@ -60,18 +64,55 @@ namespace InvoiceX.Pages.InvoicePage
 
         private void BtnSelectProduct_Click(object sender, RoutedEventArgs e)
         {
-            var totalSales = new ChartValues<float>();
-            var totalSalesLastYear = new ChartValues<float>();
 
-            var moment = DateTime.Now;
+            totalSales.Clear();
+            totalSalesLastYear.Clear();
 
-            for (var i = 1; i <= 12; i++)
+            int comparisonYear = int.Parse(cmbBoxLast.Text);
+            float totalSalesAmount = 0;
+            float totalSalesAmountLastYear = 0;
+
+            if (cmbBoxBy.Text == "Month")
             {
-                totalSales.Add(InvoiceViewModel.getTotalSalesMonthYear(i, moment.Year));
-                totalSalesLastYear.Add(InvoiceViewModel.getTotalSalesMonthYear(i, moment.Year - 1));
+                Labels = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+                var moment = DateTime.Now;
+
+                for (var i = 0; i < 12; i++)
+                {
+                    var temp1 = InvoiceViewModel.getTotalSalesMonthYear(i + 1, moment.Year);
+                    totalSales.Add(temp1);
+                    totalSalesAmount += temp1;
+
+                    temp1 = InvoiceViewModel.getTotalSalesMonthYear(i + 1, comparisonYear);
+                    totalSalesLastYear.Add(temp1);
+                    totalSalesAmountLastYear += temp1;
+                }
+            } else if (cmbBoxBy.Text == "Week")
+            {
+                Labels = new String[52];
+                for (int i = 0; i < 52; i++)
+                {
+                    string dateLabel= FirstDateOfWeekISO8601(DateTime.Now.Year, (i+1)).ToString()+"-"+ FirstDateOfWeekISO8601(DateTime.Now.Year, (i + 2)).ToString();
+                    Labels[i] = dateLabel;
+                }
+
+                var moment = DateTime.Now;
+
+                for (var i = 0; i < 52; i++)
+                {
+                    var temp1 = InvoiceViewModel.getTotalSalesWeekYear(i + 1, moment.Year);
+                    totalSales.Add(temp1);
+                    totalSalesAmount += temp1;
+
+                    temp1 = InvoiceViewModel.getTotalSalesWeekYear(i + 1, comparisonYear);
+                    totalSalesLastYear.Add(temp1);
+                    totalSalesAmountLastYear += temp1;
+                }
+
+
+              
             }
-
-
             SeriesCollection = new SeriesCollection
             {
                 new LineSeries
@@ -87,10 +128,13 @@ namespace InvoiceX.Pages.InvoicePage
             };
 
             YFormatter = value => value.ToString("C");
+            salesCount.Text = totalSalesAmount.ToString();
+            productSalesCount.Text = totalSalesAmountLastYear.ToString();
+            comparisonYearText.Text = cmbBoxLast.Text;
 
             DataContext = this;
-        }
 
+        }
         public void CartesianChart_Loaded(object sender, RoutedEventArgs e)
         {
         }
@@ -98,5 +142,32 @@ namespace InvoiceX.Pages.InvoicePage
         private void cmbBoxBy_Copy_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
         }
+        public static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
+        {
+            DateTime jan1 = new DateTime(year, 1, 1);
+            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
+
+            // Use first Thursday in January to get first week of the year as
+            // it will never be in Week 52/53
+            DateTime firstThursday = jan1.AddDays(daysOffset);
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            var weekNum = weekOfYear;
+            // As we're adding days to a date in Week 1,
+            // we need to subtract 1 in order to get the right date for week #1
+            if (firstWeek == 1)
+            {
+                weekNum -= 1;
+            }
+
+            // Using the first Thursday as starting week ensures that we are starting in the right year
+            // then we add number of weeks multiplied with days
+            var result = firstThursday.AddDays(weekNum * 7);
+
+            // Subtract 3 days from Thursday to get Monday, which is the first weekday in ISO8601
+            return result.AddDays(-3);
+        }
+
     }
 }
