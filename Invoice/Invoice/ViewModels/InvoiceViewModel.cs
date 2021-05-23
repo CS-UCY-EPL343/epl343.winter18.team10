@@ -218,7 +218,7 @@ namespace InvoiceX.ViewModels
                     var invTotalCost = dataRow.Field<float>("TotalCost");
                     var createdDate = dataRow.Field<DateTime>("CreatedDate");
                     var balance = dataRow.Field<float>("PreviousBalance");
-                    if (temp.isPaid == true)
+                    if (temp!=null&&temp.isPaid == true)
                     {
                         credits1 = invTotalCost;
                         balance = balance - credits1;

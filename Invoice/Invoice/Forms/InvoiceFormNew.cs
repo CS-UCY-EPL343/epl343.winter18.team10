@@ -163,8 +163,8 @@ namespace InvoiceX.Forms
             par.Format.Font.Size = 24;
             par.Format.Font.Color = LogoBlue;
             par.Format.SpaceBefore = 5;
-            section.PageSetup.TopMargin = 250;
-            section.PageSetup.BottomMargin = 100;
+            section.PageSetup.TopMargin = 230;
+            section.PageSetup.BottomMargin = 140;
 
             // Create the left footer frame
             footerFrameLeft = section.Footers.Primary.AddTextFrame();
@@ -240,11 +240,6 @@ namespace InvoiceX.Forms
             column = table.AddColumn("3cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            // Create the header of the table
-             
-            image = paragraph.AddImage("../../Images/invoiceDesign2.png");
-            image.Width = "16cm";
-            image.LockAspectRatio = true;
 
 
 
@@ -314,6 +309,13 @@ namespace InvoiceX.Forms
             paragraph.AddFormattedText(date, TextFormat.Bold);
             paragraph.Format.SpaceBefore = 5;
 
+            // Create the header of the table
+
+            var row = table.AddRow();
+            row.HeadingFormat = true;
+
+            row.Cells[3].AddParagraph().AddImage("../../Images/invoiceDesign2.png").Width = "15.9cm";
+
             // Iterate the invoice items
             for (var i = 0; i < products.Count; i++)
             {
@@ -361,7 +363,7 @@ namespace InvoiceX.Forms
 
 
             // Add an invisible row as a space line to the table
-            var row = table.AddRow();
+            row = table.AddRow();
             row.Height = 10;
             row.Borders.Visible = false;
 
@@ -474,6 +476,15 @@ namespace InvoiceX.Forms
             ft = paragraph.AddFormattedText("Thank you for your business!", TextFormat.Bold);
             ft.Color = Colors.DarkGray;
             ft.Font.Size = 9;
+
+            //add number of pages
+            paragraph.AddLineBreak();
+            ft = paragraph.AddFormattedText("Page ", TextFormat.NotItalic);
+            ft.Font.Size = 8;
+            paragraph.AddPageField();
+            ft = paragraph.AddFormattedText(" of ", TextFormat.NotItalic);
+            ft.Font.Size = 8;
+            paragraph.AddNumPagesField();
 
             paragraph = footerFrameRight.AddParagraph();
             paragraph.Format.Borders.Bottom = new Border() { Width = "1pt", Color = Colors.DarkGray };

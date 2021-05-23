@@ -29,6 +29,12 @@ using System.Windows.Controls;
 using System.Windows.Data;
 using InvoiceX.Models;
 using InvoiceX.ViewModels;
+using MigraDoc.DocumentObjectModel;
+using InvoiceX.Forms;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using MigraDoc.Rendering;
 
 namespace InvoiceX.Pages.CustomerPage
 {
@@ -139,7 +145,38 @@ namespace InvoiceX.Pages.CustomerPage
             txtBoxCity.Clear();
             customerDataGrid.ItemsSource = custViewModel.customersList;
         }
+        private void btnCreateCustomersBalanceSheet_Click(object sender, RoutedEventArgs e)
+        {
+            var document = createPdfBalanceSheet();
 
+            document.UseCmykColor = true;
+
+            // Create a renderer for PDF that uses Unicode font encoding
+            var pdfRenderer = new PdfDocumentRenderer(true);
+
+            // Set the MigraDoc document
+            pdfRenderer.Document = document;
+
+            // Create the PDF document
+            pdfRenderer.RenderDocument();
+            Directory.CreateDirectory(Environment.GetEnvironmentVariable("USERPROFILE") +
+                                      "/Documents/InvoiceX/Customers Balance Report/");
+            DateTime date = DateTime.Now;
+
+            // Save the PDF document...
+            var filename = Environment.GetEnvironmentVariable("USERPROFILE") +
+                           "/Documents/InvoiceX/Customers Balance Report/Report" + date.Day+"-"+date.Month+"-"+date.Year + ".pdf";
+            ;
+            try
+            {
+                pdfRenderer.Save(filename);
+                Process.Start(filename);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         /// <summary>
         ///     The method that handles the event Text Changed on the textbox containing the filter From.
         ///     Calls the filterList method.
@@ -213,5 +250,26 @@ namespace InvoiceX.Pages.CustomerPage
                 itemDelete.Visibility = Visibility.Collapsed;
             }
         }
+
+        private Document createPdfBalanceSheet()
+        {
+
+            List<Customer> customers = custViewModel.customersList;
+
+            try
+            {
+                float total = 0;
+                var report = new CustomersBalanceReport("../../Forms/Invoice.xml", customers, total);
+                var document = report.CreateDocument();
+                return document;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+
+            return null;
+        }
+        
     }
 }

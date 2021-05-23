@@ -217,13 +217,6 @@ namespace InvoiceX.Forms
             customerDetails.RelativeVertical = RelativeVertical.Page;
 
 
-            quoteDetailsFrame = section.Headers.Primary.AddTextFrame();
-            quoteDetailsFrame.Height = "3.0cm";
-            quoteDetailsFrame.Width = "6.0cm";
-            quoteDetailsFrame.Left = ShapePosition.Right;
-            quoteDetailsFrame.RelativeHorizontal = RelativeHorizontal.Margin;
-            quoteDetailsFrame.Top = "3cm";
-            quoteDetailsFrame.RelativeVertical = RelativeVertical.Page;
 
 
             // Add the print date field
@@ -253,14 +246,7 @@ namespace InvoiceX.Forms
             column = table.AddColumn("2.5cm");
             column.Format.Alignment = ParagraphAlignment.Right;
 
-            // Create the header of the table
-            paragraph.AddLineBreak();
-            image = paragraph.AddImage("../../Images/quoteDesign-02.png");
-            image.Width = "16cm";
-            image.LockAspectRatio = true;
-
-
-
+           
         }
 
         /// <summary>
@@ -357,6 +343,11 @@ namespace InvoiceX.Forms
             ft = paragraph.AddFormattedText(email, TextFormat.NotItalic);
             ft.Font.Color = Colors.DarkSlateGray;
 
+            var row = table.AddRow();
+            row.HeadingFormat = true;
+
+            row.Cells[3].AddParagraph().AddImage("../../Images/quoteDesign-02.png").Width="15.9cm";
+
             // Iterate the invoice items
             for (var i = 0; i < products.Count; i++)
             {
@@ -402,7 +393,7 @@ namespace InvoiceX.Forms
 
             paragraph = table.Section.AddParagraph();
             paragraph.Format.RightIndent = 350;
-            paragraph.Format.SpaceBefore = 8;
+            paragraph.Format.SpaceBefore = 20;
             ft = paragraph.AddFormattedText("Company Info:", TextFormat.Bold);
             ft.Font.Size = 10;
            paragraph.Format.Borders.Bottom = new Border() { Width = "1pt", Color = Colors.DarkGray };
@@ -466,10 +457,19 @@ namespace InvoiceX.Forms
             ft.Font.Color = Colors.DarkSlateGray;
             paragraph.AddLineBreak();
             paragraph.AddLineBreak();
-            paragraph.AddLineBreak();
             ft = paragraph.AddFormattedText("Thank you for your business!", TextFormat.Bold);
+            ft.Font.Size = 8;
             ft.Color = Colors.DarkGray;
-            ft.Font.Size = 9;
+
+            //add number of pages
+            paragraph.AddLineBreak();
+            paragraph.AddLineBreak();
+            ft=paragraph.AddFormattedText("Page ", TextFormat.NotItalic);
+            ft.Font.Size = 8;
+            paragraph.AddPageField();
+            ft=paragraph.AddFormattedText(" of ", TextFormat.NotItalic);
+            ft.Font.Size = 8;
+            paragraph.AddNumPagesField();
 
             paragraph = footerFrameRight.AddParagraph();
             paragraph.Format.Borders.Bottom = new Border() { Width = "1pt", Color = Colors.DarkGray };
@@ -494,6 +494,7 @@ namespace InvoiceX.Forms
         
             ft.Font.Size = 8;
             ft.Font.Color = Colors.DarkSlateGray;
+
 
         }
 

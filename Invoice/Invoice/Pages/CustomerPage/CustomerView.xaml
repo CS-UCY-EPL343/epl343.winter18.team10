@@ -45,6 +45,9 @@
             <TextBox x:Name="txtBoxCity" HorizontalAlignment="Left" Height="37" Margin="653,30,0,0" TextWrapping="Wrap"
                      Text="" VerticalAlignment="Top" Width="240" FontSize="18" VerticalContentAlignment="Center"
                      TextChanged="TxtBoxCity_TextChanged" />
+            <Button x:Name="btnCreateCustomersBalanceSheet" Style="{DynamicResource CommonButtonStyle}" Content="Create Balance Sheets"
+                HorizontalAlignment="Left" Margin="1122,8,-195,0" VerticalAlignment="Top" Width="172" Height="37"
+                Click="btnCreateCustomersBalanceSheet_Click" />
         </Grid>
         <DataGrid x:Name="customerDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0"
                   VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"

@@ -373,7 +373,7 @@ namespace InvoiceX.Pages.QuotePage
 
             if (selectedCategory == "Καθαριστήρια")
             {
-                int[] productsId = { 8, 52, 53, 54, 2, 3, 155, 36, 94, 9, 10, 16, 17, 32, 33, 25, 26, 14, 89 };
+                int[] productsId = { 8, 52, 53, 54, 2, 3, 155, 36, 94, 9, 10, 16, 17, 32, 33, 25, 26, 14, 89,161 };
 
                 for (int i = 0; i < productsId.Length;i++) {
                     Product temp = ProductViewModel.getProduct(productsId[i]);
@@ -387,6 +387,9 @@ namespace InvoiceX.Pages.QuotePage
                     }) ;
                 }
             }
+
         }
+
+
     }
 }

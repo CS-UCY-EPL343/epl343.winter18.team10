@@ -153,6 +153,7 @@
     <Compile Include="Classes\HashSalt.cs" />
     <Compile Include="Forms\CreditNoteForm.cs" />
     <Compile Include="Forms\CreditNoteFormNew.cs" />
+    <Compile Include="Forms\CustomersBalanceReport.cs" />
     <Compile Include="Forms\QuoteFormNew.cs" />
     <Compile Include="Forms\StatementFormNew.cs" />
     <Compile Include="Forms\ReceiptFormNew.cs" />
@@ -636,6 +637,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\companyLogo.png" />
+    <Resource Include="Images\customersBalances-02.png" />
     <Resource Include="Images\quoteDesign-02.png" />
     <Resource Include="Images\CreditNoteDesign.png" />
     <Resource Include="Images\quoteDesign.png" />
