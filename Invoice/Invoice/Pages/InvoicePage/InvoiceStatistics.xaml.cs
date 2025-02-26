@@ -41,6 +41,8 @@ namespace InvoiceX.Pages.InvoicePage
         private ProductViewModel prodViewModel;
         ChartValues<float> totalSales = new ChartValues<float>();
         ChartValues<float> totalSalesLastYear = new ChartValues<float>();
+        ChartValues<float> totalSalesAverage = new ChartValues<float>();
+        ChartValues<float> totalSalesAverageLY = new ChartValues<float>();
 
         public InvoiceStatistics()
         {
@@ -51,7 +53,7 @@ namespace InvoiceX.Pages.InvoicePage
 
         public SeriesCollection SeriesCollection { get; set; }
         public SeriesCollection SeriesCollection2 { get; set; }
-
+        public SeriesCollection SeriesCollectionAverage { get; set; }
         public string[] Labels { get; set; }
         public Func<double, string> YFormatter { get; set; }
         public Func<int, string> YFormatter2 { get; set; }
@@ -67,6 +69,8 @@ namespace InvoiceX.Pages.InvoicePage
 
             totalSales.Clear();
             totalSalesLastYear.Clear();
+            totalSalesAverage.Clear();
+            totalSalesAverageLY.Clear();
 
             int comparisonYear = int.Parse(cmbBoxLast.Text);
             float totalSalesAmount = 0;
@@ -84,9 +88,16 @@ namespace InvoiceX.Pages.InvoicePage
                     totalSales.Add(temp1);
                     totalSalesAmount += temp1;
 
+                    totalSalesAverage.Add(totalSalesAmount / (i+1));
+
+
                     temp1 = InvoiceViewModel.getTotalSalesMonthYear(i + 1, comparisonYear);
                     totalSalesLastYear.Add(temp1);
                     totalSalesAmountLastYear += temp1;
+
+                    totalSalesAverageLY.Add(totalSalesAmountLastYear / (i + 1));
+
+
                 }
             } else if (cmbBoxBy.Text == "Week")
             {
@@ -124,6 +135,16 @@ namespace InvoiceX.Pages.InvoicePage
                 {
                     Title = "Last Year Sales",
                     Values = totalSalesLastYear
+                },
+                new LineSeries
+                {
+                    Title = "Yearly Average",
+                    Values = totalSalesAverage
+                },
+                new LineSeries
+                {
+                    Title = "Last Year Average",
+                    Values = totalSalesAverageLY
                 }
             };
 

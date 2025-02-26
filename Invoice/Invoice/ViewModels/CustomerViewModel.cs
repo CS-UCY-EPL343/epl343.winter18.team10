@@ -44,6 +44,8 @@ namespace InvoiceX.ViewModels
         public CustomerViewModel()
         {
             customersList = new List<Customer>();
+            lastInvoiceOfCustomer = new List<Invoice>();
+            lastInvoice2OfCustomer = new List<Invoice>();
 
             try
             {
@@ -74,6 +76,18 @@ namespace InvoiceX.ViewModels
                             Address = AddressDB,
                             Balance = BalanceDB
                         });
+                    Invoice[] invoices = getLast2InvoicesOfCustomer(idCustomerDB);
+                    lastInvoice2OfCustomer.Add(invoices[0]);
+                    if (invoices[1] != null)
+                    {
+                        lastInvoiceOfCustomer.Add(invoices[1]);
+
+                    }
+                    else
+                    {
+                        lastInvoiceOfCustomer.Add(invoices[0]);
+
+                    }
                 }
             }
             catch (MySqlException ex)
@@ -342,7 +356,62 @@ namespace InvoiceX.ViewModels
 
             return ret.ToString();
         }
+        public static string[,] getTotalSalesByCity(int year)
+        {
+            ChartValues<float> sum = new ChartValues<float>();
+            string[,] amountCity = new string[5, 2];
+            try
+            {
+                var cmd = new MySqlCommand("getTotalSalesPerCity", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+                MySqlDataReader reader = cmd.ExecuteReader();
+                int i = 0;
+                while (reader.Read())
+                {
+                    amountCity[i, 0] = (reader["SUM(Invoice.Cost)"].ToString());
+                    amountCity[i, 1] = (reader["City"].ToString());
+                    i++;
+                }
 
+                reader.Close();
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return amountCity;
+        }
+        public static float getTotalSalesByCityAndMonth(int year, int month, string city)
+        {
+
+            float total = 0;
+            try
+            {
+                var cmd = new MySqlCommand("getTotalSalesPerCityMonth", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@year", SqlDbType.Int).Value = year;
+                cmd.Parameters["@year"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@month", SqlDbType.Int).Value = month;
+                cmd.Parameters["@month"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@city", city);
+                cmd.Parameters["@city"].Direction = ParameterDirection.Input;
+
+                cmd.ExecuteNonQuery();
+                var total2 = cmd.ExecuteScalar().ToString();
+                float total3 = 0;
+
+                if (float.TryParse(total2, out total3)) total = total3;
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return total;
+        }
         public static string[,] getTotalSalesByCategory(int year)
         {
             ChartValues<float> sum = new ChartValues<float>();
@@ -358,7 +427,7 @@ namespace InvoiceX.ViewModels
                 while (reader.Read())
                 {
                     amountCategory[i,0]= (reader["SUM(Invoice.Cost)"].ToString());
-                    amountCategory[i,1] = (reader["Category"].ToString());
+                    amountCategory[i,1] = (reader["category"].ToString());
                     i++;
                 }
 
@@ -398,6 +467,52 @@ namespace InvoiceX.ViewModels
             }
 
             return total;
+        }
+        public List<Invoice> lastInvoiceOfCustomer { get; set; }
+        public List<Invoice> lastInvoice2OfCustomer { get; set; }
+        
+        public Invoice[] getLast2InvoicesOfCustomer(int idCustomer)
+        {
+            try
+            {
+                var cmd = new MySqlCommand("SELECT idInvoice,CreatedDate FROM invoice WHERE idCustomer = " + idCustomer+ "  ORDER BY CreatedDate DESC LIMIT 2", conn);
+                var dt = new DataTable();
+                dt.Load(cmd.ExecuteReader());
+                Invoice[] inv = new Invoice[2];
+
+                int i = 0;
+                    foreach (DataRow dataRow in dt.Rows)
+                {
+                    if (i == 0) { 
+
+                        var idInvoice = dataRow.Field<int>("idInvoice");
+                        var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                        inv[0] = new Invoice
+                        {
+                            idInvoice = idInvoice,
+                            createdDate = createdDate,
+                        };
+                    }
+                    if (i == 1) {
+
+                        var idInvoice = dataRow.Field<int>("idInvoice");
+                        var createdDate = dataRow.Field<DateTime>("CreatedDate");
+                        inv[1] = new Invoice
+                        {
+                            idInvoice = idInvoice,
+                            createdDate = createdDate,
+                        };
+                    }
+                    i++;
+                }
+                return inv;
+
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return null;
         }
     }
 }

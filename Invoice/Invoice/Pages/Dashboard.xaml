@@ -6,31 +6,29 @@
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
 
       mc:Ignorable="d"
-      d:DesignHeight="964" d:DesignWidth="1756"
-      Title="Page1">
+      Title="Page1" Height="1000" Width="1800">
 
-    <Grid Background="White">
+    <Grid Background="White" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="116*"/>
+            <RowDefinition Height="737*"/>
+        </Grid.RowDefinitions>
         <TextBlock Text="3
 PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f9198"
-                   Margin="1558,943,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                   Margin="1558,827.5,-136,-103" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" />
         <TextBlock Text="4
 PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f9198"
-                   Margin="1558,1025,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                   Margin="1558,909.5,-136,-185" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" />
         <Path Width="86" Height="0" Stretch="uniform" Data="M -17371.21875 -22641 L -17284.443359375 -22641"
               Stroke="#ffec4e6e" Margin="173.5,75.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Line X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1597.5,961.5,0,0" HorizontalAlignment="Left"
-              VerticalAlignment="Top" />
-        <Line X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1597.5,1043.5,0,0" HorizontalAlignment="Left"
-              VerticalAlignment="Top" />
-        <Canvas Width="156" Height="50" Margin="1391,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-        <Canvas Width="98" Height="101" Margin="1638,14,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Canvas Width="98" Height="101" Canvas.Left="0" Canvas.Top="0">
-                <Canvas Width="98" Height="101" Canvas.Left="0" Canvas.Top="0" />
-            </Canvas>
-        </Canvas>
-        <Border Width="162" Height="31" BorderBrush="#ff707070" Margin="4,1006,0,0" HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
-        <Canvas Width="158" Height="317" Margin="1198,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Line X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1598,846.5,-451,-110" HorizontalAlignment="Left"
+              VerticalAlignment="Top" Grid.Row="1" />
+        <Line X1="0" Y1="0" X2="299" Y2="0" Stroke="#ffd5e3d6" Margin="1598,928.5,-451,-192" HorizontalAlignment="Left"
+              VerticalAlignment="Top" Grid.Row="1" />
+        <Canvas Width="156" Height="50" Margin="1275,41,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+        <Border Width="162" Height="31" BorderBrush="#ff707070" Margin="4,890.5,0,-185" HorizontalAlignment="Left"
+                VerticalAlignment="Top" Grid.Row="1" />
+        <Canvas Width="158" Height="317" Margin="1119,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2">
             <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
                     Canvas.Top="0" CornerRadius="20" />
 
@@ -61,43 +59,43 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
                            Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="157" />
             </Canvas>
         </Canvas>
-        <Canvas Width="158" Height="317" Margin="1000,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="980,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2">
             <Border x:Name="salesCount" Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583"
-                    Canvas.Left="0" Canvas.Top="0" CornerRadius="20" />
+                    Canvas.Left="-26" Canvas.Top="0" CornerRadius="20" />
             <Canvas Width="55" Height="55" Canvas.Left="57" Canvas.Top="20">
-                <Border Width="55" Height="55" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
-                        Canvas.Top="6" BorderThickness="1" CornerRadius="15" />
+                <Border Width="55" Height="55" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-23"
+                        Canvas.Top="10" BorderThickness="1" CornerRadius="15" />
                 <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
                     <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
                         <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
                         <Path Width="8" Height="8" Stretch="uniform"
                               Data="M 14.5 10.32999992370605 L 21.17000007629395 10.32999992370605 C 21.62839698791504 10.32999992370605 22 9.958395957946777 22 9.5 C 22 5.357864379882813 18.64213562011719 1.999999046325684 14.49999904632568 2 C 14.04160308837891 2 13.66999912261963 2.371603727340698 13.66999912261963 2.830000162124634 L 13.67000007629395 9.5 C 13.67000102996826 9.958395957946777 14.04160499572754 10.32999992370605 14.50000095367432 10.32999992370605 Z"
-                              Fill="#ffffb100" Canvas.Left="14" Canvas.Top="10" RenderTransformOrigin="0.708,1.542" />
+                              Fill="#ffffb100" Canvas.Left="-8" Canvas.Top="10" RenderTransformOrigin="0.708,1.542" />
                         <Path Width="19" Height="19" Stretch="uniform"
                               Data="M 21.07999992370605 12 L 12.93000030517578 12 C 12.42742156982422 11.99999904632568 12.02000045776367 11.59257888793945 12.02000045776367 11.08999919891357 L 12.02000045776367 2.920000076293945 C 12.02155494689941 2.657643795013428 11.91102504730225 2.407104015350342 11.7162036895752 2.231383085250854 C 11.52138233184814 2.055661916732788 11.2608060836792 1.971477746963501 11 1.99999988079071 C 5.779948234558105 2.554285049438477 1.87705135345459 7.050512790679932 2.06212043762207 12.29664897918701 C 2.247188568115234 17.54278564453125 6.457214832305908 21.75281143188477 11.70335102081299 21.93788146972656 C 16.94948577880859 22.12294960021973 21.44571495056152 18.22005462646484 22 13.00000095367432 C 22.02248573303223 12.74246406555176 21.93557548522949 12.4873514175415 21.76054382324219 12.29710102081299 C 21.58551406860352 12.10685062408447 21.33851432800293 11.99901962280273 21.07999992370605 12 Z"
-                              Fill="#ffffb100" Canvas.Left="3" Canvas.Top="10" />
+                              Fill="#ffffb100" Canvas.Left="-19" Canvas.Top="10" />
                     </Canvas>
                 </Canvas>
             </Canvas>
             <Canvas Width="75" Height="76" Canvas.Left="39" Canvas.Top="197">
                 <Canvas Width="75" Height="59" Canvas.Left="0" Canvas.Top="0">
                     <TextBlock x:Name="totalSales" Text="$1.3k" TextAlignment="center" FontFamily="Avenir" FontSize="30"
-                               Foreground="#ffcce8ff" Canvas.Top="0" Canvas.Left="-39" Width="158" />
+                               Foreground="#ffcce8ff" Canvas.Top="0" Canvas.Left="-68" Width="158" />
                     <TextBlock Text="NEW SALES" TextAlignment="center" FontFamily="Avenir" FontSize="13"
-                               Foreground="#ffcce8ff" Canvas.Left="-39" Canvas.Top="41" Width="158" />
+                               Foreground="#ffcce8ff" Canvas.Left="-68" Canvas.Top="43" Width="158" />
                 </Canvas>
                 <TextBlock Text="Last 30 days" TextAlignment="center" FontFamily="Avenir" FontSize="9"
-                           Foreground="#ffcce8ff" Canvas.Left="-38" Canvas.Top="64" Width="156" />
+                           Foreground="#ffcce8ff" Canvas.Left="-59" Canvas.Top="65" Width="156" />
             </Canvas>
-            <Border Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-983" CornerRadius="30" />
+            <Border Width="950" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-979" CornerRadius="30" />
         </Canvas>
 
         <TextBlock Text="OUTSTANDING ORDERS(TOTAL:)" TextAlignment="left" FontFamily="Avenir" FontSize="14"
-                   Foreground="#ff484848" Margin="30,409,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
+                   Foreground="#ff484848" Margin="30,293.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" />
 
-        <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="363" Margin="30,431,0,0"
+        <DataGrid x:Name="orderDataGrid" HorizontalAlignment="Left" Height="363" Margin="30,315.5,0,0"
                   VerticalAlignment="Top" Width="714" Style="{DynamicResource viewDataGridStyle}"
-                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
+                  HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None" Grid.Row="1">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </DataGrid.Effect>
@@ -109,7 +107,7 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
                 <DataGridTextColumn Header="Shipping Date" Binding="{Binding shippingDate, StringFormat=d}" />
             </DataGrid.Columns>
         </DataGrid>
-        <Canvas Width="158" Height="317" Margin="1400,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="1284,47,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.RowSpan="2">
             <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
                     Canvas.Top="0" CornerRadius="20" />
 
@@ -140,43 +138,12 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
                         Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
             </Canvas>
         </Canvas>
-        <Canvas Width="158" Height="317" Margin="1590,46,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
-                    Canvas.Top="0" CornerRadius="20" />
-
-            <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
-                <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
-                        CornerRadius="15" />
-                <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
-                    <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
-                        <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
-                        <Path Width="19" Height="13" Stretch="uniform"
-                                Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
-                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
-                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
-                                Canvas.Top="18" />
-                        <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
-                                Canvas.Top="18" />
-                    </Canvas>
-                </Canvas>
-            </Canvas>
-            <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
-                <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
-                    <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="receiptsCountYearly" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
-                            Foreground="#ffcce8ff" Canvas.Top="0" />
-                    <TextBlock Text="Total Receipts" TextAlignment="center" FontFamily="Avenir" FontSize="13"
-                            Foreground="#ffcce8ff" Canvas.Top="41" Width="158" />
-                </Canvas>
-                <TextBlock Text="This Year" TextAlignment="center" FontFamily="Avenir" FontSize="9"
-                        Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
-            </Canvas>
-        </Canvas>
-        <Canvas Width="16" Height="345" Margin="912,431,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="16" Height="345" Margin="912,315.5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1">
             <Canvas Width="16" Height="16" Canvas.Left="0" Canvas.Top="0">
                 <Border Width="16" Height="16" BorderBrush="#ff979797" Canvas.Left="0" Canvas.Top="0" />
             </Canvas>
             <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Width="920" Height="300"
-                                AutomationProperties.IsRequiredForForm="True" Canvas.Left="-885" Canvas.Top="-365">
+                                AutomationProperties.IsRequiredForForm="True" Canvas.Left="-903" Canvas.Top="-365">
                 <lvc:CartesianChart.AxisY>
                     <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" />
                 </lvc:CartesianChart.AxisY>
@@ -188,7 +155,7 @@ PM" TextAlignment="center" FontFamily="Avenir" FontSize="10" Foreground="#ff8f91
 
             <Grid>
                 <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom"
-                                    Margin="30,-52,-434,-200" Width="600" Height="453" Loaded="CartesianChart_Loaded"
+                                    Margin="-110,-44,-294,-200" Width="600" Height="440" Loaded="CartesianChart_Loaded"
                                     RenderTransformOrigin="0.5,0.5">
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis Title="Last Months" Labels="{Binding Labels2}" />

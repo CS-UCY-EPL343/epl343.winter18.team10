@@ -55,13 +55,13 @@
     </Page.Resources>
 
     <Grid x:Name="viewTab" Background="White">
-        <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="132" VerticalAlignment="Top" Width="1725">
+        <Border Background="#FFECECEC" HorizontalAlignment="Left" Height="169" VerticalAlignment="Top" Width="1725">
             <Border.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Border.Effect>
         </Border>
 
-        <Grid Background="White" HorizontalAlignment="Left" Height="107" Margin="200,10,0,0" VerticalAlignment="Top"
+        <Grid Background="White" HorizontalAlignment="Left" Height="159" Margin="74,10,0,0" VerticalAlignment="Top"
               Width="1499">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -99,7 +99,11 @@
             </ComboBox>
             <ComboBox x:Name="categorycmbBoxLast" HorizontalAlignment="Left" Margin="700,68,0,0" VerticalAlignment="Top"
                 Width="200" Height="30">
-                <ComboBoxItem IsSelected="True" Content="2020" />
+                <ComboBoxItem IsSelected="True" Content="2024" />
+                <ComboBoxItem IsSelected="False" Content="2023" />
+                <ComboBoxItem IsSelected="False" Content="2022" />
+                <ComboBoxItem IsSelected="False" Content="2021" />
+                <ComboBoxItem IsSelected="False" Content="2020" />
                 <ComboBoxItem IsSelected="False" Content="2019" />
 
             </ComboBox>
@@ -118,12 +122,48 @@
             </ComboBox>
             <Label x:Name="label1_Copy3" Content="By: " HorizontalAlignment="Left" Margin="911,65,0,0"
                 VerticalAlignment="Top" FontSize="18" />
+            <Label x:Name="label1_Copy6" Content="OR " HorizontalAlignment="Left" Margin="85,95,0,0"
+                VerticalAlignment="Top" FontSize="18" />
+            <Label x:Name="label1_Copy7" Content="Select City: " HorizontalAlignment="Left" Margin="76,113,0,0"
+                VerticalAlignment="Top" FontSize="18" />
+            <ComboBox x:Name="cityComboBox" HorizontalAlignment="Left" Margin="182,115,0,0" VerticalAlignment="Top"
+                Width="350" Height="30">
+                <ComboBoxItem IsSelected="True" Content="Λάρνακα" />
+                <ComboBoxItem IsSelected="False" Content="Λευκωσία" />
+                <ComboBoxItem IsSelected="False" Content="Πάφος" />
+                <ComboBoxItem IsSelected="False" Content="Λεμεσός" />
+                <ComboBoxItem IsSelected="False" Content="Αμμόχωστος" />
+
+            </ComboBox>
+            <ComboBox x:Name="categorycmbBoxLast_Copy" HorizontalAlignment="Left" Margin="688,118,0,-9" VerticalAlignment="Top"
+                Width="200" Height="30">
+                <ComboBoxItem IsSelected="False" Content="2024" />
+                <ComboBoxItem IsSelected="False" Content="2023" />
+                <ComboBoxItem IsSelected="False" Content="2022" />
+                <ComboBoxItem IsSelected="False" Content="2021" />
+                <ComboBoxItem IsSelected="False" Content="2020" />
+                <ComboBoxItem IsSelected="False" Content="2019" />
+
+            </ComboBox>
+            <Label x:Name="label1_Copy8" Content="Compare With: " HorizontalAlignment="Left" Margin="554,113,0,-8"
+                VerticalAlignment="Top" FontSize="18" />
+            <ComboBox x:Name="categorycmbBoxBy_Copy" HorizontalAlignment="Left" Margin="942,119,0,-10" VerticalAlignment="Top"
+                Width="200" Height="30">
+                <ComboBoxItem IsSelected="True" Content="Total" />
+                <ComboBoxItem IsSelected="False" Content="Month" />
+
+            </ComboBox>
+            <Label x:Name="label1_Copy9" Content="By: " HorizontalAlignment="Left" Margin="899,115,0,-10"
+                VerticalAlignment="Top" FontSize="18" />
+            <Button x:Name="btnSubmitCategory_Copy" Style="{DynamicResource CommonButtonStyle}" Content="Submit"
+                HorizontalAlignment="Left" Margin="1168,117,0,0" VerticalAlignment="Top" Width="200" Height="30"
+                FontSize="18" Click="BtnSelectCity_Click" />
         </Grid>
         <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="116,154,409,152" />
+                CornerRadius="30" Margin="55,196,470,110" />
 
         <Grid>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="149,170,450,172"
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="82,236,517,106"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -132,23 +172,21 @@
                     <lvc:Axis Title="Amount" LabelFormatter="{Binding YFormatter}" />
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
-            <Canvas Width="158" Height="317" Margin="1546,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas Width="158" Height="317" Margin="1293,500,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
-                    Canvas.Top="0" CornerRadius="20" />
+                    Canvas.Top="37" CornerRadius="20" />
 
                 <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
-                    <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
-                        CornerRadius="15" />
+                    <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="2" BorderThickness="1"
+                        CornerRadius="15" Canvas.Top="31" />
                     <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
                         <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
-                            <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
+                            <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="2" Canvas.Top="31" />
                             <Path Width="19" Height="13" Stretch="uniform"
                                 Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
-                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
-                            <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
-                                Canvas.Top="18" />
-                            <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
-                                Canvas.Top="18" />
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="4" Canvas.Top="34" />
+                            <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="8"
+                                Canvas.Top="49" />
                         </Canvas>
                     </Canvas>
                 </Canvas>
@@ -164,27 +202,23 @@
                 </Canvas>
             </Canvas>
             <Canvas Width="156" Height="50" Margin="1391,40,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" />
-            <Canvas Width="158" Height="317" Margin="1346,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Canvas Width="158" Height="317" Margin="1293,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
-                    Canvas.Top="0" CornerRadius="20" />
+                    Canvas.Top="38" CornerRadius="20" />
 
                 <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
-                    <Border Width="55" Height="55" BorderBrush="#ff4b6583" Canvas.Left="0" BorderThickness="1"
-                        CornerRadius="15" />
+                    <Border Width="55" Height="55" BorderBrush="#ff4b6583" BorderThickness="1"
+                        CornerRadius="15" Canvas.Top="28" />
                     <Canvas Width="24" Height="24" Canvas.Left="16" Canvas.Top="16">
                         <Canvas Width="24" Height="24" Canvas.Left="0" Canvas.Top="0">
                             <Border Width="24" Height="24" BorderBrush="#ff707070" Canvas.Left="0" Canvas.Top="0" />
                             <Path Width="19" Height="13" Stretch="uniform"
                                 Data="M 21.07999992370605 7 C 20.72851753234863 6.391005516052246 20.08305358886719 6.0113205909729 19.3799991607666 6 L 6.579999923706055 6 L 6 3.740000009536743 C 5.879335880279541 3.29078197479248 5.464868545532227 2.984076499938965 5 3 L 3 3 C 2.447715282440186 3 2 3.447715282440186 2 4 C 2 4.552284717559814 2.447715282440186 5 3 5 L 4.239999771118164 5 L 7 15.26000022888184 C 7.120663642883301 15.70921802520752 7.535130977630615 16.01592445373535 8 16 L 17 16 C 17.37655830383301 15.99885845184326 17.72055053710938 15.78627967834473 17.88999938964844 15.44999980926514 L 21.17000007629395 8.889999389648438 C 21.45875549316406 8.284751892089844 21.42496109008789 7.575069904327393 21.07999992370605 6.999999523162842 Z"
-                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="2.9994049072265625" />
-                            <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="6"
-                                Canvas.Top="18" />
-                            <Ellipse Width="3" Height="3" Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="16"
-                                Canvas.Top="18" />
+                                Fill="#ff59ff00" Stroke="#FF59FF00" Canvas.Left="2" Canvas.Top="31" />
                         </Canvas>
                     </Canvas>
                 </Canvas>
-                <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="197">
+                <Canvas Width="89" Height="76" Canvas.Left="31" Canvas.Top="250">
                     <Canvas Width="158" Height="59" Canvas.Left="-30" Canvas.Top="0">
                         <TextBlock Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType=Canvas}}" x:Name="salesCount" Text="200" TextAlignment="center" FontFamily="Avenir" FontSize="30"
                             Foreground="#ffcce8ff" Canvas.Top="0" />
@@ -194,10 +228,10 @@
                     <TextBlock Text="This Year" TextAlignment="center" FontFamily="Avenir" FontSize="9"
                         Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
                 </Canvas>
-                
+
             </Canvas>
 
         </Grid>
-        
+
     </Grid>
 </Page>

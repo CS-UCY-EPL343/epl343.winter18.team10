@@ -13,7 +13,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0"
+            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="269,46,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -39,7 +39,7 @@
                            VerticalAlignment="Top" />
             </Grid>
 
-            <Grid x:Name="grid_Invoice" Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0"
+            <Grid x:Name="grid_Invoice" Background="white" HorizontalAlignment="Left" Height="276" Margin="889,46,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -72,8 +72,8 @@
                        TextWrapping="Wrap" Text="View Quote" VerticalAlignment="Top" Width="364" FontSize="40" />
         </Grid>
 
-        <DataGrid x:Name="quoteProductsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="quoteProductsGrid" HorizontalAlignment="Left" Height="376" Margin="0,399,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -88,17 +88,17 @@
         </DataGrid>
 
         <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF"
-                HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="934,793,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="savePdf_Click" />
         <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print"
-                HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="756,793,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="printPdf_click" />
         <Button Style="{DynamicResource CommonButtonStyle}" Content="Preview" HorizontalAlignment="Left"
-                VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click" />
+                VerticalAlignment="Top" Width="174" Margin="578,793,0,0" Height="44" Click="previewPdf_click" />
         <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left"
-                Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click" />
+                Margin="1113,793,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click" />
         <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete"
-                HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="1292,793,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="Btn_delete_Click" />
 
 

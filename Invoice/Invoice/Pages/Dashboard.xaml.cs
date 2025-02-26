@@ -117,7 +117,7 @@ namespace InvoiceX.Pages
                 }
             };
             salesCountYearly.Text = totalYearlySales.ToString();
-            receiptsCountYearly.Text = totalYearlyReceipts.ToString("C");
+            //receiptsCountYearly.Text = totalYearlyReceipts.ToString("C");
             YFormatter = value => value.ToString("C");
             DataContext = this;
         }

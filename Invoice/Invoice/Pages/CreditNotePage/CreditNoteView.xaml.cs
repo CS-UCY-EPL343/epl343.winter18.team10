@@ -336,7 +336,7 @@ namespace InvoiceX.Pages.CreditNotePage
                                  customer.City + ", " + customer.Country;
             customerDetails[2] = customer.PhoneNumber.ToString();
             customerDetails[3] = customer.Email;
-            customerDetails[4] = customer.Balance.ToString();
+            customerDetails[4] = (CustomerViewModel.calculateCustomerBalance(customer.idCustomer)).ToString("c");
             customerDetails[5] = customer.idCustomer.ToString();
 
             var creditNoteDetails = new string[6];

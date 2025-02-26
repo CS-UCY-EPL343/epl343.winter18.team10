@@ -66,7 +66,7 @@ namespace InvoiceX.Pages.CustomerPage
         /// </summary>
         private void filterList()
         {
-            var _itemSourceList = new CollectionViewSource {Source = custViewModel.customersList};
+            var _itemSourceList = new CollectionViewSource { Source = custViewModel.customersList };
 
             var Itemlist = _itemSourceList.View;
 
@@ -79,6 +79,30 @@ namespace InvoiceX.Pages.CustomerPage
             }
 
             customerDataGrid.ItemsSource = Itemlist;
+
+
+            List<MyClass> lst = new List<MyClass>();
+            for (int i = 0; i < custViewModel.customersList.Count; i++)
+            {
+                if (custViewModel.customersList[i] != null && custViewModel.lastInvoiceOfCustomer[i] != null) {
+                    lst.Add(new MyClass() { CName = custViewModel.customersList[i].CustomerName, Invoice1Date = custViewModel.lastInvoiceOfCustomer[i].createdDate, Invoice2Date = custViewModel.lastInvoice2OfCustomer[i].createdDate, DayDifference = (custViewModel.lastInvoice2OfCustomer[i].createdDate - custViewModel.lastInvoiceOfCustomer[i].createdDate).Days.ToString(), dateProjection = (custViewModel.lastInvoice2OfCustomer[i].createdDate.AddDays((custViewModel.lastInvoice2OfCustomer[i].createdDate - custViewModel.lastInvoiceOfCustomer[i].createdDate).Days))});
+        }
+    }
+            var _itemSourceList2 = new CollectionViewSource { Source = lst };
+
+            var Itemlist2 = _itemSourceList2.View;
+
+            customerDataGridInvoices.ItemsSource = Itemlist2;
+
+        }
+        class MyClass
+        {
+            public string CName { get; set; }
+            public DateTime Invoice1Date { get; set; }
+            public DateTime Invoice2Date { get; set; }
+            public string DayDifference { get; set; }
+            public DateTime dateProjection { get; set; }
+
         }
 
         /// <summary>
@@ -176,6 +200,21 @@ namespace InvoiceX.Pages.CustomerPage
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void btnCreateCustomersNextOrderInfo_Click(object sender, RoutedEventArgs e)
+        {
+            if (customerDataGrid.Visibility == Visibility.Visible)
+            {
+                customerDataGrid.Visibility = Visibility.Collapsed;
+                customerDataGridInvoices.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                customerDataGrid.Visibility = Visibility.Visible;
+                customerDataGridInvoices.Visibility = Visibility.Collapsed;
+
+            }
+
         }
         /// <summary>
         ///     The method that handles the event Text Changed on the textbox containing the filter From.

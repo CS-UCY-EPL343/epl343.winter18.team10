@@ -130,7 +130,11 @@ namespace InvoiceX.ViewModels
                     var product = dataRow.Field<string>("ProductName");
                     var prodDescription = dataRow.Field<string>("Description");
                     var stock = dataRow.Field<int>("Stock");
-                    var proTotalCost = dataRow.Field<float>("IPCost");
+
+                    string rowValue = dataRow["IPCost"].ToString();
+                    float proTotalCost = 0;
+                    float.TryParse(rowValue, out proTotalCost);
+
                     var proVat = dataRow.Field<float>("IPVAT");
                     var quantity = dataRow.Field<int>("Quantity");
 
@@ -168,11 +172,11 @@ namespace InvoiceX.ViewModels
                         ProductName = product,
                         ProductDescription = prodDescription,
                         Stock = stock,
-                        Total = proTotalCost * quantity, //@chrisi ekana alagi edo * quantity
+                        Total = proTotalCost,
                         Quantity = quantity,
                         SellPrice = proTotalCost / quantity,
                         Vat = proVat
-                    });
+                    });;
                 }
             }
             catch (MySqlException ex)

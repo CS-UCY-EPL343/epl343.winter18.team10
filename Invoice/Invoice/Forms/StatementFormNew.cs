@@ -79,8 +79,9 @@ namespace InvoiceX.Forms
 
         private readonly string[] statement_details = new string[4];
         private readonly List<StatementItem> items = new List<StatementItem>();
+        private readonly List<StatementItem> allItems = new List<StatementItem>();
 
-        public StatementFormNew(string filename, string[] cd, string[] id, List<StatementItem> p)
+        public StatementFormNew(string filename, string[] cd, string[] id, List<StatementItem> p, List<StatementItem> allItems)
         {
             invoice = new XmlDocument();
             invoice.Load(filename);
@@ -88,6 +89,7 @@ namespace InvoiceX.Forms
             customer_details = cd;
             statement_details = id;
             items = p;
+            this.allItems=allItems;
         }
 
         /// <summary>
@@ -97,7 +99,7 @@ namespace InvoiceX.Forms
         {
             // Create a new MigraDoc document
             document = new Document();
-            document.Info.Title = "Invoice";
+            document.Info.Title = "Statement";
             document.Info.Author = "Eco-Bright";
 
             DefineStyles();
@@ -166,26 +168,19 @@ namespace InvoiceX.Forms
             par.Format.SpaceBefore = 5;
 
             section.PageSetup.TopMargin = 255;
-            section.PageSetup.BottomMargin = 20;
+            section.PageSetup.BottomMargin = 100;
 
 
             // Create the left footer frame
             footerFrameLeft = section.Footers.Primary.AddTextFrame();
             footerFrameLeft.Height = "3.0cm";
-            footerFrameLeft.Width = "7.0cm";
+            footerFrameLeft.Width = "14cm";
             footerFrameLeft.Left = ShapePosition.Left;
             footerFrameLeft.RelativeHorizontal = RelativeHorizontal.Margin;
             footerFrameLeft.Top = "26cm";
             footerFrameLeft.RelativeVertical = RelativeVertical.Page;
 
             // Create the right footer frame
-            footerFrameRight = section.Footers.Primary.AddTextFrame();
-            footerFrameRight.Height = "3.0cm";
-            footerFrameRight.Width = "7.0cm";
-            footerFrameRight.Left = ShapePosition.Right;
-            footerFrameRight.RelativeHorizontal = RelativeHorizontal.Margin;
-            footerFrameRight.Top = "26cm";
-            footerFrameRight.RelativeVertical = RelativeVertical.Page;
 
             // Create the text frame for the address
             addressFrame = section.Headers.Primary.AddTextFrame();
@@ -267,7 +262,7 @@ namespace InvoiceX.Forms
             var item = SelectItem("/invoice/to");
             var paragraph = addressFrame.AddParagraph();
             paragraph.Format.SpaceBefore = 60;
-            FormattedText ft = paragraph.AddFormattedText("Customer Info.",TextFormat.Bold);
+            FormattedText ft = paragraph.AddFormattedText("Customer Info.", TextFormat.Bold);
             ft.Font.Size = 13;
             paragraph.AddLineBreak();
             ft=paragraph.AddFormattedText(customer_details[0], TextFormat.Bold);
@@ -276,7 +271,7 @@ namespace InvoiceX.Forms
 
             paragraph = addressFrame.AddParagraph();
             paragraph.AddFormattedText("A. ", TextFormat.Bold);
-            ft=paragraph.AddFormattedText(customer_details[1],TextFormat.NotItalic);
+            ft=paragraph.AddFormattedText(customer_details[1], TextFormat.NotItalic);
             ft.Font.Color = Colors.DarkSlateGray;
             paragraph.Format.SpaceBefore = 5;
 
@@ -292,10 +287,10 @@ namespace InvoiceX.Forms
             paragraph = statementDetailsFrame.AddParagraph();
             paragraph.Format.Alignment = ParagraphAlignment.Left;
             paragraph.Format.SpaceBefore = 60;
-            ft=paragraph.AddFormattedText("Account Due",TextFormat.Bold);
+            ft=paragraph.AddFormattedText("Account Due", TextFormat.Bold);
             ft.Font.Size = 13;
 
-       
+
             paragraph.AddLineBreak();
             ft = paragraph.AddFormattedText("€ "+customer_details[6], TextFormat.NotBold);
             ft.Font.Size = 14;
@@ -324,12 +319,79 @@ namespace InvoiceX.Forms
             var row = table.AddRow();
             row.VerticalAlignment = VerticalAlignment.Center;
             paragraph = row.Cells[1].AddParagraph();
-            paragraph.AddFormattedText("Brought Forward",  TextFormat.Bold);
+            paragraph.AddFormattedText("Brought Forward", TextFormat.Bold);
             row.Cells[4].AddParagraph(customer_details[5]);
             float amount = float.Parse(customer_details[5]);
             // Iterate the invoice items
-            for (var i = 0; i < items.Count; i++)
+            float sumCharges = 0;
+            float sumCredits = 0;
+            float sum30 = 0;
+            float sum60 = 0;
+            float sum90 = 0;
+            float sumOver90 = 0;
+            float temp = 0;
+            bool flag = false;
+
+            for (var i = 0; i < allItems.Count; i++)
             {
+                sumCharges+=allItems[i].charges;
+                sumCredits+=allItems[i].credits;
+            }
+            for (var i = 0; i < allItems.Count; i++) { 
+
+                sumCredits=sumCredits-allItems[i].charges;
+            if (i+1<allItems.Count-1 && sumCredits-allItems[i+1].charges<0 && !flag)
+            {
+                flag=true;
+                temp=sumCredits;
+                }
+                if (sumCredits<0)
+            {
+                int dayDifference = (DateTime.Now-allItems[i].createdDate).Days;
+                if (dayDifference<=30)
+                {
+                    sum30+=allItems[i].charges;
+                        Debug.WriteLine("0-30: "+sum30);
+                }
+                else if (dayDifference<=60)
+                {
+                    sum60+=allItems[i].charges;
+                        Debug.WriteLine("30-60: "+sum60);
+
+                    }
+                    else if (dayDifference<=90)
+                {
+                    sum90+=allItems[i].charges;
+                        Debug.WriteLine("60-90: "+sum90);
+
+                    }
+                    else
+                {
+                    sumOver90+=allItems[i].charges;
+                        Debug.WriteLine("90+: "+sumOver90);
+
+                    }
+                }
+        }
+            if (sumOver90>0)
+            {
+                sumOver90-=temp;
+            }
+            else if (sum90>0)
+            {
+                sum90-=temp;
+            }
+            else if (sum60>0)
+            {
+                sum60-=temp;
+            }
+            else if (sum30>0)
+            {
+                sum30-=temp;
+            }
+                for (var i = 0; i < items.Count; i++)
+            {
+               
                 // Each item fills two rows
                 var row1 = table.AddRow();
                 row1.VerticalAlignment = VerticalAlignment.Center;
@@ -345,6 +407,8 @@ namespace InvoiceX.Forms
                 row1.Cells[2].AddParagraph(items[i].charges.ToString());
                 row1.Cells[3].AddParagraph(items[i].credits.ToString());
                 amount = amount + items[i].charges-items[i].credits;
+
+                
                 if (i == items.Count - 1)
                 {
                     paragraph = row1.Cells[4].AddParagraph();
@@ -364,6 +428,58 @@ namespace InvoiceX.Forms
 
                 }
             }
+
+            paragraph = footerFrameLeft.AddParagraph();
+            // Add the print date field
+
+            // Create the item table
+            table = footerFrameLeft.AddTable();
+            table.Style = "Table";
+            table.Borders.Bottom.Width = 0.25;
+            table.Borders.Bottom.Color = Colors.DarkSlateGray;
+            table.Rows.LeftIndent = 0;
+            paragraph.Format.SpaceAfter = "-0.05cm";
+            table.Rows.Height = 25;
+            // Before you can add a row, you must define the columns
+            var column = table.AddColumn("5cm");
+            column.Format.Alignment = ParagraphAlignment.Left;
+
+            column = table.AddColumn("2cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            column = table.AddColumn("2cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+            column = table.AddColumn("2cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+            column = table.AddColumn("2cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+            column = table.AddColumn("3cm");
+            column.Format.Alignment = ParagraphAlignment.Center;
+
+            //ageing analysis
+            var row2 = table.AddRow();
+            row2.VerticalAlignment = VerticalAlignment.Center;
+
+            paragraph = row2.Cells[0].AddParagraph();
+            paragraph.AddFormattedText("Ageing Analysis", TextFormat.Bold);
+
+            row2.Cells[1].AddParagraph("0-30");
+            row2.Cells[2].AddParagraph("31-60");
+            row2.Cells[3].AddParagraph("61-90");
+            row2.Cells[4].AddParagraph("90+");
+
+            paragraph = row2.Cells[5].AddParagraph();
+            paragraph.AddFormattedText("Balance", TextFormat.Bold);
+
+            row2 = table.AddRow();
+            row2.VerticalAlignment = VerticalAlignment.Center;
+            row2.Cells[1].AddParagraph(sum30.ToString("c"));
+            row2.Cells[2].AddParagraph(sum60.ToString("c"));
+            row2.Cells[3].AddParagraph(sum90.ToString("c"));
+            row2.Cells[4].AddParagraph(sumOver90.ToString("c"));
+            paragraph = row2.Cells[5].AddParagraph();
+            paragraph.AddFormattedText((sum30+sum60+sum90+sumOver90).ToString("c"), TextFormat.Bold);
+
         }
 
         /// <summary>

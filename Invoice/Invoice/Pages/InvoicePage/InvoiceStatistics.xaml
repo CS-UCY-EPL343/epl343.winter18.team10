@@ -67,7 +67,7 @@
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
             <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit"
-                    HorizontalAlignment="Left" Margin="1172,42,0,0" VerticalAlignment="Top" Width="200" Height="30"
+                    HorizontalAlignment="Left" Margin="1010,42,0,0" VerticalAlignment="Top" Width="200" Height="30"
                     FontSize="18" Click="BtnSelectProduct_Click" />
             <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="80,41,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
@@ -79,7 +79,11 @@
                    VerticalAlignment="Top" FontSize="18" />
             <ComboBox x:Name="cmbBoxLast" HorizontalAlignment="Left" Margin="503,41,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
-                <ComboBoxItem IsSelected="True" Content="2020" />
+                <ComboBoxItem IsSelected="False" Content="2024" />
+                <ComboBoxItem IsSelected="False" Content="2023" />
+                <ComboBoxItem IsSelected="False" Content="2022" />
+                <ComboBoxItem IsSelected="False" Content="2021" />
+                <ComboBoxItem IsSelected="False" Content="2020" />
                 <ComboBoxItem IsSelected="False" Content="2019" />
 
             </ComboBox>
@@ -87,9 +91,9 @@
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
         <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="88,154,437,198" />
+                CornerRadius="30" Margin="31,154,494,198" />
 
-        <Grid>
+        <Grid Margin="-57,0,57,0">
             <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="126,176,473,208"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
@@ -100,7 +104,7 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Grid>
-        <Canvas Width="158" Height="317" Margin="1446,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="1262,154,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
                     Canvas.Top="0" CornerRadius="20" />
 
@@ -131,7 +135,7 @@
                         Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
             </Canvas>
         </Canvas>
-        <Canvas Width="158" Height="317" Margin="1446,500,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="1262,494,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="158" Height="317" Background="#8E1600" BorderBrush="#ff4b6583" Canvas.Left="0"
                     Canvas.Top="0" CornerRadius="20" />
 

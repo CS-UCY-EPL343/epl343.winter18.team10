@@ -15,7 +15,7 @@
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
             <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
-                  VerticalAlignment="Top" Width="1264">
+                  VerticalAlignment="Top" Width="1057">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>

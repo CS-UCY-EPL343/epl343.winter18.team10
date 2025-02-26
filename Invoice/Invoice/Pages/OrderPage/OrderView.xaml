@@ -13,7 +13,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="413,28,0,0"
+            <Grid x:Name="grid_Customer" Background="white" HorizontalAlignment="Left" Height="276" Margin="291,28,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -39,8 +39,8 @@
                            VerticalAlignment="Top" />
             </Grid>
 
-            <Grid x:Name="grid_Order" Background="white" HorizontalAlignment="Left" Height="276" Margin="1033,28,0,0"
-                  VerticalAlignment="Top" Width="584">
+            <Grid x:Name="grid_Order" Background="white" HorizontalAlignment="Left" Height="276" Margin="911,28,0,0"
+                  VerticalAlignment="Top" Width="554">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -80,8 +80,8 @@
                        TextWrapping="Wrap" Text="View Order" VerticalAlignment="Top" Width="364" FontSize="40" />
         </Grid>
 
-        <DataGrid x:Name="orderProductsGrid" HorizontalAlignment="Left" Height="424" Margin="0,399,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="orderProductsGrid" HorizontalAlignment="Left" Height="376" Margin="0,399,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -98,20 +98,20 @@
         </DataGrid>
 
         <Button x:Name="createpdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Save as PDF"
-                HorizontalAlignment="Left" Margin="808,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="652,798,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="savePdf_Click" />
         <Button x:Name="printPdf_button" Style="{DynamicResource CommonButtonStyle}" Content="Print"
-                HorizontalAlignment="Left" Margin="630,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="474,798,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="printPdf_click" />
         <Button Content="Preview" Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Left"
-                VerticalAlignment="Top" Width="174" Margin="452,856,0,0" Height="44" Click="previewPdf_click" />
+                VerticalAlignment="Top" Width="174" Margin="296,798,0,0" Height="44" Click="previewPdf_click" />
         <Button x:Name="btn_edit" Style="{DynamicResource CommonButtonStyle}" Content="Edit" HorizontalAlignment="Left"
-                Margin="987,856,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click" />
+                Margin="831,798,0,0" VerticalAlignment="Top" Width="174" Height="44" Click="btn_edit_Click" />
         <Button x:Name="btn_delete" Style="{DynamicResource CommonButtonStyle}" Content="Delete"
-                HorizontalAlignment="Left" Margin="1166,856,0,0" VerticalAlignment="Top" Width="174" Height="44"
+                HorizontalAlignment="Left" Margin="1010,798,0,0" VerticalAlignment="Top" Width="174" Height="44"
                 Click="btn_delete_Click" />
 
-        <Grid HorizontalAlignment="Left" Height="77" Margin="1459,837,0,0" VerticalAlignment="Top" Width="163">
+        <Grid HorizontalAlignment="Left" Height="77" Margin="1303,779,0,0" VerticalAlignment="Top" Width="163">
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,3,0,0" TextWrapping="Wrap" Text="Net Total"
                        VerticalAlignment="Top" Width="81" FontSize="16" />
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,30,0,0" TextWrapping="Wrap" Text="Vat"

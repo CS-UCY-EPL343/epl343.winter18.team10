@@ -53,7 +53,7 @@
             </Grid>
 
             <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
-                  VerticalAlignment="Top" Width="584">
+                  VerticalAlignment="Top" Width="416">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -138,8 +138,8 @@
         </Grid>
 
 
-        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="376" Margin="0,434,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -162,10 +162,10 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0"
+        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1104,824,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0"
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1283,824,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_clearAll_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
 

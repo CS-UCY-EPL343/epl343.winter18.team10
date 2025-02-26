@@ -14,7 +14,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="368,16,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -40,8 +40,8 @@
 
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
-                  VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="988,16,0,0"
+                  VerticalAlignment="Top" Width="479">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -82,10 +82,10 @@
         </Grid>
 
 
-        <Button x:Name="Btn_createProduct" Content="Create" Margin="476,339,1134,563"
+        <Button x:Name="Btn_createProduct" Content="Create" Margin="431,339,1179,563"
                 Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Click="Btn_createProduct_Click" Height="48" Width="115" />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="596,339,1014,563"
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="551,339,1059,563"
                 Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Click="Btn_clearProduct_Click" Height="48" Width="115" />
 

@@ -19,7 +19,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="329,26,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -52,8 +52,8 @@
                            VerticalAlignment="Top" />
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
-                  VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="949,26,0,0"
+                  VerticalAlignment="Top" Width="486">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -83,7 +83,7 @@
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0"
                        TextWrapping="Wrap" Text="Create new Order" VerticalAlignment="Top" Width="364" FontSize="40" />
             <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72"
-                  Margin="22,340,0,0" VerticalAlignment="Top" Width="1644">
+                  Margin="10,340,0,0" VerticalAlignment="Top" Width="1644">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -98,39 +98,39 @@
                 <TextBox x:Name="textBox_Product" HorizontalAlignment="Left" Height="30" Margin="218,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="200" IsReadOnly="True" />
                 <TextBox x:Name="textBox_ProductDescription" HorizontalAlignment="Left" Height="30" Margin="423,31,0,0"
-                         TextWrapping="Wrap" VerticalAlignment="Top" Width="596" />
-                <TextBox x:Name="textBox_ProductStock" HorizontalAlignment="Left" Margin="1024,31,0,0"
+                         TextWrapping="Wrap" VerticalAlignment="Top" Width="444" />
+                <TextBox x:Name="textBox_ProductStock" HorizontalAlignment="Left" Margin="874,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Height="30" Width="80"
                          RenderTransformOrigin="0.362,-2.4" IsReadOnly="True" />
-                <TextBox x:Name="textBox_ProductQuantity" HorizontalAlignment="Left" Height="30" Margin="1109,31,0,0"
+                <TextBox x:Name="textBox_ProductQuantity" HorizontalAlignment="Left" Height="30" Margin="959,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="60"
                          TextChanged="TextBox_ProductQuantity_TextChanged" />
-                <TextBox x:Name="textBox_ProductPrice" HorizontalAlignment="Left" Height="30" Margin="1174,31,0,0"
+                <TextBox x:Name="textBox_ProductPrice" HorizontalAlignment="Left" Height="30" Margin="1024,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="116"
                          TextChanged="TextBox_ProductPrice_TextChanged" RenderTransformOrigin="0.85,-2.767" />
-                <TextBox x:Name="textBox_ProductVat" HorizontalAlignment="Left" Height="30" Margin="1295,31,0,0"
+                <TextBox x:Name="textBox_ProductVat" HorizontalAlignment="Left" Height="30" Margin="1145,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="37" IsReadOnly="True" />
-                <TextBox x:Name="textBox_ProductTotal" HorizontalAlignment="Left" Height="30" Margin="1350,31,0,0"
+                <TextBox x:Name="textBox_ProductTotal" HorizontalAlignment="Left" Height="30" Margin="1200,31,0,0"
                          TextWrapping="Wrap" VerticalAlignment="Top" Width="116" IsReadOnly="True" />
-                <Button Content="Add" HorizontalAlignment="Left" Margin="1471,31,0,0" VerticalAlignment="Top"
+                <Button Content="Add" HorizontalAlignment="Left" Margin="1321,31,0,0" VerticalAlignment="Top"
                         Width="116" Click="Btn_AddProduct" Height="30" Style="{DynamicResource CommonButtonStyle}" />
                 <TextBlock HorizontalAlignment="Left" Margin="423,10,0,0" TextWrapping="Wrap" Text="Description"
                            VerticalAlignment="Top" />
                 <TextBlock HorizontalAlignment="Left" Margin="218,10,0,0" TextWrapping="Wrap" Text="Product"
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="1024,11,0,0" TextWrapping="Wrap" Text="Stock"
+                <TextBlock HorizontalAlignment="Left" Margin="874,11,0,0" TextWrapping="Wrap" Text="Stock"
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="1109,11,0,0" TextWrapping="Wrap" Text="Quantity"
+                <TextBlock HorizontalAlignment="Left" Margin="959,11,0,0" TextWrapping="Wrap" Text="Quantity"
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="1174,11,0,0" TextWrapping="Wrap" Text="Price"
+                <TextBlock HorizontalAlignment="Left" Margin="1024,11,0,0" TextWrapping="Wrap" Text="Price"
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="1295,11,0,0" TextWrapping="Wrap" Text="Vat"
+                <TextBlock HorizontalAlignment="Left" Margin="1145,11,0,0" TextWrapping="Wrap" Text="Vat"
                            VerticalAlignment="Top" RenderTransformOrigin="0.418,1.734" />
-                <TextBlock HorizontalAlignment="Left" Margin="1350,11,0,0" TextWrapping="Wrap" Text="Total"
+                <TextBlock HorizontalAlignment="Left" Margin="1200,11,0,0" TextWrapping="Wrap" Text="Total"
                            VerticalAlignment="Top" />
-                <TextBlock HorizontalAlignment="Left" Margin="1335,39,0,0" TextWrapping="Wrap" Text="%"
+                <TextBlock HorizontalAlignment="Left" Margin="1185,39,0,0" TextWrapping="Wrap" Text="%"
                            VerticalAlignment="Top" Width="12" Height="17" />
-                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1592,31,0,0"
+                <Button x:Name="Btn_clearProduct" Content="X" HorizontalAlignment="Left" Margin="1442,31,0,0"
                         VerticalAlignment="Top" Click="Btn_clearProduct_Click"
                         Style="{DynamicResource RemoveButtonStyle}" />
             </Grid>
@@ -142,8 +142,8 @@
         </Grid>
 
 
-        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ProductDataGrid" HorizontalAlignment="Left" Height="376" Margin="0,434,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -168,14 +168,14 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0"
+        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="841,832,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0"
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1020,832,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_clearAll_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
 
-        <Grid HorizontalAlignment="Left" Height="77" Margin="1459,837,0,0" VerticalAlignment="Top" Width="163">
+        <Grid HorizontalAlignment="Left" Height="78" Margin="1298,812,0,0" VerticalAlignment="Top" Width="163">
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,3,0,0" TextWrapping="Wrap" Text="Net Total"
                        VerticalAlignment="Top" Width="81" FontSize="16" />
             <TextBlock HorizontalAlignment="Left" Height="19" Margin="1,30,0,0" TextWrapping="Wrap" Text="Vat"

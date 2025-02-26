@@ -19,7 +19,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="283,16,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -45,7 +45,7 @@
                            VerticalAlignment="Top" />
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="903,16,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -69,7 +69,7 @@
 
             </Grid>
             <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Height="100" Margin="10,49,0,0"
-                       TextWrapping="Wrap" Text="Create new Receipt" VerticalAlignment="Top" Width="364" FontSize="40" />
+                       TextWrapping="Wrap" Text="Edit Receipt" VerticalAlignment="Top" Width="364" FontSize="40" />
             <Grid x:Name="whiteborder_addProduct" Background="white" HorizontalAlignment="Left" Height="72"
                   Margin="413,347,0,0" VerticalAlignment="Top" Width="829">
                 <Grid.Effect>
@@ -104,15 +104,15 @@
                         Style="{DynamicResource RemoveButtonStyle}" />
             </Grid>
 
-            <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="81,154,0,0"
+            <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Left" Margin="28,154,0,0"
                     VerticalAlignment="Top" Width="174" Height="55" Click="Btn_clearAll_Click"
                     Style="{DynamicResource CommonButtonStyle}" />
 
         </Grid>
 
 
-        <DataGrid x:Name="ReceiptDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ReceiptDataGrid" HorizontalAlignment="Left" Height="376" Margin="0,434,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -135,21 +135,21 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="1002,856,0,0"
+        <Button x:Name="Btn_Complete" Content="Update" HorizontalAlignment="Left" Margin="838,825,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0"
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1017,825,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_clearAll_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1438,856,0,0" TextWrapping="Wrap" Text="Total Amount"
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1274,825,0,0" TextWrapping="Wrap" Text="Total Amount"
                    VerticalAlignment="Top" Width="99" FontSize="16" />
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1550,856,0,0" TextWrapping="Wrap"
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1386,825,0,0" TextWrapping="Wrap"
                    VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16" />
 
 
         <Grid />
         <Button x:Name="btn_loadInvoice" Style="{DynamicResource CommonButtonStyle}" Content="Load Receipt"
-                HorizontalAlignment="Left" Margin="1168,224,0,0" VerticalAlignment="Top" Width="120" Height="35"
+                HorizontalAlignment="Left" Margin="1038,224,0,0" VerticalAlignment="Top" Width="120" Height="35"
                 Click="Btn_LoadReceipt_Click" />
 
 

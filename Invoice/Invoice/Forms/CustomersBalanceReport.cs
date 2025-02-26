@@ -290,7 +290,7 @@ namespace InvoiceX.Forms
             row.Cells[4].AddParagraph().AddImage("../../Images/customersBalances-02.png").Width = "15.9cm";
 
             // Iterate the invoice items
-            for (var i = 0; i < customers.Count; i++)
+            for ( var i = 0; i < customers.Count; i++)
             {
                 if (customers[i]!=null)
                 {

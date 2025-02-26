@@ -14,7 +14,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="283,16,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -40,8 +40,8 @@
 
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
-                  VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="903,16,0,0"
+                  VerticalAlignment="Top" Width="554">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -83,15 +83,15 @@
         </Grid>
 
 
-        <Button x:Name="Btn_createProduct" Content="Update" Margin="600,330,1011,580"
+        <Button x:Name="Btn_createProduct" Content="Update" Margin="470,330,1141,580"
                 Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Click="Btn_UpdateProduct_Click" Height="40" Width="114" />
-        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="719,330,892,580"
+        <Button x:Name="Btn_clearProduct" Content="Clear" Margin="589,330,1022,580"
                 Style="{DynamicResource CommonButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center"
                 Click="Btn_clearProduct_Click" Height="40" Width="114" />
-        <TextBox x:Name="txtbox_productId" HorizontalAlignment="Left" Height="40" Margin="433,330,0,0"
+        <TextBox x:Name="txtbox_productId" HorizontalAlignment="Left" Height="40" Margin="303,330,0,0"
                  TextWrapping="Wrap" VerticalAlignment="Top" Width="43" TextChanged="Txtbox_productId_TextChanged" />
-        <Button x:Name="Btn_loadProduct" Content="Load Product" HorizontalAlignment="Left" Margin="481,330,0,0"
+        <Button x:Name="Btn_loadProduct" Content="Load Product" HorizontalAlignment="Left" Margin="351,330,0,0"
                 VerticalAlignment="Top" Style="{DynamicResource CommonButtonStyle}" Width="114"
                 Click="Btn_loadProduct_Click" Height="40" />
 

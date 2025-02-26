@@ -302,7 +302,7 @@ namespace InvoiceX.Forms
 
             paragraph = creditNoteDetailsFrame.AddParagraph();
             paragraph.AddLineBreak();
-            paragraph.AddText("Invoice No.");
+            paragraph.AddText("Doc. No.");
             paragraph.AddTab();
             paragraph.AddFormattedText(invoiceNumber,TextFormat.Bold);
 

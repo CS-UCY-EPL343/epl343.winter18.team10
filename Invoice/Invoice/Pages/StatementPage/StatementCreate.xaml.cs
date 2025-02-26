@@ -112,6 +112,7 @@ namespace InvoiceX.Pages.StatementPage
             statement.AddRange(CreditNoteViewModel.getCreditNotesForStatement(customerID, from, to));
             statement.AddRange(ReceiptViewModel.getReceiptsForStatement(customerID, from, to));
 
+
             if (statement.Count > 0)
             {
                 statementDataGrid.ItemsSource = statement;
@@ -391,8 +392,19 @@ namespace InvoiceX.Pages.StatementPage
 
             var items = statementDataGrid.Items.OfType<StatementItem>().ToList();
 
+            var allItems = new List<StatementItem>();
+            var fromD=new DateTime(2020,01, 01);
+            fromD += new TimeSpan(0, 0, 0); // start from 00:00:00 of from date
+            var to = (DateTime.Now);
+            to += new TimeSpan(23, 59, 59); // end on 23:59:59 of to date
 
-            var statement2 = new StatementFormNew("../../Forms/Receipt.xml", customerDetails, statementDetails, items);
+
+            allItems.AddRange(InvoiceViewModel.getInvoicesForStatement(int.Parse(customerDetails[4]), fromD, to));
+            allItems.AddRange(CreditNoteViewModel.getCreditNotesForStatement(int.Parse(customerDetails[4]), fromD, to));
+            allItems.AddRange(ReceiptViewModel.getReceiptsForStatement(int.Parse(customerDetails[4]), fromD, to));
+
+
+            var statement2 = new StatementFormNew("../../Forms/Receipt.xml", customerDetails, statementDetails, items,allItems);
             var document = statement2.CreateDocument();
             return document;
         }

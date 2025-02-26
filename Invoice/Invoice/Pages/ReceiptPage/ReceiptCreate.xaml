@@ -19,7 +19,7 @@
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="413,16,0,0"
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="356,26,0,0"
                   VerticalAlignment="Top" Width="584">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
@@ -52,8 +52,8 @@
                            VerticalAlignment="Top" />
             </Grid>
 
-            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="1033,16,0,0"
-                  VerticalAlignment="Top" Width="584">
+            <Grid Background="white" HorizontalAlignment="Left" Height="302" Margin="976,26,0,0"
+                  VerticalAlignment="Top" Width="488">
                 <Grid.Effect>
                     <DropShadowEffect Opacity="0.16" />
                 </Grid.Effect>
@@ -119,8 +119,8 @@
         </Grid>
 
 
-        <DataGrid x:Name="ReceiptDataGrid" HorizontalAlignment="Left" Height="394" Margin="0,434,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+        <DataGrid x:Name="ReceiptDataGrid" HorizontalAlignment="Left" Height="376" Margin="0,434,0,0"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -143,15 +143,15 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="1002,856,0,0"
+        <Button x:Name="Btn_Complete" Content="Complete" HorizontalAlignment="Left" Margin="844,820,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_Complete_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1181,856,0,0"
+        <Button x:Name="Btn_clearAll" Content="Clear" HorizontalAlignment="Left" Margin="1023,820,0,0"
                 VerticalAlignment="Top" Width="174" Height="44" Click="Btn_clearAll_Click"
                 Style="{DynamicResource CommonButtonStyle}" />
-        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1438,856,0,0" TextWrapping="Wrap" Text="Total Amount"
+        <TextBlock HorizontalAlignment="Left" Height="19" Margin="1280,820,0,0" TextWrapping="Wrap" Text="Total Amount"
                    VerticalAlignment="Top" Width="99" FontSize="16" />
-        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1550,856,0,0" TextWrapping="Wrap"
+        <TextBlock x:Name="TotalAmount_TextBlock" HorizontalAlignment="Left" Margin="1392,820,0,0" TextWrapping="Wrap"
                    VerticalAlignment="Top" Width="108" Height="20" Text="0,00" FontSize="16" />
 
 

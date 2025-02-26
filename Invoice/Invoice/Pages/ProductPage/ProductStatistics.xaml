@@ -61,7 +61,7 @@
             </Border.Effect>
         </Border>
 
-        <Grid Background="White" HorizontalAlignment="Left" Height="107" Margin="200,10,0,0" VerticalAlignment="Top"
+        <Grid Background="White" HorizontalAlignment="Left" Height="107" Margin="134,10,0,0" VerticalAlignment="Top"
               Width="1499">
             <Grid.Effect>
                 <DropShadowEffect Opacity="0.16" />
@@ -69,7 +69,7 @@
             <Label x:Name="label1" Content="Select Product: " HorizontalAlignment="Left" Margin="36,34,0,0"
                    VerticalAlignment="Top" FontSize="18" />
             <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit"
-                    HorizontalAlignment="Left" Margin="1170,39,0,0" VerticalAlignment="Top" Width="200" Height="30"
+                    HorizontalAlignment="Left" Margin="1151,39,0,0" VerticalAlignment="Top" Width="200" Height="30"
                     FontSize="18" Click="BtnSelectProduct_Click" />
             <ComboBox x:Name="productComboBox" HorizontalAlignment="Left" Margin="174,38,0,0" VerticalAlignment="Top"
                       Width="350" Height="30" />
@@ -88,10 +88,10 @@
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
         <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="133,137,392,427" />
+                CornerRadius="30" Margin="33,160,492,473" />
 
         <Grid>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="155,148,444,436"
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="55,170,544,492"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -101,8 +101,8 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Grid>
-        <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" CornerRadius="30" Margin="133,528,392,42">
-            <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="32,10,42,5"
+        <Border Width="1200" Background="#ff30455d" BorderBrush="#ff4b6583" CornerRadius="30" Margin="33,538,492,95">
+            <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="32,10,42,10"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -112,7 +112,7 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </Border>
-        <Canvas Width="158" Height="317" Margin="1446,560,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+        <Canvas Width="158" Height="317" Margin="1310,538,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
                     Canvas.Top="0" CornerRadius="20" />
 
@@ -143,8 +143,8 @@
                         Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
             </Canvas>
         </Canvas>
-        <Canvas Width="158" Height="317" Margin="1446,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="0"
+        <Canvas Width="158" Height="317" Margin="1310,160,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Border Width="158" Height="317" Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1"
                     Canvas.Top="0" CornerRadius="20" />
 
             <Canvas Width="55" Height="55" Canvas.Left="52" Canvas.Top="26">
@@ -174,6 +174,6 @@
                         Foreground="#ffcce8ff" Canvas.Left="-30" Canvas.Top="64" Width="158" />
             </Canvas>
         </Canvas>
-        
+
     </Grid>
 </Page>

@@ -24,13 +24,16 @@
 //  *****************************************************************************/
 
 using System;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using InvoiceX.Classes;
 using InvoiceX.Models;
 using InvoiceX.ViewModels;
+using MySql.Data.MySqlClient;
 
 namespace InvoiceX.Pages.InvoicePage
 {
@@ -234,7 +237,62 @@ namespace InvoiceX.Pages.InvoicePage
                 TotalAmount_TextBlock.Text = (netTotal + VAT).ToString("C");
             }
         }
+        private void Btn_getLatestPrice_Click(object sender, RoutedEventArgs e)
+        {
+        float ret = 0;
+            MySqlConnection conn = DBConnection.Instance.Connection;
+            int idProduct = 0;
+            int idcustomer = 0;
 
+            if (comboBox_Product.SelectedIndex > 0)
+            {
+                idProduct = ((Product)comboBox_Product.SelectedItem).idProduct;
+
+            }
+            if (comboBox_customer.SelectedIndex > 0)
+            {
+                idcustomer = ((Customer)comboBox_customer.SelectedItem).idCustomer;
+
+            }
+
+            if (idProduct>0 && idcustomer>0)
+            {
+
+            
+            try
+            {
+                var cmd = new MySqlCommand("getLatestProductPrice", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@pid", SqlDbType.Int).Value = idProduct;
+                cmd.Parameters["@pid"].Direction = ParameterDirection.Input;
+                cmd.Parameters.AddWithValue("@cid", SqlDbType.Int).Value = idcustomer;
+                cmd.Parameters["@cid"].Direction = ParameterDirection.Input;
+
+                //MySqlDataReader reader = cmd.ExecuteReader();
+                cmd.ExecuteNonQuery();
+                    var total2 = cmd.ExecuteScalar();
+                    if (total2!=null)
+                    {
+                        float total3 = 0;
+
+                        if (float.TryParse(total2.ToString(), out total3)) ret = total3;
+                        textBox_ProductPrice.Text = total3.ToString();
+                        textBox_ProductPrice.BorderBrush = Brushes.Green;
+                        textBox_ProductPrice.BorderThickness = new Thickness(2);
+
+                    }
+
+
+                    //reader.Close();
+                }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            }
+
+        }
         /// <summary>
         ///     Removes a product from the product grid
         /// </summary>

@@ -39,7 +39,7 @@
             <ColumnDefinition Width="11*" />
             <ColumnDefinition Width="13*" />
         </Grid.ColumnDefinitions>
-        <Border Width="1923" Height="80" BorderBrush="#ffd5e3d6" Margin="0,0,-3,0" HorizontalAlignment="Left"
+        <Border Width="1920" Height="76" BorderBrush="#ffd5e3d6" HorizontalAlignment="Left"
                 VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.RowSpan="1">
             <Border.Background>
                 <LinearGradientBrush EndPoint="1,0" StartPoint="0,1">

@@ -100,7 +100,7 @@
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
         <DataGrid x:Name="expensesDataGrid" HorizontalAlignment="Left" Height="698" Margin="0,170,0,0"
-                  VerticalAlignment="Top" Width="1725" Style="{DynamicResource viewDataGridStyle}"
+                  VerticalAlignment="Top" Width="1500" Style="{DynamicResource viewDataGridStyle}"
                   HorizontalScrollBarVisibility="Disabled" GridLinesVisibility="None">
             <DataGrid.Effect>
                 <DropShadowEffect Opacity="0.16" />

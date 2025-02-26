@@ -67,7 +67,7 @@
                 <DropShadowEffect Opacity="0.16" />
             </Grid.Effect>
             <Button x:Name="btnSubmit" Style="{DynamicResource CommonButtonStyle}" Content="Submit"
-                    HorizontalAlignment="Left" Margin="1170,39,0,0" VerticalAlignment="Top" Width="200" Height="30"
+                    HorizontalAlignment="Left" Margin="1060,43,0,0" VerticalAlignment="Top" Width="200" Height="30"
                     FontSize="18" Click="BtnSelectProduct_Click" />
             <ComboBox x:Name="cmbBoxBy" HorizontalAlignment="Left" Margin="74,42,0,0" VerticalAlignment="Top"
                       Width="200" Height="30">
@@ -85,10 +85,10 @@
                    VerticalAlignment="Top" FontSize="18" />
         </Grid>
         <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="29,152,900,404" />
+                CornerRadius="30" Margin="29,152,992,404" />
 
         <Grid>
-            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="60,169,933,428"
+            <lvc:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Bottom" Margin="60,169,1063,428"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -99,10 +99,10 @@
             </lvc:CartesianChart>
         </Grid>
         <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="879,152,18,404" />
+                CornerRadius="30" Margin="761,152,256,404" />
 
         <Grid Margin="738,-428,-738,428">
-            <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="170,601,775,6"
+            <lvc:CartesianChart Series="{Binding SeriesCollection2}" LegendLocation="Bottom" Margin="36,607,1021,0"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
@@ -114,10 +114,10 @@
         </Grid>
 
         <Border Background="#ff30455d" BorderBrush="#ff4b6583" Canvas.Left="-1169" Canvas.Top="5"
-                CornerRadius="30" Margin="29,556,26,10" />
+                CornerRadius="30" Margin="29,551,256,38" />
 
         <Grid Margin="738,-428,-738,428">
-            <lvc:CartesianChart Series="{Binding SeriesCollection3}" LegendLocation="Bottom" Margin="-662,1009,815,-402"
+            <lvc:CartesianChart Series="{Binding SeriesCollection3}" LegendLocation="Bottom" Margin="-662,983,1021,-364"
                                 Loaded="CartesianChart_Loaded">
                 <lvc:CartesianChart.AxisX>
                     <lvc:Axis Title="Month" Labels="{Binding Labels}" />
